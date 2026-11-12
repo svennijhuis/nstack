@@ -53,12 +53,17 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 25. Alternatives includes "do nothing". Assumptions and risks has an owner on every row.
 26. The type requirements in [sizes.md](sizes.md) are met for each type in the header.
 
+### Prose
+
+27. `design.md` follows the `technical-writing` skill. Read the skill, then check each section against its rules. A fail names the file, the line, and the rule broken.
+28. Run the `unslop` skill over `design.md` and every file in the folder. This check goes last. It passes when unslop finds nothing left to fix. A fail lists each file and line it would change.
+
 ## Ready anyway
 
 `/tech-design <name> ready anyway` lets the human go ready while gaps are open. Use it only when the human types it. Never suggest it. Never accept a risk for them.
 
 1. Run the whole gate first and print it.
-2. Checks 1 to 5 and 10 to 26 still stop ready. Only the gap checks 6, 8, and 9 can be accepted.
+2. Checks 1 to 5 and 10 to 28 still stop ready. Only the gap checks 6, 8, and 9 can be accepted.
 3. For each open, research, or waiting gap, and each fog line, show: the question, what a builder would have to guess, and what goes wrong if the guess is wrong.
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human as owner, today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.
