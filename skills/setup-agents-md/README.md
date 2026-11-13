@@ -12,7 +12,7 @@ How to handle docs in a repo an agent works in: what to write, what to delete, a
 
 A doc that explains the code is a second copy of the truth. The code is run and tested on every change. The doc is not. So the code changes, the doc does not, and now the two disagree.
 
-A person who reads a stale doc gets confused once. An agent reads `AGENTS.md` on every request and believes it. When the doc and the code disagree, the agent cannot tell which one is right, so it guesses, and it often picks the doc. A wrong doc is worse than no doc.
+A person who reads a stale doc gets confused once. An agent reads `AGENTS.md` on every request and believes it. When the doc and the code disagree, the agent cannot tell which one is right, so it guesses, and it often picks the doc. A wrong doc is worse than no doc. Markdown in the repo is not run and not tested against the code, so nothing tells you when it drifts.
 
 There is a cost even when the doc is right. `AGENTS.md` loads on every request. Every line costs tokens, and the more instructions it holds, the worse the agent follows all of them, not only the new ones. Frontier models follow roughly 150 to 200 instructions reliably, and the harness's own system prompt already uses part of that.
 
@@ -26,6 +26,7 @@ The agent reads code well. Code that explains itself needs no doc beside it, and
 | "Orders go through these five states" | A type or enum with those five states, and a test per transition |
 | "Call `init()` before `send()`" | Make the wrong order impossible: `send` takes what `init` returns |
 | "The payments folder handles Stripe" | Name it `stripe-payments/`, or put it behind a `PaymentProvider` interface |
+| "This 3,000-line file has three parts" | Split it into reasonable chunks, one concern per file, in the folder where you would look for it. Format it. |
 | "How the checkout works" | A small public interface, with the implementation behind it. The agent reads the interface, not the 2,000 lines |
 | "Use this pattern for new endpoints" | One clean example endpoint the agent can copy. Agents follow the patterns they see |
 | "Do not import from `legacy/`" | A lint rule that fails the build |
@@ -48,7 +49,7 @@ The rule: **if it can be checked by a compiler, a test, or a linter, put it ther
 | Rules for one area only | `docs/agents/<topic>.md` | How tests are set up, API conventions |
 | A procedure with steps | A skill | Releasing, migrating a database |
 | Why something was chosen, and what was rejected | `docs/adr/` | "Postgres over MongoDB, because reporting needs joins." |
-| Words with a project meaning | `GLOSSARY.md` | "Tenant: a paying organisation, not a user." |
+| Words with a project meaning | `GLOSSARY.md` | "Order: a paid cart. Before payment it is a cart, not an order." |
 
 Why these survive: the code shows *what* and *how*. It never shows *why*, what was *rejected*, what a word *means* to the business, or how to *start*.
 
@@ -127,7 +128,7 @@ Nothing is written before you approve the plan. Nothing is pushed.
 
 ## Sources
 
-- Matt Pocock, "Delete (most of) your docs": https://www.youtube.com/watch?v=Fj8DKMbdIzU (summary on daily.dev: https://daily.dev/posts/delete-most-of-your-docs-gvj33j7ru)
+- Matt Pocock, "Delete (most of) your docs": https://www.youtube.com/watch?v=Fj8DKMbdIzU. The keep list (ADRs for the alternatives considered, a glossary for domain language, a thin navigation layer) and the code advice (formatted, well organised, reasonable chunks, interfaces separate from implementations) come from this video.
 - Matt Pocock, A complete guide to AGENTS.md: https://www.aihero.dev/a-complete-guide-to-agents-md
 - Matt Pocock, The home repo pattern: https://www.aihero.dev/the-home-repo-pattern
 - HumanLayer, Writing a good CLAUDE.md: https://www.humanlayer.dev/blog/writing-a-good-claude-md
