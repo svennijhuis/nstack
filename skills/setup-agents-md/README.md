@@ -32,10 +32,10 @@ When an agent explores a repo, the code is what it has to go on. So the code car
 | --- | --- |
 | "This 3,000-line file has three parts" | Split it: one concern per file, in the folder where you would look for it. Format it. |
 | "How the checkout works" | A small public interface with the implementation behind it. The agent reads the interface, not the 2,000 lines. |
-| "This function returns null if the user is not found" | A return type that says so: `User \| null`, or `findUser` vs `getUser` |
+| "This function returns nothing if the user is not found" | A return type that says the user may be missing, or a name that says it: `findUser` vs `getUser` |
 | "Orders go through these five states" | A type or enum with those five states, and a test per transition |
 | "Call `init()` before `send()`" | Make the wrong order impossible: `send` takes what `init` returns |
-| "The payments folder handles Stripe" | Name it `stripe-payments/`, or put it behind a `PaymentProvider` interface |
+| "The payments folder talks to the payment provider" | Name it after what it does, or put it behind a `PaymentProvider` interface |
 | "Use this pattern for new endpoints" | One clean example endpoint. Agents follow the patterns they see. |
 | "Do not import from `legacy/`" | A lint rule that fails the build |
 | "Format with 2 spaces, sort imports" | A formatter, run by a hook or CI |
@@ -106,23 +106,23 @@ From Matt Pocock's [guide to AGENTS.md](https://www.aihero.dev/a-complete-guide-
 
 | Keep | Where | Example |
 | --- | --- | --- |
-| One sentence on what the project is | `AGENTS.md` | "Storefront for Acme, Next.js, deployed on Vercel." |
+| One sentence on what the project is | `AGENTS.md` | "Web shop for Acme: catalog, checkout, and the admin app." |
 | The thin navigation layer | `AGENTS.md` | "Checkout: cart to payment, in `checkout/`." |
-| The package manager, when it is not npm and not pinned with corepack | `AGENTS.md` | "Use pnpm." |
-| How to start, build, and test, always | `AGENTS.md` | "Start: `pnpm dev`", "Test: `pnpm test:unit`" |
-| Each part of the repo and its commands: solutions, apps, infrastructure | `AGENTS.md`, or the part's own `AGENTS.md` | "Api (.NET): `dotnet test src/Api/Api.sln`" |
+| The package manager or build tool, when the stack has more than one and the repo does not pin it | `AGENTS.md` | "Package manager: <the one this repo uses>." |
+| How to start, build, and test, always | `AGENTS.md` | "Start: `<command>`", "Test: `<command>`" |
+| Each part of the repo and its commands: solutions, apps, infrastructure | `AGENTS.md`, or the part's own `AGENTS.md` | "Api: entry `<solution file>`. Test: `<command>`." |
 | Each pipeline: its trigger and what it does | `AGENTS.md` | "`ci.yml`: on every pull request, build and test." |
 | Rules for every task that no tool can enforce | `AGENTS.md` | "Call the payments API only from the server." |
 | One line per topic file | `AGENTS.md` | "Testing: `docs/agents/testing.md`. Read before you write a test." |
 | Code standards: conventions no linter checks | `docs/agents/code-standards.md`, created by default | "Return errors as a `Result`, do not throw, in domain code." |
 | Rules for one area only | `docs/agents/<topic>.md` | How tests are set up, API conventions |
 | A procedure with steps | A skill | Releasing, migrating a database |
-| Decisions | `docs/adr/` | "Postgres over MongoDB, because reporting needs joins." |
+| Decisions | `docs/adr/` | "A relational database over a document store, because reporting needs joins." |
 | Terms | `GLOSSARY.md` | "Order: a paid cart." |
 
 This is progressive disclosure: the root file holds one line per topic, and the agent opens a topic file only when the task needs it.
 
-**Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, such as `docs/TYPESCRIPT.md`. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name.
+**Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, one per language. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name.
 
 **Commands by default.** The AI Hero guide lists only non-standard commands. This skill always writes Start, Build, and Test, because they are what the agent needs first. It learns them from the scripts and the pipeline, and runs the safe ones to check them. It never runs a deploy or an apply.
 

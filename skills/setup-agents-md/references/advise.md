@@ -78,7 +78,7 @@ Only when the target is in a home repo setup.
 ```text
 Sev     Kind      Item                       Finding                                         Fix
 high    decision  docs/adr/2026-10-02-redis  commit 4f2a1c9 reverted it, no revert ADR       add a revert ADR, set status to Reverted by
-high    root      AGENTS.md:14               `pnpm test:e2e` does not exist                  use `pnpm e2e` or delete the line
+high    root      AGENTS.md:14               test command does not exist                     use the one the pipeline runs, or delete the line
 medium  root      AGENTS.md:20-48            folder tree                                     delete it
 medium  docs      docs/specs/checkout.md     feature shipped in #212                         move the why to an ADR, delete the spec
 low     root      AGENTS.md                  84 lines                                        move testing rules to docs/agents/testing.md

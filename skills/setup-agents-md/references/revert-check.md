@@ -6,7 +6,7 @@ It finds reverts by the line git writes, `This reverts commit <sha>.` A revert m
 
 ## Install
 
-Offer it in the report when the repo uses GitHub Actions and has no such check. Write it only on a yes, as a plan row. Set `DOCS` to where the repo keeps its decisions.
+Offer it in the report when the repo has CI and no such check. The example below is for GitHub Actions. For another CI, keep the script and wrap it in that CI's job format. Write it only on a yes, as a plan row. Set `DOCS` to where the repo keeps its decisions.
 
 `.github/workflows/adr-revert-check.yml`:
 

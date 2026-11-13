@@ -18,7 +18,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 
 ## Commands
 
-- Package manager: <pnpm, yarn, ...>
+- Package manager: <the one this repo uses>
 - Install: `<command>`
 - Start: `<command>`
 - Build: `<command>`
@@ -68,7 +68,7 @@ For a repo with several parts, replace Shape and Commands with Parts. Keep Pipel
 - Build: `<command>`
 - Test: `<command>`
 
-### Infrastructure (<Terraform, Bicep, ...>)
+### Infrastructure (<tool>)
 
 <What it provisions.> In `<folder>`.
 
@@ -82,7 +82,7 @@ Keep Start, Build, and Test even when they are the standard ones for the stack. 
 
 Shape is the thin navigation layer: three to six lines, the main parts of the project and what each does. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.
 
-Leave out the package manager line when it is npm, or when the repo pins it with corepack (`packageManager` in `package.json`). Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
+Leave out the package manager line when the stack has only one, or when the repo pins it in its manifest. Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
 
 In a child repo of a home repo, keep the one line `setup-home-repo` wrote that points at the home repo. Put it under the first sentence.
 

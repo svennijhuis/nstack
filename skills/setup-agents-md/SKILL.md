@@ -29,7 +29,7 @@ The **steering file** is `AGENTS.md`. Every harness in nstack reads it, Claude C
 | --- | --- | --- |
 | What the project is, in one sentence | Root file | Anchors every task |
 | The main parts and what each does, three to six lines, top-level folders at most | Root file | A thin map so the agent knows where to start |
-| Package manager, when it is not npm and corepack does not pin it | Root file | The agent guesses wrong otherwise |
+| The package manager or build tool, when the stack has more than one to choose from and the repo does not pin it | Root file | The agent guesses wrong otherwise |
 | How to start, build, and test, always, plus lint and typecheck | Root file | The agent needs them first |
 | Each part and its commands: solutions, apps, infrastructure. Each pipeline and what it does. | Root file, or the part's own `AGENTS.md` | One repo can hold several of each |
 | Rules for every task that no tool enforces | Root file | They apply everywhere |
@@ -84,7 +84,7 @@ Done when every plan row has an outcome, the root file and each part's `AGENTS.m
 
 The root file always says how to start, build, and test, even when the commands are the standard ones for the stack. These are the lines the agent needs first, and a wrong guess costs a failed run.
 
-1. **Find every part.** Solutions and project files (`*.sln`, `*.slnx`, `*.csproj`), workspaces in the package manifest, `Makefile`, `docker-compose*`, `Dockerfile`, infrastructure (`*.tf`, `*.bicep`, Pulumi, Helm, Kubernetes manifests), and pipelines (`.github/workflows/`, `azure-pipelines*.yml`, `.gitlab-ci.yml`).
+1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses: each one marks a part that builds, runs, or deploys on its own.
 2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. The pipeline is the best source: it is what really runs.
 3. **Check them.** Run the start, build, and test commands that change nothing outside the repo. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Read those from the pipeline and write them down as they are.
 4. **One part:** a `## Commands` section with Start, Build, Test, and Lint or Typecheck when they exist.
@@ -102,9 +102,9 @@ Every repo gets `docs/agents/code-standards.md`, and the root file points at it 
 2. **Send checkable rules to tools.** A rule a linter, formatter, or type checker can enforce becomes a plan row for that tool's config, not a line here.
 3. **Ask when it is empty.** If nothing was found, ask one round: "Which conventions should every change follow?" Offer two or three candidates read from the code, marked as seen in the code, the recommended answer first. Write only what the person confirms.
 4. **Skip it on a no.** If the person gives no conventions, leave the file out and say so in the report. An empty file is noise.
-5. **Split past about 50 lines,** or when the repo has more than one language: one file per language under `docs/agents/`, such as `typescript.md` and `python.md`, each linked from the root file.
+5. **Split past about 50 lines,** or when the repo has more than one language: one file per language under `docs/agents/`, named after the language, each linked from the root file.
 
-When the repo already has a standards file elsewhere, such as `docs/TYPESCRIPT.md` or `CONTRIBUTING.md`, point the root file at it and keep its name. Do not move a file other tools or people link to.
+When the repo already has a standards file elsewhere, such as a language file under `docs/` or `CONTRIBUTING.md`, point the root file at it and keep its name. Do not move a file other tools or people link to.
 
 ## CLAUDE.md
 
