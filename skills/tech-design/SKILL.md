@@ -1,6 +1,6 @@
 ---
 name: tech-design
-description: When the user types /tech-design to start, resume, check, or ready a technical design.
+description: Use when the user wants to write, continue, review, or finish a technical design or design doc for a feature, API, integration, or data change.
 ---
 
 A technical design developers can build is too big for one session, and most of what it needs is not known yet. This skill charts that design as a shared map at `docs/design/<yyyy-mm-dd>-<name>/`, finds every gap, and closes them one per session until a developer or an agent can build from the design without guessing.

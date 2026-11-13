@@ -1,6 +1,6 @@
 ---
 name: setup-home-repo
-description: When the user types /setup-home-repo to create, update, check, or clean up a home repo.
+description: Use when the user wants to create, update, audit, or clean up a home repo that holds shared skills, steering files, MCP servers, and hooks for many repos.
 ---
 
 A team with many repos copies its skills, steering files, MCP servers, and hooks into each one, or hides them in the user folder where they go stale. A home repo ends that. It is one repo that holds everything the agent needs in every session, plus a pointer to every other repo and source. The agent always starts in the home repo and reaches out from there.

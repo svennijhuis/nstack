@@ -1,6 +1,6 @@
 ---
 name: setup-nstack-skills
-description: When the user types /setup-nstack-skills to check which external skills nstack needs and install the missing ones locally.
+description: Use when the user wants to set up nstack, or an nstack skill fails because a skill it calls is missing. Installs the missing external skills at the pinned commit.
 ---
 
 nstack skills call skills that live in other repos. This skill reads the list of those skills in [external-skills.md](external-skills.md), checks which ones are installed, and installs the missing ones at the pinned commit.
