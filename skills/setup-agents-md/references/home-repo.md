@@ -31,7 +31,7 @@ So the home repo may hold open designs that span repos. It never holds a shipped
 
 When the working directory is a home repo:
 
-1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer under `## Repos`. If the path is missing, clone it from the remote in the pointer. Run Create or Update on that repo. Work on a new local branch there. When `setup-home-repo` started this run and names a branch, use that branch instead. If it has uncommitted changes, stop and report it.
+1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer under `## Repos`. If the path is missing, clone it from the remote in the pointer. Run Create or Update on that repo. Work on a new local branch there. If it has uncommitted changes, stop and report it.
 2. **With nothing typed**: ask one question. "Which repo? The home repo itself, or one of: <names from `## Repos`>." Recommend the child repo the person last named, or the home repo if none.
 3. **On the home repo itself**: trim only the steering text at the top of `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`.
 

@@ -16,8 +16,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 
 ```text
 1. setup-nstack-skills     once: install the external skills the others call
-2. setup-home-repo         once: one home repo for skills, pointers, MCP, hooks, and a router.
-                           It asks whether to run step 3 on every child repo.
+2. setup-home-repo         once: one home repo for skills, pointers, MCP, hooks, and a router
 3. setup-agents-md <repo>  per repo: a lean AGENTS.md, code standards, ADRs, glossary
 4. tech-design             per feature. One repo: start it there. Several repos: start it in the home repo
 5. build                   agents follow AGENTS.md, write an ADR with each decision
@@ -26,7 +25,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 
 - **Where things live.** The skills and the pointers live in the home repo. Everything about a repo's code lives in that repo: its `AGENTS.md`, code standards, ADRs, glossary, and designs. One exception: an open design that spans several repos lives in the home repo. When it ships, its decisions become ADRs in each repo they change. Start in the home repo and type `/setup-agents-md <repo>`, or start in the repo itself.
 - **Who owns what.** `setup-home-repo` owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`, and trims each child repo's `AGENTS.md` to what is true for that repo. `setup-agents-md` then keeps that file lean and never touches the home repo's pointers. `tech-design` owns `docs/design/` while a design is open.
-- **Hand-offs.** `setup-home-repo` advise reports a decision that sits in the home repo but belongs to a child repo. `setup-agents-md` advise reports a shipped design whose decisions are not ADRs yet. Each tells you which skill fixes it.
+- **Hand-offs.** `setup-agents-md` advise reports a decision that sits in the home repo but belongs to a child repo, and a shipped design whose decisions are not ADRs yet. After `setup-home-repo` builds the home repo, run `/setup-agents-md <repo>` for each child repo.
 - **Updating.** Run `/setup-agents-md` again in a repo that already has an `AGENTS.md`. It updates rather than starts over: it checks every line against the code, shows what to keep, move, or delete, and waits for your yes.
 
 Some skills call skills that live in other repos. Run `setup-nstack-skills` to

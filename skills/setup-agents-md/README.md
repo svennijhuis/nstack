@@ -128,7 +128,7 @@ This is progressive disclosure: the root file holds one line per topic, and the 
 
 **Repos with several parts.** One repo can hold several solutions, apps, the infrastructure, and the pipelines. The root file then gets a Parts section: per part, what it is, its entry file, and its commands. Infrastructure says how to check a change without applying it, and that applying goes through the pipeline. Past about four parts, each part gets its own `AGENTS.md` in its folder, and the root keeps one line per part. The harness loads a folder's `AGENTS.md` when the agent works there.
 
-**Only `AGENTS.md`, no `CLAUDE.md`.** Claude Code reads `AGENTS.md` itself from version 2.1.277, so every harness reads the same file. But when a `CLAUDE.md` exists in the repo or a folder above it, Claude reads that one and ignores `AGENTS.md`. So the skill folds any `CLAUDE.md` into `AGENTS.md` and deletes it, and reports a `CLAUDE.md` in a parent folder. It keeps a one-line `@AGENTS.md` only if you use an older Claude Code.
+**Only `AGENTS.md`, no `CLAUDE.md`.** Claude Code reads `AGENTS.md` itself from version 2.1.277, so every harness reads the same file. But when a `CLAUDE.md` exists in the repo or a folder above it, Claude reads that one and ignores `AGENTS.md`. So the skill folds a `CLAUDE.md` with its own text into `AGENTS.md` and deletes it, leaves a one-line `@AGENTS.md` import alone, and reports a `CLAUDE.md` in a parent folder. It keeps a one-line `@AGENTS.md` only if you use an older Claude Code.
 
 ## 7. Decisions that stay true
 
@@ -168,8 +168,7 @@ A design is different: it is a plan, and a plan for several repos has no single 
 
 ```text
 setup-home-repo          one home for skills, pointers, MCP, hooks
-   ↓ trims each child repo's AGENTS.md, adds the pointer to home,
-   ↓ and asks: set up AGENTS.md in the child repos too?
+   ↓ trims each child repo's AGENTS.md, adds the pointer to home
 setup-agents-md <repo>   makes that AGENTS.md lean, sets up code standards, ADRs, glossary
    ↓
 tech-design              one repo: start it there. Several repos: start it in the home repo
@@ -177,8 +176,7 @@ tech-design              one repo: start it there. Several repos: start it in th
 setup-agents-md advise   once shipped: decisions → ADRs, design folder → offered for deletion
 ```
 
-- **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`. This skill never touches them. Its advise mode also reports an ADR or glossary in the home repo that belongs to a child repo.
-- **`setup-home-repo` asks during setup** whether to run this skill on each child repo, and runs it one repo at a time, each with its own plan. Adding a repo later with `/setup-home-repo add` offers it too.
+- **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`. This skill never touches them. After `setup-home-repo` builds the home repo, run `/setup-agents-md <repo>` once for each child repo. This skill's advise reports an ADR or glossary in the home repo that belongs to a child repo.
 - **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `committed` and not yet shipped. This skill leaves them alone. After the feature ships, each line of Decisions so far becomes an ADR and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
 
 ## 10. Commands

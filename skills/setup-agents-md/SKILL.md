@@ -112,7 +112,8 @@ Claude Code reads `AGENTS.md` natively from version 2.1.277, but only when no `C
 
 So write only `AGENTS.md`.
 
-- **A `CLAUDE.md` exists:** move each of its lines to `AGENTS.md` or a topic file as plan rows, then delete it. Do the same for `.claude/CLAUDE.md`.
+- **A `CLAUDE.md` with its own text exists:** move each of its lines to `AGENTS.md` or a topic file as plan rows, then delete it. Do the same for `.claude/CLAUDE.md`.
+- **A `CLAUDE.md` whose only line is `@AGENTS.md`:** it works, Claude reads `AGENTS.md` through it. Leave it. `setup-home-repo` writes one like this.
 - **A `CLAUDE.local.md` exists:** it is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude, and that they can move its lines to their user `~/.claude/CLAUDE.md`, which does not.
 - **A `CLAUDE.md` in a folder above the repo,** such as the home folder or the folder that holds the repos: report it. It hides every repo's `AGENTS.md` below it.
 - **Old Claude Code, or a provider without native support:** when the person uses Claude Code before 2.1.277, or says it does not read `AGENTS.md` for them, keep a `CLAUDE.md` whose only line is `@AGENTS.md`. Ask before writing it.

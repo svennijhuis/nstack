@@ -16,7 +16,7 @@
 
 | Kind | What add does |
 | --- | --- |
-| `repo` | Adds the pointer line in the same format as the others. Past about 20 repos, offers the split into `repos/<area>.md` by [layout.md](layout.md). When the repo has no `AGENTS.md`, or one over about 60 lines, offers `/setup-agents-md <repo>` after the commit. |
+| `repo` | Adds the pointer line in the same format as the others. Past about 20 repos, offers the split into `repos/<area>.md` by [layout.md](layout.md). |
 | `source` | Adds the pointer line. If no access method exists, offers to add one first, such as an MCP server, and writes `none yet` if the person declines. |
 | `skill` | Copies the folder whole into the skills folder. If it came from a child repo, offers to remove it there on a new local branch. |
 | `rule` | Writes one file per harness in use, in each harness's format, with the same text. |
