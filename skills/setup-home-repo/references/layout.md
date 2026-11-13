@@ -4,7 +4,7 @@ Create only what has content. An empty folder is noise.
 
 ```text
 <home>/
-  AGENTS.md            steering, Repos, Sources, Tools, Environment
+  AGENTS.md            steering, Repos, Sources, Designs, Tools, Environment
   CLAUDE.md            one line: @AGENTS.md   (Claude Code only)
   .claude/             skills, rules, agents, hooks, settings   (Claude Code)
   .cursor/             rules, hooks, mcp.json                   (Cursor)
@@ -13,6 +13,7 @@ Create only what has content. An empty folder is noise.
   .agents/skills/      skills, or a link to them
   .mcp.json            MCP servers                              (Claude Code)
   repos/<area>.md      pointer files, only past about 20 repos
+  docs/design/         designs written by tech-design, only if there are any
   wiki/                knowledge in markdown, only if there is any
   tools/               scripts the agent runs, only if there are any
   .gitignore           local settings files, worktrees, secret files, child repo clones
@@ -28,7 +29,7 @@ Keep it short. It is loaded every session. A skill holds a procedure. `AGENTS.md
 # <team or person> home repo
 
 Start every session here. Reach other repos and sources through the pointers below.
-Not sure which skill, repo, or source fits? Type the router: <router slash>.
+Something new or changed? Run `/setup-home-repo update`.
 
 ## How to work across repos
 
@@ -44,6 +45,10 @@ Not sure which skill, repo, or source fits? Type the router: <router slash>.
 ## Sources
 
 - <name> (<kind>): <location>. Reach via <how>.
+
+## Designs
+
+- <name> (<status>): `docs/design/<yyyy-mm-dd>-<name>/`. <what it designs>.
 
 ## Tools
 
@@ -88,6 +93,19 @@ runbooks (docs): Confluence space OPS. Reach via the MCP server `atlassian`.
 ```
 
 Nothing from a source is copied into the home repo. The pointer says where it is and how to reach it. If no access method exists yet, write `Reach via: none yet` and report it. Do not invent one.
+
+## The design pointer
+
+```text
+<name> (<status>): <folder>. <what it designs>.
+```
+
+- One line per folder under `docs/design/`. A design in a child repo gets the same line with that repo's path.
+- `<status>` comes from the design's own files. Do not judge it yourself. When the files do not say, leave the status out.
+- `<what it designs>` is a few words the agent can match a task against.
+- Nothing from the design is copied into `AGENTS.md`. The pointer says where it is.
+
+Good: `search (charting, 4 gaps open): docs/design/2026-11-13-search/. Full text search for the storefront.`
 
 ## Many repos
 

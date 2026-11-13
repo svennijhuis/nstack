@@ -8,7 +8,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | Skill | Say | What it does |
 |---|---|---|
 | `tech-design` | "tech design" | Charts a technical design as a shared map, finds every gap, and closes them one per session until a developer or an agent can build from it without guessing. |
-| `setup-home-repo` | "set up a home repo" | Creates, updates, audits, and cleans up one repo that holds your shared skills, steering files, MCP servers, and hooks, with a router skill on top. |
+| `setup-home-repo` | "set up a home repo", "update the home repo" | Creates, updates, audits, and cleans up one repo that holds your shared skills, steering files, MCP servers, and hooks. One command for all of it: run `/setup-home-repo update` after you add a repo or a design. |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
 
 Some skills call skills that live in other repos. Run `setup-nstack-skills` to

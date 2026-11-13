@@ -1,6 +1,6 @@
 # The component registry
 
-Every mode walks this table. Setup uses "What counts" and "Where to look" to find items. Apply and add use "Home" to place them. Advise uses "Check". The exact path for a kind in a given harness is in [harnesses.md](harnesses.md).
+Every mode walks this table. Setup uses "What counts" and "Where to look" to find items. Apply and update use "Home" to place them. Advise uses "Check". The exact path for a kind in a given harness is in [harnesses.md](harnesses.md).
 
 To support a new kind, add a row here and a row in the harness table. Change nothing else.
 
@@ -11,6 +11,7 @@ To support a new kind, add a row here and a row in the harness table. Change not
 | `steering` | The file the harness loads every session: `AGENTS.md`, `CLAUDE.md`, Copilot instructions | Root of each repo, the user folder | `AGENTS.md` at the root | Too long. Restates a skill. Two files that disagree. |
 | `repo` | A git repo the agent may need to read or change | The folders the person names | A pointer line under `## Repos` | Path gone and no remote. Repo on disk with no pointer. No commit in a long time. |
 | `source` | A place outside git: wiki, issue tracker, pipeline, chat, docs site, dashboard | Git remotes, MCP config, tools on the path, links in steering files | A pointer line under `## Sources` | The access method is gone. Two pointers to the same place. |
+| `design` | A design folder written by `tech-design` | `docs/design/` in the home repo and in each repo | A pointer line under `## Designs` | Folder on disk with no pointer. Pointer whose folder is gone. |
 | `skill` | A folder with a `SKILL.md` | Skill folders of each harness, in each repo and the user folder | The skills folder | Same name in two places. Copies that differ. Missing from a harness in use. |
 | `rule` | A scoped instruction file: Cursor rule, Copilot instruction file, Claude rule | Rule folders of each harness | The rules folder of each harness in use | Applies to paths that do not exist. Says what `AGENTS.md` already says. |
 | `agent` | A subagent or custom agent definition | Agent folders of each harness | The agents folder | Same name in two places. Names a tool or model that is not available. |

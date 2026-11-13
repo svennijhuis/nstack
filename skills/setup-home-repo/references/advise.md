@@ -4,7 +4,7 @@
 
 ## Steps
 
-1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder, the router's map.
+1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder, `docs/design/`.
 2. **Walk the registry** over the home repo, every pointed-at repo that is on disk, and the user folder. Use the Check column in [components.md](components.md).
 3. **Run the checks below.** Each finding is one row.
 4. **Print the table**, worst first, then the summary line.
@@ -21,6 +21,8 @@
 | Two pointers to the same remote | medium |
 | Source pointer whose access method is gone: the tool is off the path, the MCP server is not in the config | high |
 | Source pointer that says `none yet` | medium |
+| Design folder on disk with no pointer | medium |
+| Design pointer whose folder is gone | high |
 | More than about 20 pointers in `AGENTS.md` | medium |
 
 ### Duplicates and drift
@@ -66,16 +68,8 @@ For a suspected secret, name the file and the key. Never print the value.
 | Child repo steering file that repeats the home repo's text | low |
 | Claude Code in use and no `CLAUDE.md` that imports `AGENTS.md` | high |
 | The `## Repos` heading missing | high |
-
-### The router
-
-| Finding | Severity |
-| --- | --- |
-| No router skill | high |
-| Map line whose item is gone | high |
-| Item with no map line | medium |
-| Flow step that names a skill that does not exist | high |
-| Map line that disagrees with the skill's own description | medium |
+| Skill in the home repo that manages the home repo itself: a router, a helper that adds repos. Remove it and use `/setup-home-repo`. | medium |
+| `AGENTS.md` names a router or another skill that does not exist | high |
 
 ### Worktrees, tools, wiki
 

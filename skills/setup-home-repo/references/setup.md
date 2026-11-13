@@ -60,7 +60,6 @@ Round two, the gaps:
 7. Each drift pair: which copy wins. Each skill with 1 or 2 mentions, see [components.md](components.md): `shared` or `repo-specific`.
 8. Each `other` item: keep, and as what, or leave.
 9. Past about 20 repos: the areas to group them in, and whether the areas follow teams. Recommend team areas when the person names teams.
-10. The router's name. Recommend `ask-home`, or `ask-<team>` for a team.
 
 If a monorepo would do, or there is only one repo, say so now and ask whether to go on.
 
@@ -68,7 +67,7 @@ Done when no row in the plan would hold a question mark.
 
 ## 5. Show the plan
 
-Show three things and wait.
+Show two things and wait.
 
 **The plan table.** One row per item.
 
@@ -83,9 +82,7 @@ engineering wiki  source  dev.azure.com/acme/platform        AGENTS.md Sources  
 
 Settle the layout and show the final path of every repo and item in the table, so nothing moves after the commit. Group long tables by bucket and show the counts first. Show the `repo-specific` and `installed` rows too, so the person sees nothing was missed.
 
-**The drafted `AGENTS.md`**, by [layout.md](layout.md).
-
-**The drafted map**, by [router.md](router.md). The person corrects any line that describes an item wrongly.
+**The drafted `AGENTS.md`**, by [layout.md](layout.md). The person corrects any line that describes an item wrongly.
 
 Then list what each child repo will lose, per repo, and the branch name that change will sit on.
 
@@ -106,11 +103,7 @@ In this order, so a stop halfway leaves nothing broken.
 
 If a step fails, stop. Report what was done and what was not. Do not roll back what the person can see and fix.
 
-## 7. Write the router
-
-By [router.md](router.md), into the skills folder. Commit it.
-
-## 8. Report and stop
+## 7. Report and stop
 
 ```text
 Home repo: ~/repos/acme/home   Harnesses: Claude Code, Cursor
@@ -126,11 +119,11 @@ Branches to review and push
 Set these variables: GITHUB_TOKEN, AZURE_DEVOPS_PAT
 No place in Copilot for: user-only skills
 
-Start every session in ~/repos/acme/home. Not sure what to use? Type /ask-home.
+Start every session in ~/repos/acme/home. Keep it current with /setup-home-repo update.
 ```
 
-Done when every plan row has an outcome and the router lists every item that was kept.
+Done when every plan row has an outcome. Setup writes no skill of its own into the home repo.
 
 ## Running setup again
 
-On a home repo that exists, do steps 1 to 3 again and compare with what is there. The plan table then holds only what changed: a new repo, a new item in a child repo, an item that drifted. Rows that are already true are counted, not listed. Never rewrite `AGENTS.md` whole. Change the lines that differ, and keep what the person wrote by hand.
+Setup builds a home repo once. On a home repo that exists, run the rescan in [update.md](update.md). It proposes only what changed.
