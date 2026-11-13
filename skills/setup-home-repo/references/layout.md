@@ -125,3 +125,4 @@ One clone per repo. A parallel task gets a worktree inside that clone, under `.w
 - Copies of content that lives in a source.
 - Anything bucketed `repo-specific`.
 - Decisions (ADRs) and glossaries about a child repo. They live in that repo, next to the code they describe. Only decisions about the home repo itself stay here. `setup-agents-md` sets this up.
+- Designs for one child repo. A `tech-design` design that spans several repos may live here while it is open. When it ships, its decisions move to the child repos as ADRs.

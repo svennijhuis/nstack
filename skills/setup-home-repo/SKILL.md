@@ -75,7 +75,8 @@ Follow [setup.md](references/setup.md) step by step.
 5. **Show the plan.** One table of every item with where it is and where it goes, the drafted `AGENTS.md`, and the drafted map. Wait for approval.
 6. **Apply.** Create the home repo, move the shared items, merge the config per harness, remove the moved copies in each child repo on a new local branch, commit in the home repo.
 7. **Write the router** by [router.md](references/router.md).
-8. **Report and stop.** One outcome per plan row, the branches created, what was skipped and why. The last line names the router slash as the place to start.
+8. **Set up each child repo's `AGENTS.md`** with `setup-agents-md`, for the repos the person picked. Each repo gets its own plan and its own yes.
+9. **Report and stop.** One outcome per plan row, the branches created, what was skipped and why. The last line names the router slash as the place to start.
 
 Setup is done when every plan row has an outcome and the router lists every item that was kept.
 

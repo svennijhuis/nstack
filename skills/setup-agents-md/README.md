@@ -149,25 +149,30 @@ With a home repo from `setup-home-repo`:
 | --- | --- |
 | The skills, this one included | The home repo's skills folder, so every repo can use them |
 | ADRs, glossary, topic files about a repo's code | That repo. Never the home repo. |
-| Designs from `tech-design` | The repo the design is about. Start `tech-design` there. |
+| A design from `tech-design` for one repo | That repo. Start `tech-design` there. |
+| A design from `tech-design` that spans repos | The home repo, while it is open. Start `tech-design` there. |
 | ADRs about the home repo itself | The home repo |
 | A decision that spans repos | Full ADR in the repo that owns the change, a short linking ADR in the others |
 
 A decision belongs next to the code it changes. That is where a reader finds it and where a revert can be checked against it.
 
+A design is different: it is a plan, and a plan for several repos has no single repo to live in. So it may stay in the home repo while it is open. When the feature ships, its decisions move out as ADRs into each repo they change, and the design folder is offered for deletion.
+
 ## 9. With the other nstack skills
 
 ```text
 setup-home-repo          one home for skills, pointers, MCP, hooks
-   ↓ trims each child repo's AGENTS.md, adds the pointer to home
-setup-agents-md <repo>   makes that AGENTS.md lean, sets up ADRs and the glossary
+   ↓ trims each child repo's AGENTS.md, adds the pointer to home,
+   ↓ and asks: set up AGENTS.md in the child repos too?
+setup-agents-md <repo>   makes that AGENTS.md lean, sets up code standards, ADRs, glossary
    ↓
-tech-design              start it in the child repo. Designs land in docs/design/
+tech-design              one repo: start it there. Several repos: start it in the home repo
    ↓ build
 setup-agents-md advise   once shipped: decisions → ADRs, design folder → offered for deletion
 ```
 
 - **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`. This skill never touches them. Its advise mode also reports an ADR or glossary in the home repo that belongs to a child repo.
+- **`setup-home-repo` asks during setup** whether to run this skill on each child repo, and runs it one repo at a time, each with its own plan. Adding a repo later with `/setup-home-repo add` offers it too.
 - **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `committed` and not yet shipped. This skill leaves them alone. After the feature ships, each line of Decisions so far becomes an ADR and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
 
 ## 10. Commands

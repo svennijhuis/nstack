@@ -61,6 +61,7 @@ Round two, the gaps:
 8. Each `other` item: keep, and as what, or leave.
 9. Past about 20 repos: the areas to group them in, and whether the areas follow teams. Recommend team areas when the person names teams.
 10. The router's name. Recommend `ask-home`, or `ask-<team>` for a team.
+11. Set up `AGENTS.md` in the child repos with `setup-agents-md`, after the home repo is built? List each chosen repo with its state: no steering file, over about 60 lines, or lean already. Recommend yes for every repo that is not lean already. Skip the question when `setup-agents-md` is not installed, and say so in the report.
 
 If a monorepo would do, or there is only one repo, say so now and ask whether to go on.
 
@@ -110,7 +111,15 @@ If a step fails, stop. Report what was done and what was not. Do not roll back w
 
 By [router.md](router.md), into the skills folder. Commit it.
 
-## 8. Report and stop
+## 8. Set up each child repo's `AGENTS.md`
+
+Only for the repos the person picked in question 11.
+
+Run `setup-agents-md` on each one, one repo at a time, by its name: `/setup-agents-md <repo>`. It shows its own plan for that repo and waits for its own yes. A yes to this setup is not a yes to those plans. Tell it to use the branch from apply step 7, `home-repo/move-agent-config`, so each child repo has one branch to review.
+
+If the person stops partway, list the repos that are left in the report, with the command to run for each.
+
+## 9. Report and stop
 
 ```text
 Home repo: ~/repos/acme/home   Harnesses: Claude Code, Cursor
@@ -120,8 +129,11 @@ Skipped
   payments   uncommitted changes, not touched
 
 Branches to review and push
-  storefront   home-repo/move-agent-config
-  admin        home-repo/move-agent-config
+  storefront   home-repo/move-agent-config   AGENTS.md 142 → 38 lines
+  admin        home-repo/move-agent-config   AGENTS.md created, 31 lines
+
+AGENTS.md not set up yet
+  search       /setup-agents-md search
 
 Set these variables: GITHUB_TOKEN, AZURE_DEVOPS_PAT
 No place in Copilot for: user-only skills
