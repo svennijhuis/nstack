@@ -15,8 +15,12 @@
 | Finding | Severity |
 | --- | --- |
 | No `AGENTS.md` | high |
-| Claude Code in use and no `CLAUDE.md` that imports `AGENTS.md` | high |
-| `CLAUDE.md` and `AGENTS.md` both hold text, and they differ | high |
+| A `CLAUDE.md` or `.claude/CLAUDE.md` with its own text beside `AGENTS.md`. Claude Code reads it and ignores `AGENTS.md`. | high |
+| A `CLAUDE.md` in a folder above the repo | high |
+| A `CLAUDE.local.md` in the repo. It hides `AGENTS.md` from Claude for that person. | medium |
+| No start, build, or test command | high |
+| A part with no commands, or a pipeline with no line | medium |
+| A deploy or apply command with no word on how it runs | medium |
 | Two instructions that contradict | high |
 | A command that fails or does not exist | high |
 | A path that does not exist | high |

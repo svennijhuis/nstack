@@ -18,10 +18,16 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 
 ## Commands
 
+- Package manager: <pnpm, yarn, ...>
 - Install: `<command>`
+- Start: `<command>`
+- Build: `<command>`
 - Test: `<command>`. Run it before you finish a change.
-- Typecheck: `<command>`
-- Lint: `<command>`
+- Lint and typecheck: `<command>`
+
+## Pipelines
+
+- `<pipeline file>`: on <trigger>, <what it checks or deploys>.
 
 ## Rules
 
@@ -49,21 +55,44 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 - Before you finish, ask: did this change contain a decision? If yes, and no ADR was written, write it.
 ```
 
+For a repo with several parts, replace Shape and Commands with Parts. Keep Pipelines.
+
+```markdown
+## Parts
+
+### <Part name> (<stack>)
+
+<What it is, in one line.> Entry: `<solution or project file>`.
+
+- Start: `<command>`
+- Build: `<command>`
+- Test: `<command>`
+
+### Infrastructure (<Terraform, Bicep, ...>)
+
+<What it provisions.> In `<folder>`.
+
+- Check a change: `<plan or what-if command>`
+- Apply: runs through the `<pipeline>` pipeline, not from a local machine.
+```
+
+Past about four parts, or when a part has its own rules, move the part's block into an `AGENTS.md` in its folder and keep one line in the root: `- <Part>: <what it is>. See <folder>/AGENTS.md.`
+
+Keep Start, Build, and Test even when they are the standard ones for the stack. Leave out a command the part does not have. Write a deploy or apply command only as the pipeline runs it, and never run it to check it.
+
 Shape is the thin navigation layer: three to six lines, the main parts of the project and what each does. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.
 
-Leave out the package manager line when it is npm, or when the repo pins it with corepack (`packageManager` in `package.json`). Leave out a command that is the standard one for the stack. Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
+Leave out the package manager line when it is npm, or when the repo pins it with corepack (`packageManager` in `package.json`). Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
 
 In a child repo of a home repo, keep the one line `setup-home-repo` wrote that points at the home repo. Put it under the first sentence.
 
 ## `CLAUDE.md`
 
-Claude Code reads `CLAUDE.md`, not `AGENTS.md`. Write one line:
+Do not write one. Claude Code reads `AGENTS.md` from 2.1.277 when there is no `CLAUDE.md`. Only for an older Claude Code, and after the person says yes, write one line:
 
 ```markdown
 @AGENTS.md
 ```
-
-When a `CLAUDE.md` with its own text exists, move each line to `AGENTS.md` or to a topic file in the plan, then replace the file with the import. A symlink also works, except on Windows without developer mode.
 
 ## Code standards
 

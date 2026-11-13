@@ -63,7 +63,8 @@ Then say "set up nstack" to pull in the external skills.
 ## Make them yours
 
 These are starting points. Edit them. Put personal settings in your
-`CLAUDE.md` or `AGENTS.md`, so you can update the skills without losing them.
+user-level steering file (`~/.claude/CLAUDE.md` for Claude Code) or in a repo's
+`AGENTS.md`, so you can update the skills without losing them.
 
 ## License
 

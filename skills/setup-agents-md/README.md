@@ -109,7 +109,9 @@ From Matt Pocock's [guide to AGENTS.md](https://www.aihero.dev/a-complete-guide-
 | One sentence on what the project is | `AGENTS.md` | "Storefront for Acme, Next.js, deployed on Vercel." |
 | The thin navigation layer | `AGENTS.md` | "Checkout: cart to payment, in `checkout/`." |
 | The package manager, when it is not npm and not pinned with corepack | `AGENTS.md` | "Use pnpm." |
-| Commands that are not the standard ones | `AGENTS.md` | "Test: `pnpm test:unit`" |
+| How to start, build, and test, always | `AGENTS.md` | "Start: `pnpm dev`", "Test: `pnpm test:unit`" |
+| Each part of the repo and its commands: solutions, apps, infrastructure | `AGENTS.md`, or the part's own `AGENTS.md` | "Api (.NET): `dotnet test src/Api/Api.sln`" |
+| Each pipeline: its trigger and what it does | `AGENTS.md` | "`ci.yml`: on every pull request, build and test." |
 | Rules for every task that no tool can enforce | `AGENTS.md` | "Call the payments API only from the server." |
 | One line per topic file | `AGENTS.md` | "Testing: `docs/agents/testing.md`. Read before you write a test." |
 | Code standards: conventions no linter checks | `docs/agents/code-standards.md`, created by default | "Return errors as a `Result`, do not throw, in domain code." |
@@ -122,7 +124,11 @@ This is progressive disclosure: the root file holds one line per topic, and the 
 
 **Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, such as `docs/TYPESCRIPT.md`. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name.
 
-Claude Code reads `CLAUDE.md`, not `AGENTS.md`. The skill writes a `CLAUDE.md` with one line, `@AGENTS.md`, so the two never differ. In a monorepo, each package gets its own short `AGENTS.md` that the harness merges with the root one.
+**Commands by default.** The AI Hero guide lists only non-standard commands. This skill always writes Start, Build, and Test, because they are what the agent needs first. It learns them from the scripts and the pipeline, and runs the safe ones to check them. It never runs a deploy or an apply.
+
+**Repos with several parts.** One repo can hold several solutions, apps, the infrastructure, and the pipelines. The root file then gets a Parts section: per part, what it is, its entry file, and its commands. Infrastructure says how to check a change without applying it, and that applying goes through the pipeline. Past about four parts, each part gets its own `AGENTS.md` in its folder, and the root keeps one line per part. The harness loads a folder's `AGENTS.md` when the agent works there.
+
+**Only `AGENTS.md`, no `CLAUDE.md`.** Claude Code reads `AGENTS.md` itself from version 2.1.277, so every harness reads the same file. But when a `CLAUDE.md` exists in the repo or a folder above it, Claude reads that one and ignores `AGENTS.md`. So the skill folds any `CLAUDE.md` into `AGENTS.md` and deletes it, and reports a `CLAUDE.md` in a parent folder. It keeps a one-line `@AGENTS.md` only if you use an older Claude Code.
 
 ## 7. Decisions that stay true
 

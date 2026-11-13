@@ -64,7 +64,8 @@ For a suspected secret, name the file and the key. Never print the value.
 | `AGENTS.md` over about 200 lines | medium |
 | A procedure in `AGENTS.md` that a skill already holds | medium |
 | Child repo steering file that repeats the home repo's text | low |
-| Claude Code in use and no `CLAUDE.md` that imports `AGENTS.md` | high |
+| A `CLAUDE.md` with its own text beside `AGENTS.md`. Claude Code reads it and ignores `AGENTS.md`. | high |
+| A `CLAUDE.md` in the home repo while child clones sit inside it. It hides their `AGENTS.md` from Claude. | high |
 | The `## Repos` heading missing | high |
 | An ADR or glossary in the home repo about one child repo. It belongs in that repo. Fix with `/setup-agents-md <repo>`. | medium |
 

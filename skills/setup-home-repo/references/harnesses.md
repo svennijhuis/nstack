@@ -8,7 +8,7 @@ A harness is in use when its folder exists in a chosen repo or in the user folde
 
 | Harness | Signs on disk |
 | --- | --- |
-| Claude Code | `.claude/`, `CLAUDE.md`, `.mcp.json`, `~/.claude/` |
+| Claude Code | `.claude/`, `CLAUDE.md`, `.mcp.json`, `~/.claude/` (a `CLAUDE.md` is a sign of use, not a file to keep) |
 | Cursor | `.cursor/`, `~/.cursor/` |
 | Copilot | `.github/copilot-instructions.md`, `.github/instructions/`, `.github/skills/`, `.github/hooks/`, `~/.copilot/` |
 | Codex | `.codex/`, `.agents/`, `~/.codex/` |
@@ -19,7 +19,7 @@ Confirm the list with the person in the first round. Write files only for the co
 
 | Kind | Path | Note |
 | --- | --- | --- |
-| `steering`, `repo`, `source` | `AGENTS.md` | Cursor, Copilot, and Codex read it. Claude Code reads `CLAUDE.md`, so write a `CLAUDE.md` whose only line is `@AGENTS.md`. |
+| `steering`, `repo`, `source` | `AGENTS.md` | All four read it. Claude Code reads it from 2.1.277, but only when no `CLAUDE.md` sits in the folder or above it. So write no `CLAUDE.md`. Only for an older Claude Code, and on a yes, write one whose only line is `@AGENTS.md`. |
 | `tool` | `tools/` | Plain files. One line per tool in `AGENTS.md`. |
 | `wiki` | `wiki/` | Plain markdown. One line in `AGENTS.md` says what is in it. |
 
