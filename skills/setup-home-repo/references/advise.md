@@ -66,6 +66,7 @@ For a suspected secret, name the file and the key. Never print the value.
 | Child repo steering file that repeats the home repo's text | low |
 | Claude Code in use and no `CLAUDE.md` that imports `AGENTS.md` | high |
 | The `## Repos` heading missing | high |
+| An ADR or glossary in the home repo about one child repo. It belongs in that repo. Fix with `/setup-agents-md <repo>`. | medium |
 
 ### The router
 

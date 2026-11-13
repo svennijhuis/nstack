@@ -36,6 +36,7 @@ Not sure which skill, repo, or source fits? Type the router: <router slash>.
 - One clone per repo. For a second task in the same repo at the same time, add a git worktree inside that clone.
 - Read a repo's own steering file before you change it.
 - Open one pull request per repo. Name the others in each description.
+- Record decisions, terms, and topic docs in the repo they are about, never here.
 
 ## Repos
 
@@ -123,3 +124,4 @@ One clone per repo. A parallel task gets a worktree inside that clone, under `.w
 - A person's own settings. They stay in the user folder or in a local settings file that git ignores.
 - Copies of content that lives in a source.
 - Anything bucketed `repo-specific`.
+- Decisions (ADRs) and glossaries about a child repo. They live in that repo, next to the code they describe. Only decisions about the home repo itself stay here. `setup-agents-md` sets this up.
