@@ -33,6 +33,7 @@ The **steering file** is `AGENTS.md`, plus `CLAUDE.md` for Claude Code. The **ro
 | Commands that are not the standard ones: build, test, typecheck, lint | Root file | The agent cannot guess them |
 | Rules for every task that no tool enforces | Root file | They apply everywhere |
 | One line per topic file, ADRs, and glossary | Root file | Progressive disclosure |
+| Code standards: how code is written here, beyond what the linter checks | `docs/agents/code-standards.md`, a default topic file | Loaded when the agent writes code, not on every request |
 | Rules for one area: testing, API design, a framework | Topic file under `docs/agents/` | Loaded only when needed |
 | A procedure with steps | A skill | Loaded only when triggered |
 | Why something was chosen, and what was rejected | `docs/adr/` | The code shows what, never why |
@@ -69,7 +70,7 @@ Same steps. Create starts with an empty inventory.
 3. **Check what you keep.** Run or look up every command. Check every path still exists. A command that fails or a path that is gone is drift: fix it or delete it.
 4. **Find conflicts.** Two lines that disagree, in one file or across files, become one `ask` row each.
 5. **Pull out the why.** Before a spec, plan, or explanation is deleted, lift any decision or term in it into an ADR draft or a glossary line.
-6. **Draft the files** from [templates.md](references/templates.md): the root file, the topic files, the ADR drafts, the glossary, and the `CLAUDE.md` that imports `AGENTS.md`.
+6. **Draft the files** from [templates.md](references/templates.md): the root file, the code standards file, the other topic files, the ADR drafts, the glossary, and the `CLAUDE.md` that imports `AGENTS.md`.
 7. **Show the plan.** The table, the drafted files, the line count of the new root file, and the conflict questions, numbered, the recommended answer first. Wait for approval.
 8. **Apply.** On a new local branch `agents-md/<yyyy-mm-dd>`. Move, write, delete. Never rewrite text the person wrote by hand without a row that says so. Commit.
 9. **Report and stop.** One outcome per plan row, the root file's line count before and after, the drift found, and the branch to push. Offer the revert check in [revert-check.md](references/revert-check.md) if the repo has CI and none is installed.
@@ -77,6 +78,18 @@ Same steps. Create starts with an empty inventory.
 In a monorepo, each package gets its own `AGENTS.md` with its purpose, its stack, and its own rules. The harness merges them with the root file, so neither repeats the other. The root says what the monorepo is, how packages are found, and the shared tooling.
 
 Done when every plan row has an outcome, the root file is under about 60 lines, and no kept line points at something that is gone.
+
+## Code standards, by default
+
+Every repo gets `docs/agents/code-standards.md`, and the root file points at it in one line. It holds how code is written in this repo: conventions a reader cannot see from one file and no tool checks, such as how errors are returned, how modules are split, or which of two patterns to use.
+
+1. **Fill it from what was found.** Code style rules from the old steering files, topic docs, and `CONTRIBUTING.md` move here.
+2. **Send checkable rules to tools.** A rule a linter, formatter, or type checker can enforce becomes a plan row for that tool's config, not a line here.
+3. **Ask when it is empty.** If nothing was found, ask one round: "Which conventions should every change follow?" Offer two or three candidates read from the code, marked as seen in the code, the recommended answer first. Write only what the person confirms.
+4. **Skip it on a no.** If the person gives no conventions, leave the file out and say so in the report. An empty file is noise.
+5. **Split past about 50 lines,** or when the repo has more than one language: one file per language under `docs/agents/`, such as `typescript.md` and `python.md`, each linked from the root file.
+
+When the repo already has a standards file elsewhere, such as `docs/TYPESCRIPT.md` or `CONTRIBUTING.md`, point the root file at it and keep its name. Do not move a file other tools or people link to.
 
 ## The decision rules
 

@@ -29,6 +29,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 
 ## Read when relevant
 
+- Code standards: `docs/agents/code-standards.md`. Read before you write or change code.
 - Testing: `docs/agents/testing.md`. Read before you write or change a test.
 - <Topic>: `docs/agents/<topic>.md`. Read when <situation>.
 - Terms: `GLOSSARY.md`. Read when a word in the task has a project meaning.
@@ -63,6 +64,27 @@ Claude Code reads `CLAUDE.md`, not `AGENTS.md`. Write one line:
 ```
 
 When a `CLAUDE.md` with its own text exists, move each line to `AGENTS.md` or to a topic file in the plan, then replace the file with the import. A symlink also works, except on Windows without developer mode.
+
+## Code standards
+
+`docs/agents/code-standards.md`. Each line is a convention the person confirmed or that came from an existing doc. No rule a linter or the type checker already enforces.
+
+```markdown
+# Code standards
+
+Read this before you write or change code. The linter and the type checker cover formatting and types. These are the conventions they do not check.
+
+## <Area, such as Errors>
+
+- <Convention, in one plain sentence.> <Why, when it is not obvious.>
+- Follow the pattern in <module or feature, by name>.
+
+## <Area, such as Modules>
+
+- <Convention.>
+```
+
+Areas that often hold a real convention: errors, modules and boundaries, naming, data access, async work, logging, comments, dependencies. Leave out an area with no confirmed line.
 
 ## Topic file
 

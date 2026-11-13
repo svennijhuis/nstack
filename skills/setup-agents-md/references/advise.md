@@ -28,6 +28,8 @@
 | A style rule a linter or formatter could check | low |
 | Obvious advice, vague rules, or ALL-CAPS commands | low |
 | No Decisions section | medium |
+| No code standards file, and no line pointing at one | low |
+| A code standard that a linter or the type checker could enforce | low |
 
 ### Docs
 

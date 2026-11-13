@@ -112,12 +112,15 @@ From Matt Pocock's [guide to AGENTS.md](https://www.aihero.dev/a-complete-guide-
 | Commands that are not the standard ones | `AGENTS.md` | "Test: `pnpm test:unit`" |
 | Rules for every task that no tool can enforce | `AGENTS.md` | "Call the payments API only from the server." |
 | One line per topic file | `AGENTS.md` | "Testing: `docs/agents/testing.md`. Read before you write a test." |
+| Code standards: conventions no linter checks | `docs/agents/code-standards.md`, created by default | "Return errors as a `Result`, do not throw, in domain code." |
 | Rules for one area only | `docs/agents/<topic>.md` | How tests are set up, API conventions |
 | A procedure with steps | A skill | Releasing, migrating a database |
 | Decisions | `docs/adr/` | "Postgres over MongoDB, because reporting needs joins." |
 | Terms | `GLOSSARY.md` | "Order: a paid cart." |
 
 This is progressive disclosure: the root file holds one line per topic, and the agent opens a topic file only when the task needs it.
+
+**Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, such as `docs/TYPESCRIPT.md`. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name.
 
 Claude Code reads `CLAUDE.md`, not `AGENTS.md`. The skill writes a `CLAUDE.md` with one line, `@AGENTS.md`, so the two never differ. In a monorepo, each package gets its own short `AGENTS.md` that the harness merges with the root one.
 
