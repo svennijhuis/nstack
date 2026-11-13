@@ -89,4 +89,4 @@ Fix them with /setup-agents-md.
 
 - The Fix cell is one concrete action.
 - With no findings, say the steering file is clean and stop.
-- After the table, at most three lines of advice no check covers, only with evidence. Example: the repo has CI and no revert check, so offer [revert-check.md](revert-check.md).
+- After the table, at most three lines of advice no check covers, only with evidence. Example: decisions appear in pull request descriptions but never as ADRs, so suggest a line in the pull request template.

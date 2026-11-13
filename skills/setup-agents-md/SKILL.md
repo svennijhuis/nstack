@@ -74,7 +74,7 @@ Same steps. Create starts with an empty inventory.
 6. **Draft the files** from [templates.md](references/templates.md): the root file, the code standards file, the other topic files, the ADR drafts, and the glossary. Fold any `CLAUDE.md` into `AGENTS.md` by [the CLAUDE.md rule](#claudemd).
 7. **Show the plan.** The table, the drafted files, the line count of the new root file, and the conflict questions, numbered, the recommended answer first. Wait for approval.
 8. **Apply.** On a new local branch `agents-md/<yyyy-mm-dd>`. Move, write, delete. Never rewrite text the person wrote by hand without a row that says so. Commit.
-9. **Report and stop.** One outcome per plan row, the root file's line count before and after, the drift found, and the branch to push. Offer the revert check in [revert-check.md](references/revert-check.md) if the repo has CI and none is installed.
+9. **Report and stop.** One outcome per plan row, the root file's line count before and after, the drift found, and the branch to push.
 
 In a monorepo, each package gets its own `AGENTS.md` with its purpose, its stack, and its own rules. The harness merges them with the root file, so neither repeats the other. The root says what the monorepo is, how packages are found, and the shared tooling.
 
@@ -128,7 +128,7 @@ The root file always carries the decision rules from [templates.md](references/t
 - A revert of code that came with an ADR gets a new ADR that says it was reverted and why, and the old ADR's status points at it. A git revert deletes the old ADR with the code, so restore it first.
 - Before finishing, the agent asks: did this change contain a decision?
 
-Text alone does not stop a person who reverts on the GitHub site. The CI check in [revert-check.md](references/revert-check.md) does.
+A person who reverts by hand is caught in the pull request review: the reviewer checks that a revert of a decision comes with its revert ADR.
 
 ## With the other nstack skills
 

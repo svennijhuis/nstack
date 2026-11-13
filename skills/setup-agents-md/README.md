@@ -137,7 +137,7 @@ An ADR records a decision on a date. It does not describe the code, so a code ch
 | Risk | What stops it |
 | --- | --- |
 | A decision never gets written | `AGENTS.md` tells every agent to write an ADR in the same pull request as the code, and to ask before it finishes: did this change contain a decision? |
-| Code gets reverted, the ADR stays | `AGENTS.md` tells agents to add a revert ADR. For people who revert on the GitHub site, an optional CI check fails the pull request until a revert ADR is added. |
+| Code gets reverted, the ADR stays | `AGENTS.md` tells agents to add a revert ADR. When a person reverts, the pull request review checks that the revert ADR is there. |
 
 Rules for ADRs:
 
