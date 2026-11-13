@@ -86,14 +86,6 @@ Leave out the package manager line when the stack has only one, or when the repo
 
 In a child repo of a home repo, keep the one line `setup-home-repo` wrote that points at the home repo. Put it under the first sentence.
 
-## `CLAUDE.md`
-
-Do not write one. Claude Code reads `AGENTS.md` from 2.1.277 when there is no `CLAUDE.md`. Only for an older Claude Code, and after the person says yes, write one line:
-
-```markdown
-@AGENTS.md
-```
-
 ## Code standards
 
 `docs/agents/code-standards.md`. Each line is a convention the person confirmed or that came from an existing doc. No rule a linter or the type checker already enforces.

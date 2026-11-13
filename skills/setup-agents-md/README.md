@@ -128,8 +128,6 @@ This is progressive disclosure: the root file holds one line per topic, and the 
 
 **Repos with several parts.** One repo can hold several solutions, apps, the infrastructure, and the pipelines. The root file then gets a Parts section: per part, what it is, its entry file, and its commands. Infrastructure says how to check a change without applying it, and that applying goes through the pipeline. Past about four parts, each part gets its own `AGENTS.md` in its folder, and the root keeps one line per part. The harness loads a folder's `AGENTS.md` when the agent works there.
 
-**Only `AGENTS.md`, no `CLAUDE.md`.** Claude Code reads `AGENTS.md` itself from version 2.1.277, so every harness reads the same file. But when a `CLAUDE.md` exists in the repo or a folder above it, Claude reads that one and ignores `AGENTS.md`. So the skill folds a `CLAUDE.md` with its own text into `AGENTS.md` and deletes it, leaves a one-line `@AGENTS.md` import alone, and reports a `CLAUDE.md` in a parent folder. It keeps a one-line `@AGENTS.md` only if you use an older Claude Code.
-
 ## 7. Decisions that stay true
 
 An ADR records a decision on a date. It does not describe the code, so a code change does not make it wrong. It can go wrong in two other ways. The video does not cover these. The rules below are nstack's own.
@@ -195,6 +193,6 @@ Nothing is written before you approve the plan. Nothing is pushed.
 - Matt Pocock, "Delete (most of) your docs": https://www.youtube.com/watch?v=Fj8DKMbdIzU. Chapters 1 to 5.
 - Matt Pocock, A complete guide to AGENTS.md: https://www.aihero.dev/a-complete-guide-to-agents-md. Chapter 6 and the delete list.
 - Matt Pocock, The home repo pattern: https://www.aihero.dev/the-home-repo-pattern
-- HumanLayer, Writing a good CLAUDE.md: https://www.humanlayer.dev/blog/writing-a-good-claude-md. The instruction budget and "use a linter, not the agent".
+- HumanLayer, on the instruction budget: https://www.humanlayer.dev/blog/writing-a-good-claude-md. The instruction budget and "use a linter, not the agent".
 
 Chapters 7 to 9 are nstack's own. The sources do not cover them.

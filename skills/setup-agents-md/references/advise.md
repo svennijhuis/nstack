@@ -15,9 +15,6 @@
 | Finding | Severity |
 | --- | --- |
 | No `AGENTS.md` | high |
-| A `CLAUDE.md` or `.claude/CLAUDE.md` with its own text beside `AGENTS.md`. Claude Code reads it and ignores `AGENTS.md`. | high |
-| A `CLAUDE.md` in a folder above the repo | high |
-| A `CLAUDE.local.md` in the repo. It hides `AGENTS.md` from Claude for that person. | medium |
 | No start, build, or test command | high |
 | A part with no commands, or a pipeline with no line | medium |
 | A deploy or apply command with no word on how it runs | medium |

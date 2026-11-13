@@ -1,6 +1,6 @@
 ---
 name: setup-agents-md
-description: Use when the user wants to create, update, trim, or audit a repo's AGENTS.md (or an old CLAUDE.md), or set up its commands, code standards, decisions (ADRs), and glossary.
+description: Use when the user wants to create, update, trim, or audit a repo's AGENTS.md, or set up its commands, code standards, decisions (ADRs), and glossary.
 ---
 
 A steering file loads on every request. Every line costs tokens and attention, and a line that restates the code becomes a second source of truth that nothing keeps honest. This skill writes the smallest `AGENTS.md` that still makes the agent better, moves the rest to files the agent reads only when a task needs them, and gives decisions and terms a home in the repo they belong to.
@@ -71,7 +71,7 @@ Same steps. Create starts with an empty inventory.
 3. **Check what you keep.** Run or look up every command. Check every path still exists. A command that fails or a path that is gone is drift: fix it or delete it.
 4. **Find conflicts.** Two lines that disagree, in one file or across files, become one `ask` row each.
 5. **Pull out the why.** Before a spec, plan, or explanation is deleted, lift any decision or term in it into an ADR draft or a glossary line.
-6. **Draft the files** from [templates.md](references/templates.md): the root file, the code standards file, the other topic files, the ADR drafts, and the glossary. Fold any `CLAUDE.md` into `AGENTS.md` by [the CLAUDE.md rule](#claudemd).
+6. **Draft the files** from [templates.md](references/templates.md): the root file, the code standards file, the other topic files, the ADR drafts, and the glossary.
 7. **Show the plan.** The table, the drafted files, the line count of the new root file, and the conflict questions, numbered, the recommended answer first. Wait for approval.
 8. **Apply.** On a new local branch `agents-md/<yyyy-mm-dd>`. Move, write, delete. Never rewrite text the person wrote by hand without a row that says so. Commit.
 9. **Report and stop.** One outcome per plan row, the root file's line count before and after, the drift found, and the branch to push.
@@ -105,18 +105,6 @@ Every repo gets `docs/agents/code-standards.md`, and the root file points at it 
 5. **Split past about 50 lines,** or when the repo has more than one language: one file per language under `docs/agents/`, named after the language, each linked from the root file.
 
 When the repo already has a standards file elsewhere, such as a language file under `docs/` or `CONTRIBUTING.md`, point the root file at it and keep its name. Do not move a file other tools or people link to.
-
-## CLAUDE.md
-
-Claude Code reads `AGENTS.md` natively from version 2.1.277, but only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the working folder or a folder above it. When one does, Claude reads that and ignores `AGENTS.md`.
-
-So write only `AGENTS.md`.
-
-- **A `CLAUDE.md` with its own text exists:** move each of its lines to `AGENTS.md` or a topic file as plan rows, then delete it. Do the same for `.claude/CLAUDE.md`.
-- **A `CLAUDE.md` whose only line is `@AGENTS.md`:** it works, Claude reads `AGENTS.md` through it. Leave it. `setup-home-repo` writes one like this.
-- **A `CLAUDE.local.md` exists:** it is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude, and that they can move its lines to their user `~/.claude/CLAUDE.md`, which does not.
-- **A `CLAUDE.md` in a folder above the repo,** such as the home folder or the folder that holds the repos: report it. It hides every repo's `AGENTS.md` below it.
-- **Old Claude Code, or a provider without native support:** when the person uses Claude Code before 2.1.277, or says it does not read `AGENTS.md` for them, keep a `CLAUDE.md` whose only line is `@AGENTS.md`. Ask before writing it.
 
 ## The decision rules
 
