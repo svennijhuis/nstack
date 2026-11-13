@@ -1,64 +1,93 @@
 # setup-agents-md
 
-How to handle docs in a repo an agent works in: what to write, what to delete, and why the code should explain itself. The skill applies these rules for you. Say "set up AGENTS.md" or type `/setup-agents-md`.
+How to handle docs in a repo an agent works in. The first five chapters follow Matt Pocock's video ["Delete (most of) your docs"](https://www.youtube.com/watch?v=Fj8DKMbdIzU), in his order. The rest is how this skill puts it into practice. Say "set up AGENTS.md" or type `/setup-agents-md`.
 
-## The short version
+**Part 1: the idea**
 
-1. **The code is the source of truth.** Make it explain itself.
-2. **Docs hold only what the code cannot say:** why something was chosen, what words mean, how to run it, and where to start.
-3. **Everything else is deleted.** Git keeps it if you ever need it back.
+1. [The problem](#1-the-problem)
+2. [Make the code explain itself](#2-make-the-code-explain-itself)
+3. [Why a layer of docs makes it worse](#3-why-a-layer-of-docs-makes-it-worse)
+4. [What the code cannot explain](#4-what-the-code-cannot-explain)
+5. [Docs are never the source of truth](#5-docs-are-never-the-source-of-truth)
 
-## Why not docs about the code
+**Part 2: in practice**
 
-A doc that explains the code is a second copy of the truth. The code is run and tested on every change. The doc is not. So the code changes, the doc does not, and now the two disagree.
+6. [What goes in AGENTS.md](#6-what-goes-in-agentsmd)
+7. [Decisions that stay true](#7-decisions-that-stay-true)
+8. [Home repo or repo](#8-home-repo-or-repo)
+9. [With the other nstack skills](#9-with-the-other-nstack-skills)
+10. [Commands](#10-commands)
 
-A person who reads a stale doc gets confused once. An agent reads `AGENTS.md` on every request and believes it. When the doc and the code disagree, the agent cannot tell which one is right, so it guesses, and it often picks the doc. A wrong doc is worse than no doc. Markdown in the repo is not run and not tested against the code, so nothing tells you when it drifts.
+---
 
-There is a cost even when the doc is right. `AGENTS.md` loads on every request. Every line costs tokens, and the more instructions it holds, the worse the agent follows all of them, not only the new ones. Frontier models follow roughly 150 to 200 instructions reliably, and the harness's own system prompt already uses part of that.
+## 1. The problem
 
-## Let the code be the docs
+Many teams write a layer of markdown docs that explains their code, then let the agent rely on those docs instead of the code. It feels helpful. It makes the agent's output worse and costs tokens on every request.
 
-The agent reads code well. Code that explains itself needs no doc beside it, and it cannot drift, because it *is* the thing.
+## 2. Make the code explain itself
+
+When an agent explores a repo, the code is what it has to go on. So the code carries the burden. It has to be formatted, sit in the right place, be split into chunks an agent can read, and keep interfaces apart from implementations so the agent takes only what it needs.
 
 | Instead of a doc that says | Do this in the code |
 | --- | --- |
+| "This 3,000-line file has three parts" | Split it: one concern per file, in the folder where you would look for it. Format it. |
+| "How the checkout works" | A small public interface with the implementation behind it. The agent reads the interface, not the 2,000 lines. |
 | "This function returns null if the user is not found" | A return type that says so: `User \| null`, or `findUser` vs `getUser` |
 | "Orders go through these five states" | A type or enum with those five states, and a test per transition |
 | "Call `init()` before `send()`" | Make the wrong order impossible: `send` takes what `init` returns |
 | "The payments folder handles Stripe" | Name it `stripe-payments/`, or put it behind a `PaymentProvider` interface |
-| "This 3,000-line file has three parts" | Split it into reasonable chunks, one concern per file, in the folder where you would look for it. Format it. |
-| "How the checkout works" | A small public interface, with the implementation behind it. The agent reads the interface, not the 2,000 lines |
-| "Use this pattern for new endpoints" | One clean example endpoint the agent can copy. Agents follow the patterns they see |
+| "Use this pattern for new endpoints" | One clean example endpoint. Agents follow the patterns they see. |
 | "Do not import from `legacy/`" | A lint rule that fails the build |
 | "Format with 2 spaces, sort imports" | A formatter, run by a hook or CI |
-| "This edge case exists because of a bank bug" | A short comment on that line that says **why**. A comment for why is fine. A comment for what is noise. |
 | "This must stay under 100 ms" | A test that fails when it does not |
+| "This edge case exists because of a bank bug" | A short comment on that line that says **why**. A comment for why is fine. A comment for what is noise. |
 
-The rule: **if it can be checked by a compiler, a test, or a linter, put it there.** A doc can only hope to be read. A check is enforced on every change.
+The rule: **if a compiler, a test, or a linter can check it, put it there.** A doc can only hope to be read. A check runs on every change.
 
-## What goes in the docs
+## 3. Why a layer of docs makes it worse
 
-| Keep | Where | Example |
-| --- | --- | --- |
-| One sentence on what the project is | `AGENTS.md` | "Storefront for Acme, Next.js, deployed on Vercel." |
-| A thin map: the main parts and what each does, three to six lines | `AGENTS.md` | "Checkout: cart to payment, in `checkout/`." |
-| The package manager, when it is not npm and not pinned with corepack | `AGENTS.md` | "Use pnpm." |
-| Commands that are not the standard ones | `AGENTS.md` | "Test: `pnpm test:unit`" |
-| Rules for every task that no tool can enforce | `AGENTS.md` | "Call the payments API only from the server." |
-| One line per topic file | `AGENTS.md` | "Testing: `docs/agents/testing.md`. Read before you write a test." |
-| Rules for one area only | `docs/agents/<topic>.md` | How tests are set up, API conventions |
-| A procedure with steps | A skill | Releasing, migrating a database |
-| Why something was chosen, and what was rejected | `docs/adr/` | "Postgres over MongoDB, because reporting needs joins." |
-| Words with a project meaning | `GLOSSARY.md` | "Order: a paid cart. Before payment it is a cart, not an order." |
+Markdown in the repo is not run and not tested against the code. So it drifts. The doc says one thing, the code says another, and nothing tells you.
 
-Why these survive: the code shows *what* and *how*. It never shows *why*, what was *rejected*, what a word *means* to the business, or how to *start*.
+Now there are two sources of truth that disagree. The agent cannot tell which one is real. It guesses, and often it picks the doc. A wrong doc is worse than no doc.
 
-## What does not
+Even a correct doc costs something. `AGENTS.md` loads on every request. Every line costs tokens, and the more instructions it holds, the worse the agent follows all of them. Frontier models follow roughly 150 to 200 instructions reliably, and the harness's own system prompt already uses part of that.
+
+## 4. What the code cannot explain
+
+This is not "delete all docs". Some things the code cannot say. Those three stay.
+
+### Decisions: ADRs
+
+Code shows what was built. It cannot show what was considered instead, or why that lost. An architectural decision record (ADR) holds that: the decision, the reason, and the rejected alternatives. Keep them in `docs/adr/`. See [chapter 7](#7-decisions-that-stay-true).
+
+### Domain language: a glossary
+
+Does the agent know what an "order" means in your codebase? Probably not. Is it a cart, a paid cart, a shipment? A glossary says so. Keep it in `GLOSSARY.md`, one line per term, only terms with a meaning special to this project.
+
+```markdown
+- **Order**: a paid cart. Before payment it is a cart, not an order.
+- **Tenant**: a paying organisation, not a user.
+```
+
+### A thin navigation layer
+
+A few lines that name the main parts of the project and what each does. It speeds up the agent's exploration. Keep it in `AGENTS.md`, three to six lines, top-level folders at most. No folder trees and no deep paths: files move, and the agent finds the rest itself.
+
+```markdown
+## Shape
+
+- Checkout: cart to payment, in `checkout/`.
+- Catalog: products and search, in `catalog/`.
+```
+
+## 5. Docs are never the source of truth
+
+The code is the thing you read to understand the code. Docs support it. They never replace it. So delete:
 
 | Delete | Why | Do this instead |
 | --- | --- | --- |
-| Explanations of how the code works | Goes stale on the next change | Make the code explain itself, see above |
-| Folder trees and deep file paths | Files move. The biggest source of drift. | The thin map, top-level folders at most. The agent finds the rest. |
+| Explanations of how the code works | Goes stale on the next change | [Chapter 2](#2-make-the-code-explain-itself) |
+| Folder trees and deep file paths | Files move. The biggest source of drift. | The thin navigation layer |
 | Specs, PRDs, and plans for features that shipped | They describe an old intent, not the code | Move the decisions into ADRs. Git keeps the rest. |
 | Pasted code snippets | Differ from the code within weeks | Name the module that shows the pattern |
 | Style rules | A linter is faster, cheaper, and always right | Linter config, a formatter, or a hook |
@@ -69,9 +98,32 @@ Why these survive: the code shows *what* and *how*. It never shows *why*, what w
 
 The test for every line: **would the agent do worse without it?** If not, delete it.
 
-## Decisions (ADRs)
+---
 
-An ADR records a decision on a date: what was chosen, why, and what was rejected. It does not describe the code, so a code change does not make it wrong. It can go wrong in two other ways:
+## 6. What goes in AGENTS.md
+
+From Matt Pocock's [guide to AGENTS.md](https://www.aihero.dev/a-complete-guide-to-agents-md): keep the root file as small as possible, and point at the rest. Aim for under 60 lines.
+
+| Keep | Where | Example |
+| --- | --- | --- |
+| One sentence on what the project is | `AGENTS.md` | "Storefront for Acme, Next.js, deployed on Vercel." |
+| The thin navigation layer | `AGENTS.md` | "Checkout: cart to payment, in `checkout/`." |
+| The package manager, when it is not npm and not pinned with corepack | `AGENTS.md` | "Use pnpm." |
+| Commands that are not the standard ones | `AGENTS.md` | "Test: `pnpm test:unit`" |
+| Rules for every task that no tool can enforce | `AGENTS.md` | "Call the payments API only from the server." |
+| One line per topic file | `AGENTS.md` | "Testing: `docs/agents/testing.md`. Read before you write a test." |
+| Rules for one area only | `docs/agents/<topic>.md` | How tests are set up, API conventions |
+| A procedure with steps | A skill | Releasing, migrating a database |
+| Decisions | `docs/adr/` | "Postgres over MongoDB, because reporting needs joins." |
+| Terms | `GLOSSARY.md` | "Order: a paid cart." |
+
+This is progressive disclosure: the root file holds one line per topic, and the agent opens a topic file only when the task needs it.
+
+Claude Code reads `CLAUDE.md`, not `AGENTS.md`. The skill writes a `CLAUDE.md` with one line, `@AGENTS.md`, so the two never differ. In a monorepo, each package gets its own short `AGENTS.md` that the harness merges with the root one.
+
+## 7. Decisions that stay true
+
+An ADR records a decision on a date. It does not describe the code, so a code change does not make it wrong. It can go wrong in two other ways. The video does not cover these. The rules below are nstack's own.
 
 | Risk | What stops it |
 | --- | --- |
@@ -86,7 +138,7 @@ Rules for ADRs:
 - A git revert deletes the old ADR along with the code. Restore it and set its status to `Reverted by`, so the history keeps both.
 - Each ADR names the pull request or commit that made it, so you can check whether that change is still in the code.
 
-## Where docs live: home repo or repo
+## 8. Home repo or repo
 
 With a home repo from `setup-home-repo`:
 
@@ -100,7 +152,7 @@ With a home repo from `setup-home-repo`:
 
 A decision belongs next to the code it changes. That is where a reader finds it and where a revert can be checked against it.
 
-## With the other nstack skills
+## 9. With the other nstack skills
 
 ```text
 setup-home-repo          one home for skills, pointers, MCP, hooks
@@ -112,10 +164,10 @@ tech-design              start it in the child repo. Designs land in docs/design
 setup-agents-md advise   once shipped: decisions → ADRs, design folder → offered for deletion
 ```
 
-- **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`. This skill never touches them. Its advise mode now also reports an ADR or glossary in the home repo that belongs to a child repo.
+- **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`. This skill never touches them. Its advise mode also reports an ADR or glossary in the home repo that belongs to a child repo.
 - **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `committed` and not yet shipped. This skill leaves them alone. After the feature ships, each line of Decisions so far becomes an ADR and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
 
-## Commands
+## 10. Commands
 
 ```text
 /setup-agents-md               create or trim this repo's AGENTS.md, ADRs, and glossary
@@ -128,9 +180,9 @@ Nothing is written before you approve the plan. Nothing is pushed.
 
 ## Sources
 
-- Matt Pocock, "Delete (most of) your docs": https://www.youtube.com/watch?v=Fj8DKMbdIzU. The keep list (ADRs for the alternatives considered, a glossary for domain language, a thin navigation layer) and the code advice (formatted, well organised, reasonable chunks, interfaces separate from implementations) come from this video.
-- Matt Pocock, A complete guide to AGENTS.md: https://www.aihero.dev/a-complete-guide-to-agents-md
+- Matt Pocock, "Delete (most of) your docs": https://www.youtube.com/watch?v=Fj8DKMbdIzU. Chapters 1 to 5.
+- Matt Pocock, A complete guide to AGENTS.md: https://www.aihero.dev/a-complete-guide-to-agents-md. Chapter 6 and the delete list.
 - Matt Pocock, The home repo pattern: https://www.aihero.dev/the-home-repo-pattern
-- HumanLayer, Writing a good CLAUDE.md: https://www.humanlayer.dev/blog/writing-a-good-claude-md
+- HumanLayer, Writing a good CLAUDE.md: https://www.humanlayer.dev/blog/writing-a-good-claude-md. The instruction budget and "use a linter, not the agent".
 
-The ADR, revert, and home repo placement rules are nstack's own. The sources do not cover them.
+Chapters 7 to 9 are nstack's own. The sources do not cover them.
