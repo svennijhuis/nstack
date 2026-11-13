@@ -17,6 +17,8 @@ Name the destination first. The destination is that design. It fixes the scope o
 
 Each gap resolves a decision. The map is done when every gap is closed and a developer can build. Builders start after the map is done. Notes may say this effort also does the work. Otherwise stop at the decision.
 
+A length request limits a summary only, see [sizes.md](references/sizes.md). It never skips gaps, research, dependency rows, or the log, and never lowers the size.
+
 ## Refer by name
 
 A gap's name is its question. Use the question when you talk to the human and in Decisions so far. The id rides along with the question. It never stands in for it.
@@ -119,7 +121,7 @@ Resolve one gap per session, then stop. Research gaps run beside it. Chart and r
 5. **Create the folder** by [structure.md](references/structure.md): every entry, the header at `draft`, all 14 headings. Fill the map and what is already known. Every other section holds `n/a: <reason>` or one line naming the gaps it waits on. Add a Dependencies row for each outside system.
 6. **Add the gaps.** Each row starts `open`, with a category and a type. Fill `blocks` in a second pass, with real ids. A gap whose answer sits with a named person starts `waiting-on-input`, with its question sheet. Set status `discussion`.
 7. **Start the research subagents**, one per research gap, by [research.md](references/research.md).
-8. **Stop.** Log one line. Tell the human the size, the gap count by type, who is being waited on, and the first frontier gap.
+8. **Stop.** Log one line. Tell the human the size, the gap count by type, who is being waited on, and the first frontier gap. If the human asked for something short, offer a summary by [sizes.md](references/sizes.md). Never replace the map with it.
 
 A second `new` for a name that already exists stops. Tell them to resume.
 

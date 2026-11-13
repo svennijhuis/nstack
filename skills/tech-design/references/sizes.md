@@ -25,6 +25,8 @@ Size only goes up. When a session finds a `medium` or `big` line holds, raise `S
 | Rollout and rollback | One line | Steps to enable and to roll back | The six rollout questions below |
 | Approvers | One | One per team that changes | One per team, plus security when data is sensitive |
 
+A page limit from the human sets the budget for a summary document only. The summary links `gaps.md` and `research/`, names each open gap by its question and owner, and does not lower the size.
+
 A `design.md` over its budget means detail leaked in. Move discussion to gap rows and facts to `research/`. A `big` design still over budget is two designs. Stop, tell the human, and split the destination.
 
 ## Rollout questions for big

@@ -7,7 +7,7 @@ It answers from a map written into its own file. It does not scan the disk each 
 ## Name and place
 
 - The name is the one the person chose in setup. Recommend `ask-home`, or `ask-<team>`.
-- It lives in the skills folder, see [harnesses.md](harnesses.md).
+- It lives in the skills folder. The folders and flags are in [harnesses.md](harnesses.md).
 - Only the person starts it. Set the flag for each harness in use.
 
 ## Build the map

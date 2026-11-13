@@ -15,7 +15,7 @@ Create only what has content. An empty folder is noise.
   repos/<area>.md      pointer files, only past about 20 repos
   wiki/                knowledge in markdown, only if there is any
   tools/               scripts the agent runs, only if there are any
-  .gitignore           local settings files, worktrees, secret files
+  .gitignore           local settings files, worktrees, secret files, child repo clones
 ```
 
 The exact files per harness are in [harnesses.md](harnesses.md).
@@ -108,6 +108,10 @@ Past about 20, `## Repos` becomes:
 ```
 
 Each area file holds pointer lines in the same format. Ask the person for the areas. Do not guess them from repo names alone.
+
+## Clones inside the home repo
+
+When the clones sit inside the home folder, they stay where they are. `.gitignore` lists each clone folder. The pointers use their paths.
 
 ## Worktrees
 

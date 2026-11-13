@@ -8,6 +8,8 @@ Use subagents for the wide searches in steps 1 to 3 when the harness has them. E
 
 Ask one thing first if you do not know it: which folders hold the person's repos. Recommend the parent of the working directory.
 
+If the working directory is not a git repo and holds child repos, it is the home folder and holds the repos. Skip the question above and the location in round one question 2. Its clones stay where they are.
+
 Find every git repo under those folders. Skip dependency and build folders. For each, record:
 
 | Field | From |
@@ -47,7 +49,7 @@ Ask in numbered rounds. One round is a short list of questions, each with a reco
 Round one, the shape:
 
 1. Which repos go in? Recommend all with a commit in the last year. List the rest as left out.
-2. Where does the home repo live, and what is it called? Recommend a new private repo beside the others, named `home`.
+2. Where does the home repo live, and what is it called? Skip the location when step 1 found the home folder. Recommend a new private repo beside the others, named `home`.
 3. Is it for one person or a team? This decides what stays in the user folder.
 4. Which harnesses? Recommend the ones detected.
 5. What is the local path convention for repos? Recommend the one most repos already follow.
@@ -55,9 +57,9 @@ Round one, the shape:
 Round two, the gaps:
 
 6. Sources that exploring missed. Ask openly once: wikis, issue trackers, pipelines, chat, dashboards, anything else the agent should reach. For each, the location and how to reach it.
-7. Each drift pair: which copy wins.
+7. Each drift pair: which copy wins. Each skill with 1 or 2 mentions, see [components.md](components.md): `shared` or `repo-specific`.
 8. Each `other` item: keep, and as what, or leave.
-9. Past about 20 repos: the areas to group them in.
+9. Past about 20 repos: the areas to group them in, and whether the areas follow teams. Recommend team areas when the person names teams.
 10. The router's name. Recommend `ask-home`, or `ask-<team>` for a team.
 
 If a monorepo would do, or there is only one repo, say so now and ask whether to go on.
@@ -79,7 +81,7 @@ migrate-db        skill   payments/.claude/skills            stays              
 engineering wiki  source  dev.azure.com/acme/platform        AGENTS.md Sources         shared
 ```
 
-Group long tables by bucket and show the counts first. Show the `repo-specific` and `installed` rows too, so the person sees nothing was missed.
+Settle the layout and show the final path of every repo and item in the table, so nothing moves after the commit. Group long tables by bucket and show the counts first. Show the `repo-specific` and `installed` rows too, so the person sees nothing was missed.
 
 **The drafted `AGENTS.md`**, by [layout.md](layout.md).
 
@@ -95,9 +97,9 @@ In this order, so a stop halfway leaves nothing broken.
 
 1. **Create the home repo.** `git init` at the chosen path. If the folder already is a git repo, use it.
 2. **Write `AGENTS.md`** and the per-harness steering files.
-3. **Copy the `shared` and `duplicate` items in.** A skill folder moves whole. For a duplicate, copy the winning one once.
+3. **Copy the `shared` and `duplicate` items in**, except an item whose only copy is in a user folder. That item stays there, because a skill in both the user folder and the home repo registers twice. A skill folder moves whole. For a duplicate, copy the winning one once.
 4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
-5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files.
+5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones.
 6. **Commit in the home repo.** One commit, the plan summary as its message.
 7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, remove the copies that moved. Leave `repo-specific` items. Trim the repo's steering file to what is true only for that repo, and add one line that points at the home repo. Commit. Do not push. Do not touch a repo with uncommitted changes; report it instead.
 8. **Leave the user folder for last and ask again.** Removing an item there changes every session the person runs. Name each one and get a yes.

@@ -29,6 +29,7 @@ To support a new kind, add a row here and a row in the harness table. Change not
 - Skip `.env`, key files, and anything a `.gitignore` marks as a secret store. Note that a file exists. Do not open it.
 - Read the user folder of each harness too. Items there are the ones most likely to be stale.
 - Record for each item: kind, name, path, harness, the repo it sits in, and a hash of its content. The hash finds duplicates and drift.
+- A steering file in a child repo (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`) is `repo-specific` and skips the bucket rules. Apply step 7 in [setup.md](setup.md) trims it.
 - Two items are the same when name and kind match. They are a `duplicate` when the hashes match and `drift` when they do not. On drift, show both and ask which one wins. Never merge them yourself.
 
 ## Choosing the bucket
@@ -37,8 +38,8 @@ Take the first rule that fits.
 
 1. It comes from a plugin or a marketplace → `installed`.
 2. It is in two or more places → `duplicate`.
-3. It names files, services, or commands of one repo only → `repo-specific`.
-4. Otherwise → `shared`.
+3. It sits in one repo, and its body mentions that repo's name, a path, or a service 3 or more times, counting each occurrence → `repo-specific`.
+4. Otherwise → `shared`. When the count is 1 or 2, round two asks if it is `repo-specific`.
 
 Propose the bucket. The person can change any row in the plan step.
 
