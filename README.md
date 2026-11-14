@@ -29,13 +29,13 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
   no `setup-agents-md`.
 - **Where things live.** The skills and the pointers live in the home repo.
   Everything about a repo's code lives in that repo: its `AGENTS.md`, code
-  standards, ADRs, glossary, and designs. One exception: an open design that
-  spans several repos lives in the home repo. When it ships, its decisions
-  become ADRs in each repo they change.
+  standards, ADRs, and glossary. When a design ships, its decisions become
+  ADRs in each repo they change.
 - **Local only or git.** `setup-home-repo` asks whether the home repo is a git
   repo you share or a plain local folder. A local-only home repo is never
-  committed and holds no designs, ADRs, or glossary. A design that spans repos
-  then lives in the repo that owns the main change.
+  committed. Everything else works the same.
+- **Designs.** A design lives where you start `tech-design`. In a home repo it
+  asks: here, or in one of the repos. Without a home repo it never asks.
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
   each child repo that points home. `setup-agents-md` owns the rest of each
   repo's `AGENTS.md` and folds an old `CLAUDE.md` into it. No skill writes a
@@ -81,8 +81,7 @@ Then say "set up nstack" to pull in the external skills.
   `docs/design/<yyyy-mm-dd>-<name>/` relative to the folder the agent runs in.
   Start the agent in the repo that should hold the design. With a home repo,
   start in the child repo the design is about. When the design spans several
-  repos, start in the home repo, or in the repo that owns the main change when
-  the home repo is local only. Either way its decisions end up as ADRs in
+  repos, start in the home repo. Either way its decisions end up as ADRs in
   the repos they change. See [setup-agents-md](skills/setup-agents-md/README.md).
 
 ## Make them yours

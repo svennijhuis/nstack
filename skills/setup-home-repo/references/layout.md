@@ -116,10 +116,7 @@ When the clones sit inside the home folder, they stay where they are. In a git h
 
 ## Local only
 
-A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit, and it is never shared. Every mode works the same there, with two differences:
-
-- **A copy is the undo.** Before a mode overwrites or removes a file, it shows the diff and copies the old file to `.backup/<name>-<yyyy-mm-dd>`.
-- **It holds no project knowledge.** A design, ADR, or glossary there is seen by nobody else. Those go in a child repo.
+A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit. The person shares its files by hand, or not at all. Every mode works the same there, with one difference: a copy is the undo. Before a mode overwrites or removes a file, it shows the diff and copies the old file to `.backup/<name>-<yyyy-mm-dd>`.
 
 To share it later, the person types `/setup-home-repo add git`, see [add.md](add.md).
 

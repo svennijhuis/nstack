@@ -155,15 +155,14 @@ With a home repo from `setup-home-repo`:
 | --- | --- |
 | The skills, this one included | The home repo's skills folder, so every repo can use them |
 | ADRs, glossary, topic files about a repo's code | That repo. Never the home repo. |
-| A design from `tech-design` for one repo | That repo. Start `tech-design` there. |
-| A design from `tech-design` that spans repos | The home repo, while it is open. Start `tech-design` there. |
-| The same, when the home repo is local only (no git) | The repo that owns the main change, on a branch. The other repos link to it. |
+| A design from `tech-design` | Where you start it. One repo: start in that repo. |
+| A design from `tech-design` that spans repos | The home repo, while it is open. Start `tech-design` there. It asks, and you may pick a repo instead. |
 | ADRs about the home repo itself | The home repo |
 | A decision that spans repos | Full ADR in the repo that owns the change, a short linking ADR in the others |
 
 A decision belongs next to the code it changes. That is where a reader finds it and where a revert can be checked against it.
 
-A design is different: it is a plan, and a plan for several repos has no single repo to live in. So it may stay in a git home repo while it is open. A local-only home repo is not versioned or shared, so it holds no design, ADR, or glossary. When the feature ships, its decisions move out as ADRs into each repo they change, and the design folder is offered for deletion.
+A design is different: it is a plan, and a plan for several repos has no single repo to live in. So it may stay in the home repo while it is open. An epic is a design like any other: one folder with its own name, not a folder of designs. When the feature ships, its decisions move out as ADRs into each repo they change, and the design folder is offered for deletion.
 
 ## 9. With the other nstack skills
 

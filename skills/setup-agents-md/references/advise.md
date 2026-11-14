@@ -67,7 +67,6 @@ Only when the target is in a home repo setup. On the home repo's own `AGENTS.md`
 | A child repo `AGENTS.md` that repeats the home repo's text | low |
 | A rule in the home repo `AGENTS.md` for only one child repo | medium |
 | A `tech-design` folder in the home repo about one child repo. It belongs in that repo. | low |
-| A design, ADR, or glossary in a local-only home repo | medium |
 | An abandoned `tech-design` folder in the home repo, or a `committed` one the person says has shipped, whose decisions are not ADRs in the child repos | medium |
 
 ## Output
