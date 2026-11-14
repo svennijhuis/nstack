@@ -33,8 +33,9 @@ flowchart TD
   `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
 - **One branch per repo.** Every change to a repo sits on one local branch. You
   review and push it. Nothing is written before you approve the plan.
-- **Only `AGENTS.md`.** No skill writes a `CLAUDE.md`. Claude Code reads
-  `AGENTS.md` from version 2.1.277.
+- **`AGENTS.md` by default.** Claude Code reads it from version 2.1.277. A
+  `CLAUDE.md` is written only when you ask for one or use an older Claude
+  Code, and then it is one line: `@AGENTS.md`.
 
 The details are in the READMEs of
 [setup-home-repo](skills/setup-home-repo/README.md) and

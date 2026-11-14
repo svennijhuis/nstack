@@ -36,7 +36,7 @@ Each skill works without the other.
 - `setup-agents-md` owns the rest of each child repo's `AGENTS.md`, its ADRs, and its glossary.
 - After setup and after `add <repo>`, this skill asks which child repos get `setup-agents-md` and calls it for those. Each repo shows its own plan and waits for its own yes. Both skills commit on the same branch.
 - Without `setup-agents-md`, the child repos' steering files stay as they are, and the report names them.
-- No skill writes a `CLAUDE.md`. Every harness reads `AGENTS.md`, Claude Code from version 2.1.277.
+- `AGENTS.md` is the default. Every harness reads it, Claude Code from version 2.1.277. A `CLAUDE.md` is written only when you ask for one or use an older Claude Code, and then it is one line: `@AGENTS.md`.
 
 ## Designs
 

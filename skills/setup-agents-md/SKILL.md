@@ -79,14 +79,17 @@ Same steps. In Create there is no steering file to sort, only the docs around it
 
 Done when every plan row has an outcome, the root file and each part's `AGENTS.md` are under about 60 lines, and no kept line points at something that is gone. In a home repo's own `AGENTS.md`, count only the lines above `## Repos`.
 
-## An old CLAUDE.md
+## CLAUDE.md
 
-This skill never writes a `CLAUDE.md`. Claude Code reads `AGENTS.md` itself from version 2.1.277, but only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the working folder or a folder above it. One that does hides every `AGENTS.md` from Claude Code.
+`AGENTS.md` is the default and holds all the text. Claude Code reads it itself from version 2.1.277, but only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the working folder or a folder above it. One that does hides `AGENTS.md` from Claude Code, unless a `CLAUDE.md` in the repo imports it.
 
-- **`CLAUDE.md` or `.claude/CLAUDE.md` in the repo.** Sort its lines like any other section, move the kept ones into `AGENTS.md` or a topic file, and delete the file. A file whose only line is `@AGENTS.md` is deleted too. Each is a plan row.
-- **`CLAUDE.local.md` in the repo.** It is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude Code for them, and that `~/.claude/CLAUDE.md` does not.
-- **`CLAUDE.md` in a folder above the repo.** Report it. Change nothing outside the repo.
-- **Claude Code older than 2.1.277.** Say which version is needed. Do not write a `CLAUDE.md` to work around it.
+So a `CLAUDE.md` is allowed in one shape: its only line is `@AGENTS.md`.
+
+- **Do not write one by default.** Offer the one-line file only when the person asks for a `CLAUDE.md`, uses Claude Code older than 2.1.277, or has one of the hiding files below. Write it on a yes.
+- **A one-line `CLAUDE.md` exists.** Leave it.
+- **`CLAUDE.md` or `.claude/CLAUDE.md` with text of its own.** Sort its lines like any other section and move the kept ones into `AGENTS.md` or a topic file. Then ask: delete the file, which is the recommended answer, or keep it as the one line. Each is a plan row.
+- **`CLAUDE.local.md` in the repo.** It is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude Code for them, and offer the one-line file.
+- **`CLAUDE.md` in a folder above the repo.** Report it and change nothing outside the repo. Offer the one-line file.
 
 ## Commands, by default
 

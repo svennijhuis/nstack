@@ -98,7 +98,7 @@ The person may change any row. Apply nothing until they approve.
 In this order, so a stop halfway leaves nothing broken.
 
 1. **Create the home repo.** `git init` at the chosen path, or only the folder when it is local only. If the folder already is a git repo, use it.
-2. **Write `AGENTS.md`.** Write no `CLAUDE.md`. If the home folder already has one, move its lines into `AGENTS.md` as plan rows and delete it.
+2. **Write `AGENTS.md`.** Write a `CLAUDE.md` only by the steering row in [harnesses.md](harnesses.md). If the home folder already has one with text of its own, move its lines into `AGENTS.md` as plan rows. Then delete it, or cut it to its one line when the person keeps it.
 3. **Copy the `shared` and `duplicate` items in**, except an item whose only copy is in a user folder. That item stays there, because a skill in both the user folder and the home repo registers twice. A skill folder moves whole. For a duplicate, copy the winning one once.
 4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
 5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones. Skip this when local only.

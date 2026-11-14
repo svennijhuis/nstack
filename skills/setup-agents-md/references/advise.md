@@ -15,8 +15,8 @@
 | Finding | Severity |
 | --- | --- |
 | No `AGENTS.md` | high |
-| A `CLAUDE.md` or `.claude/CLAUDE.md` in the repo or a folder above it. Claude Code reads it and skips `AGENTS.md`. | high |
-| A `CLAUDE.local.md` in the repo. It hides `AGENTS.md` from Claude Code for that person. | medium |
+| A `CLAUDE.md` or `.claude/CLAUDE.md` with text of its own. Two files to keep true. | high |
+| A `CLAUDE.md` in a folder above the repo, or a `CLAUDE.local.md` in it, and no `CLAUDE.md` in the repo that imports `AGENTS.md`. Claude Code skips `AGENTS.md`. | high |
 | No start, build, or test command | high |
 | A part with no commands, a pipeline with no line, or a line for a part or pipeline that is gone | medium |
 | A deploy or apply command with no word on how it runs | medium |

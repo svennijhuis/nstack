@@ -5,6 +5,7 @@ Create only what has content. An empty folder is noise.
 ```text
 <home>/
   AGENTS.md            steering, Repos, Sources, Tools, Environment
+  CLAUDE.md            one line: @AGENTS.md   (only when asked for, see harnesses.md)
   .claude/             skills, rules, agents, hooks, settings   (Claude Code)
   .cursor/             rules, hooks, mcp.json                   (Cursor)
   .github/             instructions, hooks, agents, prompts     (Copilot)
