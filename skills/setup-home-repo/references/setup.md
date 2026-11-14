@@ -60,7 +60,7 @@ Round one, the shape:
 Round two, the gaps:
 
 7. Sources that exploring missed. Ask openly once: wikis, issue trackers, pipelines, chat, dashboards, anything else the agent should reach. For each, the location and how to reach it.
-8. Each drift pair: which copy wins. Each skill with 1 or 2 mentions, see [components.md](components.md): `shared` or `repo-specific`.
+8. Each drift pair: which copy wins. Each `shared` item that sits in one repo only, see [components.md](components.md): `shared` or `repo-specific`.
 9. Each `other` item: keep, and as what, or leave.
 10. Past about 20 repos: the areas to group them in, and whether the areas follow teams. Recommend team areas when the person names teams.
 11. Which child repos get `setup-agents-md` after setup? Recommend all that go in. Leave this out when that skill is not installed.
@@ -102,7 +102,7 @@ In this order, so a stop halfway leaves nothing broken.
 4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
 5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones. Skip this when local only.
 6. **Commit in the home repo.** One commit, the plan summary as its message. Skip this when local only.
-7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, with `-2` added when that name is taken, remove the copies that moved. Leave `repo-specific` items. Add the line that points home, by [layout.md](layout.md), to the repo's steering file. If the repo has no steering file, that line is its whole `AGENTS.md`. Change nothing else in that file. Commit, and leave the repo on that branch. Do not push. Do not touch a repo with uncommitted changes to tracked files, other than under `docs/design/`; report it instead. An open design there is `tech-design`'s work in progress: leave it uncommitted.
+7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, with `-2`, then `-3`, added when that name is taken, remove the copies that moved. Leave `repo-specific` items. Add the line that points home, by [layout.md](layout.md), to the repo's steering file. If the repo has no steering file, that line is its whole `AGENTS.md`. Change nothing else in that file. Commit, and leave the repo on that branch. Do not push. Do not touch a repo with uncommitted changes to tracked files, other than under `docs/design/`; report it instead. An open design there is `tech-design`'s work in progress: leave it uncommitted.
 8. **Leave the user folder for last and ask again.** Removing an item there changes every session the person runs. Name each one and get a yes. On a no, say that an item now in both the home repo and the user folder registers twice.
 
 If a step fails, stop. Report what was done and what was not. Do not roll back what the person can see and fix.

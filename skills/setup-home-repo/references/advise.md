@@ -5,7 +5,7 @@
 ## Steps
 
 1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder.
-2. **Walk the registry** over the home repo, every pointed-at repo that is on disk, and the user folder. Use the Check column in [components.md](components.md).
+2. **Walk the registry** over the home repo, every pointed-at repo that is on disk, as it is checked out, and the user folder. Use the Check column in [components.md](components.md).
 3. **Run the checks below.** Each finding is one row.
 4. **Print the table**, worst first, then the summary line.
 
