@@ -103,7 +103,7 @@ In this order, so a stop halfway leaves nothing broken.
 4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
 5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones. Skip this when local only.
 6. **Commit in the home repo.** One commit, the plan summary as its message. Skip this when local only.
-7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, remove the copies that moved. Leave `repo-specific` items. Add one line to the repo's steering file that points at the home repo. If the repo has no steering file, that line is its whole `AGENTS.md`. Change nothing else in that file. Commit. Do not push. Do not touch a repo with uncommitted changes; report it instead.
+7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, remove the copies that moved. Leave `repo-specific` items. Add one line to the repo's steering file that points at the home repo. If the repo has no steering file, that line is its whole `AGENTS.md`. Change nothing else in that file. Commit, and leave the repo on that branch. Do not push. Do not touch a repo with uncommitted changes; report it instead.
 8. **Leave the user folder for last and ask again.** Removing an item there changes every session the person runs. Name each one and get a yes.
 
 If a step fails, stop. Report what was done and what was not. Do not roll back what the person can see and fix.

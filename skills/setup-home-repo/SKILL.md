@@ -13,7 +13,7 @@ This skill builds that repo from what the person already has, keeps it current, 
 
 **Read only until the plan is approved.** Setup and cleanup write nothing before the person approves the plan table. Advise never writes.
 
-**Secrets stay out.** Never read `.env` or any other secret file. Never write a token, key, or password into a tracked file. Config names an environment variable instead.
+**Secrets stay out.** Never read `.env` or any other secret file. Never write a token, key, or password into a file in the home repo or a tracked file. Config names an environment variable instead.
 
 **Never push.** Commit in the home repo, unless it is local only. In any other repo, edit only on a new local branch, one per repo. The person pushes.
 
