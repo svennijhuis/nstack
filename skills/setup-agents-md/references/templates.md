@@ -1,6 +1,6 @@
 # Templates
 
-Fill these in. Leave out a section that has no lines. Never fill a line with a guess.
+Fill these in. Leave out a section that has no lines, and a line whose file does not exist after this run. Never fill a line with a guess.
 
 ## Root `AGENTS.md`
 
@@ -36,7 +36,6 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 ## Read when relevant
 
 - Code standards: `docs/agents/code-standards.md`. Read before you write or change code.
-- Testing: `docs/agents/testing.md`. Read before you write or change a test.
 - <Topic>: `docs/agents/<topic>.md`. Read when <situation>.
 - Terms: `GLOSSARY.md`. Read when a word in the task has a project meaning.
 - Decisions: `docs/adr/`. Read before you change something an ADR covers.
@@ -76,13 +75,13 @@ For a repo with several parts, replace Shape and Commands with Parts. Keep Pipel
 - Apply: runs through the `<pipeline>` pipeline, not from a local machine.
 ```
 
-Past about four parts, or when a part has its own rules, move the part's block into an `AGENTS.md` in its folder and keep one line in the root: `- <Part>: <what it is>. See <folder>/AGENTS.md.`
+When a part has its own `AGENTS.md`, the root keeps one line for it: `- <Part>: <what it is>. See <folder>/AGENTS.md.`
 
-Keep Start, Build, and Test even when they are the standard ones for the stack. Leave out a command the part does not have. Write a deploy or apply command only as the pipeline runs it, and never run it to check it.
+Leave out a command the part does not have.
 
-Shape is the thin navigation layer: three to six lines, the main parts of the project and what each does. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.
+Shape is the thin navigation layer: three to six lines. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.
 
-Leave out the package manager line when the stack has only one, or when the repo pins it in its manifest. Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
+Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
 
 In a child repo of a home repo, keep the one line `setup-home-repo` wrote that points at the home repo. Put it under the first sentence.
 
@@ -131,7 +130,7 @@ One file per decision: `docs/adr/<yyyy-mm-dd>-<short-slug>.md`. One file each, s
 
 Status: Accepted
 Date: <yyyy-mm-dd>
-Change: <pull request or commit that made it>
+Change: <pull request or commit that made it. "this pull request" until it has a number>
 
 ## Decision
 
@@ -146,7 +145,7 @@ Change: <pull request or commit that made it>
 - <Alternative>: <why not>.
 ```
 
-Status words: `Accepted`, `Superseded by <file>`, `Reverted by <file>`. Only the status line changes after the ADR is merged.
+Status words: `Accepted`, `Superseded by <file>`, `Reverted by <file>`. After the ADR is merged only the status line changes. The `Change` line is filled in once, when the pull request has its number.
 
 A revert ADR:
 

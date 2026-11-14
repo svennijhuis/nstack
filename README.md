@@ -20,13 +20,30 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 3. setup-agents-md <repo>  per repo: a lean AGENTS.md, code standards, ADRs, glossary
 4. tech-design             per feature. One repo: start it there. Several repos: start it in the home repo
 5. build                   agents follow AGENTS.md, write an ADR with each decision
-6. setup-agents-md advise  now and then: find drift, turn shipped designs into ADRs
+6. setup-agents-md advise  now and then: report drift and shipped designs that are not ADRs yet
+7. setup-agents-md         after a design ships: its decisions become ADRs
 ```
 
-- **Where things live.** The skills and the pointers live in the home repo. Everything about a repo's code lives in that repo: its `AGENTS.md`, code standards, ADRs, glossary, and designs. One exception: an open design that spans several repos lives in the home repo. When it ships, its decisions become ADRs in each repo they change. Start in the home repo and type `/setup-agents-md <repo>`, or start in the repo itself.
-- **Who owns what.** `setup-home-repo` owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`, and trims each child repo's `AGENTS.md` to what is true for that repo. `setup-agents-md` then keeps that file lean and never touches the home repo's pointers. `tech-design` owns `docs/design/` while a design is open.
-- **Hand-offs.** `setup-agents-md` advise reports a decision that sits in the home repo but belongs to a child repo, and a shipped design whose decisions are not ADRs yet. After `setup-home-repo` builds the home repo, run `/setup-agents-md <repo>` for each child repo.
-- **Updating.** Run `/setup-agents-md` again in a repo that already has an `AGENTS.md`. It updates rather than starts over: it checks every line against the code, shows what to keep, move, or delete, and waits for your yes.
+- **Where things live.** The skills and the pointers live in the home repo.
+  Everything about a repo's code lives in that repo: its `AGENTS.md`, code
+  standards, ADRs, glossary, and designs. One exception: an open design that
+  spans several repos lives in the home repo. When it ships, its decisions
+  become ADRs in each repo they change. Start in the home repo and type
+  `/setup-agents-md <repo>`, or start in the repo itself.
+- **Who owns what.** `setup-home-repo` owns the home repo's `## Repos`,
+  `## Sources`, `## Tools`, and `## Environment`, and trims each child repo's
+  `AGENTS.md` to what is true for that repo. `setup-agents-md` then keeps that
+  file lean, folds an old `CLAUDE.md` into it, and never touches the home repo's
+  pointers. No skill writes a `CLAUDE.md`: every harness reads `AGENTS.md`,
+  Claude Code from version 2.1.277. `tech-design` owns `docs/design/` while a
+  design is open.
+- **Hand-offs.** `setup-agents-md` advise reports a decision that sits in the
+  home repo but belongs to a child repo, and a shipped design whose decisions
+  are not ADRs yet. After `setup-home-repo` builds the home repo, run
+  `/setup-agents-md <repo>` for each child repo.
+- **Updating.** Run `/setup-agents-md` again in a repo that already has an
+  `AGENTS.md`. It updates rather than starts over: it checks every line against
+  the code, shows what to keep, move, or delete, and waits for your yes.
 
 Some skills call skills that live in other repos. Run `setup-nstack-skills` to
 install them. The list is in
@@ -62,7 +79,8 @@ Then say "set up nstack" to pull in the external skills.
 ## Make them yours
 
 These are starting points. Edit them. Put personal settings in your
-user-level steering file or in a repo's `AGENTS.md`, so you can update the skills without losing them.
+user-level steering file or in a repo's `AGENTS.md`, so you can update the
+skills without losing them.
 
 ## License
 

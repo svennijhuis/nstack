@@ -64,7 +64,7 @@ For a suspected secret, name the file and the key. Never print the value.
 | `AGENTS.md` over about 200 lines | medium |
 | A procedure in `AGENTS.md` that a skill already holds | medium |
 | Child repo steering file that repeats the home repo's text | low |
-| Claude Code in use and no `CLAUDE.md` that imports `AGENTS.md` | high |
+| Claude Code in use and a `CLAUDE.md` or `.claude/CLAUDE.md` in the home repo or a folder above it. Claude Code reads that file and skips every `AGENTS.md` below it. | high |
 | The `## Repos` heading missing | high |
 
 ### The router

@@ -23,7 +23,7 @@ A decision that spans repos: write the full ADR in the repo that owns the change
 | One repo | That repo | That repo's `docs/design/` |
 | More than one repo | The home repo | The home repo's `docs/design/`, while it is open |
 
-A design is a plan, not a decision record. A cross-repo plan has no single repo to live in, so it stays in the home repo while it is open. Its decisions do not stay there. When the feature ships, each line of Decisions so far becomes an ADR in the repo it changes, by the cross-repo rule above. Then the design folder is offered for deletion.
+A design is a plan, not a decision record. A cross-repo plan has no single repo to live in, so it stays in the home repo while it is open. Its decisions do not stay there. When the feature ships, the skill's `tech-design` steps turn them into ADRs by the cross-repo rule above.
 
 So the home repo may hold open designs that span repos. It never holds a shipped design, and never holds an ADR about a child repo.
 
@@ -31,9 +31,9 @@ So the home repo may hold open designs that span repos. It never holds a shipped
 
 When the working directory is a home repo:
 
-1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer under `## Repos`. If the path is missing, clone it from the remote in the pointer. Run Create or Update on that repo. Work on a new local branch there. If it has uncommitted changes, stop and report it.
+1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer under `## Repos`. If the path is missing, ask before you clone it from the remote in the pointer. Advise does not clone: it reports the missing path and stops. Run Create or Update on that repo.
 2. **With nothing typed**: ask one question. "Which repo? The home repo itself, or one of: <names from `## Repos`>." Recommend the child repo the person last named, or the home repo if none.
-3. **On the home repo itself**: trim only the steering text at the top of `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`.
+3. **On the home repo itself**: trim only the steering text above `## Repos` in `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`.
 
 Offer to add this line under `## How to work across repos` in the home `AGENTS.md`, if it is not there:
 

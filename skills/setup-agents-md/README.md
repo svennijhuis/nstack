@@ -122,9 +122,11 @@ From Matt Pocock's [guide to AGENTS.md](https://www.aihero.dev/a-complete-guide-
 
 This is progressive disclosure: the root file holds one line per topic, and the agent opens a topic file only when the task needs it.
 
-**Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, one per language. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name.
+**Only `AGENTS.md`, no `CLAUDE.md`.** Every harness reads `AGENTS.md`. Claude Code does from version 2.1.277, but only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the repo or a folder above it. One that does hides `AGENTS.md` from Claude Code. So the skill never writes a `CLAUDE.md`. It moves the lines of an existing one into `AGENTS.md` and deletes the file, leaves your personal `CLAUDE.local.md` alone and tells you about it, and reports one in a folder above the repo.
 
-**Commands by default.** The AI Hero guide lists only non-standard commands. This skill always writes Start, Build, and Test, because they are what the agent needs first. It learns them from the scripts and the pipeline, and runs the safe ones to check them. It never runs a deploy or an apply.
+**Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, one per language. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." If you have no conventions to put in it, it is left out. It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name.
+
+**Commands by default.** The AI Hero guide lists only non-standard commands. This skill always writes Start, Build, and Test, because they are what the agent needs first. It learns them from the scripts and the pipeline. After you approve the plan it runs build and test to check them. It never runs a start, a deploy, or an apply.
 
 **Repos with several parts.** One repo can hold several solutions, apps, the infrastructure, and the pipelines. The root file then gets a Parts section: per part, what it is, its entry file, and its commands. Infrastructure says how to check a change without applying it, and that applying goes through the pipeline. Past about four parts, each part gets its own `AGENTS.md` in its folder, and the root keeps one line per part. The harness loads a folder's `AGENTS.md` when the agent works there.
 
@@ -134,7 +136,7 @@ An ADR records a decision on a date. It does not describe the code, so a code ch
 
 | Risk | What stops it |
 | --- | --- |
-| A decision never gets written | `AGENTS.md` tells every agent to write an ADR in the same pull request as the code, and to ask before it finishes: did this change contain a decision? |
+| A decision never gets written | `AGENTS.md` tells every agent to write an ADR in the same change as the code, and to ask before it finishes: did this change contain a decision? |
 | Code gets reverted, the ADR stays | `AGENTS.md` tells agents to add a revert ADR. When a person reverts, the pull request review checks that the revert ADR is there. |
 
 Rules for ADRs:
@@ -171,28 +173,31 @@ setup-agents-md <repo>   makes that AGENTS.md lean, sets up code standards, ADRs
    ↓
 tech-design              one repo: start it there. Several repos: start it in the home repo
    ↓ build
-setup-agents-md advise   once shipped: decisions → ADRs, design folder → offered for deletion
+setup-agents-md advise   now and then: reports drift and shipped designs that are not ADRs yet
+   ↓
+setup-agents-md          once shipped: decisions → ADRs, design folder → offered for deletion
 ```
 
 - **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`. This skill never touches them. After `setup-home-repo` builds the home repo, run `/setup-agents-md <repo>` once for each child repo. This skill's advise reports an ADR or glossary in the home repo that belongs to a child repo.
-- **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `committed` and not yet shipped. This skill leaves them alone. After the feature ships, each line of Decisions so far becomes an ADR and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
+- **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `committed` and not yet shipped. This skill leaves them alone. `tech-design` has no status for shipped, so the skill asks you. After the feature ships, each line of Decisions so far becomes an ADR, the design's project terms go into the glossary, and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
 
 ## 10. Commands
 
 ```text
 /setup-agents-md               create or trim this repo's AGENTS.md, ADRs, and glossary
-/setup-agents-md <repo>        from a home repo: the same, in that repo
-/setup-agents-md advise        audit, change nothing
-/setup-agents-md help          the card
+                               in a home repo: asks which repo first
+/setup-agents-md <repo>        from a home repo: do the same in that child repo, on a branch
+/setup-agents-md advise        audit the steering file, docs, and decisions. changes nothing
+/setup-agents-md help          this card
 ```
 
-Nothing is written before you approve the plan. Nothing is pushed.
+Nothing is written or run before you approve the plan. Nothing is pushed.
 
 ## Sources
 
 - Matt Pocock, "Delete (most of) your docs": https://www.youtube.com/watch?v=Fj8DKMbdIzU. Chapters 1 to 5.
 - Matt Pocock, A complete guide to AGENTS.md: https://www.aihero.dev/a-complete-guide-to-agents-md. Chapter 6 and the delete list.
 - Matt Pocock, The home repo pattern: https://www.aihero.dev/the-home-repo-pattern
-- HumanLayer, on the instruction budget: https://www.humanlayer.dev/blog/writing-a-good-claude-md. The instruction budget and "use a linter, not the agent".
+- HumanLayer: https://www.humanlayer.dev/blog/writing-a-good-claude-md. The instruction budget and "use a linter, not the agent".
 
 Chapters 7 to 9 are nstack's own. The sources do not cover them.

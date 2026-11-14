@@ -96,12 +96,12 @@ The person may change any row. Apply nothing until they approve.
 In this order, so a stop halfway leaves nothing broken.
 
 1. **Create the home repo.** `git init` at the chosen path. If the folder already is a git repo, use it.
-2. **Write `AGENTS.md`** and the per-harness steering files.
+2. **Write `AGENTS.md`.** Write no `CLAUDE.md`. If the home folder already has one, move its lines into `AGENTS.md` as plan rows and delete it.
 3. **Copy the `shared` and `duplicate` items in**, except an item whose only copy is in a user folder. That item stays there, because a skill in both the user folder and the home repo registers twice. A skill folder moves whole. For a duplicate, copy the winning one once.
 4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
 5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones.
 6. **Commit in the home repo.** One commit, the plan summary as its message.
-7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, remove the copies that moved. Leave `repo-specific` items. Trim the repo's steering file to what is true only for that repo, and add one line that points at the home repo. Commit. Do not push. Do not touch a repo with uncommitted changes; report it instead.
+7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, remove the copies that moved. Leave `repo-specific` items. Trim the repo's steering file to what is true only for that repo, and add one line that points at the home repo. Leave a child repo's `CLAUDE.md` in place and name it in the report: `/setup-agents-md <repo>` folds it into `AGENTS.md`. Commit. Do not push. Do not touch a repo with uncommitted changes; report it instead.
 8. **Leave the user folder for last and ask again.** Removing an item there changes every session the person runs. Name each one and get a yes.
 
 If a step fails, stop. Report what was done and what was not. Do not roll back what the person can see and fix.
