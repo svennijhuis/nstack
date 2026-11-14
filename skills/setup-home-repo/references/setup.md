@@ -61,8 +61,7 @@ Round two, the gaps:
 8. Each drift pair: which copy wins. Each skill with 1 or 2 mentions, see [components.md](components.md): `shared` or `repo-specific`.
 9. Each `other` item: keep, and as what, or leave.
 10. Past about 20 repos: the areas to group them in, and whether the areas follow teams. Recommend team areas when the person names teams.
-11. The router's name. Recommend `ask-home`, or `ask-<team>` for a team.
-12. Which child repos get `setup-agents-md` after setup? Recommend all that go in. Leave this out when that skill is not installed.
+11. Which child repos get `setup-agents-md` after setup? Recommend all that go in. Leave this out when that skill is not installed.
 
 If a monorepo would do, or there is only one repo, say so now and ask whether to go on.
 
@@ -70,7 +69,7 @@ Done when no row in the plan would hold a question mark.
 
 ## 5. Show the plan
 
-Show three things and wait.
+Show two things and wait.
 
 **The plan table.** One row per item.
 
@@ -86,8 +85,6 @@ engineering wiki  source  dev.azure.com/acme/platform        AGENTS.md Sources  
 Settle the layout and show the final path of every repo and item in the table, so nothing moves after the commit. Group long tables by bucket and show the counts first. Show the `repo-specific` and `installed` rows too, so the person sees nothing was missed.
 
 **The drafted `AGENTS.md`**, by [layout.md](layout.md).
-
-**The drafted map**, by [router.md](router.md). The person corrects any line that describes an item wrongly.
 
 Then list, per child repo, what it will lose, the branch name that change will sit on, and its steering state: none, `CLAUDE.md`, or `AGENTS.md`.
 
@@ -108,17 +105,13 @@ In this order, so a stop halfway leaves nothing broken.
 
 If a step fails, stop. Report what was done and what was not. Do not roll back what the person can see and fix.
 
-## 7. Write the router
+## 7. Hand over the child repos
 
-By [router.md](router.md), into the skills folder. Commit it.
-
-## 8. Hand over the child repos
-
-What a child repo's steering file says belongs to `setup-agents-md`. For each repo picked in question 12, call `setup-agents-md <repo>`. It shows its own plan for that repo, waits for its own yes, and commits on the branch step 6 made, so each repo has one branch to review.
+What a child repo's steering file says belongs to `setup-agents-md`. For each repo picked in question 11, call `setup-agents-md <repo>`. It shows its own plan for that repo, waits for its own yes, and commits on the branch step 6 made, so each repo has one branch to review.
 
 When that skill is not installed, say so once. The steering files stay as they are.
 
-## 9. Report and stop
+## 8. Report and stop
 
 ```text
 Home repo: ~/repos/acme/home   Harnesses: Claude Code, Cursor
@@ -137,11 +130,21 @@ Steering files left as they are
 Set these variables: GITHUB_TOKEN, AZURE_DEVOPS_PAT
 No place in Copilot for: user-only skills
 
-Start every session in ~/repos/acme/home. Not sure what to use? Type /ask-home.
+Start every session in ~/repos/acme/home. Keep it current with /setup-home-repo update.
 ```
 
-Done when every plan row has an outcome and the router lists every item that was kept.
+Done when every plan row has an outcome.
 
-## Running setup again
+## Update
 
-On a home repo that exists, do steps 1 to 3 again and compare with what is there. The plan table then holds only what changed: a new repo, a new item in a child repo, an item that drifted. A new repo gets question 12 too. Rows that are already true are counted, not listed. Never ask question 4 again. Never rewrite `AGENTS.md` whole. Change the lines that differ, and keep what the person wrote by hand.
+`/setup-home-repo update` keeps a home repo current. It runs only inside a home repo. Outside one, say so and name setup.
+
+1. Do steps 1 to 3 again and compare with what is there.
+2. Build the plan table with only what changed: a new repo with no pointer, a pointer whose repo is gone or moved, a new item in a child repo or the user folder, an item that drifted from its copy in the home repo, a new source, a new harness. Rows that are already true are counted, not listed.
+3. Ask only about those rows. A new repo gets question 11 too. Never ask question 4 again.
+4. Show the plan and wait, by step 5.
+5. Apply in the order of step 6, then hand over by step 7 and report by step 8.
+
+Never rewrite `AGENTS.md` whole. Change the lines that differ, and keep what the person wrote by hand. Never remove an item only because exploring did not find it again. Show it as a row and ask.
+
+When nothing changed, say so in one line and stop.

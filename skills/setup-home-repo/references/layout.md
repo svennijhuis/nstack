@@ -29,7 +29,6 @@ Keep it short. It is loaded every session. A skill holds a procedure. `AGENTS.md
 # <team or person> home repo
 
 Start every session here. Reach other repos and sources through the pointers below.
-Not sure which skill, repo, or source fits? Type the router: <router slash>.
 
 ## How to work across repos
 

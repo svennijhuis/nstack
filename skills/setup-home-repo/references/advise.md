@@ -4,7 +4,7 @@
 
 ## Steps
 
-1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder, the router's map.
+1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder.
 2. **Walk the registry** over the home repo, every pointed-at repo that is on disk, and the user folder. Use the Check column in [components.md](components.md).
 3. **Run the checks below.** Each finding is one row.
 4. **Print the table**, worst first, then the summary line.
@@ -69,15 +69,11 @@ For a suspected secret, name the file and the key. Never print the value.
 | Claude Code in use, a `CLAUDE.md` in the home repo or a folder above it, and a child repo below it with no `CLAUDE.md` that imports its `AGENTS.md`. Claude Code skips that `AGENTS.md`. | high |
 | The `## Repos` heading missing | high |
 
-### The router
+### Skills setup wrote
 
 | Finding | Severity |
 | --- | --- |
-| No router skill | high |
-| Map line whose item is gone | high |
-| Item with no map line | medium |
-| Flow step that names a skill that does not exist | high |
-| Map line that disagrees with the skill's own description | medium |
+| A skill whose file says `Written by setup-home-repo`, such as a router from an earlier version. Cleanup removes it and the line in `AGENTS.md` that names it. | medium |
 
 ### Worktrees, tools, wiki
 

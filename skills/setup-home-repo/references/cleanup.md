@@ -15,8 +15,8 @@
 
 Do the safe fixes first, so a stop halfway leaves nothing broken.
 
-1. Additions: a missing hook registration, a missing map line, a missing environment entry.
-2. Corrections: a pointer path, a renamed skill in the map, a script made executable.
+1. Additions: a missing hook registration, a missing environment entry.
+2. Corrections: a pointer path, a script made executable.
 3. Moves: a procedure out of `AGENTS.md` into a skill, pointers into `repos/` files, the lines of a `CLAUDE.md` into `AGENTS.md`.
 4. Removals: a duplicate copy, a dead pointer, a merged worktree, a file for an unused harness, a `CLAUDE.md` whose lines have moved, or its text down to the one line.
 
@@ -41,9 +41,9 @@ Never use a force flag to get past a refusal. A refusal is a finding to report.
 - Remove only what the picked rows name. Leave everything bucketed `repo-specific`.
 - A row whose Fix names `/setup-agents-md` is not fixed here. Name the command and leave the row.
 
-## The router
+## Renames
 
-Every removal and rename changes the map in the same commit. After the last row, read the map top to bottom once: no line may name an item that is gone.
+A rename changes every place that names the item in the same commit: `AGENTS.md`, the pointer files, and other skills' text.
 
 ## Report
 

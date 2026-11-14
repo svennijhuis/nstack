@@ -1,6 +1,6 @@
 # Add or update one item
 
-`/setup-home-repo add <thing>` puts one item into the home repo, or changes one that is there. It runs only inside a home repo. Outside one, say so and name setup.
+`/setup-home-repo add <thing>`, or `update <thing>`, puts one item into the home repo, or changes one that is there. It runs only inside a home repo. Outside one, say so and name setup.
 
 ## Steps
 
@@ -8,7 +8,7 @@
 2. **Look for it.** If an item with that name and kind exists, this is an update. Show what is there.
 3. **Explore what you need.** A repo: its remote, what it is, the path convention already used in `AGENTS.md`. A source: its location and the access method, checked by the same means as setup. An MCP server: its command or address, and the variables it needs.
 4. **Ask only what is missing**, with a recommended answer.
-5. **Show the diff.** Every file that changes, for every harness in use, plus the map line in the router. One item usually touches two to five files.
+5. **Show the diff.** Every file that changes, for every harness in use. One item usually touches two to five files.
 6. **Write** on a yes. Commit in the home repo, or back up by [layout.md](layout.md) when it is local only. Do not push.
 7. **Report** in one or two lines: what was added, where, and anything a harness had no place for.
 
@@ -32,7 +32,7 @@ The paths per harness are in [harnesses.md](harnesses.md).
 
 ## Update
 
-Same steps. Show the old and the new side by side. For a skill, replace the folder whole. Never patch a skill's body in place. If the name changes, change the map line and every place that names it: `AGENTS.md`, other skills' text, the router's flows.
+Same steps. Show the old and the new side by side. For a skill, replace the folder whole. Never patch a skill's body in place. If the name changes, change every place that names it: `AGENTS.md`, the pointer files, other skills' text.
 
 ## From local only to git
 

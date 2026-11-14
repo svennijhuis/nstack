@@ -1,6 +1,6 @@
 # setup-home-repo
 
-One place for everything your agent needs in every session: skills, pointers to your repos and sources, MCP servers, and hooks, with a router skill on top. You start every session there and reach the other repos from it. Say "set up a home repo" or type `/setup-home-repo`.
+One place for everything your agent needs in every session: skills, pointers to your repos and sources, MCP servers, and hooks. You start every session there and reach the other repos from it. Say "set up a home repo" or type `/setup-home-repo`.
 
 This file is for people. The agent reads [SKILL.md](SKILL.md).
 
@@ -8,7 +8,7 @@ This file is for people. The agent reads [SKILL.md](SKILL.md).
 
 1. Reads your repos, your agent config, and your tools. It asks only what it could not find.
 2. Shows a plan: every item, where it is now, and where it goes.
-3. Waits for your yes. Then it builds the home repo and writes the router.
+3. Waits for your yes. Then it builds the home repo. It writes no skill of its own.
 4. In each child repo it removes what moved and adds one line that points home, on a new local branch. It never pushes.
 
 ## Local only or git
@@ -47,7 +47,9 @@ A design from `tech-design` lives where you start it. Started in the home repo, 
 ```text
 /setup-home-repo                 no home repo here: build one. home repo here: show its status
 /setup-home-repo add <thing>     add or update one item: a repo, a source, a skill, an MCP server,
-                                 a hook, a rule, a setting, an agent, a command, a tool, a wiki page
+                                 a hook, a rule, a setting, an agent, a command, a tool, a wiki page.
+                                 update <thing> does the same
+/setup-home-repo update          read everything again and propose only what changed
 /setup-home-repo add git         turn a local-only home repo into a git repo
 /setup-home-repo advise          audit and say what to fix. changes nothing
 /setup-home-repo cleanup         fix what advise found, the rows you pick
