@@ -66,6 +66,8 @@ For a suspected secret, name the file and the key. Never print the value.
 | Child repo with no `AGENTS.md`, or with a `CLAUDE.md` that has text of its own. The Fix is `/setup-agents-md <repo>`. | medium |
 | Child repo without the line that points at the home repo | low |
 | A `CLAUDE.md` or `.claude/CLAUDE.md` in the home repo with text of its own | high |
+| A `.claude/CLAUDE.md` in the home repo whose only line is `@AGENTS.md`. It imports nothing and hides `AGENTS.md`. | high |
+| Claude Code in use, `claude --version` older than 2.1.277 or no answer, and no root `CLAUDE.md` that imports `AGENTS.md` | high |
 | Claude Code in use, a `CLAUDE.md` in the home repo or a folder above it, and a child repo below it with no `CLAUDE.md` that imports its `AGENTS.md`. Claude Code skips that `AGENTS.md`. | high |
 | The `## Repos` heading missing | high |
 

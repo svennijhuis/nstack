@@ -40,6 +40,8 @@ Find sources without asking:
 
 Find the harnesses by the signs in [harnesses.md](harnesses.md).
 
+When Claude Code is one of them, run `claude --version`. It only reads. Note the version, or that there was no answer. Question 5 uses it.
+
 Done when each source has a name, a kind, a location, and an access method or `none yet`.
 
 ## 4. Ask what is left
@@ -52,7 +54,7 @@ Round one, the shape:
 2. Where does the home repo live, and what is it called? Skip the location when step 1 found the home folder. Recommend a new private repo beside the others, named `home`.
 3. Is it for one person or a team? This decides what stays in the user folder.
 4. Is the home repo local only, or a git repo you share? Skip this when the folder already is a git repo. Recommend local only for one person. A team needs git.
-5. Which harnesses? Recommend the ones detected.
+5. Which harnesses? Recommend the ones detected. When Claude Code is one and its version is older than 2.1.277 or was not found, ask too: write a one-line `CLAUDE.md`? Recommend yes. Without it that Claude Code reads no `AGENTS.md`. Name the other cases in the question: Bedrock, telemetry off, or project instructions set to `CLAUDE.md` only.
 6. What is the local path convention for repos? Recommend the one most repos already follow.
 
 Round two, the gaps:
@@ -95,7 +97,7 @@ The person may change any row. Apply nothing until they approve.
 In this order, so a stop halfway leaves nothing broken.
 
 1. **Create the home repo.** `git init` at the chosen path, or only the folder when it is local only. If the folder already is a git repo, use it.
-2. **Write `AGENTS.md`.** Write a `CLAUDE.md` only by the steering row in [harnesses.md](harnesses.md). If the home folder already has one with text of its own, move its lines into `AGENTS.md` as plan rows. Then delete it, or cut it to its one line when the person keeps it.
+2. **Write `AGENTS.md`.** Write a `CLAUDE.md` only by the steering row in [harnesses.md](harnesses.md). If the home folder already has a `CLAUDE.md` or a `.claude/CLAUDE.md` with text of its own, move its lines into `AGENTS.md` as plan rows. Then delete it. When the person keeps a `CLAUDE.md`, the one-line file goes at the root, never in `.claude/`.
 3. **Copy the `shared` and `duplicate` items in**, except an item whose only copy is in a user folder. That item stays there, because a skill in both the user folder and the home repo registers twice. A skill folder moves whole. For a duplicate, copy the winning one once.
 4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
 5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones. Skip this when local only.

@@ -83,13 +83,16 @@ Done when every plan row has an outcome, the root file and each part's `AGENTS.m
 
 `AGENTS.md` is the default and holds all the text. Claude Code reads it itself from version 2.1.277, but only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the working folder or a folder above it. One that does hides `AGENTS.md` from Claude Code, unless a `CLAUDE.md` in the repo imports it.
 
-So a `CLAUDE.md` is allowed in one shape: its only line is `@AGENTS.md`.
+So a `CLAUDE.md` is allowed in one shape: it sits beside an `AGENTS.md`, and its only line is `@AGENTS.md`. Claude Code resolves that import from the folder of the file that holds it. A `.claude/CLAUDE.md` with that line imports nothing, so never leave or write one there.
 
-- **Do not write one by default.** Offer the one-line file only when the person asks for a `CLAUDE.md`, uses Claude Code older than 2.1.277, or has one of the hiding files below. Write it on a yes.
+- **Do not write one by default.** Offer the one-line file only when the person asks for a `CLAUDE.md`, the check below fails, or one of the hiding files below is there. Write it on a yes.
+- **Check Claude Code.** When the repo or the user folder shows Claude Code is in use, run `claude --version` during the inventory. It only reads. On a version older than 2.1.277, or no answer, ask once: "Your Claude Code may not read `AGENTS.md`. Write a one-line `CLAUDE.md`?" Recommend yes. On Bedrock, with telemetry off, or with project instructions set to `CLAUDE.md` only, the person may need it on a newer version too. Say so in the question.
 - **A one-line `CLAUDE.md` exists.** Leave it.
-- **`CLAUDE.md` or `.claude/CLAUDE.md` with text of its own.** Sort its lines like any other section and move the kept ones into `AGENTS.md` or a topic file. Then ask: delete the file, which is the recommended answer, or keep it as the one line. Each is a plan row.
+- **`CLAUDE.md` or `.claude/CLAUDE.md` with text of its own.** Sort its lines like any other section and move the kept ones into `AGENTS.md` or a topic file. Then ask: delete the file, which is the recommended answer, or keep a one-line `CLAUDE.md`. Each is a plan row. A kept one is always the root `CLAUDE.md`. A `.claude/CLAUDE.md` is deleted either way.
+- **`.claude/CLAUDE.md` whose only line is `@AGENTS.md`.** It imports nothing and hides `AGENTS.md`. Delete it, and write the root one-line file when the person keeps a `CLAUDE.md`.
 - **`CLAUDE.local.md` in the repo.** It is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude Code for them, and offer the one-line file.
 - **`CLAUDE.md` in a folder above the repo.** Report it and change nothing outside the repo. Offer the one-line file.
+- **Parts.** Whenever a `CLAUDE.md` stays in the repo or sits above it, Claude Code loads no `AGENTS.md` on its own. Each part that has its own `AGENTS.md` then gets a one-line `CLAUDE.md` beside it, as a plan row. Without it that part's commands and rules never load.
 
 ## Commands, by default
 
@@ -99,7 +102,7 @@ The root file always says how to start, build, and test, even when the commands 
 2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. The pipeline is the best source: it is what really runs.
 3. **Check them, after approval.** Run the build and test commands. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
 4. **One part:** a `## Commands` section with Start, Build, Test, and Lint or Typecheck when they exist.
-5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. Past about four parts, or when a part needs its own rules, the part gets its own `AGENTS.md` in its folder with what it is, its stack, its commands, and its rules. The root keeps one line for it, and neither file repeats the other. The harness loads a folder's `AGENTS.md` when the agent works there.
+5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. Past about four parts, or when a part needs its own rules, the part gets its own `AGENTS.md` in its folder with what it is, its stack, its commands, and its rules. The root keeps one line for it, and neither file repeats the other. The harness loads a folder's `AGENTS.md` when the agent works there. For Claude Code that holds only by the Parts rule in [CLAUDE.md](#claudemd).
 6. **Pipelines:** one line per pipeline: its file, what triggers it, and what it does. The agent learns what CI will check before it opens a pull request.
 7. **Infrastructure:** say how to check a change without applying it, such as a plan or a what-if, and say that applying goes through the pipeline. Ask the person when the pipeline does not show it.
 

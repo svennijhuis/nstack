@@ -15,10 +15,10 @@
 
 Do the safe fixes first, so a stop halfway leaves nothing broken.
 
-1. Additions: a missing hook registration, a missing environment entry.
+1. Additions: a missing hook registration, a missing environment entry, a missing one-line `CLAUDE.md`.
 2. Corrections: a pointer path, a script made executable.
 3. Moves: a procedure out of `AGENTS.md` into a skill, pointers into `repos/` files, the lines of a `CLAUDE.md` into `AGENTS.md`.
-4. Removals: a duplicate copy, a dead pointer, a merged worktree, a file for an unused harness, a `CLAUDE.md` whose lines have moved, or its text down to the one line.
+4. Removals: a duplicate copy, a dead pointer, a merged worktree, a file for an unused harness, a `CLAUDE.md` whose lines have moved, or its text down to the one line. A `.claude/CLAUDE.md` is always removed, and a kept one-line file is written at the root.
 
 ## Ask again before each of these
 
