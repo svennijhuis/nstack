@@ -66,6 +66,7 @@ For a repo with several parts, replace Shape and Commands with Parts. Keep Pipel
 - Start: `<command>`
 - Build: `<command>`
 - Test: `<command>`
+- Integration test: `<command>`. Needs <what must run first>.
 
 ### Infrastructure (<tool>)
 
