@@ -1,6 +1,6 @@
 # Advise
 
-`/setup-agents-md advise` audits the steering file and the docs around it, and says what to fix. It reads. It never writes, never runs a project command, never clones, and never opens a secret file. In a home repo it asks which repo first, as in [home-repo.md](home-repo.md). With `all` it audits every repo under `## Repos` and prints one table with the repo as the first column.
+`/setup-agents-md advise` audits the steering file and the docs around it, and says what to fix. It reads. It never writes, never runs a project command, never clones, and never opens a secret file. In a home repo it asks which repo first, as in [home-repo.md](home-repo.md). With `all` it audits every repo in the repo list of that file and prints one table with the repo as the first column.
 
 ## Steps
 
@@ -62,7 +62,7 @@ To find reverts, read `git log --grep="This reverts commit"` and, for each rever
 
 ### Home repo
 
-Only when the target is in a home repo setup. On the home repo's own `AGENTS.md`, the size check counts only the lines above `## Repos`.
+Only when the target is in a home repo setup. On the home repo's own `AGENTS.md`, the size check counts only the lines above `## Repos`. Skip three Root file checks there, because `setup-home-repo`'s layout has no such sections: no start, build, or test command; a part or pipeline with no line; no Decisions section.
 
 | Finding | Severity |
 | --- | --- |

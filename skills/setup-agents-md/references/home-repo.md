@@ -29,14 +29,25 @@ A design is a plan, not a decision record. A cross-repo plan has no single repo 
 
 So the home repo may hold open designs. It never holds a shipped design or an ADR about a child repo.
 
+### A shipped design in the home repo
+
+A run on the home repo itself, and a run with `all`, handles each design in the home `docs/design/` that is `abandoned`, or `committed` and shipped by the person's word.
+
+1. Ask which repos the design changed, with the repos its text names as the recommended answer.
+2. In each of those repos, write the ADRs by the cross-repo rule above, as that repo's own plan, on that repo's branch, after its own yes.
+3. Only when every one of those ADRs is committed, offer to delete the design folder, as a row in the home repo's plan. If a repo said no or was skipped, keep the folder and report which repo is missing.
+4. In a local-only home repo, copy the folder to `.backup/<yyyy-mm-dd>-<hhmm>/` before you delete it. There is no git to keep it.
+
 ## Running in a home repo
+
+**The repo list.** The child repos are the pointer lines under `## Repos`. Past about 20 repos, `setup-home-repo` writes area lines there instead, each naming a `repos/<area>.md` file. Then read every one of those files: their pointer lines are the repo list. An area is never a repo.
 
 When the working directory is a home repo:
 
-1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer under `## Repos`. If the path is missing, ask before you clone it from the remote in the pointer. Advise does not clone: it reports the missing path and stops. Run Create or Update on that repo.
-2. **With `all`**: do step 1 for every repo under `## Repos`, one after the other. Each repo gets its own plan, its own yes, and its own branch. A no skips that repo only.
-3. **With nothing typed**: ask one question. "Which repo? The home repo itself, or one of: <names from `## Repos`>." Recommend the child repo the person last named, or the home repo if none.
-4. **On the home repo itself**: trim only the steering text above `## Repos` in `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`. A home repo that is not a git repo has no branch: after the yes, copy the old file to `.backup/<yyyy-mm-dd>-<hhmm>/AGENTS.md`, then write. Never write over a backup that exists.
+1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer in the repo list. If the path is missing, ask before you clone it from the remote in the pointer. Advise does not clone: it reports the missing path and stops. Run Create or Update on that repo.
+2. **With `all`**: do step 1 for every repo in the repo list, one after the other. Each repo gets its own plan, its own yes, and its own branch. A no skips that repo only.
+3. **With nothing typed**: ask one question. "Which repo? The home repo itself, or one of: <names from the repo list>." With areas, show the names grouped by area. Recommend the child repo the person last named, or the home repo if none.
+4. **On the home repo itself**: trim only the steering text above `## Repos` in `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`. The home `AGENTS.md` follows `setup-home-repo`'s layout, so the skill's defaults do not apply to it: add no Commands, Parts, Decisions, or Docs section and no code standards file, and run no command check. Then do the shipped designs, below. A home repo that is not a git repo has no branch: after the yes, copy the old file to `.backup/<yyyy-mm-dd>-<hhmm>/AGENTS.md`, then write. Never write over a backup that exists.
 
 ## Running in a child repo
 

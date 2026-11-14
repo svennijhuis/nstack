@@ -60,7 +60,7 @@ The person types `/setup-agents-md`. Read the first word after it.
 
 ### Detect
 
-1. Find where you are. The working directory is a home repo when its `AGENTS.md` has a `## Repos` section written by `setup-home-repo`, or the person says it is. If it is one, follow [home-repo.md](references/home-repo.md). It decides which repo the rest of the steps run on.
+1. Find where you are. The working directory is a home repo when its `AGENTS.md` has a `## Repos` section written by `setup-home-repo`, or the person says it is. If it is one, follow [home-repo.md](references/home-repo.md). It decides which repo the rest of the steps run on, and which of them do not apply to the home repo itself.
 2. If the target repo has no `AGENTS.md` and no `CLAUDE.md`, run Create. If it has either, run Update.
 
 ## Create and Update
@@ -96,7 +96,7 @@ So a `CLAUDE.md` is allowed in one shape: it sits beside an `AGENTS.md`, and its
 
 ## Commands, by default
 
-The root file always says how to start, build, and test, even when the commands are the standard ones for the stack. A wrong guess costs a failed run.
+The root file of every repo but a home repo always says how to start, build, and test, even when the commands are the standard ones for the stack. A wrong guess costs a failed run.
 
 1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses.
 2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. The pipeline is the best source: it is what really runs.
@@ -120,7 +120,7 @@ When the repo already has a standards file elsewhere, such as a language file un
 
 ## The decision rules
 
-The root file always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths.
+The root file of every repo but a home repo always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths.
 
 ## With the other nstack skills
 
