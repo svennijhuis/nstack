@@ -17,7 +17,7 @@ Setup asks once which one you want. It skips the question when the folder alread
 
 | | Local only | Git |
 | --- | --- | --- |
-| For | One person | A team |
+| For | One person who accepts no undo | One person or a team. The default. |
 | Git, commits, `.gitignore` | No | Yes |
 | The undo | None. A changed or removed file is gone. | A commit |
 | Sharing | You share files yourself, or not at all | Through the repo |

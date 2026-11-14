@@ -53,7 +53,7 @@ Round one, the shape:
 1. Which repos go in? Recommend all with a commit in the last year. List the rest as left out.
 2. Where does the home repo live, and what is it called? Skip the location when step 1 found the home folder. Recommend a new private repo beside the others, named `home`.
 3. Is it for one person or a team? This decides what stays in the user folder.
-4. Is the home repo local only, or a git repo you share? Skip this when the folder already is a git repo. Recommend local only for one person. A team needs git. Say once that local only has no undo: a changed or removed file is gone, and git is the way to get one.
+4. Is the home repo a git repo, or local only? Skip this when the folder already is a git repo. Recommend git, also for one person: the commit is the undo, and nothing is pushed. A team needs git. When the person picks local only, say once that it has no undo: a changed or removed file is gone.
 5. Which harnesses? Recommend the ones detected. When Claude Code is one and its version is older than 2.1.277 or was not found, ask too: write a one-line `CLAUDE.md`? Recommend yes. Without it that Claude Code reads no `AGENTS.md`. Name the other cases in the question: Bedrock, telemetry off, or project instructions set to `CLAUDE.md` only.
 6. What is the local path convention for repos? Recommend the one most repos already follow.
 
