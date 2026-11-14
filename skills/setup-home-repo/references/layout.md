@@ -116,7 +116,7 @@ When the clones sit inside the home folder, they stay where they are. In a git h
 
 ## Local only
 
-A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit. The person shares its files by hand, or not at all. Every mode works the same there, with one difference: a copy is the undo. Before a mode overwrites or removes a file, it shows the diff and copies the old file to `.backup/<name>-<yyyy-mm-dd>`.
+A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit. The person shares its files by hand, or not at all. Every mode works the same there, with one difference: a copy is the undo. Before a mode overwrites or removes a file, it shows the diff and copies the old file to `.backup/<yyyy-mm-dd>-<hhmm>/<the file's path from the home root>`. One run uses one dated folder. `.cursor/mcp.json` and `.vscode/mcp.json` so keep separate copies, and a second change on the same day does not replace the first. Never write over a backup that exists: add `-2` to the folder name.
 
 To share it later, the person types `/setup-home-repo add git`, see [add.md](add.md).
 

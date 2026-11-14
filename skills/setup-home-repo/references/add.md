@@ -36,7 +36,12 @@ Same steps. Show the old and the new side by side. For a skill, replace the fold
 
 ## From local only to git
 
-`/setup-home-repo add git` is the one `add` that names no item. It turns a local-only home repo into a git repo: `git init`, write `.gitignore` with `.backup/` in it, and make the first commit. Show what will be committed first, and check it for secrets by the advise check.
+`/setup-home-repo add git` is the one `add` that names no item. It turns a local-only home repo into a git repo, in this order:
+
+1. `git init`.
+2. Write the full `.gitignore` by apply step 5 in [setup.md](setup.md): local settings files, `.worktrees/`, secret files, and every child repo clone inside the home folder. Add `.backup/`.
+3. Show the list of files the first commit will hold. No clone folder, local settings file, or secret file may be on it. Check the list for secrets by the advise check.
+4. Commit on a yes.
 
 The way back is the person's: they delete the `.git` folder.
 

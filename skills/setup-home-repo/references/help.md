@@ -32,6 +32,7 @@ Last change 2026-11-03.
 Next: /setup-home-repo advise
 ```
 
+- `Last change` is the date of the last commit. When local only, it is the newest change date of a file in the folder, leaving out `.backup/` and the clones.
 - Leave out a count that is zero. Add `Local only` to the first line when the folder is not a git repo.
 - Name `advise` as the next step when the last change is over a month old or a repo is not cloned. Otherwise name `add`.
 - If a repo sits beside the others with no pointer, say so in one line and name `/setup-home-repo update`.

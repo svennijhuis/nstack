@@ -36,7 +36,7 @@ When the working directory is a home repo:
 1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer under `## Repos`. If the path is missing, ask before you clone it from the remote in the pointer. Advise does not clone: it reports the missing path and stops. Run Create or Update on that repo.
 2. **With `all`**: do step 1 for every repo under `## Repos`, one after the other. Each repo gets its own plan, its own yes, and its own branch. A no skips that repo only.
 3. **With nothing typed**: ask one question. "Which repo? The home repo itself, or one of: <names from `## Repos`>." Recommend the child repo the person last named, or the home repo if none.
-4. **On the home repo itself**: trim only the steering text above `## Repos` in `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`. A home repo that is not a git repo has no branch: after the yes, copy the old file to `.backup/AGENTS.md-<yyyy-mm-dd>`, then write.
+4. **On the home repo itself**: trim only the steering text above `## Repos` in `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`. A home repo that is not a git repo has no branch: after the yes, copy the old file to `.backup/<yyyy-mm-dd>-<hhmm>/AGENTS.md`, then write. Never write over a backup that exists.
 
 ## Running in a child repo
 
