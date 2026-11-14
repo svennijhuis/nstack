@@ -15,7 +15,7 @@ A steering file loads on every request. Every line costs tokens and attention, a
 
 **Never invent a line.** Every command and every rule comes from the disk, the person, or a doc that is already there. The only fixed text is the Docs and Decisions sections in [templates.md](references/templates.md).
 
-**Never push.** Commit on a new local branch. The person pushes.
+**Never push.** Commit on a local branch, one per repo. The person pushes.
 
 **Ask on a conflict.** When two instructions disagree, show both and ask which one stays. Never pick one yourself.
 
@@ -54,7 +54,8 @@ The person types `/setup-agents-md`. Read the first word after it.
 | --- | --- | --- |
 | nothing | Detect, then Create or Update | After approval |
 | `<repo name>` | From a home repo: run on that child repo | After approval, on a branch in that repo |
-| `advise` | Audit, see [advise.md](references/advise.md) | Never |
+| `all` | From a home repo: run on every child repo, one plan and one yes each | After each approval, on a branch in each repo |
+| `advise`, `advise <repo name>`, `advise all` | Audit, see [advise.md](references/advise.md) | Never |
 | `help` | The card, see [help.md](references/help.md) | Never |
 
 ### Detect
@@ -68,12 +69,12 @@ Same steps. In Create there is no steering file to sort, only the docs around it
 
 1. **Inventory.** Read `AGENTS.md`, any `CLAUDE.md`, `README*`, everything under `docs/`, `CONTEXT.md`, `GLOSSARY.md`, `DECISIONS.md`, `docs/adr/`, and any spec, PRD, plan, or memory file. Read the package manifest, the lockfile, the scripts, the linter config, and the CI config to learn the real commands. Never open `.env` or another secret file.
 2. **Sort every section.** One row per section: file, section, kind, action. Kinds: `anchor`, `shape`, `command`, `rule`, `topic`, `procedure`, `decision`, `term`, `derivable`, `finished plan`, `lint rule`, `obvious`. Actions: keep, move, rewrite, delete, ask.
-3. **Check what you keep.** Look up every command in the scripts, the manifest, or the pipeline. Check every path still exists. A command nothing defines or a path that is gone is drift: fix it or delete it.
+3. **Check what you keep.** Look up every command in the scripts, the manifest, or the pipeline. Check every path still exists. A command nothing defines or a path that is gone is drift: fix it or delete it. In Update, find the parts and the pipelines again by [Commands](#commands-by-default) step 1 and compare them with the root file. A part or pipeline with no line, and a line for one that is gone, are drift too.
 4. **Find conflicts.** Two lines that disagree, in one file or across files, become one `ask` row each.
 5. **Pull out the why.** Before a spec, plan, or explanation is deleted, lift any decision or term in it into an ADR draft or a glossary line.
 6. **Draft the files** from [templates.md](references/templates.md): the root file, the code standards file, the other topic files, the ADR drafts, and the glossary.
 7. **Show the plan.** The table, the drafted files, the line count of the new root file, the commands step 8 will run, and the conflict questions, numbered, the recommended answer first. Wait for approval.
-8. **Apply.** If the repo has uncommitted changes, stop and report it. Work on a new local branch `agents-md/<yyyy-mm-dd>`, with `-2` added when that name is taken. Run the build and test commands by [Commands](#commands-by-default) step 3. One that fails is not written: report it with its error. Move, write, delete. Never rewrite text the person wrote by hand without a row that says so. Commit.
+8. **Apply.** If the repo has uncommitted changes, stop and report it. Work on a new local branch `agents-md/<yyyy-mm-dd>`, with `-2` added when that name is taken. When the repo's current branch starts with `home-repo/` and is not pushed, `setup-home-repo` just made it: commit there instead, so the repo has one branch to review. Run the build and test commands by [Commands](#commands-by-default) step 3. One that fails is not written: report it with its error. Move, write, delete. Never rewrite text the person wrote by hand without a row that says so. Commit.
 9. **Report and stop.** One outcome per plan row, the root file's line count before and after, the drift found, and the branch to push.
 
 Done when every plan row has an outcome, the root file and each part's `AGENTS.md` are under about 60 lines, and no kept line points at something that is gone. In a home repo's own `AGENTS.md`, count only the lines above `## Repos`.
@@ -117,7 +118,9 @@ The root file always carries the Decisions section from [templates.md](reference
 
 ## With the other nstack skills
 
-**`setup-home-repo`.** This skill lives in the home repo's skills folder, so every repo can use it. Add it to the router's map with `/setup-home-repo add`. Apply step 7 of its setup trims each child repo's steering file to what is true only for that repo and adds the line that points at the home repo. Run this skill on the child repo after that, with `/setup-agents-md <repo>`. What it may change in a home repo is in [home-repo.md](references/home-repo.md).
+Each one is optional. This skill works alone in any repo.
+
+**`setup-home-repo`.** It owns the home repo and the one line in each child repo that points home. This skill owns everything else a child repo's steering file says. `setup-home-repo` calls `/setup-agents-md <repo>` after its setup and after `add <repo>`. What this skill may change in a home repo is in [home-repo.md](references/home-repo.md).
 
 **`tech-design`.** A design folder `docs/design/<yyyy-mm-dd>-<name>/` is a live doc while its status is `draft`, `discussion`, or `ready`, and while it is `committed` and the feature has not shipped. Leave it alone. `tech-design` has no status for shipped, so ask the person, one question per `committed` design. Never infer it.
 

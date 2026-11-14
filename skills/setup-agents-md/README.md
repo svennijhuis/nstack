@@ -157,19 +157,20 @@ With a home repo from `setup-home-repo`:
 | ADRs, glossary, topic files about a repo's code | That repo. Never the home repo. |
 | A design from `tech-design` for one repo | That repo. Start `tech-design` there. |
 | A design from `tech-design` that spans repos | The home repo, while it is open. Start `tech-design` there. |
+| The same, when the home repo is local only (no git) | The repo that owns the main change, on a branch. The other repos link to it. |
 | ADRs about the home repo itself | The home repo |
 | A decision that spans repos | Full ADR in the repo that owns the change, a short linking ADR in the others |
 
 A decision belongs next to the code it changes. That is where a reader finds it and where a revert can be checked against it.
 
-A design is different: it is a plan, and a plan for several repos has no single repo to live in. So it may stay in the home repo while it is open. When the feature ships, its decisions move out as ADRs into each repo they change, and the design folder is offered for deletion.
+A design is different: it is a plan, and a plan for several repos has no single repo to live in. So it may stay in a git home repo while it is open. A local-only home repo is not versioned or shared, so it holds no design, ADR, or glossary. When the feature ships, its decisions move out as ADRs into each repo they change, and the design folder is offered for deletion.
 
 ## 9. With the other nstack skills
 
 ```text
 setup-home-repo          one home for skills, pointers, MCP, hooks
-   ↓ trims each child repo's AGENTS.md, adds the pointer to home
-setup-agents-md <repo>   makes that AGENTS.md lean, sets up code standards, ADRs, glossary
+   ↓ adds the line that points home, then calls, per child repo:
+setup-agents-md <repo>   a lean AGENTS.md, code standards, ADRs, glossary, on the same branch
    ↓
 tech-design              one repo: start it there. Several repos: start it in the home repo
    ↓ build
@@ -178,7 +179,9 @@ setup-agents-md advise   now and then: reports drift and shipped designs that ar
 setup-agents-md          once shipped: decisions → ADRs, design folder → offered for deletion
 ```
 
-- **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`. This skill never touches them. After `setup-home-repo` builds the home repo, run `/setup-agents-md <repo>` once for each child repo. This skill's advise reports an ADR or glossary in the home repo that belongs to a child repo.
+Each skill works without the others.
+
+- **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`, and the one line in each child repo that points home. This skill never touches them. It owns the rest of each child repo's `AGENTS.md`. `setup-home-repo` calls it for the child repos you pick, after setup and after `add <repo>`, and both commit on one branch per repo. Later, when a repo's structure has changed, run `/setup-agents-md <repo>` from the home repo or `/setup-agents-md` in the repo itself. This skill's advise reports an ADR or glossary in the home repo that belongs to a child repo.
 - **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `committed` and not yet shipped. This skill leaves them alone. `tech-design` has no status for shipped, so the skill asks you. After the feature ships, each line of Decisions so far becomes an ADR, the design's project terms go into the glossary, and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
 
 ## 10. Commands
@@ -187,7 +190,9 @@ setup-agents-md          once shipped: decisions → ADRs, design folder → off
 /setup-agents-md               create or trim this repo's AGENTS.md, ADRs, and glossary
                                in a home repo: asks which repo first
 /setup-agents-md <repo>        from a home repo: do the same in that child repo, on a branch
+/setup-agents-md all           from a home repo: every child repo, one plan and one yes each
 /setup-agents-md advise        audit the steering file, docs, and decisions. changes nothing
+/setup-agents-md advise all    from a home repo: audit every child repo in one table
 /setup-agents-md help          this card
 ```
 

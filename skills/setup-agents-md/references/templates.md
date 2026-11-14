@@ -83,8 +83,6 @@ Shape is the thin navigation layer: three to six lines. Name a top-level folder 
 
 Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
 
-In a child repo of a home repo, keep the one line `setup-home-repo` wrote that points at the home repo. Put it under the first sentence.
-
 ## Code standards
 
 `docs/agents/code-standards.md`. Each line is a convention the person confirmed or that came from an existing doc. No rule a linter or the type checker already enforces.

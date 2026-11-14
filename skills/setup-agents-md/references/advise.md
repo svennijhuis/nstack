@@ -1,6 +1,6 @@
 # Advise
 
-`/setup-agents-md advise` audits the steering file and the docs around it, and says what to fix. It reads. It never writes, never runs a project command, never clones, and never opens a secret file. In a home repo it asks which repo first, as in [home-repo.md](home-repo.md).
+`/setup-agents-md advise` audits the steering file and the docs around it, and says what to fix. It reads. It never writes, never runs a project command, never clones, and never opens a secret file. In a home repo it asks which repo first, as in [home-repo.md](home-repo.md). With `all` it audits every repo under `## Repos` and prints one table with the repo as the first column.
 
 ## Steps
 
@@ -18,7 +18,7 @@
 | A `CLAUDE.md` or `.claude/CLAUDE.md` in the repo or a folder above it. Claude Code reads it and skips `AGENTS.md`. | high |
 | A `CLAUDE.local.md` in the repo. It hides `AGENTS.md` from Claude Code for that person. | medium |
 | No start, build, or test command | high |
-| A part with no commands, or a pipeline with no line | medium |
+| A part with no commands, a pipeline with no line, or a line for a part or pipeline that is gone | medium |
 | A deploy or apply command with no word on how it runs | medium |
 | Two instructions that contradict | high |
 | A command that no script, manifest, or pipeline defines | high |
@@ -66,8 +66,8 @@ Only when the target is in a home repo setup. On the home repo's own `AGENTS.md`
 | An ADR, glossary, or topic file in the home repo about one child repo | medium |
 | A child repo `AGENTS.md` that repeats the home repo's text | low |
 | A rule in the home repo `AGENTS.md` for only one child repo | medium |
-| A child repo `AGENTS.md` without the line that points at the home repo | low |
 | A `tech-design` folder in the home repo about one child repo. It belongs in that repo. | low |
+| A design, ADR, or glossary in a local-only home repo | medium |
 | An abandoned `tech-design` folder in the home repo, or a `committed` one the person says has shipped, whose decisions are not ADRs in the child repos | medium |
 
 ## Output
