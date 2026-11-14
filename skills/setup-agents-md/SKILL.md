@@ -31,7 +31,7 @@ The **steering file** is `AGENTS.md`. Every harness in nstack reads it. A **part
 | The main parts and what each does | Root file | A thin map so the agent knows where to start |
 | The package manager or build tool, when the stack has more than one to choose from and no lockfile or manifest field pins it | Root file | The agent guesses wrong otherwise |
 | How to start, build, and test, plus lint and typecheck | Root file | The agent needs them first |
-| Each part and its commands. Each pipeline and what it does. | Root file, or the part's own `AGENTS.md` | One repo can hold several of each |
+| Each part and its commands. Each pipeline and what it does. | Root file | One repo can hold several of each |
 | Rules for every task that no tool enforces | Root file | They apply everywhere |
 | One line per topic file, ADRs, and glossary | Root file | Progressive disclosure |
 | Code standards: how code is written here, beyond what the linter checks | `docs/agents/code-standards.md`, a default topic file | Loaded when the agent writes code, not on every request |
@@ -77,7 +77,7 @@ Same steps. In Create there is no steering file to sort, only the docs around it
 8. **Apply.** If the repo has uncommitted changes to tracked files, other than under `docs/design/`, stop and report it. An open design there is `tech-design`'s work in progress: leave it uncommitted. A folder that is not a git repo has no branch and no undo: say so in the plan, write after the yes, and keep no copy. Otherwise work on a new local branch `agents-md/<yyyy-mm-dd>`, with `-2`, then `-3`, added when that name is taken. When the repo's current branch starts with `home-repo/` and is not pushed, `setup-home-repo` just made it: commit there instead, so the repo has one branch to review. Run the commands by [Commands](#commands-by-default) step 3 and treat a failure as that step says. Move, write, delete. Never rewrite text the person wrote by hand without a row that says so. Commit only the files the plan names. Never stage everything: a build may leave output or change a lockfile. Report such files and leave them uncommitted.
 9. **Report and stop.** One outcome per plan row, the root file's line count before and after, the drift found, and the branch to push.
 
-Done when every plan row has an outcome, the root file and each part's `AGENTS.md` are under about 60 lines, and no kept line points at something that is gone. In a home repo's own `AGENTS.md`, count only the lines above `## Repos`.
+Done when every plan row has an outcome, the root file is under about 60 lines, not counting the Parts section, and no kept line points at something that is gone. In a home repo's own `AGENTS.md`, count only the lines above `## Repos`.
 
 ## CLAUDE.md
 
@@ -92,17 +92,16 @@ So a `CLAUDE.md` is allowed in one shape: it sits beside an `AGENTS.md`, and its
 - **`.claude/CLAUDE.md` whose only line is `@AGENTS.md`.** It imports nothing and hides `AGENTS.md`. Delete it, and write the root one-line file when the person keeps a `CLAUDE.md`.
 - **`CLAUDE.local.md` in the repo.** It is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude Code for them, and offer the one-line file.
 - **`CLAUDE.md` in a folder above the repo.** Report it and change nothing outside the repo. Offer the one-line file.
-- **Parts.** Whenever a `CLAUDE.md` stays in the repo or sits above it, Claude Code loads no `AGENTS.md` on its own. Each part that has its own `AGENTS.md` then gets a one-line `CLAUDE.md` beside it, as a plan row. Without it that part's commands and rules never load.
 
 ## Commands, by default
 
-The root file of every repo but a home repo always says how to start, build, and test, or points at the part file that does, even when the commands are the standard ones for the stack. A wrong guess costs a failed run. A command that no script, manifest, or pipeline defines is left out, not guessed.
+The root file of every repo but a home repo always says how to start, build, and test, even when the commands are the standard ones for the stack. A wrong guess costs a failed run. A command that no script, manifest, or pipeline defines is left out, not guessed.
 
 1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses.
 2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. The pipeline is the best source: it is what really runs.
 3. **Check them, after approval.** Run the install command first, when a script, the manifest, or the pipeline defines one, then the build, test, and lint commands. A failure does not prove a command wrong: the dependencies, a database, or a test that was already red can cause it. So a command that a script, the manifest, or the pipeline defines is written even when it fails here, and the report gives the first line of its error. Only a command nothing defines is left out. When install cannot run, skip the check and say so. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
 4. **One part:** a `## Commands` section with Start, Build, Test, and Lint or Typecheck when they exist. When a part has more than one of a kind, such as a start per app, or a unit test and an integration test, write one line each, named for what it runs, with what must run first.
-5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. Past about four parts, or when a part needs its own rules, the part gets its own `AGENTS.md` in its folder with what it is, its stack, its commands, and its rules. The root keeps one line for it, and neither file repeats the other. The harness loads a folder's `AGENTS.md` when the agent works there. For Claude Code that holds only by the Parts rule in [CLAUDE.md](#claudemd).
+5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. All of it stays in the one root file, where the `.git` folder is. Write no `AGENTS.md` in a part's folder. One that is already there is sorted like any other doc, and its kept lines move into the root file, as plan rows.
 6. **Pipelines:** one line per pipeline: its file, what triggers it, and what it does. The agent learns what CI will check before it opens a pull request.
 7. **Infrastructure:** say how to check a change without applying it, such as a plan or a what-if, and say that applying goes through the pipeline. Ask the person when the pipeline does not show it.
 

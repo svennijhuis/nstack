@@ -18,7 +18,7 @@
 | A `CLAUDE.md` or `.claude/CLAUDE.md` with text of its own. Two files to keep true. | high |
 | A `CLAUDE.md` in a folder above the repo, or a `CLAUDE.local.md` in it, and no `CLAUDE.md` in the repo that imports `AGENTS.md`. Claude Code skips `AGENTS.md`. | high |
 | A `.claude/CLAUDE.md` whose only line is `@AGENTS.md`. It imports nothing and hides `AGENTS.md`. | high |
-| A `CLAUDE.md` in the repo or above it, and a part with its own `AGENTS.md` and no one-line `CLAUDE.md` beside it. Claude Code skips that part's file. | high |
+| An `AGENTS.md` in a part's folder. Its lines belong in the root file. | medium |
 | Claude Code in use, `claude --version` older than 2.1.277 or no answer, and no `CLAUDE.md` that imports `AGENTS.md` | high |
 | A start, build, or test command that a script, the manifest, or the pipeline defines, with no line for it | high |
 | A part with no commands, a pipeline with no line, or a line for a part or pipeline that is gone | medium |
@@ -26,7 +26,7 @@
 | Two instructions that contradict | high |
 | A command that no script, manifest, or pipeline defines | high |
 | A path that does not exist. The `docs/adr/` the Decisions section names does not count. | high |
-| Root file over about 60 lines. One row. | low, medium past about 100 |
+| Root file over about 60 lines, not counting the Parts section. One row. | low, medium past about 100 |
 | A folder tree or a list of file paths | medium |
 | Rules for one area only, in the root file | medium |
 | A procedure with steps that could be a skill | medium |

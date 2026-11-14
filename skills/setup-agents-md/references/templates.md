@@ -76,8 +76,6 @@ For a repo with several parts, replace Shape and Commands with Parts. Keep Pipel
 - Apply: runs through the `<pipeline>` pipeline, not from a local machine.
 ```
 
-When a part has its own `AGENTS.md`, the root keeps one line for it: `- <Part>: <what it is>. See <folder>/AGENTS.md.`
-
 Leave out a command the part does not have. Leave out the Package manager line unless the stack has more than one to choose from and no lockfile or manifest field pins it.
 
 Shape is the thin navigation layer: three to six lines. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.

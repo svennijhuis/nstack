@@ -110,7 +110,7 @@ From Matt Pocock's [guide to AGENTS.md](https://www.aihero.dev/a-complete-guide-
 | The thin navigation layer | `AGENTS.md` | "Checkout: cart to payment, in `checkout/`." |
 | The package manager or build tool, when the stack has more than one and the repo does not pin it | `AGENTS.md` | "Package manager: <the one this repo uses>." |
 | How to start, build, and test, always | `AGENTS.md` | "Start: `<command>`", "Test: `<command>`" |
-| Each part of the repo and its commands: solutions, apps, infrastructure | `AGENTS.md`, or the part's own `AGENTS.md` | "Api: entry `<solution file>`. Test: `<command>`." |
+| Each part of the repo and its commands: solutions, apps, infrastructure | `AGENTS.md` | "Api: entry `<solution file>`. Test: `<command>`." |
 | Each pipeline: its trigger and what it does | `AGENTS.md` | "`ci.yml`: on every pull request, build and test." |
 | Rules for every task that no tool can enforce | `AGENTS.md` | "Call the payments API only from the server." |
 | One line per topic file | `AGENTS.md` | "Testing: `docs/agents/testing.md`. Read before you write a test." |
@@ -128,7 +128,7 @@ This is progressive disclosure: the root file holds one line per topic, and the 
 
 **Commands by default.** The AI Hero guide lists only non-standard commands. This skill always writes Start, Build, and Test, because they are what the agent needs first. It learns them from the scripts and the pipeline. After you approve the plan it runs build and test to check them. It never runs a start, a deploy, or an apply.
 
-**Repos with several parts.** One repo can hold several solutions, apps, the infrastructure, and the pipelines. The root file then gets a Parts section: per part, what it is, its entry file, and its commands. Infrastructure says how to check a change without applying it, and that applying goes through the pipeline. Past about four parts, each part gets its own `AGENTS.md` in its folder, and the root keeps one line per part. The harness loads a folder's `AGENTS.md` when the agent works there.
+**Repos with several parts.** One repo can hold several solutions, apps, the infrastructure, and the pipelines. The root file then gets a Parts section: per part, what it is, its entry file, and its commands. Infrastructure says how to check a change without applying it, and that applying goes through the pipeline. It all stays in the one `AGENTS.md` at the repo root, where the `.git` folder is. The skill writes no `AGENTS.md` per part.
 
 ## 7. Decisions that stay true
 
