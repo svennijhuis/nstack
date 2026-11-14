@@ -14,44 +14,31 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 
 ## How they work together
 
-```text
-1. setup-nstack-skills     once: install the external skills the others call
-2. setup-home-repo         once: one home repo for skills, pointers, MCP, hooks, and a router
-3. setup-agents-md <repo>  per repo, called by step 2 or by you: a lean AGENTS.md, code standards, ADRs, glossary
-4. tech-design             per feature. One repo: start it there. Several repos: start it in the home repo
-5. build                   agents follow AGENTS.md, write an ADR with each decision
-6. setup-agents-md advise  now and then: report drift and shipped designs that are not ADRs yet
-7. setup-agents-md         after a design ships: its decisions become ADRs
+```mermaid
+flowchart TD
+    A[setup-nstack-skills<br/>once: install the external skills] --> B{Many repos?}
+    B -->|Yes| C[setup-home-repo<br/>once: skills, pointers, MCP, hooks, router]
+    B -->|No| D
+    C -->|calls, per child repo| D[setup-agents-md<br/>lean AGENTS.md, code standards, ADRs, glossary]
+    D --> E[tech-design<br/>per feature, lives where you start it]
+    E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
+    F --> G[setup-agents-md advise<br/>reports drift and shipped designs]
+    G --> H[setup-agents-md<br/>updates AGENTS.md, shipped decisions become ADRs]
+    H --> E
 ```
 
-- **Each skill works alone.** A skill calls another by name only when it is
-  installed. `setup-agents-md` needs no home repo, and `setup-home-repo` needs
-  no `setup-agents-md`.
-- **Where things live.** The skills and the pointers live in the home repo.
-  Everything about a repo's code lives in that repo: its `AGENTS.md`, code
-  standards, ADRs, and glossary. When a design ships, its decisions become
-  ADRs in each repo they change.
-- **Local only or git.** `setup-home-repo` asks whether the home repo is a git
-  repo you share or a plain local folder. A local-only home repo is never
-  committed. Everything else works the same.
-- **Designs.** A design lives where you start `tech-design`. In a home repo it
-  asks: here, or in one of the repos. Without a home repo it never asks.
+- **Each skill works alone.** A skill calls another only when it is installed.
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
-  each child repo that points home. `setup-agents-md` owns the rest of each
-  repo's `AGENTS.md` and folds an old `CLAUDE.md` into it. No skill writes a
-  `CLAUDE.md`: every harness reads `AGENTS.md`, Claude Code from version
-  2.1.277. `tech-design` owns `docs/design/` while a design is open.
-- **Hand-offs.** After setup and after `add <repo>`, `setup-home-repo` calls
-  `setup-agents-md` for the child repos you pick. Both commit on one local
-  branch per repo, so you review and push one branch per repo.
-  `setup-agents-md` advise reports a decision that sits in the home repo but
-  belongs to a child repo, and a shipped design whose decisions are not ADRs
-  yet.
-- **Updating.** When a repo's structure has changed, type
-  `/setup-agents-md <repo>` in the home repo, `/setup-agents-md` in the repo
-  itself, or `/setup-agents-md all` for every child repo. It updates rather
-  than starts over: it checks every line against the code, shows what to keep,
-  move, or delete, and waits for your yes.
+  each child repo that points home. `setup-agents-md` owns the rest of a repo's
+  `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
+- **One branch per repo.** Every change to a repo sits on one local branch. You
+  review and push it. Nothing is written before you approve the plan.
+- **Only `AGENTS.md`.** No skill writes a `CLAUDE.md`. Claude Code reads
+  `AGENTS.md` from version 2.1.277.
+
+The details are in the READMEs of
+[setup-home-repo](skills/setup-home-repo/README.md) and
+[setup-agents-md](skills/setup-agents-md/README.md).
 
 Some skills call skills that live in other repos. Run `setup-nstack-skills` to
 install them. The list is in
