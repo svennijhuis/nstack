@@ -9,7 +9,7 @@
 3. **Show what each picked row will change**: the files, and for a removal, what is removed and from where.
 4. **Apply in the order below.** Stop at the first failure and report.
 5. **Check again.** Run the checks for the rows you touched.
-6. **Commit and report.** One commit in the home repo, or the backups by [layout.md](layout.md) when it is local only. One commit on a new local branch in each child repo that changed. Do not push.
+6. **Commit and report.** One commit in the home repo, unless it is local only. One commit on a new local branch in each child repo that changed. Do not push.
 
 ## Order
 

@@ -9,7 +9,7 @@
 3. **Explore what you need.** A repo: its remote, what it is, the path convention already used in `AGENTS.md`. A source: its location and the access method, checked by the same means as setup. An MCP server: its command or address, and the variables it needs.
 4. **Ask only what is missing**, with a recommended answer.
 5. **Show the diff.** Every file that changes, for every harness in use. One item usually touches two to five files.
-6. **Write** on a yes. Commit in the home repo, or back up by [layout.md](layout.md) when it is local only. Do not push.
+6. **Write** on a yes. Commit in the home repo, unless it is local only. Do not push.
 7. **Report** in one or two lines: what was added, where, and anything a harness had no place for.
 
 ## By kind
@@ -39,7 +39,7 @@ Same steps. Show the old and the new side by side. For a skill, replace the fold
 `/setup-home-repo add git` is the one `add` that names no item. It turns a local-only home repo into a git repo, in this order:
 
 1. `git init`.
-2. Write the full `.gitignore` by apply step 5 in [setup.md](setup.md): local settings files, `.worktrees/`, secret files, and every child repo clone inside the home folder. Add `.backup/`.
+2. Write the full `.gitignore` by apply step 5 in [setup.md](setup.md): local settings files, `.worktrees/`, secret files, and every child repo clone inside the home folder.
 3. Show the list of files the first commit will hold. No clone folder, local settings file, or secret file may be on it. Check the list for secrets by the advise check.
 4. Commit on a yes.
 

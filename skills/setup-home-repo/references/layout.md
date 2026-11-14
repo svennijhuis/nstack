@@ -16,7 +16,6 @@ Create only what has content. An empty folder is noise.
   wiki/                knowledge in markdown, only if there is any
   tools/               scripts the agent runs, only if there are any
   .gitignore           local settings files, worktrees, secret files, child repo clones   (git only)
-  .backup/             dated copies of overwritten files   (local only)
 ```
 
 The exact files per harness are in [harnesses.md](harnesses.md).
@@ -116,7 +115,7 @@ When the clones sit inside the home folder, they stay where they are. In a git h
 
 ## Local only
 
-A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit. The person shares its files by hand, or not at all. Every mode works the same there, with one difference: a copy is the undo. Before a mode overwrites or removes a file, it shows the diff and copies the old file to `.backup/<yyyy-mm-dd>-<hhmm>/<the file's path from the home root>`. One run uses one dated folder. `.cursor/mcp.json` and `.vscode/mcp.json` so keep separate copies, and a second change on the same day does not replace the first. Never write over a backup that exists: add `-2` to the folder name.
+A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit. The person shares its files by hand, or not at all. Every mode works the same there, with one difference: there is no undo. A mode still shows the diff and waits for a yes before it overwrites or removes a file, but it keeps no copy of the old one. The person chose that risk with local only. A person who wants an undo uses git.
 
 To share it later, the person types `/setup-home-repo add git`, see [add.md](add.md).
 

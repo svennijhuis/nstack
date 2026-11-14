@@ -19,7 +19,7 @@ Setup asks once which one you want. It skips the question when the folder alread
 | --- | --- | --- |
 | For | One person | A team |
 | Git, commits, `.gitignore` | No | Yes |
-| The undo | A dated copy in `.backup/` | A commit |
+| The undo | None. A changed or removed file is gone. | A commit |
 | Sharing | You share files yourself, or not at all | Through the repo |
 
 Everything else works the same. To switch later, type `/setup-home-repo add git`.
