@@ -23,7 +23,7 @@ On `/tech-design help`, print this card and stop.
 
 ## List
 
-On `/tech-design` with no argument, read the header and `gaps.md` of every folder under `docs/design/`. Print one row per design, newest `Updated` first, and stop.
+On `/tech-design` with no argument, read the header and `gaps.md` of every folder under `docs/design/`. Print one row per design, newest `Updated` first, and stop. When the working directory's `AGENTS.md` has a `## Repos` section, read the same folder in each repo it points at that is on disk, and add a Repo column. To work on one of those, the human runs the skill from that repo.
 
 ```text
 Design              Size    Types        Status      Created     Updated     Open  Waiting

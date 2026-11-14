@@ -45,6 +45,8 @@ Write: docs/design/<folder>/research/<gap-id>-<topic>.md
 Do not: decide, recommend a product choice as final, call a live system, edit design.md
 ```
 
+Both paths are from the working directory. When the design sits in another repo, write the full path of that repo before `docs/design/`, so the subagent finds `gaps.md` and writes beside it.
+
 The subagent claims the gap by setting `owner` and status `research`, then calls `research` when that skill is installed.
 
 ## The research file
