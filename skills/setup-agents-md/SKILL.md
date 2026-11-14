@@ -13,7 +13,7 @@ A steering file loads on every request. Every line costs tokens and attention, a
 
 **Decisions live in the repo they change.** ADRs, the glossary, and topic docs go in that repo, never in the home repo. The home repo holds only decisions about itself. See [home-repo.md](references/home-repo.md).
 
-**Never invent a line.** Every command and every rule comes from the disk, the person, or a doc that is already there. The only fixed text is the Docs and Decisions sections in [templates.md](references/templates.md).
+**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Every rule comes from the person or a doc that is already there. The only fixed text is the Docs and Decisions sections in [templates.md](references/templates.md).
 
 **Never push.** Commit on a local branch, one per repo. The person pushes.
 
@@ -98,7 +98,7 @@ So a `CLAUDE.md` is allowed in one shape: it sits beside an `AGENTS.md`, and its
 The root file of every repo but a home repo always says how to start, build, and test, even when the commands are the standard ones for the stack. A wrong guess costs a failed run. A command that no script, manifest, or pipeline defines is left out, not guessed.
 
 1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses.
-2. **Learn each part's commands** from its scripts, its manifest, the pipeline that builds it, and then the docs that are already there. The pipeline is the best source: it is what really runs.
+2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. Never from a readme or another doc: the code is the truth. The pipeline is the best source: it is what really runs.
 3. **Check them, after approval.** Run the install command first, when a script, the manifest, or the pipeline defines one, then the build, test, and lint commands. A failure does not prove a command wrong: the dependencies, a database, or a test that was already red can cause it. So a command that a script, the manifest, or the pipeline defines is written even when it fails here, and the report gives the first line of its error. Only a command nothing defines is left out. When install cannot run, skip the check and say so. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
 4. **One part:** a `## Commands` section with Start, Build, Test, and Lint or Typecheck when they exist. When a part has more than one of a kind, such as a start per app, or a unit test and an integration test, write one line each, named for what it runs, with what must run first.
 5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. All of it stays in the one root file, where the `.git` folder is. Write no `AGENTS.md` in a part's folder. One that is already there is sorted like any other doc, and its kept lines move into the root file, as plan rows.
