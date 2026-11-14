@@ -14,7 +14,8 @@ Create only what has content. An empty folder is noise.
   repos/<area>.md      pointer files, only past about 20 repos
   wiki/                knowledge in markdown, only if there is any
   tools/               scripts the agent runs, only if there are any
-  .gitignore           local settings files, worktrees, secret files, child repo clones
+  .gitignore           local settings files, worktrees, secret files, child repo clones   (git only)
+  .backup/             dated copies of overwritten files   (local only)
 ```
 
 The exact files per harness are in [harnesses.md](harnesses.md).
@@ -35,6 +36,7 @@ Not sure which skill, repo, or source fits? Type the router: <router slash>.
 - One clone per repo. For a second task in the same repo at the same time, add a git worktree inside that clone.
 - Read a repo's own steering file before you change it.
 - Open one pull request per repo. Name the others in each description.
+- Record decisions, terms, and topic docs in the repo they are about, never here.
 
 ## Repos
 
@@ -110,7 +112,16 @@ Each area file holds pointer lines in the same format. Ask the person for the ar
 
 ## Clones inside the home repo
 
-When the clones sit inside the home folder, they stay where they are. `.gitignore` lists each clone folder. The pointers use their paths.
+When the clones sit inside the home folder, they stay where they are. In a git home repo, `.gitignore` lists each clone folder. The pointers use their paths.
+
+## Local only
+
+A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit, and it is never shared. Every mode works the same there, with two differences:
+
+- **A copy is the undo.** Before a mode overwrites or removes a file, it shows the diff and copies the old file to `.backup/<name>-<yyyy-mm-dd>`.
+- **It holds no project knowledge.** A design, ADR, or glossary there is seen by nobody else. Those go in a child repo.
+
+To share it later, the person types `/setup-home-repo add git`, see [add.md](add.md).
 
 ## Worktrees
 

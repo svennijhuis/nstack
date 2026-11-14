@@ -15,7 +15,7 @@ This skill builds that repo from what the person already has, keeps it current, 
 
 **Secrets stay out.** Never read `.env` or any other secret file. Never write a token, key, or password into a tracked file. Config names an environment variable instead.
 
-**Never push.** Commit in the home repo. In any other repo, edit only on a new local branch. The person pushes.
+**Never push.** Commit in the home repo, unless it is local only. In any other repo, edit only on a new local branch, one per repo. The person pushes.
 
 **Work from what was found.** Never invent a component the person does not have. Never drop one because it fits no kind. It goes in the `other` row and you ask.
 
@@ -23,7 +23,7 @@ This skill builds that repo from what the person already has, keeps it current, 
 
 ## The words
 
-A **home repo** is the repo the agent starts in. A **child repo** is any other repo it points at. A **component** is one thing the agent uses: a skill, a hook, an MCP server, a rule, a pointer. A **kind** is its row in the registry. A **source** is a place outside git the agent reads or writes: a wiki, an issue tracker, a pipeline, a chat. A **harness** is the agent client: Claude Code, Cursor, Copilot, or Codex. The **map** is the list of one line per item that the router answers from.
+A **home repo** is the repo the agent starts in. It is **local only** when its folder is not a git repo: one person uses it, and nothing is committed there. See [layout.md](references/layout.md). A **child repo** is any other repo it points at. A **component** is one thing the agent uses: a skill, a hook, an MCP server, a rule, a pointer. A **kind** is its row in the registry. A **source** is a place outside git the agent reads or writes: a wiki, an issue tracker, a pipeline, a chat. A **harness** is the agent client: Claude Code, Cursor, Copilot, or Codex. The **map** is the list of one line per item that the router answers from.
 
 ## The registry
 
@@ -73,9 +73,10 @@ Follow [setup.md](references/setup.md) step by step.
 3. **Explore the sources and the harnesses.** Read remotes, MCP config, and the command line tools on the path.
 4. **Ask what is left**, in numbered rounds, the recommended answer first.
 5. **Show the plan.** One table of every item with where it is and where it goes, the drafted `AGENTS.md`, and the drafted map. Wait for approval.
-6. **Apply.** Create the home repo, move the shared items, merge the config per harness, remove the moved copies in each child repo on a new local branch, commit in the home repo.
+6. **Apply.** Create the home repo, move the shared items, merge the config per harness, commit in the home repo, and on a new local branch in each child repo remove the moved copies and add the line that points home.
 7. **Write the router** by [router.md](references/router.md).
-8. **Report and stop.** One outcome per plan row, the branches created, what was skipped and why. The last line names the router slash as the place to start.
+8. **Hand over the child repos.** Call `setup-agents-md` for each repo the person picked. It owns what a child repo's steering file says.
+9. **Report and stop.** One outcome per plan row, the branches created, what was skipped and why. The last line names the router slash as the place to start.
 
 Setup is done when every plan row has an outcome and the router lists every item that was kept.
 

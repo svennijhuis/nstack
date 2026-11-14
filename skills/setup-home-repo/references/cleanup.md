@@ -9,7 +9,7 @@
 3. **Show what each picked row will change**: the files, and for a removal, what is removed and from where.
 4. **Apply in the order below.** Stop at the first failure and report.
 5. **Check again.** Run the checks for the rows you touched.
-6. **Commit and report.** One commit in the home repo. One commit on a new local branch in each child repo that changed. Do not push.
+6. **Commit and report.** One commit in the home repo, or the backups by [layout.md](layout.md) when it is local only. One commit on a new local branch in each child repo that changed. Do not push.
 
 ## Order
 
@@ -28,7 +28,7 @@ A yes to the list is not a yes to these. Confirm each one by name.
 | --- | --- |
 | Remove a file or folder | Show the path. For a duplicate, confirm the kept copy has the same content. If it differs, stop and ask which wins. |
 | Remove a worktree | Run `git status` in it. Any uncommitted or unpushed work means do not remove it. Report it. |
-| Drop a repo pointer | Say the repo itself is not touched, only the line. |
+| Drop a repo pointer | Say the repo itself is not touched, only the line. Offer to remove the line that points home from that repo, on its cleanup branch. |
 | Change anything in the user folder | Say it changes every session the person runs. |
 | Remove a suspected secret | Say removal does not undo the leak. The token must be rotated. Offer no history rewrite unless asked. |
 
@@ -39,6 +39,7 @@ Never use a force flag to get past a refusal. A refusal is a finding to report.
 - Work on a new local branch, `home-repo/cleanup-<date>`.
 - Skip a repo with uncommitted changes and report it.
 - Remove only what the picked rows name. Leave everything bucketed `repo-specific`.
+- A row whose Fix names `/setup-agents-md` is not fixed here. Name the command and leave the row.
 
 ## The router
 

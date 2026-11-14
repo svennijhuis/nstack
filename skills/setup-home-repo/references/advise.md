@@ -1,6 +1,6 @@
 # Advise
 
-`/setup-home-repo advise` audits the home repo and says what to fix. It reads. It never writes, never runs a tool against a service, and never opens a secret file.
+`/setup-home-repo advise` audits the home repo and says what to fix. It reads. It never writes, never runs a tool against a service, and never opens a secret file. In a local-only home repo, read "tracked file" as any file in the folder.
 
 ## Steps
 
@@ -63,7 +63,8 @@ For a suspected secret, name the file and the key. Never print the value.
 | --- | --- |
 | `AGENTS.md` over about 200 lines | medium |
 | A procedure in `AGENTS.md` that a skill already holds | medium |
-| Child repo steering file that repeats the home repo's text | low |
+| Child repo with no `AGENTS.md`, or with a `CLAUDE.md`. The Fix is `/setup-agents-md <repo>`. | medium |
+| Child repo without the line that points at the home repo | low |
 | Claude Code in use and a `CLAUDE.md` or `.claude/CLAUDE.md` in the home repo or a folder above it. Claude Code reads that file and skips every `AGENTS.md` below it. | high |
 | The `## Repos` heading missing | high |
 
