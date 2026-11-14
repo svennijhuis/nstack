@@ -63,6 +63,7 @@ For a repo with several parts, replace Shape and Commands with Parts. Keep Pipel
 
 <What it is, in one line.> Entry: `<solution or project file>`.
 
+- Install: `<command>`
 - Start: `<command>`
 - Build: `<command>`
 - Test: `<command>`
