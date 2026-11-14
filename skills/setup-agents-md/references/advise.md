@@ -28,7 +28,7 @@
 | A path that does not exist. The `docs/adr/` the Decisions section names does not count. | high |
 | Root file over about 60 lines, not counting the Parts section. One row. | low, medium past about 100 |
 | A folder tree or a list of file paths | medium |
-| Rules for one area only, in the root file | medium |
+| Rules for one area only, in the root file and outside that part's block | medium |
 | A procedure with steps that could be a skill | medium |
 | A style rule a linter or formatter could check | low |
 | Obvious advice, vague rules, or ALL-CAPS commands | low |
