@@ -34,7 +34,8 @@ So the home repo may hold open designs. It never holds a shipped design or an AD
 A run on the home repo itself, and a run with `all`, handles each design in the home `docs/design/` that is `abandoned`, or `committed` and shipped by the person's word.
 
 1. Ask which repos the design changed and which one owns the change, with the repos its text names as the recommended answer. For an `abandoned` design, ask which repo would have owned it: the one ADR goes there.
-2. In each of those repos, write the ADRs by the cross-repo rule above, as that repo's own plan, which holds only those ADRs when the run is on the home repo itself, on that repo's branch, after its own yes.
+2. In each of those repos, write the ADRs by the cross-repo rule above, as that repo's own plan, on that repo's branch, after its own yes.
+   When the run is on the home repo itself, that plan holds only those ADRs and the design's project terms, which go into the glossary of the repo that owns the change. It sorts nothing else, adds no section and no code standards file, and runs no command.
 3. Only when every one of those ADRs is committed, offer to delete the design folder, as a row in the home repo's plan. If a repo said no or was skipped, keep the folder and report which repo is missing.
 4. In a local-only home repo there is no git to keep the folder. Say so in the row, so the person knows the delete cannot be undone.
 
