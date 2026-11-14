@@ -20,7 +20,7 @@
 | A `.claude/CLAUDE.md` whose only line is `@AGENTS.md`. It imports nothing and hides `AGENTS.md`. | high |
 | A `CLAUDE.md` in the repo or above it, and a part with its own `AGENTS.md` and no one-line `CLAUDE.md` beside it. Claude Code skips that part's file. | high |
 | Claude Code in use, `claude --version` older than 2.1.277 or no answer, and no `CLAUDE.md` that imports `AGENTS.md` | high |
-| No start, build, or test command | high |
+| A start, build, or test command that a script, the manifest, or the pipeline defines, with no line for it | high |
 | A part with no commands, a pipeline with no line, or a line for a part or pipeline that is gone | medium |
 | A deploy or apply command with no word on how it runs | medium |
 | Two instructions that contradict | high |

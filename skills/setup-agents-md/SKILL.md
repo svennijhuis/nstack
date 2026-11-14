@@ -96,7 +96,7 @@ So a `CLAUDE.md` is allowed in one shape: it sits beside an `AGENTS.md`, and its
 
 ## Commands, by default
 
-The root file of every repo but a home repo always says how to start, build, and test, even when the commands are the standard ones for the stack. A wrong guess costs a failed run.
+The root file of every repo but a home repo always says how to start, build, and test, even when the commands are the standard ones for the stack. A wrong guess costs a failed run. A command that no script, manifest, or pipeline defines is left out, not guessed.
 
 1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses.
 2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. The pipeline is the best source: it is what really runs.
