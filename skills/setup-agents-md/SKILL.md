@@ -21,7 +21,7 @@ A steering file loads on every request. Every line costs tokens and attention, a
 
 ## The words
 
-The **steering file** is `AGENTS.md`. Every harness in nstack reads it. A **part** is one thing in the repo that builds, runs, or deploys on its own: an app, a package, a solution, a service, the infrastructure. A project or folder that holds only tests is not a part: it belongs to the part it tests. The **root file** is the steering file at the repo root. A **topic file** is a doc the root file points at and the agent reads only when the task touches its topic. An **ADR** is one decision record in `docs/adr/`. The **glossary** is `GLOSSARY.md`. **Derivable** means the code already says it.
+The **steering file** is `AGENTS.md`. Every harness in nstack reads it. A **part** is one thing in the repo that builds, runs, or deploys on its own: an app, a package, a solution, a service, the infrastructure. A project or folder that holds only tests always gets its commands in the root file: under the part it tests, or as a block of its own when it tests more than one part. The **root file** is the steering file at the repo root. A **topic file** is a doc the root file points at and the agent reads only when the task touches its topic. An **ADR** is one decision record in `docs/adr/`. The **glossary** is `GLOSSARY.md`. **Derivable** means the code already says it.
 
 ## What goes where
 
