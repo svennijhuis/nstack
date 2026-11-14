@@ -57,7 +57,9 @@ Some skills call skills that live in other repos. Run `setup-nstack-skills` to
 install them. The list is in
 [external-skills.md](skills/setup-nstack-skills/external-skills.md):
 
-- `tech-design` uses `technical-writing` and `unslop`.
+- `tech-design` uses `grilling`, `domain-modeling`, `research`,
+  `codebase-design`, `writing-for-agents`, `deslop`, `technical-writing`, and
+  `unslop`.
 
 ## Install
 
@@ -92,4 +94,5 @@ skills without losing them.
 
 ## License
 
-None yet.
+MIT. See [LICENSE](LICENSE). Each skill's `NOTICE.md` names where its ideas
+come from.
