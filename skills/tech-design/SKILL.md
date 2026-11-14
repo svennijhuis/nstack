@@ -95,7 +95,7 @@ Work past the destination is out of scope. Drop the row and add one line under O
 
 ## Companion skills
 
-Call each by its exact name with the Skill tool: `grilling`, `domain-modeling`, `research`, `codebase-design`, `writing-for-agents`, `deslop`. On each edit of `design.md`, call `writing-for-agents`. When a code snippet changes, call `deslop`. If one is not installed, say so once, point to Setup in the pack readme, and do that step by the rules in this skill.
+Call each by its exact name with the Skill tool: `grilling`, `domain-modeling`, `research`, `codebase-design`, `writing-for-agents`, `deslop`. On each edit of `design.md`, call `writing-for-agents`. When a code snippet changes, call `deslop`. If one is not installed, say so once, name `/setup-nstack-skills`, and do that step by the rules in this skill.
 
 ## Invocation
 
@@ -109,6 +109,7 @@ The person types `/tech-design`. Read the first word after it.
 | `<name>` or `<name> grill [gap]` | Work |
 | `<name> status`, `close <gap>`, `drop <gap>` | See [help.md](references/help.md) |
 | `<name> ready` or `<name> ready anyway` | Ready |
+| `<name> committed`, `<name> abandoned` | Set that status, see [help.md](references/help.md) |
 
 Resolve one gap per session, then stop. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
 
@@ -127,7 +128,7 @@ A second `new` for a name that already exists stops. Tell them to resume. Check 
 
 ### Work through the map
 
-1. **Load and catch up** by [resume.md](references/resume.md): read the map, take in new files under `input/`, print the board, flag overdue gaps, start new research. If the status is `ready`, `committed`, or `abandoned`, say so and stop.
+1. **Load and catch up** by [resume.md](references/resume.md): read the map, take in new files under `input/`, print the board, flag overdue gaps, start new research. When no design of that name is here and the working directory's `AGENTS.md` has a `## Repos` section, look in the repos it points at. If it is in one, name that repo, tell the human to run the skill from there, and stop. If the status is `ready`, `committed`, or `abandoned`, say so and stop.
 2. **Choose the gap and claim it.** Use the one the person named. Otherwise take the first frontier gap. Set `owner` before any work.
 3. **Resolve it by type.** Read a related row or research file when you need it. On a grilling gap, advice comes before the one question.
 4. **Record the resolution.** Write the answer on the row and set `decided`, or `accepted-risk` when the human accepts the risk you named. With no answer, set `waiting-on-input` and write the question sheet. Advice alone never closes a gap.

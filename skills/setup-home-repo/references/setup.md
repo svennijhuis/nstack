@@ -54,7 +54,7 @@ Round one, the shape:
 2. Where does the home repo live, and what is it called? Skip the location when step 1 found the home folder. Recommend a new private repo beside the others, named `home`.
 3. Is it for one person or a team? This decides what stays in the user folder.
 4. Is the home repo a git repo, or local only? Skip this when the folder already is a git repo. Recommend git, also for one person: the commit is the undo, and nothing is pushed. A team needs git. When the person picks local only, say once that it has no undo: a changed or removed file is gone.
-5. Which harnesses? Recommend the ones detected. When Claude Code is one and its version is older than 2.1.277 or was not found, ask too: write a one-line `CLAUDE.md`? Recommend yes. Without it that Claude Code reads no `AGENTS.md`. Name the other cases in the question: Bedrock, telemetry off, or project instructions set to `CLAUDE.md` only.
+5. Which harnesses? Recommend the ones detected. When Claude Code is one and its version is older than 2.1.277 or was not found, ask too: write a one-line `CLAUDE.md`? Recommend yes. Without it that Claude Code reads no `AGENTS.md`. Name the other cases in the question: Bedrock or telemetry off on a version from 2.1.277 to 2.1.280, or project instructions set to `CLAUDE.md` only on any version.
 6. What is the local path convention for repos? Recommend the one most repos already follow.
 
 Round two, the gaps:
@@ -98,12 +98,12 @@ In this order, so a stop halfway leaves nothing broken.
 
 1. **Create the home repo.** `git init` at the chosen path, or only the folder when it is local only. If the folder already is a git repo, use it.
 2. **Write `AGENTS.md`.** Write a `CLAUDE.md` only by the steering row in [harnesses.md](harnesses.md). If the home folder already has a `CLAUDE.md` or a `.claude/CLAUDE.md` with text of its own, move its lines into `AGENTS.md` as plan rows. Then delete it. When the person keeps a `CLAUDE.md`, the one-line file goes at the root, never in `.claude/`.
-3. **Copy the `shared` and `duplicate` items in**, except an item whose only copy is in a user folder. That item stays there, because a skill in both the user folder and the home repo registers twice. A skill folder moves whole. For a duplicate, copy the winning one once.
+3. **Copy the `shared` and `duplicate` items in**, also when the only copy is in a user folder. A skill folder moves whole. For a duplicate, copy the winning one once.
 4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
 5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones. Skip this when local only.
 6. **Commit in the home repo.** One commit, the plan summary as its message. Skip this when local only.
-7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, remove the copies that moved. Leave `repo-specific` items. Add one line to the repo's steering file that points at the home repo. If the repo has no steering file, that line is its whole `AGENTS.md`. Change nothing else in that file. Commit, and leave the repo on that branch. Do not push. Do not touch a repo with uncommitted changes; report it instead.
-8. **Leave the user folder for last and ask again.** Removing an item there changes every session the person runs. Name each one and get a yes.
+7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, with `-2` added when that name is taken, remove the copies that moved. Leave `repo-specific` items. Add the line that points home, by [layout.md](layout.md), to the repo's steering file. If the repo has no steering file, that line is its whole `AGENTS.md`. Change nothing else in that file. Commit, and leave the repo on that branch. Do not push. Do not touch a repo with uncommitted changes outside `docs/design/`; report it instead. An open design there is `tech-design`'s work in progress: leave it uncommitted.
+8. **Leave the user folder for last and ask again.** Removing an item there changes every session the person runs. Name each one and get a yes. On a no, say that an item now in both the home repo and the user folder registers twice.
 
 If a step fails, stop. Report what was done and what was not. Do not roll back what the person can see and fix.
 

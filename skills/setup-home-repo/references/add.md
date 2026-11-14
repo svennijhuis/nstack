@@ -16,7 +16,7 @@
 
 | Kind | What add does |
 | --- | --- |
-| `repo` | Adds the pointer line in the same format as the others. Adds the line that points home to the child repo, by apply step 7 in [setup.md](setup.md). Then offers `/setup-agents-md <repo>`, when that skill is installed. Past about 20 repos, offers the split into `repos/<area>.md` by [layout.md](layout.md). |
+| `repo` | Adds the pointer line in the same format as the others. Adds the line that points home to the child repo, by apply step 7 in [setup.md](setup.md). In a git home repo, a clone inside the home folder goes into `.gitignore` before the commit. Then asks whether to run `/setup-agents-md <repo>` and calls it on a yes, when that skill is installed. Past about 20 repos, offers the split into `repos/<area>.md` by [layout.md](layout.md). |
 | `source` | Adds the pointer line. If no access method exists, offers to add one first, such as an MCP server, and writes `none yet` if the person declines. |
 | `skill` | Copies the folder whole into the skills folder. If it came from a child repo, offers to remove it there on a new local branch. |
 | `rule` | Writes one file per harness in use, in each harness's format, with the same text. |

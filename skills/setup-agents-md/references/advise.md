@@ -58,7 +58,7 @@
 | A merged change that adds a dependency with no ADR in the same change, last 30 days | low |
 | Decision text in a spec, plan, or comment with no ADR | low |
 
-To find reverts, read `git log --grep="This reverts commit"` and, for each reverted commit, check whether it touched `docs/adr/` or `DECISIONS.md`. In a shallow clone, say the check covers only the history on disk.
+To find reverts, read `git log --grep="This reverts commit"` and, for each reverted commit, check whether it touched `docs/adr/` or `DECISIONS.md`. In a shallow clone, say the check covers only the history on disk. In a folder with no git, skip the checks that read git history and say so.
 
 ### Home repo
 

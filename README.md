@@ -31,8 +31,10 @@ flowchart TD
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
   each child repo that points home. `setup-agents-md` owns the rest of a repo's
   `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
-- **One branch per repo.** Every change to a repo sits on one local branch. You
-  review and push it. Nothing is written before you approve the plan.
+- **One branch per repo.** The two setup skills put every change to a repo on
+  one local branch, after you approve the plan. You review and push it.
+  `tech-design` writes only its design folder and commits nothing. You commit
+  it.
 - **`AGENTS.md` by default.** Claude Code reads it from version 2.1.277. A
   `CLAUDE.md` is written only when you ask for one or use an older Claude
   Code, and then it is one line: `@AGENTS.md`.
@@ -63,11 +65,14 @@ Create the target folder first if it does not exist (`mkdir -p ~/.cursor/skills`
 
 Then say "set up nstack" to pull in the external skills.
 
+With a home repo, `setup-home-repo` moves the skills from the user folder into
+it, after you approve the plan.
+
 ## Requirements
 
 - Network access for `setup-nstack-skills`, to fetch external skills at their
   pinned commit.
-- A git repo to work in. `tech-design` writes to
+- A git repo to work in, or a local-only home repo. `tech-design` writes to
   `docs/design/<yyyy-mm-dd>-<name>/` relative to the folder the agent runs in.
   Start the agent in the repo that should hold the design. With a home repo,
   start in the child repo the design is about. When the design spans several

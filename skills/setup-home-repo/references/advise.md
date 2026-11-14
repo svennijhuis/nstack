@@ -63,8 +63,8 @@ For a suspected secret, name the file and the key. Never print the value.
 | --- | --- |
 | `AGENTS.md` over about 200 lines | medium |
 | A procedure in `AGENTS.md` that a skill already holds | medium |
-| Child repo with no `AGENTS.md`, or with a `CLAUDE.md` that has text of its own. The Fix is `/setup-agents-md <repo>`. | medium |
-| Child repo without the line that points at the home repo | low |
+| Child repo with no `AGENTS.md`, or with a `CLAUDE.md` that has text of its own. The Fix is `/setup-agents-md <repo>` when that skill is installed. Otherwise the Fix says what to change by hand. | medium |
+| Child repo without the line that points home, which starts with `Home repo:` | low |
 | A `CLAUDE.md` or `.claude/CLAUDE.md` in the home repo with text of its own | high |
 | A `.claude/CLAUDE.md` in the home repo whose only line is `@AGENTS.md`. It imports nothing and hides `AGENTS.md`. | high |
 | Claude Code in use, `claude --version` older than 2.1.277 or no answer, and no root `CLAUDE.md` that imports `AGENTS.md` | high |

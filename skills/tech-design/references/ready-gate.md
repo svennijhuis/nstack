@@ -58,6 +58,8 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 27. `design.md` follows the `technical-writing` skill. Read the skill, then check each section against its rules. A fail names the file, the line, and the rule broken.
 28. Run the `unslop` skill over `design.md` and every file in the folder. This check goes last. It passes when unslop finds nothing left to fix. A fail lists each file and line it would change.
 
+When the skill a check needs is not installed, that check fails: `fail: <skill> not installed`. Name `/setup-nstack-skills`.
+
 ## Ready anyway
 
 `/tech-design <name> ready anyway` lets the human go ready while gaps are open. Use it only when the human types it. Never suggest it. Never accept a risk for them.

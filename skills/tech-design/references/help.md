@@ -1,4 +1,4 @@
-# Help, list, status, close, drop
+# Help, list, status, close, drop, committed, abandoned
 
 These modes let the human see where a design stands and steer it. Help, list, and status change no file.
 
@@ -16,6 +16,8 @@ On `/tech-design help`, print this card and stop.
 /tech-design <name> drop <gap>      move a gap out of scope, with a reason
 /tech-design <name> ready           strict gate. refuses while anything is open
 /tech-design <name> ready anyway    ready with open gaps you accept one by one
+/tech-design <name> committed       builders follow this design now. only from ready
+/tech-design <name> abandoned       the work stopped, with a reason
 /tech-design help                   this card
 ```
 
@@ -23,7 +25,7 @@ On `/tech-design help`, print this card and stop.
 
 ## List
 
-On `/tech-design` with no argument, read the header and `gaps.md` of every folder under `docs/design/`. Print one row per design, newest `Updated` first, and stop. When the working directory's `AGENTS.md` has a `## Repos` section, read the same folder in each repo it points at that is on disk, and add a Repo column. To work on one of those, the human runs the skill from that repo.
+On `/tech-design` with no argument, read the header and `gaps.md` of every folder under `docs/design/`. Print one row per design, newest `Updated` first, and stop. When the working directory's `AGENTS.md` has a `## Repos` section, read the same folder in each repo it points at that is on disk, and add a Repo column. When the lines under `## Repos` name `repos/<area>.md` files, the repos are the pointer lines in those files. To work on one of those, the human runs the skill from that repo.
 
 ```text
 Design              Size    Types        Status      Created     Updated     Open  Waiting
@@ -87,3 +89,18 @@ On `/tech-design <name> drop <gap>`:
 3. Clear its id from every `blocks` cell. Log one line. Stop.
 
 Drop a gap only when it sits past the destination. A gap that is in scope but unanswered is not dropped. It is closed, or accepted as a risk at ready.
+
+## Committed and abandoned
+
+Only the human's own command sets these two. Never set one yourself.
+
+On `/tech-design <name> committed`:
+
+1. If the status is not `ready`, say what it is and stop.
+2. Ask for each approver's verdict and date. Fill Sign-off.
+3. Set `Status: committed` and `Updated`. Log one line. Stop.
+
+On `/tech-design <name> abandoned`, from any status:
+
+1. Ask for the reason if none was given.
+2. Set `Status: abandoned` and `Updated`. Log the reason. Change no gap. Stop.

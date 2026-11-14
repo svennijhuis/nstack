@@ -15,6 +15,8 @@ Create only what has content. An empty folder is noise.
   repos/<area>.md      pointer files, only past about 20 repos
   wiki/                knowledge in markdown, only if there is any
   tools/               scripts the agent runs, only if there are any
+  docs/adr/            decisions about the home repo itself   (from setup-agents-md, left alone)
+  docs/design/         open designs that span repos           (from tech-design, left alone)
   .gitignore           local settings files, worktrees, secret files, child repo clones   (git only)
 ```
 
@@ -35,7 +37,7 @@ Start every session here. Reach other repos and sources through the pointers bel
 - One clone per repo. For a second task in the same repo at the same time, add a git worktree inside that clone.
 - Read a repo's own steering file before you change it.
 - Open one pull request per repo. Name the others in each description.
-- Record decisions, terms, and topic docs in the repo they are about, never here.
+- Record decisions, terms, and topic docs in the repo they are about. Only decisions about this home repo itself go here.
 
 ## Repos
 
@@ -88,6 +90,16 @@ runbooks (docs): Confluence space OPS. Reach via the MCP server `atlassian`.
 ```
 
 Nothing from a source is copied into the home repo. The pointer says where it is and how to reach it. If no access method exists yet, write `Reach via: none yet` and report it. Do not invent one.
+
+## The line that points home
+
+One fixed line in each child repo's steering file, under its first sentence:
+
+```text
+Home repo: <local path>. Shared skills and pointers to the other repos and sources live there.
+```
+
+Every mode finds the line by its start, `Home repo:`.
 
 ## Many repos
 
