@@ -29,7 +29,7 @@ To support a new kind, add a row here and a row in the harness table. Change not
 - Skip `.env`, key files, and anything a `.gitignore` marks as a secret store. Note that a file exists. Do not open it.
 - Read the user folder of each harness too. Items there are the ones most likely to be stale.
 - Record for each item: kind, name, path, harness, the repo it sits in, and a hash of its content. The hash finds duplicates and drift.
-- A steering file in a child repo (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`) is `repo-specific` and skips the bucket rules. Apply step 7 in [setup.md](setup.md) trims it.
+- A steering file in a child repo (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`) is `repo-specific` and skips the bucket rules. Apply step 7 in [setup.md](setup.md) adds one line to it. The rest of it belongs to `setup-agents-md`.
 - Two items are the same when name and kind match. They are a `duplicate` when the hashes match and `drift` when they do not. On drift, show both and ask which one wins. Never merge them yourself.
 
 ## Choosing the bucket

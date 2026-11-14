@@ -9,14 +9,14 @@
 3. **Explore what you need.** A repo: its remote, what it is, the path convention already used in `AGENTS.md`. A source: its location and the access method, checked by the same means as setup. An MCP server: its command or address, and the variables it needs.
 4. **Ask only what is missing**, with a recommended answer.
 5. **Show the diff.** Every file that changes, for every harness in use, plus the map line in the router. One item usually touches two to five files.
-6. **Write** on a yes. Commit in the home repo. Do not push.
+6. **Write** on a yes. Commit in the home repo, or back up by [layout.md](layout.md) when it is local only. Do not push.
 7. **Report** in one or two lines: what was added, where, and anything a harness had no place for.
 
 ## By kind
 
 | Kind | What add does |
 | --- | --- |
-| `repo` | Adds the pointer line in the same format as the others. Past about 20 repos, offers the split into `repos/<area>.md` by [layout.md](layout.md). |
+| `repo` | Adds the pointer line in the same format as the others. Adds the line that points home to the child repo, by apply step 7 in [setup.md](setup.md). Then offers `/setup-agents-md <repo>`, when that skill is installed. Past about 20 repos, offers the split into `repos/<area>.md` by [layout.md](layout.md). |
 | `source` | Adds the pointer line. If no access method exists, offers to add one first, such as an MCP server, and writes `none yet` if the person declines. |
 | `skill` | Copies the folder whole into the skills folder. If it came from a child repo, offers to remove it there on a new local branch. |
 | `rule` | Writes one file per harness in use, in each harness's format, with the same text. |
@@ -33,6 +33,12 @@ The paths per harness are in [harnesses.md](harnesses.md).
 ## Update
 
 Same steps. Show the old and the new side by side. For a skill, replace the folder whole. Never patch a skill's body in place. If the name changes, change the map line and every place that names it: `AGENTS.md`, other skills' text, the router's flows.
+
+## From local only to git
+
+`/setup-home-repo add git` is the one `add` that names no item. It turns a local-only home repo into a git repo: `git init`, write `.gitignore` with `.backup/` in it, and make the first commit. Show what will be committed first, and check it for secrets by the advise check.
+
+The way back is the person's: they delete the `.git` folder.
 
 ## Remove
 

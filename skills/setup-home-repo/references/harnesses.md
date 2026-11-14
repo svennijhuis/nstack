@@ -19,7 +19,7 @@ Confirm the list with the person in the first round. Write files only for the co
 
 | Kind | Path | Note |
 | --- | --- | --- |
-| `steering`, `repo`, `source` | `AGENTS.md` | Cursor, Copilot, and Codex read it. Claude Code reads `CLAUDE.md`, so write a `CLAUDE.md` whose only line is `@AGENTS.md`. |
+| `steering`, `repo`, `source` | `AGENTS.md` | All four read it. Claude Code reads it from version 2.1.277, and only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the working folder or a folder above it. Write no `CLAUDE.md` by default. When the person asks for one or uses an older Claude Code, write one whose only line is `@AGENTS.md`. With clones inside the home folder, each child repo then needs the same one-line file. |
 | `tool` | `tools/` | Plain files. One line per tool in `AGENTS.md`. |
 | `wiki` | `wiki/` | Plain markdown. One line in `AGENTS.md` says what is in it. |
 
