@@ -29,14 +29,14 @@ The **steering file** is `AGENTS.md`. Every harness in nstack reads it. A **part
 | --- | --- | --- |
 | What the project is, in one sentence | Root file | Anchors every task |
 | The main parts and what each does | Root file | A thin map so the agent knows where to start |
-| The package manager or build tool, when the stack has more than one to choose from and the repo does not pin it | Root file | The agent guesses wrong otherwise |
+| The package manager or build tool, when the stack has more than one to choose from and no lockfile or manifest field pins it | Root file | The agent guesses wrong otherwise |
 | How to start, build, and test, plus lint and typecheck | Root file | The agent needs them first |
 | Each part and its commands. Each pipeline and what it does. | Root file, or the part's own `AGENTS.md` | One repo can hold several of each |
 | Rules for every task that no tool enforces | Root file | They apply everywhere |
 | One line per topic file, ADRs, and glossary | Root file | Progressive disclosure |
 | Code standards: how code is written here, beyond what the linter checks | `docs/agents/code-standards.md`, a default topic file | Loaded when the agent writes code, not on every request |
 | Rules for one area: testing, API design, a framework | Topic file under `docs/agents/` | Loaded only when needed |
-| A procedure with steps | A skill | Loaded only when triggered |
+| A procedure with steps | A skill. Until the person makes one, a topic file under `docs/agents/`. Never deleted. | Loaded only when triggered |
 | Why something was chosen, and what was rejected | `docs/adr/` | The code shows what, never why |
 | Terms with a meaning special to this project | `GLOSSARY.md` | The code uses the words, it does not define them |
 | How the code works, folder trees, deep file paths | Nowhere. Delete it. | Goes stale, misleads the agent |
@@ -100,7 +100,7 @@ The root file of every repo but a home repo always says how to start, build, and
 
 1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses.
 2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. The pipeline is the best source: it is what really runs.
-3. **Check them, after approval.** Run the install command first, when a script, the manifest, or the pipeline defines one, then the build and test commands. A failure does not prove a command wrong: the dependencies, a database, or a test that was already red can cause it. So a command that a script, the manifest, or the pipeline defines is written even when it fails here, and the report gives the first line of its error. Only a command nothing defines is left out. When install cannot run, skip the check and say so. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
+3. **Check them, after approval.** Run the install command first, when a script, the manifest, or the pipeline defines one, then the build, test, and lint commands. A failure does not prove a command wrong: the dependencies, a database, or a test that was already red can cause it. So a command that a script, the manifest, or the pipeline defines is written even when it fails here, and the report gives the first line of its error. Only a command nothing defines is left out. When install cannot run, skip the check and say so. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
 4. **One part:** a `## Commands` section with Start, Build, Test, and Lint or Typecheck when they exist.
 5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. Past about four parts, or when a part needs its own rules, the part gets its own `AGENTS.md` in its folder with what it is, its stack, its commands, and its rules. The root keeps one line for it, and neither file repeats the other. The harness loads a folder's `AGENTS.md` when the agent works there. For Claude Code that holds only by the Parts rule in [CLAUDE.md](#claudemd).
 6. **Pipelines:** one line per pipeline: its file, what triggers it, and what it does. The agent learns what CI will check before it opens a pull request.
