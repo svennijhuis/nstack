@@ -24,7 +24,7 @@
 | A part with no commands, a pipeline with no line, or a line for a part or pipeline that is gone | medium |
 | A deploy or apply command with no word on how it runs | medium |
 | Two instructions that contradict | high |
-| A command that no script, manifest, or pipeline defines | high |
+| A command that no script, manifest, or pipeline defines, and that is not marked `Not in the code.` | high |
 | A path that does not exist. The `docs/adr/` the Decisions section names does not count. | high |
 | Root file over about 60 lines, not counting the Parts section. One row. | low, medium past about 100 |
 | A folder tree or a list of file paths | medium |
