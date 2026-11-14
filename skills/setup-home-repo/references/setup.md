@@ -8,7 +8,7 @@ Use subagents for the wide searches in steps 1 to 3 when the harness has them. E
 
 Ask one thing first if you do not know it: which folders hold the person's repos. Recommend the parent of the working directory.
 
-If the working directory is not a git repo and holds child repos, it is the home folder and holds the repos. Skip the question above and the location in round one question 2. Its clones stay where they are.
+If the working directory is not a git repo and holds child repos, it is the home folder and holds the repos. The home repo is that folder itself. Skip the question above and the location in round one question 2. Its clones stay where they are.
 
 Find every git repo under those folders. Skip dependency and build folders. For each, record:
 

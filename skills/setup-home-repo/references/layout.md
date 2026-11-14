@@ -27,7 +27,7 @@ The exact files per harness are in [harnesses.md](harnesses.md).
 Keep it short. It is loaded every session. A skill holds a procedure. `AGENTS.md` holds where things are.
 
 ```markdown
-# <team or person> home repo
+# Home repo
 
 Start every session here. Reach other repos and sources through the pointers below.
 
@@ -93,7 +93,7 @@ Nothing from a source is copied into the home repo. The pointer says where it is
 
 ## The line that points home
 
-One fixed line in each child repo's steering file, under its first sentence:
+One fixed line in each child repo's steering file, under its first sentence, or as the first line when the file has none:
 
 ```text
 Home repo: <local path>. Shared skills and pointers to the other repos and sources live there.

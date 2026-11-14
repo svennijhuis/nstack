@@ -25,7 +25,7 @@
 | A deploy or apply command with no word on how it runs | medium |
 | Two instructions that contradict | high |
 | A command that no script, manifest, or pipeline defines | high |
-| A path that does not exist | high |
+| A path that does not exist. The `docs/adr/` the Decisions section names does not count. | high |
 | Root file over about 60 lines. One row. | low, medium past about 100 |
 | A folder tree or a list of file paths | medium |
 | Rules for one area only, in the root file | medium |

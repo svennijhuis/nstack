@@ -39,8 +39,9 @@ Take the first rule that fits.
 
 1. It comes from a plugin or a marketplace → `installed`.
 2. It is in two or more places → `duplicate`.
-3. It sits in one repo, and its body mentions that repo's name, a path, or a service 3 or more times, counting each occurrence → `repo-specific`.
-4. Otherwise → `shared`. When the count is 1 or 2, round two asks if it is `repo-specific`.
+3. It is a `tool` or a `wiki` item and sits in one repo only → `repo-specific`. A repo's own scripts and docs stay with its code.
+4. It sits in one repo, and its body mentions that repo's name, a path, or a service 3 or more times, counting each occurrence → `repo-specific`.
+5. Otherwise → `shared`. When the count is 1 or 2, round two asks if it is `repo-specific`.
 
 Propose the bucket. The person can change any row in the plan step.
 

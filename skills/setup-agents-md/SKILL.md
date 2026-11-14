@@ -100,7 +100,7 @@ The root file of every repo but a home repo always says how to start, build, and
 
 1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses.
 2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. The pipeline is the best source: it is what really runs.
-3. **Check them, after approval.** Run the install command first, then the build and test commands. A failure does not prove a command wrong: the dependencies, a database, or a test that was already red can cause it. So a command that a script, the manifest, or the pipeline defines is written even when it fails here, and the report gives the first line of its error. Only a command nothing defines is left out. When install cannot run, skip the check and say so. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
+3. **Check them, after approval.** Run the install command first, when a script, the manifest, or the pipeline defines one, then the build and test commands. A failure does not prove a command wrong: the dependencies, a database, or a test that was already red can cause it. So a command that a script, the manifest, or the pipeline defines is written even when it fails here, and the report gives the first line of its error. Only a command nothing defines is left out. When install cannot run, skip the check and say so. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
 4. **One part:** a `## Commands` section with Start, Build, Test, and Lint or Typecheck when they exist.
 5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. Past about four parts, or when a part needs its own rules, the part gets its own `AGENTS.md` in its folder with what it is, its stack, its commands, and its rules. The root keeps one line for it, and neither file repeats the other. The harness loads a folder's `AGENTS.md` when the agent works there. For Claude Code that holds only by the Parts rule in [CLAUDE.md](#claudemd).
 6. **Pipelines:** one line per pipeline: its file, what triggers it, and what it does. The agent learns what CI will check before it opens a pull request.
@@ -120,7 +120,7 @@ When the repo already has a standards file elsewhere, such as a language file un
 
 ## The decision rules
 
-The root file of every repo but a home repo always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths.
+The root file of every repo but a home repo always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths. The section stays when `docs/adr/` does not exist yet: the first ADR creates the folder. That path is not drift.
 
 ## With the other nstack skills
 
