@@ -37,7 +37,7 @@ Never use a force flag to get past a refusal. A refusal is a finding to report.
 ## Child repos
 
 - Work on a new local branch, `home-repo/cleanup-<date>`.
-- Skip a repo with uncommitted changes outside `docs/design/` and report it.
+- Skip a repo with uncommitted changes to tracked files, other than under `docs/design/`, and report it.
 - Remove only what the picked rows name. Leave everything bucketed `repo-specific`.
 - A row whose Fix names `/setup-agents-md` is not fixed here. Name the command and leave the row.
 
