@@ -16,16 +16,26 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 
 ```mermaid
 flowchart TD
-    A[setup-nstack-skills<br/>once: install the external skills] --> B{Many repos?}
+    A[setup-nstack-skills<br/>once: install the external skills] --> B{More than one repo?}
     B -->|Yes| C[setup-home-repo<br/>once: skills, pointers, MCP, hooks]
     B -->|No| D
     C -->|calls, per child repo| D[setup-agents-md<br/>lean AGENTS.md, code standards, ADRs, glossary]
-    D --> E[tech-design<br/>per feature, lives where you start it]
+    D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
     E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
-    F --> G[setup-agents-md advise<br/>reports drift and shipped designs]
-    G --> H[setup-agents-md<br/>updates AGENTS.md, shipped decisions become ADRs]
+    F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
+    G -->|once a feature has shipped| H[setup-agents-md<br/>shipped decisions become ADRs,<br/>the design folder is offered for deletion]
     H --> E
 ```
+
+A design from start to shipped:
+
+1. `/tech-design new <name>` charts the design and lists its gaps.
+2. `/tech-design <name>` closes one gap per session.
+3. `/tech-design <name> ready` runs the gate and writes the tickets.
+4. `/tech-design <name> committed` records the sign-off. Builders start.
+5. After the feature ships, `/setup-agents-md` in the repo that holds the
+   design asks if it shipped, turns its decisions into ADRs, and offers to
+   delete the folder.
 
 - **Each skill works alone.** A skill calls another only when it is installed.
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
@@ -36,8 +46,8 @@ flowchart TD
   `tech-design` writes only its design folder and commits nothing. You commit
   it.
 - **`AGENTS.md` by default.** Claude Code reads it from version 2.1.277. A
-  `CLAUDE.md` is written only when you ask for one or use an older Claude
-  Code, and then it is one line: `@AGENTS.md`.
+  `CLAUDE.md` is written only when you ask for one, use an older Claude Code,
+  or another `CLAUDE.md` hides `AGENTS.md`. Then it is one line: `@AGENTS.md`.
 
 The details are in the READMEs of
 [setup-home-repo](skills/setup-home-repo/README.md) and
@@ -82,7 +92,7 @@ it, after you approve the plan.
 ## Make them yours
 
 These are starting points. Edit them. Put personal settings in your
-user-level steering file or in a repo's `AGENTS.md`, so you can update the
+user-level instructions file or in a repo's `AGENTS.md`, so you can update the
 skills without losing them.
 
 ## License

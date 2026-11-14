@@ -9,7 +9,7 @@ This file is for people. The agent reads [SKILL.md](SKILL.md).
 1. Reads your repos, your agent config, and your tools. It asks only what it could not find.
 2. Shows a plan: every item, where it is now, and where it goes.
 3. Waits for your yes. Then it builds the home repo. It writes no skill of its own.
-4. In each child repo it removes what moved and adds one line that points home, on a new local branch. It never pushes.
+4. In each child repo it removes what moved and adds one line to its `AGENTS.md` that points home and starts with `Home repo:`, on a new local branch. It never pushes.
 
 ## Local only or git
 
@@ -36,7 +36,7 @@ Each skill works without the other.
 - `setup-agents-md` owns the rest of each child repo's `AGENTS.md`, its ADRs, and its glossary.
 - After setup and after `add <repo>`, this skill asks which child repos get `setup-agents-md` and calls it for those. Each repo shows its own plan and waits for its own yes. Both skills commit on the same branch.
 - Without `setup-agents-md`, the child repos' steering files stay as they are, and the report names them.
-- `AGENTS.md` is the default. Every harness reads it, Claude Code from version 2.1.277. Setup checks your Claude Code version itself. A `CLAUDE.md` is written only when you ask for one or that check fails, and then it is one line at the root: `@AGENTS.md`.
+- `AGENTS.md` is the default. Every harness reads it, Claude Code from version 2.1.277. Setup checks your Claude Code version itself. A `CLAUDE.md` is written only when you ask for one, that check fails, or another `CLAUDE.md` hides `AGENTS.md`. Then it is one line at the root: `@AGENTS.md`.
 
 ## Designs
 
