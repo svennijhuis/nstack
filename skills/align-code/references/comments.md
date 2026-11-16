@@ -22,7 +22,3 @@ Everything else. Explanations, banners, commented-out code, `TODO`, `FIXME`, and
 - A comment that explains a surprise in our code: delete it, fix the code. Rename, extract, type, or test. One `mid` ticket.
 - A suppression on a rule that catches bugs: delete it, fix the code. One `mid` ticket.
 - `IMPORTANT`, `do not remove`: encode it as a test, type, or lint rule, then delete it. If it is false, delete it.
-
-## In the rollout
-
-Deletes run in the comments wave, model `cheap`. No ticket adds a comment that explains code. Review, `check`, and `advise` flag every one.

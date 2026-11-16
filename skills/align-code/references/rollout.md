@@ -15,7 +15,7 @@ A wave starts when the one before it is all `done` or `blocked`. Tickets in a wa
 | 4. Rest | `bad`, then `inconsistent` |
 | 5. Markers | Frozen and exception markers |
 | 6. Comments | Deletes by [comments.md](comments.md), then each fix it calls for |
-| 7. Tests | The tests area |
+| 7. Tests | Tickets that align the tests area. Never a wave 0 test. |
 
 No ticket changes lint, format, or type checker config. Those come as advice at the end.
 
@@ -31,15 +31,16 @@ Exemplar: <module>
 Files: <every file it may change, one per line>
 Model: <cheap | mid | main>
 Checks: <commands from AGENTS.md, plus each contract check>
-Do not: change a file not listed, change a frozen surface, add a dependency, add or change a migration, change or delete a test's expectation, add a comment [comments.md](comments.md) deletes
+Do not: change a file not listed, or anything under "A ticket never" in contracts.md
 Blocked by: <ids or none>
 Status: todo
+Worktree:
 Commit:
 ```
 
-- **Size:** one module, or at most 20 files of one mechanical change.
+- **Size:** at most 20 files. One exception: an internal rename or retype is one ticket however many files, because every caller, tests included, changes in the same commit by [contracts.md](contracts.md). Past 20 files it gets model `mid`, runs alone, blocks every ticket that shares a file, and is reviewed 20 files at a time.
 - **Files:** needs another file? Stop and report. Never edit outside the list.
-- **Model:** `cheap` for mechanical work: renames, imports, moves, comment deletes. `mid` for wave 0 tests. `mid` for judgment: error flow, boundaries, adapters, splits. `main` only after two failed `mid` reviews, when the person asks. In Claude Code: `haiku`, `sonnet`, the session model.
+- **Model:** `cheap` for mechanical work: renames, imports, moves, comment deletes. `mid` for wave 0 tests. `mid` for judgment: error flow, boundaries, adapters, splits. `main` only for a `blocked` ticket the person sends back. In Claude Code: `haiku`, `sonnet`, the session model.
 
 `rollout.md` starts with the board:
 
@@ -49,45 +50,47 @@ Wave  Ticket  Title                         Model  Status   Commit
 3     T-007   Errors: result type, billing  mid    blocked  failed review twice
 ```
 
-Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
+Statuses: `todo`, `doing`, `review`, `done`, `blocked`. A `blocked` ticket goes back to `todo` only when the person asks, with model `main`.
 
 ## Start
 
 1. Status not `ready` or `applying`: say so and stop.
-2. Uncommitted changes to tracked files outside `docs/align/` and `docs/design/`: stop and report.
-3. First apply only: show the board, counts by wave and model, and the branch. Wait for a yes. Log `apply approved`.
-4. Branch `align/<yyyy-mm-dd>-<name>` from the current branch. Fill `Branch`. Status `applying`.
+2. Status `applying`: check out `Branch`. Missing: stop and report. Then each `doing` or `review` ticket:
+   - `git log` has its `align: T-<nnn>` commit: write the commit, set `done`.
+   - It has a `Worktree`: remove that worktree, set `todo`.
+   - Neither: show `git status` and ask whether those changes are this ticket's leftovers. Yes: undo as in [Each ticket](#each-ticket) step 5, set `todo`. No: stop and report.
+3. Uncommitted changes to tracked files, or untracked files, outside `docs/align/` and `docs/design/`: stop and report.
+4. Status `ready`, the first apply: show the board, counts by wave and model, and the branch. Wait for a yes. Log `apply approved`. Create `align/<yyyy-mm-dd>-<name>` from the current branch. Fill `Branch`. Status `applying`.
 5. Run every check once. Log what is already red.
 
 ## Each ticket
 
-1. **Pick** `todo` tickets in the lowest open wave, blockers `done`, no file held by a `doing` ticket. Up to four. Set `doing`.
-2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket and the full paths to the exemplar, [contracts.md](contracts.md), and [comments.md](comments.md). Nothing from the conversation. It returns only: the worktree path, the files changed, one `pass` or `fail` line per check with the first error line, and anything it could not do. Never the full check output. The subagent never commits.
-3. **Review.** Set `review`. Run `code-review` on the worktree: fixed point the apply branch head the ticket started from, spec the ticket, standards the area sections of `align.md` and [comments.md](comments.md). Read the diff with `git diff`. Pass only when:
+1. **Pick** `todo` tickets in the lowest open wave, blockers `done`, no file held by a `doing` ticket. Set `doing`. With worktrees: up to four. Without: one.
+2. **Brief** one subagent each, with its model. With worktrees: each in its own, its path written to `Worktree` first. Without: on the apply branch itself. Give the ticket and the full paths to the exemplar, [contracts.md](contracts.md), and [comments.md](comments.md). Nothing from the conversation. It returns only: the worktree path or `none`, the files changed, one `pass` or `fail` line per check with the first error line, and anything it could not do. Never the full check output. The subagent never commits.
+3. **Review.** Set `review`. Run `code-review` on the change: fixed point the apply branch head the ticket started from, spec the ticket, standards the area sections of `align.md` and [comments.md](comments.md). Read the diff with `git diff`. Pass only when:
    - every changed line follows the standard and looks like the exemplar
    - no file outside the list changed
    - nothing in Do not happened
    - every check passed, every contract check shows no difference
    - `code-review` reports no standards violation and no smell the ticket added
    - `deslop` finds nothing
-4. **Commit** on a pass: apply the worktree diff to the apply branch, stage only the ticket's files, commit `align: T-<nnn> <title>`, write the commit, set `done`, remove the worktree. A fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
-5. **Update the board** after every ticket.
+4. **Commit** on a pass: with a worktree, apply its diff to the apply branch and remove it. Stage only the ticket's files, commit `align: T-<nnn> <title>`, write the commit, clear `Worktree`, set `done`.
+5. **Fail:** undo first. With a worktree: remove it, clear `Worktree`. Without: `git restore --staged --worktree -- . ':!docs/align' ':!docs/design'`, then `git clean -fd -- . ':!docs/align' ':!docs/design'`. Start step 3 made sure nothing else was there. The first fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
+6. **Update the board** after every ticket.
 
-Stop between any two tickets. Stop the session after about ten reviewed tickets, so every review gets a clean context. On resume, `doing` and `review` go back to `todo` and their worktrees are removed.
+Stop between any two tickets. Stop the session after 10 reviewed tickets, so every review gets a clean context. On resume, Start step 2 undoes `doing` and `review` tickets.
 
 ## Finish
 
-1. **Verify.** Run the surveys again on every area with a standard. Pass: one variant left, apart from marked code. Fail: one ticket per leftover file, in a new wave. Stay `applying`.
+1. **Verify.** Run the surveys again on every area with a standard. Pass: one variant left, apart from marked code. Fail, the first time: one ticket per leftover file, in one new wave. Stay `applying`. Fail after that wave: set those files' tickets `blocked` and ask the person.
 2. **Lint advice.** Write `lint.md` in the align folder and show it:
 
    ```text
-   Standard        Tool    Rule and setting                                     Catches                 Hits now
-   Errors: no null eslint  no-restricted-syntax ReturnStatement > Literal[raw="null"]  return null on failure  0
-   Comments        eslint  no-warning-comments ["error", {"terms": ["todo"]}]     TODO                    0
-   Naming          none    no tool can check it                                 the check mode covers it  -
+   Standard         Tool    Rule and setting                                          Catches                 Hits now
+   Errors: no null  eslint  no-restricted-syntax ReturnStatement > Literal[raw="null"]  return null on failure  0
    ```
 
-   - One row per standard with `Checked by` set, plus every standard a rule could now check.
+   - One row per standard.
    - Use the repo's own linter, formatter, or type checker, or a well-known plugin for it. Name the exact rule id and setting. Never invent a rule: find it in the tool's installed docs or its source.
    - `Hits now`: run the tool once with the rule on the command line, never in a config file. Tool not installed: `-`.
    - No rule fits: say `none`, and that `/align-code check` covers it.
@@ -100,7 +103,7 @@ Stop between any two tickets. Stop the session after about ten reviewed tickets,
    3. Show both as plan rows. Wait for a yes. The person maintains `code-standards.md`: no line goes without its row.
    4. `writing-for-agents` on each file. Commit.
    5. File gone, or a pointer now stale: tell the person to run `/setup-agents-md`. Never edit `AGENTS.md`.
-5. **Done.** Nothing `todo`: status `aligned`. Log the counts.
+5. **Done.** Nothing `todo` or `blocked`, and Verify passed: status `aligned`. Else stay `applying`. Log the counts.
 6. **Report** tickets done and blocked, files changed, marked code left, lint rules added and advised, and the branch.
 7. **Offer** to delete the align folder, as its own question. Say git does not keep its uncommitted files.
 

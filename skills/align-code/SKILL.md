@@ -19,16 +19,18 @@ Agents copy the code they see, so a bad pattern spreads with every change. This 
 - **Read only until ready.** Before ready, write only the align folder. Code changes only in `apply`, on a local branch, after a yes. Never push.
 - **One gap per session.** Surveys and research run beside it.
 
-## Context
+## Invocation
 
-| Mode | Main session loads | Subagents load |
-| --- | --- | --- |
-| Chart | structure, survey, contracts | Survey: its brief, contracts, `codebase-design`, comments |
-| Work | resume, the claimed gap's row and its one survey file | Research: its brief |
-| Ready | ready-gate, rollout, contracts, `to-tickets` | none |
-| Apply | rollout, resume | Ticket: its brief, contracts, comments, the exemplar. Review: `code-review` |
-| Check, advise | advise, comments | Advise surveys: their brief |
-| Help, status | help | none |
+| Typed | Mode | Main session loads | Subagents load |
+| --- | --- | --- | --- |
+| nothing, `help`, `<name> status`, `close <gap>`, `drop <gap>`, `abandoned` | [help.md](references/help.md) | help. Close also structure, contracts | none |
+| `new <name>` | [Chart](#chart) | resume, structure, survey, contracts | Survey: its brief, contracts, `codebase-design`, comments |
+| `<name>` or `<name> grill [gap]` | [Work](#work) | resume, help, structure, survey, contracts, the claimed gap's row and its one survey file | Survey and research: their brief |
+| `<name> ready` | [ready-gate.md](references/ready-gate.md) | resume, help, ready-gate, structure, rollout, contracts, `to-tickets` | none |
+| `<name> apply` | [rollout.md](references/rollout.md), lint advice at the end | resume, help, rollout, survey, contracts, comments | Ticket: its brief, contracts, comments, the exemplar. Review: `code-review`. Verify: survey brief |
+| `check`, `advise` | [advise.md](references/advise.md) | advise, comments | Advise surveys: their brief |
+
+Chart, work, ready, and apply sessions start and end by [resume.md](references/resume.md). `check` and `advise` do not.
 
 Subagents return a short result and write only their own output file. Only the main session writes `gaps.md`, `align.md`, `log.md`, and `rollout.md`.
 
@@ -59,7 +61,7 @@ Execution: apply runs the rollout after ready.
 
 A gap's name is its question. Use the question, never the bare id. **Claim** a gap by setting `owner` first. The **frontier** is `open`, unblocked, unclaimed, ordered danger first.
 
-**Fog of war:** an in-scope question you cannot phrase yet is one line under Not yet specified. One you can phrase is a gap, even when blocked. Fog is `None.` at ready.
+**Fog of war:** an in-scope question you cannot phrase yet is one line under Not yet specified. One you can phrase is a gap, even when blocked.
 
 ## Judging
 
@@ -76,7 +78,7 @@ A rule the person states outranks every source, and goes on the gap row.
 1. `bad spreading`: `bad`, and added in the last 90 days.
 2. `bad majority`: `bad`, and the most common variant.
 3. `bad`.
-4. `inconsistent`: no variant is `bad`, the code just does it more than one way. A `weak` variant lands here.
+4. `inconsistent`: no variant is `bad`, but the code does it more than one way, or its one way is `weak`.
 
 Then by files touched. Open research and task gaps come before all of them: they unblock the rest.
 
@@ -94,7 +96,8 @@ Never answer the person's side of a HITL gap.
 ```text
 <area> (<id>): <question>
 A. <variant>   <files> files, <n> in last 90 days   <good | weak | bad>: <source, one line>
-B. <variant>   ...                                   recommended: <why, with the source>
+B. <variant>   ...
+Recommended: <exactly one letter>: <why, with the source>. Or: none, research first.
 Exemplar: <module>
 Contract: <none | the frozen surface, and the outcome you propose>
 Changes: <files>   Left open: <what keeps spreading>
@@ -106,18 +109,7 @@ Answers: a variant, the person's own standard, `exception` with a reason, or res
 
 Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `to-tickets`, `code-review`, `writing-for-agents`, `deslop`. `to-tickets` at ready, for the slicing. `code-review` and `deslop` on every ticket diff in apply. `writing-for-agents` on every edit of `code-standards.md` or an ADR. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
 
-## Invocation
-
-| Typed | Mode |
-| --- | --- |
-| nothing, `help`, `<name> status`, `close <gap>`, `drop <gap>`, `abandoned` | See [help.md](references/help.md) |
-| `new <name>` | Chart |
-| `<name>` or `<name> grill [gap]` | Work |
-| `<name> ready` | [ready-gate.md](references/ready-gate.md) |
-| `<name> apply` | [rollout.md](references/rollout.md), lint advice at the end |
-| `check`, `advise` | [advise.md](references/advise.md) |
-
-Chart, work, ready, and apply sessions start and end by [resume.md](references/resume.md). `check` and `advise` do not.
+## Modes
 
 ### Chart
 
@@ -125,19 +117,19 @@ Chart, work, ready, and apply sessions start and end by [resume.md](references/r
 2. **Destination.** Call `grilling` and `domain-modeling`. Agree the scope. Done when the person agrees with the destination.
 3. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>` in its section.
 4. **Create the folder** by [structure.md](references/structure.md). Status `draft`.
-5. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`, recommended yes. Edits go on the row and outrank comments.md for this run. A frozen surface with no check is a task gap. Fill `blocks` in a second pass. Status `discussion`.
-6. **Start the surveys,** one subagent per area.
+5. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`, with A. comments.md as written, B. comments.md with the person's edits. Recommended: A. Edits go on the row and outrank comments.md for this run. A frozen surface with no check is a task gap. Fill `blocks` in a second pass. Status `discussion`.
+6. **Start the surveys** by [survey.md](references/survey.md#when).
 7. **Stop.** Log. Say the gap count by type and the first frontier gap.
 
 A `new` for a name that exists stops. Tell them to resume.
 
 ### Work
 
-1. **Catch up** by [resume.md](references/resume.md). Turn each finished survey into gaps: each Question a grilling gap with its danger, each Still unknown a gap. One `good` variant: the area is `consistent`, no gap.
+1. **Catch up** by [resume.md](references/resume.md). Turn each finished survey into gaps by [survey.md](references/survey.md#closing).
 2. **Claim** the gap the person named, or the first on the frontier.
 3. **Resolve** it by type.
-4. **Record** the answer and outcome on the row, status `decided`. No answer: `waiting-on-input`. Advice never closes a gap.
-5. **Write** the standard into its area section of `align.md`. Add the gist to Decisions so far.
+4. **Record** the answer and outcome on the row, status `decided`. A prototype gap records its exemplar. The standard and outcome go on the grilling gap it unblocks. No answer: `waiting-on-input`. Advice never closes a gap.
+5. **Write** a grilling gap's standard into its area section of `align.md`. Every gap: add the gist to Decisions so far.
 6. **Update the map.** Add the gaps it opens. Clear fog you can now phrase. A breaking change goes to Out of scope.
 7. **Stop.**
 

@@ -4,7 +4,7 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 
 ## Run
 
-1. Draft the tickets: call `to-tickets` for the slicing and to check the breakdown with the person. A rename or retype across many callers is expand-contract: add the new form, move callers in batches, delete the old form. Write each ticket in the [rollout.md](rollout.md) shape, with its file list, not to a tracker. Do not write them to disk yet.
+1. Draft the tickets: call `to-tickets` for the slicing and to check the breakdown with the person. An internal rename or retype is one ticket that changes every caller, tests included, by [contracts.md](contracts.md). Never expand-contract inside the repo. Write each ticket in the [rollout.md](rollout.md) shape, with its file list, not to a tracker. Do not write them to disk yet.
 2. Walk every check. Print `pass` or `fail` with file, line, and what is wrong. Run all of them, even after a fail.
 3. Nothing to check is a fail.
 4. Any fail: status unchanged. A missing fact or decision becomes a gap. Say what to run next.
@@ -13,7 +13,7 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 
 ### Map
 
-1. Every entry [structure.md](structure.md) creates at chart exists.
+1. `align.md`, `gaps.md`, and `log.md` exist. Every file a gap row links to exists.
 2. Every header field has a value. `Branch` may be empty.
 3. Every area has its section. None is blank.
 4. No gap is `open`, `research`, or `waiting-on-input`.
@@ -27,8 +27,8 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 9. Every exemplar exists in the code, or is an accepted prototype. `none` only for a rule of absence.
 10. Every outcome fits [contracts.md](contracts.md).
 11. Every `new-only` and `exception` has a reason.
-12. Every standard a tool can check names its rule under `Checked by`, for the advice at the end. None named: fail.
-13. No two standards contradict.
+12. Every `Checked by` has the form in [structure.md](structure.md#area-sections). A bare `none`, or a `none` that names no tool, fails.
+13. No two standards contradict. Compare every pair of standards. Print each pair that conflicts.
 
 ### Contracts
 
@@ -38,10 +38,10 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 
 ### Tickets
 
-17. Every file under `Changes` is in exactly one ticket per standard.
+17. Every file listed under `Changes` is in exactly one ticket per standard.
 18. Every ticket has every field.
 19. Two tickets that share a file are in different waves, or one blocks the other.
-20. Tests tickets are in the tests wave.
+20. Every characterization test and contract check is in wave 0. Every ticket that aligns the tests area is in wave 7.
 21. No `TBD`, `TODO`, `???`, or unfilled `<...>`.
 
 ## Pass

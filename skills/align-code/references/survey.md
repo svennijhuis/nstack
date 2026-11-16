@@ -32,10 +32,10 @@ A missing area the stack needs: add it, with the reason in `log.md`.
 ## When
 
 - End of chart: one subagent per survey gap, all at once.
-- Start of a session: one per survey gap still `open`. A gap in `research` is already running or done: read its file.
+- Start of a session: one per survey or research gap still `open`. A gap in `research` with its file: read the file. Without its file: ask the person once whether the session that started it is still open. No: its subagent died with that session, so start it again.
 - During a session: a new survey gap starts before you stop.
 
-Surveys never block the session. Model: `mid` (`sonnet` in Claude Code). `main` for an area that needs heavy judgment.
+Surveys never block the session. Model: `mid` (`sonnet` in Claude Code).
 
 ## Brief
 
@@ -51,7 +51,7 @@ Write: docs/align/<folder>/survey/<area>.md
 Do not: change code, decide, call a live system, edit any file but the one in Write
 ```
 
-Before it starts, the main session sets the gap's `owner` to `survey` and status `research`. The subagent returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
+Before it starts, the main session sets the gap's `owner` to `survey`, or `research` for a research brief, and status `research`. The subagent returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
 
 ## Research brief
 
@@ -82,7 +82,7 @@ Date: <yyyy-mm-dd>
 History: <from> to <to>
 
 ## Answer
-<consistent | inconsistent>. <one line>
+<consistent: only one variant, and it is `good` | inconsistent: anything else>. <one line>
 
 ## Variants
 | Variant | Files | Last 90 days | Example | Verdict | Source | Frozen |
@@ -92,7 +92,7 @@ History: <from> to <to>
 <module, and why. Or: none, propose a prototype.>
 
 ## Danger
-<bad spreading | bad majority | bad | inconsistent | none>
+<a level from Danger first in SKILL.md, or none>
 
 ## Questions
 - <one line per standard to decide. Never one per file or per line.>
@@ -105,5 +105,5 @@ History: <from> to <to>
 
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap.
-- One `good` variant: the area is `consistent`. No gap.
-- One `bad` variant everywhere: danger `bad majority`. One grilling gap: what replaces it.
+- Only one variant, `good`: the area is `consistent`. No gap.
+- Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` and spreading is `bad spreading`, `bad` otherwise is `bad majority`, `weak` is `inconsistent`.

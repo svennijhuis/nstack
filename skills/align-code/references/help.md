@@ -57,9 +57,8 @@ During apply, add the board from [rollout.md](rollout.md). Leave out an empty gr
 
 1. Find the row. Several match: list them and ask.
 2. No answer given: ask once. Grilling: ask the outcome too.
-3. Write answer and outcome. `decided`.
-4. Write the standard into `align.md`. Add the gist to Decisions so far.
-5. Add the gaps it opens. Log. Stop.
+3. Run Work steps 4 to 6 in [SKILL.md](../SKILL.md#work).
+4. Log. Stop.
 
 Only the person's own answer closes a gap this way.
 
@@ -76,5 +75,5 @@ Only for a gap past the destination. A difference the person keeps is closed as 
 Only on the person's command.
 
 1. No reason given: ask.
-2. Status `abandoned`. Log the reason. Change no gap or ticket. Stop.
-3. Name the apply branch, if any, to keep or delete.
+2. Status `abandoned`. Log the reason. Change no gap or ticket.
+3. Name the apply branch, if any, to keep or delete. Stop.
