@@ -1,68 +1,68 @@
 ---
 name: comment-root-cause
-description: Use before you write a code comment, a lint or type suppression, a TODO or HACK, or a guard, retry, sleep, cast, or catch that works around behavior instead of fixing it. Also use when a hook flags a new comment, when a test is flaky or a value is "sometimes" wrong, when the user asks to fix a bug at its root cause, and when the user wants to remove or clean up the comments in a file, folder, or repo.
+description: Use before you write a code comment, a TODO or HACK, a lint or type suppression, or a workaround (a guard, retry, sleep, cast, empty catch, skipped or loosened test), with or without a comment. Also use when a hook blocks a comment, a test is flaky, a value is "sometimes" wrong, the user asks for the root cause, or the user wants comments cleaned up.
 ---
 
-Fix the root cause, don't comment it. An agent that cannot find the cause of a problem patches the symptom and writes a comment that makes the patch sound reasonable. The comment is the tell. So a comment that excuses a workaround becomes a fixed cause, and a comment that says what the code does becomes clearer code. One exception: a fact outside code we own, with its source.
+Fix the root cause. Never comment it, never work around it. An agent that cannot find a cause patches the symptom, and often writes a comment that makes the patch sound reasonable. The comment is the tell. The workaround is the bug.
 
 ## Rules that outrank the rest
 
-**A comment never fixes anything.** When you want to explain why the code works around something, stop and look at that something first.
+**A workaround is an excuse, with or without a comment.** A guard, retry, sleep, cast, suppression, empty catch, or skipped, loosened, or slowed test that hides behavior of code we own: run [the loop](#the-loop).
 
-**Fix the cause where it lives.** The fix goes in the first place the cause sits in code we own, not in the place the symptom showed up.
+**An excuse moved is still an excuse.** In a name, a log line, a docstring, an error message, a commit message, or a PR description, it counts the same as in a comment.
 
-**Never ship a workaround silently.** When the cause cannot be fixed in this task, say so to the person and let them choose. Do not decide it for them with a comment.
+**Only the person decides to keep a workaround.** Out of scope, too big, out of reach: say so and let them choose. Never decide it with a comment.
 
-**Never delete an excuse without its cause.** An excuse comment that is already in the code points at a cause that is still there. Removing the comment and keeping the workaround hides the bug. Fix the cause, then the workaround and the comment go together.
+**Never remove an excuse without its cause.** Deleting the comment and keeping the workaround hides the bug. Both go when the cause is fixed.
 
-**A blocked comment is a question, not an obstacle.** The optional hook refuses a new comment with no source. Sort it by the table below. Never add a link, an issue, or a ticket only to get past the hook. A source must say why the comment is true.
+**A source must prove the comment, not pass the hook.** The optional hook refuses a comment with no source. A link, issue, ticket, or ADR you added only to get past it is a lie.
 
-## The three kinds of comment
+## Three kinds of comment
 
-Sort each new comment, suppression, or marker before you keep it. Examples per language are in [comment-classes.md](references/comment-classes.md).
+Sort every new comment, marker, and workaround. Examples: [comment-classes.md](references/comment-classes.md).
 
-| Kind | Test | What to do |
+| Kind | Test | Do |
 | --- | --- | --- |
-| **What** | It says what the code does. | Delete it. Make the code say it: a name, a type, a smaller function. |
-| **Outside why** | It names a cause outside code we own: a vendor bug, a law, a protocol, a measured limit. | Keep it, with its source: a link, an issue, an ADR, a ticket. No source, no comment. |
-| **Excuse** | It explains away behavior of code we own: "needed because X is sometimes null", "retry because it is flaky", "cast because the type is wrong", `@ts-ignore`, `eslint-disable`, `TODO`, `HACK`, an empty `catch`. | Stop. Run the loop below. The workaround and its comment both go. |
+| **What** | Says what the code does. | Delete. Make the code say it: a name, a type, a smaller function. |
+| **Outside why** | Names a cause outside code we own: a vendor bug, a law, a protocol, a measured limit. | Keep, with a source that shows it. No source, no comment. |
+| **Excuse** | Explains away code we own, or is a workaround. | Run the loop. Workaround and comment both go. |
 
-When unsure between outside why and excuse, ask: could someone in this repo change the thing the comment blames? If yes, it is an excuse.
+Unsure? Could someone in this repo change what the comment blames? Then it is an excuse.
 
 ## The loop
 
-1. **Name the symptom.** One line: what goes wrong without the workaround.
-2. **Reproduce it.** A failing test, or the exact command that shows it. No reproduction, no fix: you are still guessing.
-3. **Ask why until you reach the source.** Each answer must be something you saw in the code, a log, or a run, never a guess. Stop at the first cause that sits in code we own.
-4. **Fix it there.** Remove the workaround and its comment. The test from step 2 now passes, and the rest of the suite still does.
-5. **The source is out of reach.** It sits in a vendor, another repo, or the platform. Keep the smallest workaround at the boundary, write an outside-why comment with the source, and tell the person.
-6. **The fix is bigger than the task.** Stop and ask the person. Give the cause you found, where the real fix goes, and the options: fix it now, open a ticket and keep the workaround with the ticket in its comment, or accept the risk by name.
+1. **Symptom.** One line: what goes wrong without the workaround.
+2. **Reproduce.** A failing test, or the exact command. Cannot reproduce: add no workaround, tell the person what you tried, and stop.
+3. **Why, until the source.** Each answer is something you saw in code, a log, or a run, never a guess. Stop at the first cause in code we own.
+4. **Fix it there.** Remove the workaround and its comment. The step 2 test passes, the suite passes, no test was skipped or loosened.
+5. **Out of reach.** The cause is in a vendor, another repo, or the platform, and a source shows it. Keep the smallest workaround at the boundary, with an outside-why comment and that source. No source shows it: it is not out of reach, go to step 6.
+6. **Ask.** Bigger than the task, or step 5 has no source: stop. Give the person the cause, where the fix goes, and the choice: fix it now, keep it with a ticket they give you, or accept the risk by name.
 
-The loop is done when the cause is fixed, or the person chose in step 6.
+Done when the cause is fixed or the person chose.
 
 ## Excuses and their answers
 
-| You think | Do this |
+| You think | Answer |
 | --- | --- |
-| "It's just defensive." | Find who passes the bad value. Fix the caller, or make the type say it can be missing. |
-| "The test is flaky." | Flaky has a cause: order, time, shared state, a race. Find it. A retry hides it. |
-| "The types are wrong." | Fix the type, or the code that makes it wrong. A cast or ignore just turns off the check. |
-| "The linter is too strict here." | Read the rule. Change the code it flags, or change the rule for the repo with a reason. Never turn it off for one line to get green. |
-| "It's out of scope." | Then it goes to the person, by step 6. Out of scope is their call, not yours. |
-| "I'll leave a TODO." | A TODO is a ticket nobody opens. Fix it, or open the ticket and link it. |
-| "It works now." | Working by accident is not working. Name why it works. |
+| "It's defensive." | Find who passes the bad value. Fix the caller, or make the type say it can be missing. |
+| "It's flaky." | Flaky has a cause: order, time, shared state, a race. A retry hides it. |
+| "The types are wrong." | Fix the type. A cast turns the check off. |
+| "The linter is too strict." | Change the code, or change the rule for the repo with a reason. Never for one line. |
+| "Out of scope." | The person's call, by step 6. |
+| "I'll leave a TODO." | Fix it, or step 6. |
+| "It works now." | Name why. Working by accident is not working. |
 
 ## Clean up existing comments
 
-The person types `/comment-root-cause <path>`, or asks to remove the comments from a file, a folder, or the repo. With no path, check only the current change.
+`/comment-root-cause <path>`, or "clean up the comments in <path>". No path: the current change only.
 
-1. **Find them.** List every comment and marker under the path. Skip docs, generated files, licence headers, and docstrings that a tool reads, such as an API doc generator.
-2. **Sort them.** Give each one its kind from the table above.
-3. **Show the plan.** One line per comment: file and line, kind, and what you will do. Delete for a what. Keep for an outside why that has its source. Find the source, or ask, for an outside why without one. Run the loop for an excuse. End with the count per kind. Write nothing before the person says yes.
-4. **Delete the what comments.** Where a comment carried meaning, move it into a name, a type, or a smaller function first.
-5. **Fix the excuses, one at a time.** Run the loop for each. One excuse is one change the person can review. When one needs step 6 of the loop, ask, and go on with the next.
-6. **Report.** What you deleted, what you fixed, what you kept with its source, and what waits on the person.
+1. **List** every comment, marker, and workaround under the path. Skip docs, generated files, and licence headers.
+2. **Plan.** One line each: file and line, kind, action. Write nothing before a yes.
+3. **What comments:** delete, after moving any meaning into a name or type.
+4. **Outside why with no source:** find the source, or ask.
+5. **Excuses:** the loop, one per change. Step 6 for one does not stop the rest.
+6. **Report** what was deleted, fixed, kept with its source, and waits on the person.
 
 ## When you finish
 
-In your final message, list each comment you added and kept: the file and line, its kind, and its source. Name each workaround still in the code and why the person agreed to it. If you added no comment, say nothing about it.
+List each comment and workaround you added or kept: file and line, kind, source, and for a workaround, the person's choice. Added none: say nothing. The optional hook checks this list.

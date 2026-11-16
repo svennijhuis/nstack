@@ -54,7 +54,7 @@ Some nstack skills ship a hook that makes the skill hard to skip. Offer a hook o
 
 | Hook | Skill | Script | Events |
 | --- | --- | --- | --- |
-| comment-root-cause | `comment-root-cause` | `<skill folder>/hooks/comment-root-cause-hook.py` | `PreToolUse` with matcher `Edit\|Write\|MultiEdit`, and `Stop` |
+| comment-root-cause | `comment-root-cause` | `<skill folder>/hooks/comment-root-cause-hook.py` | `SessionStart`, `PreToolUse` with matcher `Edit\|Write\|MultiEdit\|NotebookEdit`, and `Stop` |
 
 What the hook does and the settings it needs are in that skill's README.
 
