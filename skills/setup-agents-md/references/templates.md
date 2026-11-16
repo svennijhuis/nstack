@@ -49,6 +49,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 ## Decisions
 
 - When a change makes a real decision, add an ADR in `docs/adr/` in the same change. A real decision is a new dependency, a change to the architecture, the data model, or a public contract, a trade-off, or a rejected alternative. Use the format of the newest ADR there.
+- Before you add an ADR, look at the ADRs this branch added compared to the default branch. They are not merged yet. If one is about the same decision, update it. Add a new file only for a different decision.
 - Leave an ADR's body as it was merged. To reverse a decision, add a new ADR that supersedes it and change only the old one's status line.
 - When you revert or undo a change, look in `docs/adr/` for an ADR from that change. If there is one, add an ADR that records the revert and why. A git revert deletes the old ADR too: restore it, and set its status to `Reverted by <new ADR>`.
 - Before you finish, ask: did this change contain a decision? If yes, and no ADR was written, write it.
@@ -129,7 +130,7 @@ One file per decision: `docs/adr/<yyyy-mm-dd>-<short-slug>.md`. One file each, s
 
 Status: Accepted
 Date: <yyyy-mm-dd>
-Change: <pull request or commit that made it. "this pull request" until it has a number>
+Change: <the work item, such as a PBI, when known>, <pull request or commit that made it. "this pull request" until it has a number>
 
 ## Decision
 
@@ -144,7 +145,7 @@ Change: <pull request or commit that made it. "this pull request" until it has a
 - <Alternative>: <why not>.
 ```
 
-Status words: `Accepted`, `Superseded by <file>`, `Reverted by <file>`. After the ADR is merged only the status line changes. The `Change` line is filled in once, when the pull request has its number.
+Status words: `Accepted`, `Superseded by <file>`, `Reverted by <file>`. After the ADR is merged only the status line changes. The `Change` line is filled in once, when the pull request has its number. Leave out the work item when nobody knows it. Never guess one: git still links the file to its commit.
 
 A revert ADR:
 
