@@ -1,6 +1,6 @@
 ---
 name: no-comments
-description: Use before you write a code comment, a lint or type suppression, a TODO or HACK, or a guard, retry, sleep, cast, or catch that works around behavior instead of fixing it. Also use when a hook flags a new comment, when a test is flaky or a value is "sometimes" wrong, when the user asks to fix a bug at its root cause, and when the user wants to remove or clean up the comments in a file, folder, or repo.
+description: Use before you write a code comment, a lint or type suppression, a TODO or HACK, or a guard, retry, sleep, cast, or catch that works around behavior instead of fixing it. Also use when a hook flags a new comment, when a test is flaky or a value is "sometimes" wrong, and when the user asks to fix a bug at its root cause.
 ---
 
 No comments in code. An agent that cannot find the cause of a problem patches the symptom and writes a comment that makes the patch sound reasonable. The comment is the tell. So every new comment goes: a comment that says what the code does becomes clearer code, and a comment that excuses a workaround becomes a fixed cause. One exception: a fact outside code we own, with its source.
@@ -12,8 +12,6 @@ No comments in code. An agent that cannot find the cause of a problem patches th
 **Fix the cause where it lives.** The fix goes in the first place the cause sits in code we own, not in the place the symptom showed up.
 
 **Never ship a workaround silently.** When the cause cannot be fixed in this task, say so to the person and let them choose. Do not decide it for them with a comment.
-
-**Never delete an excuse without its cause.** An excuse comment that is already in the code points at a cause that is still there. Removing the comment and keeping the workaround hides the bug. Fix the cause, then the workaround and the comment go together.
 
 **A blocked comment is a question, not an obstacle.** The optional hook refuses a new comment with no source. Sort it by the table below. Never add a link, an issue, or a ticket only to get past the hook. A source must say why the comment is true.
 
@@ -51,17 +49,6 @@ The loop is done when the cause is fixed, or the person chose in step 6.
 | "It's out of scope." | Then it goes to the person, by step 6. Out of scope is their call, not yours. |
 | "I'll leave a TODO." | A TODO is a ticket nobody opens. Fix it, or open the ticket and link it. |
 | "It works now." | Working by accident is not working. Name why it works. |
-
-## Clean up existing comments
-
-The person types `/no-comments <path>`, or asks to remove the comments from a file, a folder, or the repo. With no path, check only the current change.
-
-1. **Find them.** List every comment and marker under the path. Skip docs, generated files, licence headers, and docstrings that a tool reads, such as an API doc generator.
-2. **Sort them.** Give each one its kind from the table above.
-3. **Show the plan.** One line per comment: file and line, kind, and what you will do. Delete for a what. Keep for an outside why that has its source. Find the source, or ask, for an outside why without one. Run the loop for an excuse. End with the count per kind. Write nothing before the person says yes.
-4. **Delete the what comments.** Where a comment carried meaning, move it into a name, a type, or a smaller function first.
-5. **Fix the excuses, one at a time.** Run the loop for each. One excuse is one change the person can review. When one needs step 6 of the loop, ask, and go on with the next.
-6. **Report.** What you deleted, what you fixed, what you kept with its source, and what waits on the person.
 
 ## When you finish
 
