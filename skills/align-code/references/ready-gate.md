@@ -27,7 +27,7 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 9. Every exemplar exists in the code, or is an accepted prototype. `none` only for a rule of absence.
 10. Every outcome fits [contracts.md](contracts.md).
 11. Every `new-only` and `exception` has a reason.
-12. Every standard a tool can check names its rule. None named: fail.
+12. Every standard a tool can check names its rule under `Checked by`, for the advice at the end. None named: fail.
 13. No two standards contradict.
 
 ### Contracts

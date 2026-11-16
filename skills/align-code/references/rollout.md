@@ -9,15 +9,15 @@ A wave starts when the one before it is all `done` or `blocked`. Tickets in a wa
 | Wave | Holds |
 | --- | --- |
 | 0. Checks | Every missing contract check and characterization test, on the unchanged code |
-| 1. Tools | Lint, format, and type config for checkable standards, then autofix |
-| 2. Exemplars | Prototypes the person accepted, made real |
-| 3. Spreading | `bad spreading` |
-| 4. Majority | `bad majority` |
-| 5. Rest | `bad`, then `inconsistent` |
-| 6. Markers | Frozen and exception markers |
-| 7. Comments | Deletes by [comments.md](comments.md), then each fix it calls for |
-| 8. Tests | The tests area |
-| 9. Docs | Trim `code-standards.md`, write the ADRs |
+| 1. Exemplars | Prototypes the person accepted, made real |
+| 2. Spreading | `bad spreading` |
+| 3. Majority | `bad majority` |
+| 4. Rest | `bad`, then `inconsistent` |
+| 5. Markers | Frozen and exception markers |
+| 6. Comments | Deletes by [comments.md](comments.md), then each fix it calls for |
+| 7. Tests | The tests area |
+
+No ticket changes lint, format, or type checker config. Those come as advice at the end.
 
 ## Ticket
 
@@ -74,21 +74,33 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
 
 Stop between any two tickets. On resume, `doing` and `review` go back to `todo` and their worktrees are removed.
 
-## Docs
-
-1. **Trim `docs/agents/code-standards.md`.** Delete every line the code, a tool, or a marker now shows. Nothing left: propose deleting the file.
-2. **ADRs.** One per area with a standard, in `docs/adr/`, in the repo's ADR format. Title `Code standard: <area>`. Decision, why with the principle, rejected variants, the exemplar, frozen and excepted code.
-3. **Show both as plan rows. Wait for a yes.** The person maintains `code-standards.md`: no line goes without its row.
-4. `writing-for-agents` on each file. Commit.
-5. File gone, or a pointer now stale: tell the person to run `/setup-agents-md`. Never edit `AGENTS.md`.
-
 ## Finish
 
-1. Run the surveys again on every area with a standard.
-2. Pass: one variant left, apart from marked code.
-3. Fail: one ticket per leftover file, in a new wave. Stay `applying`.
-4. All pass, nothing `todo`: status `aligned`. Log the counts.
-5. Report tickets done and blocked, files changed, marked code left, and the branch.
-6. Offer to delete the align folder, as its own question. Say git does not keep its uncommitted files.
+1. **Verify.** Run the surveys again on every area with a standard. Pass: one variant left, apart from marked code. Fail: one ticket per leftover file, in a new wave. Stay `applying`.
+2. **Lint advice.** Write `lint.md` in the align folder and show it:
+
+   ```text
+   Standard        Tool    Rule and setting                                     Catches                 Hits now
+   Errors: no null eslint  no-restricted-syntax ReturnStatement > Literal[raw="null"]  return null on failure  0
+   Comments        eslint  no-warning-comments ["error", {"terms": ["todo"]}]     TODO                    0
+   Naming          none    no tool can check it                                 the check mode covers it  -
+   ```
+
+   - One row per standard with `Checked by` set, plus every standard a rule could now check.
+   - Use the repo's own linter, formatter, or type checker, or a well-known plugin for it. Name the exact rule id and setting. Never invent a rule: find it in the tool's installed docs or its source.
+   - `Hits now`: run the tool once with the rule on the command line, never in a config file. Tool not installed: `-`.
+   - No rule fits: say `none`, and that `/align-code check` covers it.
+3. **Ask:** "Add these lint rules with a subagent?" Answers: all, the rows you name, or none. Recommend all with 0 hits.
+   - On a yes: one ticket, model `cheap`, files: the tool's config only. Checks: lint passes with 0 errors. Review and commit as any ticket: `align: lint rules`.
+   - On a no: nothing changes. `lint.md` and the ADRs keep the advice.
+4. **Docs.**
+   1. Trim `docs/agents/code-standards.md`: delete every line the code, an added lint rule, or a marker now shows. Nothing left: propose deleting the file.
+   2. ADRs: one per area with a standard, in `docs/adr/`, in the repo's ADR format. Title `Code standard: <area>`. Decision, why with the principle, rejected variants, the exemplar, frozen and excepted code, and its lint rule: added, or advised and not added.
+   3. Show both as plan rows. Wait for a yes. The person maintains `code-standards.md`: no line goes without its row.
+   4. `writing-for-agents` on each file. Commit.
+   5. File gone, or a pointer now stale: tell the person to run `/setup-agents-md`. Never edit `AGENTS.md`.
+5. **Done.** Nothing `todo`: status `aligned`. Log the counts.
+6. **Report** tickets done and blocked, files changed, marked code left, lint rules added and advised, and the branch.
+7. **Offer** to delete the align folder, as its own question. Say git does not keep its uncommitted files.
 
 Never push.

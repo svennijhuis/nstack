@@ -13,6 +13,7 @@
 | `research/` | One file per other research gap | chart |
 | `prototypes/` | One rewrite per prototype gap. Never imported. | chart |
 | `rollout.md` | The board and the tickets | ready |
+| `lint.md` | The lint advice | finish |
 
 Folders start with a `.gitkeep`. Delete it when the first file lands.
 

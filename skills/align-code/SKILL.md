@@ -90,7 +90,7 @@ Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`
 | `new <name>` | Chart |
 | `<name>` or `<name> grill [gap]` | Work |
 | `<name> ready` | [ready-gate.md](references/ready-gate.md) |
-| `<name> apply` | [rollout.md](references/rollout.md) |
+| `<name> apply` | [rollout.md](references/rollout.md), lint advice at the end |
 | `check`, `advise` | [advise.md](references/advise.md) |
 
 Chart, work, ready, and apply sessions start and end by [resume.md](references/resume.md). `check` and `advise` do not.
