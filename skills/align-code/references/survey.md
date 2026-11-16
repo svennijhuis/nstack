@@ -32,7 +32,7 @@ A missing area the stack needs: add it, with the reason in `log.md`.
 ## When
 
 - End of chart: one subagent per survey gap, all at once.
-- Start of a session: one per survey gap still `open`.
+- Start of a session: one per survey gap still `open`. A gap in `research` is already running or done: read its file.
 - During a session: a new survey gap starts before you stop.
 
 Surveys never block the session. Model: `mid` (`sonnet` in Claude Code). `main` for an area that needs heavy judgment.
@@ -48,10 +48,22 @@ Scope: <Scope from align.md>
 Principles: <full path to references/principles.md>, plus docs/agents/code-standards.md if it exists
 Contracts: <full path to references/contracts.md>. Mark every variant on a frozen surface.
 Write: docs/align/<folder>/survey/<area>.md
-Do not: change code, decide, call a live system, edit align.md
+Do not: change code, decide, call a live system, edit any file but the one in Write
 ```
 
-The subagent claims the gap: `owner`, status `research`. It returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
+Before it starts, the main session sets the gap's `owner` to `survey` and status `research`. The subagent returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
+
+## Research brief
+
+A research gap that is not a survey gets the same brief with these lines changed:
+
+```markdown
+Question: <the gap question, word for word>
+Write: docs/align/<folder>/research/<gap id>-<topic>.md
+Return: one line: <gap id>: <the answer in one sentence>, confidence <high | medium | low>, <path>
+```
+
+The file holds the answer, each fact with its source, and what is still unknown. Low confidence closes nothing.
 
 ## Counting
 
@@ -91,7 +103,7 @@ History: <from> to <to>
 
 ## Closing
 
-- The subagent writes the Answer on the row, links the file, sets `decided`. The only gap an agent closes alone.
+- On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap.
 - One `good` variant: the area is `consistent`. No gap.
 - One `bad` variant everywhere: danger `bad majority`. One grilling gap: what replaces it.

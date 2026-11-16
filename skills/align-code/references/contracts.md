@@ -65,3 +65,5 @@ Build, test, and lint always run. Red before the first ticket: log it. A ticket 
 - adds a dependency
 - changes a test's expected value
 - deletes a test
+
+One exception: a tests-wave ticket may restructure or rename a test, when every behavior it asserted is still asserted.

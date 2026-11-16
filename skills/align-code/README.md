@@ -71,7 +71,7 @@ An API that does not line up stays as it is. You choose one of:
 - **New code only.** The old shape stays, marked frozen. New code follows the standard.
 - **An adapter.** The inside follows the standard, a thin layer at the edge keeps the outside the same.
 
-Every ticket must pass the build, the tests, the linter, and a contract check that compares the outside before and after: a schema snapshot for an API, a declaration diff for a package, screenshots for the UI. A missing check is added first, against the unchanged code.
+Every ticket must pass the build, the tests, the linter, and a contract check that compares the outside before and after: a schema snapshot for an API, a declaration diff for a package, screenshots for the UI. A missing check is added first, against the unchanged code, and so is a test for every file no test runs yet. Passing checks that never run the changed code prove nothing.
 
 Making the contract itself consistent is a breaking change. That is a versioned API or a migration, and it belongs in `/tech-design`.
 

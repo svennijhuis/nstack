@@ -39,7 +39,7 @@ Commit:
 
 - **Size:** one module, or at most 20 files of one mechanical change.
 - **Files:** needs another file? Stop and report. Never edit outside the list.
-- **Model:** `cheap` for mechanical work: renames, imports, moves, config. `mid` for judgment: error flow, boundaries, adapters, splits. `main` only after two failed `mid` reviews, when the person asks. In Claude Code: `haiku`, `sonnet`, the session model.
+- **Model:** `cheap` for mechanical work: renames, imports, moves, comment deletes. `mid` for wave 0 tests. `mid` for judgment: error flow, boundaries, adapters, splits. `main` only after two failed `mid` reviews, when the person asks. In Claude Code: `haiku`, `sonnet`, the session model.
 
 `rollout.md` starts with the board:
 
@@ -62,7 +62,7 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
 ## Each ticket
 
 1. **Pick** `todo` tickets in the lowest open wave, blockers `done`, no file held by a `doing` ticket. Up to four. Set `doing`.
-2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket and the full paths to the exemplar, [contracts.md](contracts.md), and [comments.md](comments.md). Nothing from the conversation. It returns only: the worktree path, the files changed, one `pass` or `fail` line per check with the first error line, and anything it could not do. Never the full check output.
+2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket and the full paths to the exemplar, [contracts.md](contracts.md), and [comments.md](comments.md). Nothing from the conversation. It returns only: the worktree path, the files changed, one `pass` or `fail` line per check with the first error line, and anything it could not do. Never the full check output. The subagent never commits.
 3. **Review.** Set `review`. Run `code-review` on the worktree: fixed point the apply branch head the ticket started from, spec the ticket, standards the area sections of `align.md` and [comments.md](comments.md). Read the diff with `git diff`. Pass only when:
    - every changed line follows the standard and looks like the exemplar
    - no file outside the list changed
@@ -70,7 +70,7 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
    - every check passed, every contract check shows no difference
    - `code-review` reports no standards violation and no smell the ticket added
    - `deslop` finds nothing
-4. **Commit** on a pass: only the ticket's files, `align: T-<nnn> <title>`, write the commit, set `done`. A fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
+4. **Commit** on a pass: apply the worktree diff to the apply branch, stage only the ticket's files, commit `align: T-<nnn> <title>`, write the commit, set `done`, remove the worktree. A fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
 5. **Update the board** after every ticket.
 
 Stop between any two tickets. Stop the session after about ten reviewed tickets, so every review gets a clean context. On resume, `doing` and `review` go back to `todo` and their worktrees are removed.

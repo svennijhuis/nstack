@@ -3,7 +3,7 @@ name: align-code
 description: Use when the user wants to align a codebase on one set of code standards and principles, find where the code does the same thing in different ways, decide which way wins, and plan or run the rewrite without breaking changes.
 ---
 
-Agents copy the code they see, so a bad pattern spreads with every change. This skill charts one standard per area as a map at `docs/align/<yyyy-mm-dd>-<name>/`, closes one gap per session, then runs the rewrite with subagents. The code ends up worth copying, and the code is the docs. The why is in [README.md](README.md). You do not need to read it.
+Agents copy the code they see, so a bad pattern spreads with every change. This skill charts one standard per area as a map at `docs/align/<yyyy-mm-dd>-<name>/`, closes one gap per session, then runs the rewrite with subagents. The code ends up worth copying, and the code is the docs.
 
 **Destination:** one decided standard and one exemplar per area, and a ticket for every change that gets the code there.
 
@@ -21,7 +21,7 @@ Agents copy the code they see, so a bad pattern spreads with every change. This 
 
 ## Context
 
-Load only what the mode needs. The why is in the README: never load it.
+Load only what the mode needs. Never load [README.md](README.md): it holds the why.
 
 | Mode | Main session loads | Subagents load |
 | --- | --- | --- |
@@ -32,7 +32,7 @@ Load only what the mode needs. The why is in the README: never load it.
 | Check, advise | advise, comments | Advise surveys: their brief |
 | Help, status | help | none |
 
-Subagents return a short result. Everything else stays in files on disk.
+Subagents return a short result and write only their own output file. Only the main session writes `gaps.md`, `align.md`, `log.md`, and `rollout.md`.
 
 ## The map
 
@@ -113,11 +113,11 @@ Chart, work, ready, and apply sessions start and end by [resume.md](references/r
 
 ### Chart
 
-1. **Preflight.** Read the build, test, and lint commands from `AGENTS.md`. None: name `/setup-agents-md` and stop. Read `docs/agents/code-standards.md` and the ADRs when they exist: each line is a candidate, never a standard. Find the contract checks by [contracts.md](references/contracts.md).
+1. **Preflight.** Read the build, test, and lint commands from `AGENTS.md`. None: name `/setup-agents-md` and stop. Read `docs/agents/code-standards.md` and the ADRs when they exist: each line is a candidate, never a standard. List the frozen surfaces in scope and the check for each, by [contracts.md](references/contracts.md).
 2. **Destination.** Call `grilling` and `domain-modeling`. Agree the scope. Done when the person agrees with the destination.
 3. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>` in its section.
 4. **Create the folder** by [structure.md](references/structure.md). Status `draft`.
-5. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`, recommended yes. A frozen surface with no check is a task gap. Fill `blocks` in a second pass. Status `discussion`.
+5. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`, recommended yes. Edits go on the row and outrank comments.md for this run. A frozen surface with no check is a task gap. Fill `blocks` in a second pass. Status `discussion`.
 6. **Start the surveys,** one subagent per area.
 7. **Stop.** Log. Say the gap count by type and the first frontier gap.
 
