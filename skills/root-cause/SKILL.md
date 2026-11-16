@@ -13,6 +13,8 @@ An agent that cannot find the cause of a problem patches the symptom and writes 
 
 **Never ship a workaround silently.** When the cause cannot be fixed in this task, say so to the person and let them choose. Do not decide it for them with a comment.
 
+**A blocked comment is a question, not an obstacle.** The optional hook refuses a new comment with no source. Sort it by the table below. Never add a link, an issue, or a ticket only to get past the hook. A source must say why the comment is true.
+
 ## The three kinds of comment
 
 Sort each new comment, suppression, or marker before you keep it. Examples per language are in [comment-classes.md](references/comment-classes.md).

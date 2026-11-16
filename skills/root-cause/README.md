@@ -6,8 +6,9 @@ This skill turns each new comment into a check. Say "find the root cause" or typ
 
 1. [How it works](#1-how-it-works)
 2. [Why a description is not enough](#2-why-a-description-is-not-enough)
-3. [Hooks you can add](#3-hooks-you-can-add)
-4. [Make them yours](#4-make-them-yours)
+3. [The hook: block and fix](#3-the-hook-block-and-fix)
+4. [Install the hook](#4-install-the-hook)
+5. [Make it yours](#5-make-it-yours)
 
 ---
 
@@ -27,152 +28,66 @@ When the fix is bigger than the task, the agent stops and asks you. It never kee
 
 A skill starts when its description matches the task. Here the trigger is the agent's own act of writing a comment, and an agent that is busy justifying a workaround does not always stop to check. The description catches most cases. A hook catches every one, because the harness runs it, not the agent.
 
-nstack does not install hooks for you. A hook runs on every edit of every session, so it is your choice. Below are two you can copy.
+The hook is optional. It runs on every edit of every session, so it is your choice. `setup-nstack-skills` offers it, see [Install the hook](#4-install-the-hook).
 
-## 3. Hooks you can add
+## 3. The hook: block and fix
 
-These are for Claude Code. They need Python 3 and nothing else. Other harnesses with hooks take the same scripts. Change only how they are registered.
+One script, [hooks/root-cause-hook.py](hooks/root-cause-hook.py), on two Claude Code events. It needs Python 3 and nothing else.
 
-| Hook | When | What it does |
-| --- | --- | --- |
-| `root-cause-edit.py` | After each Edit, Write, or MultiEdit | Finds added comments and markers in the new text and tells the agent to run `root-cause`. It does not block the edit. |
-| `root-cause-stop.py` | When the agent wants to finish | Reads `git diff HEAD` for added comments. If there are any, it blocks once and asks the agent to fix every excuse and list each comment it keeps. |
+| Event | What it does |
+| --- | --- |
+| `PreToolUse` on Edit, Write, MultiEdit | Refuses an edit that adds a comment or a marker with no source. The agent gets the reason and must change the code. |
+| `Stop` | Before the agent finishes, reads `git diff HEAD` and new files once, for edits made another way, such as a shell command. If it finds such a comment, the agent must go back and fix it. |
 
-Use one or both. The edit hook nudges while the agent works. The stop hook is the checkpoint.
+**A source is the way through.** A comment passes when it carries a link, an issue (`#123`), a ticket (`ABC-123`), or an ADR (`ADR-0012`). That is the skill's rule: an outside why keeps its source, and a workaround you agreed to keeps its ticket. A what comment or an excuse has no source, so the agent has to fix the code.
 
-### Install
+What it checks:
 
-Save both scripts in `~/.claude/hooks/` (for you) or `.claude/hooks/` in a repo (for the team), and make them executable:
+- Comments, by the file's language: `//` and `/* */` in C-like files, `#` in Python, shell, YAML and the like, `--` in SQL, `<!-- -->` in HTML.
+- Markers in any code file: `@ts-ignore`, `@ts-expect-error`, `eslint-disable`, `noqa`, `type: ignore`, `nolint`, `rubocop:disable`, `pragma warning disable`, `@SuppressWarnings`, `TODO`, `FIXME`, `HACK`, `XXX`.
+- Only lines that are new. Comments already in the file pass.
 
-```bash
-chmod +x ~/.claude/hooks/root-cause-*.py
-```
+What it skips: docs (`.md`, `.mdx`, `.txt`, `.rst`, `.adoc`), file types it does not know, and a shebang line.
 
-Then add this to `~/.claude/settings.json`, or to `.claude/settings.json` in the repo. For a repo, replace `~/.claude/hooks` with `"$CLAUDE_PROJECT_DIR"/.claude/hooks`.
+What it cannot do: judge the source. A made-up link passes. The hook makes the agent stop and look, and the skill tells it what to look for. Review still matters.
+
+The `Stop` check blocks once per stop. When the agent tries again, it may finish, so a false hit never traps it.
+
+## 4. Install the hook
+
+### With nstack
+
+Say "set up nstack". `setup-nstack-skills` asks if you want the hook, and where: for you (`~/.claude/settings.json`) or for a repo (`.claude/settings.json`). It shows the change and writes nothing before your yes. With a home repo, `setup-home-repo` owns hooks. Say "add the root-cause hook" there instead.
+
+### By hand
+
+The script ships with the skill. When the skill is in `~/.claude/skills/root-cause/`, add this to `~/.claude/settings.json`:
 
 ```json
 {
   "hooks": {
-    "PostToolUse": [
+    "PreToolUse": [
       {
         "matcher": "Edit|Write|MultiEdit",
-        "hooks": [{ "type": "command", "command": "~/.claude/hooks/root-cause-edit.py" }]
+        "hooks": [{ "type": "command", "command": "~/.claude/skills/root-cause/hooks/root-cause-hook.py" }]
       }
     ],
     "Stop": [
       {
-        "hooks": [{ "type": "command", "command": "~/.claude/hooks/root-cause-stop.py" }]
+        "hooks": [{ "type": "command", "command": "~/.claude/skills/root-cause/hooks/root-cause-hook.py" }]
       }
     ]
   }
 }
 ```
 
-Restart the session. `/hooks` shows them.
+For a repo, put the skill in `.claude/skills/root-cause/` and use `"$CLAUDE_PROJECT_DIR"/.claude/skills/root-cause/hooks/root-cause-hook.py` in `.claude/settings.json`. Make the script executable (`chmod +x`). Merge into the `hooks` you already have. Do not replace them. Restart the session. `/hooks` shows it.
 
-### `root-cause-edit.py`
+Other harnesses with hooks can run the same script. Map the events by what they do: before a file edit, and when the agent stops. The script reads Claude Code's input, so check the fields your harness sends.
 
-Exit code 2 sends the message to the agent. The edit is already made, so the agent cannot get stuck.
-
-```python
-#!/usr/bin/env python3
-"""PostToolUse hook: point the agent at root-cause when an edit adds a comment."""
-import json, re, sys
-
-DOCS = (".md", ".mdx", ".txt", ".rst", ".adoc")
-COMMENT = re.compile(r"^\s*(//|#(?!!)|/\*|\*|--|<!--|;)|\s(//|#)\s")
-MARKER = re.compile(
-    r"@ts-ignore|@ts-expect-error|eslint-disable|noqa|type:\s*ignore|nolint"
-    r"|rubocop:disable|pragma warning disable|SuppressWarnings|TODO|FIXME|HACK|workaround",
-    re.I,
-)
-
-data = json.load(sys.stdin)
-tool = data.get("tool_input", {})
-path = tool.get("file_path", "")
-if path.endswith(DOCS):
-    sys.exit(0)
-
-texts = [tool.get("new_string") or tool.get("content") or ""]
-texts += [e.get("new_string", "") for e in tool.get("edits", [])]
-old = tool.get("old_string", "")
-old_lines = set(old.splitlines())
-
-hits = [
-    line.strip()
-    for text in texts
-    for line in text.splitlines()
-    if line not in old_lines and (COMMENT.search(line) or MARKER.search(line))
-]
-if hits:
-    shown = "\n".join(f"  {h[:120]}" for h in hits[:5])
-    print(
-        f"You added a comment or marker in {path}:\n{shown}\n"
-        "Use the root-cause skill: sort each one as what, outside why, or excuse. "
-        "If it is an excuse, fix the cause and remove the workaround.",
-        file=sys.stderr,
-    )
-    sys.exit(2)
-```
-
-### `root-cause-stop.py`
-
-It blocks once. `stop_hook_active` is true on the next try, so the agent can always finish.
-
-```python
-#!/usr/bin/env python3
-"""Stop hook: before the agent finishes, ask it to account for each comment it added."""
-import json, re, subprocess, sys
-
-DOCS = (".md", ".mdx", ".txt", ".rst", ".adoc")
-COMMENT = re.compile(r"^\s*(//|#(?!!)|/\*|\*|--|<!--|;)|\s(//|#)\s")
-MARKER = re.compile(
-    r"@ts-ignore|@ts-expect-error|eslint-disable|noqa|type:\s*ignore|nolint"
-    r"|rubocop:disable|pragma warning disable|SuppressWarnings|TODO|FIXME|HACK|workaround",
-    re.I,
-)
-
-data = json.load(sys.stdin)
-if data.get("stop_hook_active"):
-    sys.exit(0)  # block once, never loop
-
-try:
-    diff = subprocess.run(
-        ["git", "diff", "HEAD", "-U0", "--no-color"],
-        capture_output=True, text=True, check=True,
-    ).stdout
-except (OSError, subprocess.CalledProcessError):
-    sys.exit(0)  # not a git repo, or no commits yet
-
-hits, path = [], ""
-for line in diff.splitlines():
-    if line.startswith("+++ "):
-        path = line[6:] if line.startswith("+++ b/") else ""
-    elif line.startswith("+") and path and not path.endswith(DOCS):
-        code = line[1:]
-        if COMMENT.search(code) or MARKER.search(code):
-            hits.append(f"{path}: {code.strip()[:120]}")
-
-if hits:
-    shown = "\n".join(f"  {h}" for h in hits[:10])
-    print(json.dumps({
-        "decision": "block",
-        "reason": (
-            f"This change adds comments or markers:\n{shown}\n"
-            "Use the root-cause skill. Fix every excuse at its cause. In your final message, "
-            "list each comment you keep, its kind, and its source."
-        ),
-    }))
-```
-
-### What they catch, and what they miss
-
-They match text, not syntax. Expect a few false hits: a `#` inside a string, a `--i` in C, the word `TODO` in a name. The message only asks the agent to check, so a false hit costs one look.
-
-They skip docs (`.md`, `.mdx`, `.txt`, `.rst`, `.adoc`), a shebang line, and comments that were already there. The stop hook sees only tracked files: a new file counts once it is added with `git add`.
-
-## 4. Make them yours
+## 5. Make it yours
 
 - Add your own markers to `MARKER`, such as a team tag for workarounds.
-- Skip generated folders by adding a path check next to `DOCS`.
-- Make the edit hook strict: move it to `PreToolUse` and the edit is refused until the comment is gone. Expect more friction. An outside-why comment then needs a second try.
+- Add a language: put its extension in `SLASH`, `HASH`, `DASH`, or `ANGLE`.
+- Change what counts as a source in `SOURCE`, for example only your issue tracker.
+- Softer: register only `Stop`. The agent works freely and fixes the comments before it finishes.

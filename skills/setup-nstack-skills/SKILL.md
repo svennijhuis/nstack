@@ -1,9 +1,9 @@
 ---
 name: setup-nstack-skills
-description: Use when the user wants to set up nstack, or an nstack skill fails because a skill it calls is missing. Installs the missing external skills at the pinned commit.
+description: Use when the user wants to set up nstack, an nstack skill fails because a skill it calls is missing, or the user wants an optional nstack hook such as the root-cause hook. Installs the missing external skills at the pinned commit and offers the hooks.
 ---
 
-nstack skills call skills that live in other repos. This skill reads the list of those skills in [external-skills.md](external-skills.md), checks which ones are installed, and installs the missing ones at the pinned commit.
+nstack skills call skills that live in other repos. This skill reads the list of those skills in [external-skills.md](external-skills.md), checks which ones are installed, and installs the missing ones at the pinned commit. Then it offers the optional hooks that nstack skills ship, by [Optional hooks](#optional-hooks).
 
 ## Rules that outrank the rest
 
@@ -15,7 +15,9 @@ nstack skills call skills that live in other repos. This skill reads the list of
 
 **Copy the folder whole.** Install every file in the skill's folder, not only `SKILL.md`. Never edit what you copy.
 
-**Never push.** This skill writes only to the local skill folder.
+**Never push.** This skill writes only to the local skill folder, and, after its own yes, to the settings file that registers an optional hook.
+
+**A hook is opt-in.** Offer each hook once. Never register one without a yes. Never replace a hook that is already there.
 
 ## Steps
 
@@ -29,7 +31,7 @@ nstack skills call skills that live in other repos. This skill reads the list of
    | `missing` | No folder | Install |
    | `differs` | The folder exists and a file differs from the pinned commit | Show the diff, ask |
 
-4. **Print the plan table.** One line per row: name, state, action, and the folder it will write. End with the count of each state. If every row is `installed`, say so and stop.
+4. **Print the plan table.** One line per row: name, state, action, and the folder it will write. End with the count of each state. If every row is `installed`, say so and go to step 8.
 5. **Wait for approval.** Ask the person to approve the plan. A `differs` row needs its own yes.
 6. **Install.** For each approved row, fetch only its folder at its commit into a new empty temp folder, then copy it to the install folder:
 
@@ -44,6 +46,24 @@ nstack skills call skills that live in other repos. This skill reads the list of
    ```
 
 7. **Verify.** Run the check again. Every approved row must now be `installed`. Report any that is not, with the error text.
+8. **Offer the hooks**, by [Optional hooks](#optional-hooks). When every row was `installed` at step 4, still do this step before you stop.
+
+## Optional hooks
+
+Some nstack skills ship a hook that makes the skill hard to skip. Offer a hook only when its skill is installed, in the install folder or the project's `.claude/skills/`.
+
+| Hook | Skill | Script | Events |
+| --- | --- | --- | --- |
+| root-cause | `root-cause` | `<skill folder>/hooks/root-cause-hook.py` | `PreToolUse` with matcher `Edit\|Write\|MultiEdit`, and `Stop` |
+
+What the hook does and the settings it needs are in that skill's README.
+
+1. **Check.** Read the settings file the hook would go in: `~/.claude/settings.json` for the person, `.claude/settings.json` for a repo. The hook is `registered` when each of its events already runs its script. Skip a registered hook.
+2. **Ask.** One question per hook: what it does in one line, and the choice of for you, for this repo, or no. Recommend for you. A no is final for this run.
+3. **With a home repo, hand over.** When the working directory or the person's setup has a home repo, `setup-home-repo` owns hooks. Tell the person to say "add the root-cause hook" there, and stop this step.
+4. **Show the change.** Print the JSON you will merge, with the full path to the script for the person's file, or `"$CLAUDE_PROJECT_DIR"/<path>` for a repo's. Wait for a yes.
+5. **Merge.** Add the entries to the `hooks` that are there. Keep every other key and hook. Make the script executable. On another harness, map the events by what they do, by the skill's README. If the harness has no matching event, say so and skip it.
+6. **Verify.** Read the file again and check that it is valid JSON and every event runs the script. Tell the person to restart the session and check with `/hooks`.
 
 ## Adding a skill to the list
 
