@@ -65,7 +65,8 @@ install them. The list is in
   `codebase-design`, `writing-for-agents`, `deslop`, `technical-writing`, and
   `unslop`.
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
-  `codebase-design`, `code-review`, and `writing-for-agents`.
+  `codebase-design`, `code-review`, `comment-root-cause`, and
+  `writing-for-agents`.
 
 ## Install
 

@@ -12,7 +12,7 @@ Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap 
 - **Report only.** Write only the align folder. Never change code, config, or docs outside it. Never commit or push.
 - **The majority does not win.** Count each variant, then judge it by [Judging](#judging). An anti-pattern is bad even when it is everywhere.
 - **No breaking changes.** A standard never changes behavior, a public API, schema, config name, or UI. Such a change goes to Out of scope.
-- **No comments.** See [comments.md](references/comments.md).
+- **Comments follow `comment-root-cause`.** See [comments.md](references/comments.md).
 - **An unknown is a gap.** Never an assumption or a guess.
 - **Never invent a standard.** Options come from the code or a cited source. Only the person decides.
 - **One gap per session.** Surveys run beside it.
@@ -95,7 +95,7 @@ Answers: a variant, the person's own standard, `exception` with a reason, or res
 
 ## Companion skills
 
-Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `writing-for-agents`. `research` for a source a verdict needs. `writing-for-agents` on every edit of `align.md`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `comment-root-cause`, `writing-for-agents`. `research` for a source a verdict needs. `writing-for-agents` on every edit of `align.md`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
 
 ## Modes
 

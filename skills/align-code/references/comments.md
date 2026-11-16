@@ -1,23 +1,14 @@
 # Comments
 
-No comments. The code says what it does.
+The comments standard is the `comment-root-cause` skill. Call it by name. Never restate its rules here.
 
-## Keep only
+## In a survey
 
-- **Business or decision why.** One line.
-- **Outside constraint.** A vendor, platform, or protocol we cannot change. One line, with a link.
-- **Public API doc comment.** An internal export is not public.
-- **License header.**
-- **Tool directive** with its reason on the same line.
+- Judge every comment by its "Why is it there?" table. The source is `comment-root-cause`.
+- `good`: a business rule, an outside fact with its source, docs or a tool marker.
+- `bad`: a comment that explains what the code does, or covers a shortcut, a workaround, a `TODO`, or a suppression with no reason.
+- Count files per kind, not comments.
 
-Not sure it fits? It goes in the report as a change.
+## In the report
 
-## Report
-
-Everything else. Explanations, banners, commented-out code, `TODO`, `FIXME`, and any why longer than one line.
-
-## Fix the code, not the comment
-
-- A comment that explains a surprise in our code: rename, extract, type, or test.
-- A suppression on a rule that catches bugs: fix the code.
-- `IMPORTANT`, `do not remove`: encode it as a test, type, or lint rule. If it is false, drop it.
+Each `bad` kind is one standard. `Changes` lists the files. The fix is not done here: the person runs `/comment-root-cause <path>`.

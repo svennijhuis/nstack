@@ -22,4 +22,4 @@ The majority does not win. Every variant is judged, even a variant used everywhe
 
 ## With the other nstack skills
 
-Uses `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, and `writing-for-agents`. `/setup-nstack-skills` installs them.
+Uses `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `comment-root-cause`, and `writing-for-agents`. `/setup-nstack-skills` installs them.
