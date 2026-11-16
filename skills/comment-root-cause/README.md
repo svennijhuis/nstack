@@ -19,6 +19,7 @@ Say "find the root cause" or type `/comment-root-cause`. The agent also starts i
 | Kind | Example | What happens |
 | --- | --- | --- |
 | What | `// loop over the users` | Deleted. The code says it. |
+| Business why | `// Business rule: orders over €500 need a manual check` | Kept. The agent needs it to understand the code. When in doubt, it stays. |
 | Outside why | `// Bank API returns 200 on failure: <link>` | Kept, with the source that proves it. |
 | Excuse | `// retry because flaky`, `as any`, `it.skip`, `catch {}`, `TODO` | The agent finds the cause, fixes it, and removes the workaround and the comment. |
 
@@ -40,7 +41,10 @@ One script, [hooks/comment-root-cause-hook.py](hooks/comment-root-cause-hook.py)
 | `PreToolUse` on Edit, Write, MultiEdit, NotebookEdit | Refuses an edit that adds a comment, marker, or workaround with no source. |
 | `Stop` | Checks everything since the session started: commits, uncommitted edits, new files, edits by shell. It blocks until each one is fixed or named in the final message with its kind, source, and your choice. |
 
-**A source is the only way through:** a link, an issue (`#123`), an ADR (`ADR-0012`), or a ticket with a prefix you allow. That is the skill's rule. An outside why keeps the source that proves it. A workaround you agreed to keeps your ticket.
+**Two ways through:**
+
+- **A business label.** A comment block that starts with `Business rule:` or `Decision:` passes. One label covers the lines below it in the same block. It never covers a marker or a workaround: `as any // Business rule: ...` is still blocked.
+- **A source:** a link, an issue (`#123`), an ADR (`ADR-0012`), or a ticket with a prefix you allow. An outside why keeps the source that proves it. A workaround you agreed to keeps your ticket. A source anywhere in a comment block covers the block.
 
 It checks, in new lines only:
 
@@ -91,5 +95,6 @@ Another harness with hooks can run the script. Map the events by what they do, a
 
 - **Tickets:** set `COMMENT_ROOT_CAUSE_TICKETS=PAY,OPS` in the settings `env`, and `PAY-123` counts as a source. Without it, no ticket key does, so `UTF-8` or `SHA-256` never passes as one.
 - **More checks:** add to `MARKER` or `WORKAROUND`, or a language to `SLASH`, `HASH`, `DASH`, or `ANGLE`.
+- **Labels:** change `BUSINESS` to your own words, such as `Rule:` or `Why:`.
 - **Allow docstrings:** remove the `DOCSTRING` check in `unsourced`.
 - **Softer:** register only `Stop`. The agent works freely, then fixes or accounts for each one before it finishes.

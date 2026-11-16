@@ -10,6 +10,16 @@ The kinds are in [SKILL.md](../SKILL.md#three-kinds-of-comment).
 | `# returns None when not found` | Name it `find_user`, or return `Optional[User]`. |
 | `// step 2: validate` | Pull the step into `validate()`. |
 
+## Business why: keep, with its label
+
+| Comment | Why it stays |
+| --- | --- |
+| `// Business rule: orders over €500 need a manual check by finance` | The code shows the check, not why. |
+| `# Decision: refunds go back to the original card, never to store credit` | A choice the business made. |
+| `// Business rule: a trial ends after 14 days, sales asked for no grace period` | The next reader would otherwise "fix" it. |
+
+`// Business rule: retry because the API is flaky` is still an excuse. The label does not change the kind.
+
 ## Outside why: keep, with the source that proves it
 
 | Comment | Why it stays |

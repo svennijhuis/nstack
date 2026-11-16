@@ -15,19 +15,20 @@ Fix the root cause. Never comment it, never work around it. An agent that cannot
 
 **Never remove an excuse without its cause.** Deleting the comment and keeping the workaround hides the bug. Both go when the cause is fixed.
 
-**A source must prove the comment, not pass the hook.** The optional hook refuses a comment with no source. A link, issue, ticket, or ADR you added only to get past it is a lie.
+**A source or label must be true, not pass the hook.** The optional hook refuses a comment with no source or business label. One you added only to get past it is a lie.
 
-## Three kinds of comment
+## Four kinds of comment
 
 Sort every new comment, marker, and workaround. Examples: [comment-classes.md](references/comment-classes.md).
 
 | Kind | Test | Do |
 | --- | --- | --- |
 | **What** | Says what the code does. | Delete. Make the code say it: a name, a type, a smaller function. |
+| **Business why** | Explains a business rule or a decision the code cannot show: why 14 days, why this order, why these customers skip a step. | Keep. Start it with `Business rule:` or `Decision:`. |
 | **Outside why** | Names a cause outside code we own: a vendor bug, a law, a protocol, a measured limit. | Keep, with a source that shows it. No source, no comment. |
 | **Excuse** | Explains away code we own, or is a workaround. | Run the loop. Workaround and comment both go. |
 
-Unsure? Could someone in this repo change what the comment blames? Then it is an excuse.
+A business why says what the business wants. An excuse says why the code misbehaves. Unsure between those two: keep it as a business why, the next reader needs it. Unsure between outside why and excuse: could someone in this repo change what the comment blames? Then it is an excuse.
 
 ## The loop
 
@@ -58,7 +59,7 @@ Done when the cause is fixed or the person chose.
 
 1. **List** every comment, marker, and workaround under the path. Skip docs, generated files, and licence headers.
 2. **Plan.** One line each: file and line, kind, action. Write nothing before a yes.
-3. **What comments:** delete, after moving any meaning into a name or type.
+3. **What comments:** delete, after moving any meaning into a name or type. **Business why:** keep, and add its label.
 4. **Outside why with no source:** find the source, or ask.
 5. **Excuses:** the loop, one per change. Step 6 for one does not stop the rest.
 6. **Report** what was deleted, fixed, kept with its source, and waits on the person.

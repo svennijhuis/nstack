@@ -9,6 +9,8 @@ Stop: checks everything since the session started, edits by shell included.
 
 A source is a link, an issue (#123), an ADR (ADR-0012), or a ticket whose
 prefix is in COMMENT_ROOT_CAUSE_TICKETS (for example "PAY,OPS").
+A comment block that starts with "Business rule:" or "Decision:" passes too.
+Markers and workarounds pass only with a source.
 """
 import json
 import os
@@ -42,6 +44,7 @@ WORKAROUND = re.compile(
     re.M,
 )
 DOCSTRING = re.compile(r"^\s*[rbuRBU]?(\"\"\"|''')")
+BUSINESS = re.compile(r"\b(Business rule|Decision):", re.I)
 
 
 def source_pattern():
@@ -69,20 +72,49 @@ def comment_pattern(path):
 
 
 def unsourced(path, lines):
-    """Return (line, text) for each new comment, marker, or workaround with no source."""
+    """Return (line, text) for each new comment, marker, or workaround with no source.
+
+    Consecutive comment lines form one block. A source anywhere in the block
+    covers all of it. A business label covers its comments, never a marker
+    or a workaround.
+    """
     if not path or path.endswith(DOCS):
         return []
     pattern = comment_pattern(path)
     python = path.endswith((".py", ".ipynb"))
+
+    is_comment, in_docstring = [], False
+    for _, line in lines:
+        opened = python and DOCSTRING.search(line)
+        if opened:
+            quote = opened.group(1)
+            in_docstring = line.count(quote) == 1
+            is_comment.append(True)
+        elif in_docstring:
+            in_docstring = '"""' not in line and "'''" not in line
+            is_comment.append(True)
+        else:
+            is_comment.append(bool(pattern and pattern.search(line)))
+
+    cover = [None] * len(lines)
+    start = 0
+    while start < len(lines):
+        end = start
+        while end < len(lines) and is_comment[end]:
+            end += 1
+        if end > start:
+            block = [line for _, line in lines[start:end]]
+            if any(SOURCE.search(l) for l in block):
+                cover[start:end] = ["source"] * (end - start)
+            elif any(BUSINESS.search(l) for l in block):
+                cover[start:end] = ["business"] * (end - start)
+        start = max(end, start + 1)
+
     hits = []
-    for number, line in lines:
-        flagged = (
-            (pattern and pattern.search(line))
-            or MARKER.search(line)
-            or WORKAROUND.search(line)
-            or (python and DOCSTRING.search(line))
-        )
-        if flagged and not SOURCE.search(line):
+    for k, (number, line) in enumerate(lines):
+        if SOURCE.search(line) or cover[k] == "source":
+            continue
+        if MARKER.search(line) or WORKAROUND.search(line) or (is_comment[k] and not cover[k]):
             hits.append((number, line.strip()))
     joined = "\n".join(line for _, line in lines)
     for match in WORKAROUND.finditer(joined):
@@ -107,7 +139,9 @@ def message(hits, where, extra=""):
         f"with no source:\n{shown}{more}\n"
         "Use the comment-root-cause skill. A what comment: delete it, make the code say it. "
         "An excuse or a workaround: find the cause, fix it, remove both. "
-        "An outside why: add the source that proves it. Never add a source only to pass. "
+        "An outside why: add the source that proves it. "
+        "A business rule or decision: start the comment with 'Business rule:' or 'Decision:'. "
+        "Never add a source or a label only to pass. "
         "If the fix is bigger than the task, ask the person." + extra
     )
 
