@@ -54,6 +54,7 @@ So at the end of a run, the standards live in:
 
 - **The code.** One way per area, and one exemplar module per area that shows it best.
 - **Tools.** Every standard a linter, formatter, or type checker can enforce becomes a rule. A check runs on every change. A doc can only hope to be read.
+- **No comments that explain code.** The code says what it does. A comment stays only when it gives a why the code cannot: a decision or business rule, or an outside constraint. Every other comment is deleted, and a comment that hid a surprise becomes a fix in the code: a better name, a type, a test. Agents copy comments too, and a comment that explains code drifts like any doc. See [comments.md](references/comments.md).
 - **Markers.** Code that cannot change, because a contract freezes it, gets one comment: `Frozen contract: do not copy this shape.` The agent reads that where it would copy from.
 - **ADRs.** One per area: what was chosen, why, and what was rejected. The code shows what, never why.
 
@@ -91,7 +92,7 @@ flowchart TD
 2. **Survey.** Each subagent counts every variant, names an example, sees how many were added in the last 90 days, and judges each one. It changes nothing.
 3. **Grill.** One question per session. You see the variants, the counts, the verdicts, the exemplar, the files that would change, and the recommended answer. You choose. When no module is good enough to copy, the skill writes a rough rewrite of one for you to react to.
 4. **Ready.** A gate checks that every area has a standard and an exemplar, every change is a ticket, and no ticket can touch a contract. Then it writes the tickets.
-5. **Apply.** After your yes, on a local branch. The tickets run in waves: contract checks first, then lint rules, then the exemplars, then the spreading bad patterns, then the rest, tests last. Mechanical tickets go to a cheap model, tickets that need judgment to a mid model. The main session reviews every diff and commits one ticket at a time. A ticket that fails twice is set aside, never forced.
+5. **Apply.** After your yes, on a local branch. The tickets run in waves: contract checks first, then lint rules, then the exemplars, then the spreading bad patterns, then the rest, then the comments, tests last. Mechanical tickets go to a cheap model, tickets that need judgment to a mid model. The main session reviews every diff and commits one ticket at a time. A ticket that fails twice is set aside, never forced.
 6. **Finish.** The surveys run again to prove each area now shows one way. The skill trims `code-standards.md`, writes the ADRs, and gives you the branch. It never pushes.
 
 Every session can stop at any point. The folder `docs/align/<date>-<name>/` holds the whole state.

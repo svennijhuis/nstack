@@ -21,7 +21,8 @@ The lint rules need no reading: the linter runs them. When none of the four hold
 2. For each standard, look at the added lines in those files. A line that uses a rejected variant is a finding.
 3. Code that copies the shape of a symbol with a frozen or exception marker is a finding. Code that touches the marked symbol itself is not.
 4. A new file in an area with an exemplar that does not follow the exemplar is a finding.
-5. Print the table, then the summary line.
+5. An added comment that explains code, marks a section, or holds dead code is a finding, by [comments.md](comments.md). An added suppression on a rule that catches bugs is a finding.
+6. Print the table, then the summary line.
 
 ```text
 File                       Line  Area    Finding                                     Fix

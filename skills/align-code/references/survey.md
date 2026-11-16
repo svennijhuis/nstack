@@ -21,7 +21,7 @@ Run every area at chart against the scope. Each ends in exactly one of: a resear
 | 11 | Dependencies and setup | How does a module get what it needs: injected, imported, global? |
 | 12 | Config | How is config read: one place, or environment reads scattered through the code? |
 | 13 | Logging | One logger, one shape, one place that logs an error? |
-| 14 | Comments | Do comments say why, or restate the code? Dead commented-out code? |
+| 14 | Comments | Which comments say a why the code cannot, and which explain code, mark sections, or hold dead code? Which hide a surprise or a suppression? See [comments.md](comments.md). |
 | 15 | Duplicate helpers | The same helper written more than once? |
 | 16 | Slop | Code an agent left behind: defensive checks nothing needs, unused code, wrappers that only forward. Use `deslop` to find it. |
 | 17 | UI components | One way to structure a component, hold state, fetch data, and style? |

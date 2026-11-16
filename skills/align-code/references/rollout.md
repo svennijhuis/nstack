@@ -15,8 +15,9 @@ Tickets run in waves. A wave starts only when every ticket in the wave before it
 | 4. Majority | Standards with danger `bad majority` | The next agent copies these first |
 | 5. The rest | `bad`, then `inconsistent` | |
 | 6. Markers | The frozen and exception markers from [contracts.md](contracts.md) | |
-| 7. Tests | The tests area | Earlier tickets are proven by the old tests |
-| 8. Docs | Trim `code-standards.md`, write the ADRs | The code now says it |
+| 7. Comments | Delete every comment that explains code, then fix each surprise and suppression it hid, by [comments.md](comments.md) | After the rewrites, so no comment is deleted twice |
+| 8. Tests | The tests area | Earlier tickets are proven by the old tests |
+| 9. Docs | Trim `code-standards.md`, write the ADRs | The code now says it |
 
 ## Ticket
 
@@ -32,7 +33,7 @@ Exemplar: <module, by name>
 Files: <every file this ticket may change, one per line>
 Model: <cheap | mid | main>
 Checks: <build, test, lint commands from AGENTS.md, plus each contract check by name>
-Do not: change a frozen surface, add a dependency, add or change a migration, change a test's expected value, change any file not listed
+Do not: add a comment that explains code, change a frozen surface, add a dependency, add or change a migration, change a test's expected value, change any file not listed
 Blocked by: <ticket ids, or none>
 Status: todo
 Commit:
@@ -71,6 +72,7 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
    - no file outside the list changed
    - nothing in the Do not line happened
    - every check passed, and every contract check shows no difference
+   - no added comment explains code, by [comments.md](comments.md)
    - `deslop` finds nothing to remove
 4. **Commit or send back.** On a pass, bring the diff into the apply branch, commit only the ticket's files with the message `align: T-<nnn> <title>`, write the commit on the ticket, and set `done`. On a fail, send it back once with the reasons. On a second fail, set `blocked` with the reasons and move on.
 5. **Update the board** after each ticket. Nothing lives only in the chat.

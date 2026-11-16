@@ -15,6 +15,8 @@ Name the destination first. The destination is the alignment plan: one decided s
 
 **An unknown is a gap. Never write it as an assumption.** When a standard needs a fact or a decision and no source gives it, add a row to `gaps.md`.
 
+**No comments that explain code.** The code says what it does. A comment says only a why the code cannot: a decision or business rule, an outside constraint. This is the default standard for the comments area, see [comments.md](references/comments.md). No ticket adds a comment that explains code.
+
 **Never invent a standard.** The options come from variants found in the code or from a cited source. Only the person's answer makes one a standard.
 
 **Behavior stays.** Build, test, lint, and every contract check pass after each ticket, the same as before it. A ticket that changes behavior is rejected.
