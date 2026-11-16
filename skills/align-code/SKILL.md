@@ -3,13 +3,13 @@ name: align-code
 description: Use when the user wants to align a codebase on one set of code standards and principles, find where the code does the same thing in different ways, and decide which way wins.
 ---
 
-Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap per session, and end with a report. Align the standards. Nothing more.
+Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap per session, end with a report, then rewrite the code one standard at a time. Align the code to the standards. Nothing more.
 
-**Destination:** one decided standard and one exemplar per area, and a report of the files that do not match.
+**Destination:** one decided standard and one exemplar per area, a report of the files that do not match, and the code rewritten to match.
 
 ## Rules
 
-- **Report only.** Write only the align folder. Never change code, config, or docs outside it. Never commit or push.
+- **Read only until aligned.** Before `aligned`, write only the align folder. Code changes only in `apply`, on a local branch, after a yes. Never push.
 - **The majority does not win.** Count each variant, then judge it by [Judging](#judging). An anti-pattern is bad even when it is everywhere.
 - **No breaking changes.** A standard never changes behavior, a public API, schema, config name, or UI. Such a change goes to Out of scope.
 - **Comments follow `comment-root-cause`.** See [comments.md](references/comments.md).
@@ -25,6 +25,7 @@ Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap 
 | `new <name>` | [Chart](#chart) |
 | `<name>` | [Work](#work) |
 | `<name> report` | [Report](#report), by [report-gate.md](references/report-gate.md) |
+| `<name> apply [area]` | [apply.md](references/apply.md) |
 
 `<name>` matches the folder with or without its date. Layout of the folder: [structure.md](references/structure.md).
 
@@ -123,7 +124,7 @@ Other sessions may edit the folder at the same time.
 
 ### Report
 
-Run the [report gate](references/report-gate.md). On pass, print the report: for each area, the standard, the exemplar, and the files that do not match. Write no code. The person or an agent rewrites the code as normal work.
+Run the [report gate](references/report-gate.md). On pass, print the report: for each area, the standard, the exemplar, and the files that do not match. Write no code. Rewriting is `apply`.
 
 ## When this is the wrong answer
 
