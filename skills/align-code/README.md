@@ -14,7 +14,7 @@ It follows wayfinder: a map, a list of gaps, one decision per session.
 2. `/align-code <name>`: one session, one gap. Each survey counts every variant and judges it against a cited source. You choose the standard.
 3. `/align-code <name> report`: the report gate checks every area. On pass, the report lists each standard, its exemplar, and the files that do not match.
 
-The majority does not win. Every variant is judged, even a variant used everywhere, and questions come in order of danger: bad and spreading first, then bad and common, then bad, then only inconsistent.
+The majority does not win. Every variant is judged, even a variant used everywhere, and questions come in order of danger: bad and common first, then bad, then only inconsistent.
 
 ## Output
 

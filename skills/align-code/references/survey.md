@@ -1,6 +1,6 @@
 # Survey
 
-Find every thing the code does more than one way. Judge every variant, even when it is the only one: an anti-pattern used everywhere is still `bad`. Count each, see if it spreads. Never decide. Never change code.
+Find every thing the code does more than one way. Judge every variant, even when it is the only one: an anti-pattern used everywhere is still `bad`. Count each. Never decide. Never change code.
 
 ## Areas
 
@@ -54,8 +54,7 @@ Before it starts, the main session sets the gap's `owner` to `survey` and status
 ## Counting
 
 - Read each hit before you count it. A search result is a candidate, not a count.
-- Count files, not lines. `Files` and `Last 90 days` are both file counts.
-- Spread: new uses in `git log --since=90.days --diff-filter=AM -p` over the scope. Shallow clone: say how far back.
+- Count files, not lines. Time does not matter: count all code in scope.
 - One example per variant, by module and symbol.
 - No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. Any `unjudged` variant makes the Danger `unjudged`. Never guess a verdict.
 
@@ -66,14 +65,13 @@ Before it starts, the main session sets the gap's `owner` to `survey` and status
 
 Gap: <id>
 Date: <yyyy-mm-dd>
-History: <from> to <to>
 
 ## Answer
 <consistent: only one variant, and it is `good` | inconsistent: anything else>. <one line>
 
 ## Variants
-| Variant | Files | Last 90 days | Example | Verdict | Source |
-| --- | --- | --- | --- | --- | --- |
+| Variant | Files | Example | Verdict | Source |
+| --- | --- | --- | --- | --- |
 
 ## Exemplar
 <module, and why. Or: none.>
@@ -93,4 +91,4 @@ History: <from> to <to>
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap. A missing source is a research gap that blocks the area's grilling gaps.
 - Only one variant, `good`: the area is `consistent`. No gap.
-- Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` and spreading is `bad spreading`, `bad` otherwise is `bad majority`, `weak` is `inconsistent`.
+- Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` is `bad majority`, `weak` is `inconsistent`.

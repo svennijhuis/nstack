@@ -68,10 +68,9 @@ A rule the person states outranks every source, and goes on the gap row.
 
 ## Danger first
 
-1. `bad spreading`: `bad`, and added in the last 90 days.
-2. `bad majority`: `bad`, and the most common variant.
-3. `bad`.
-4. `inconsistent`: no variant is `bad`, but the code does it more than one way, or its one way is `weak`.
+1. `bad majority`: `bad`, and the most common variant.
+2. `bad`.
+3. `inconsistent`: no variant is `bad`, but the code does it more than one way, or its one way is `weak`.
 
 Research gaps come before all of them: they unblock the rest.
 
@@ -84,7 +83,7 @@ Research gaps come before all of them: they unblock the rest.
 
 ```text
 <area> (<id>): <question>
-A. <variant>   <files> files, <n> in last 90 days   <good | weak | bad>: <source, one line>
+A. <variant>   <files> files   <good | weak | bad>: <source, one line>
 B. <variant>   ...
 Recommended: <exactly one letter>: <why, with the source>. Or: none, research first.
 Exemplar: <module>
