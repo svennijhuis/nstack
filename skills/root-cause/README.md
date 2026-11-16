@@ -1,8 +1,8 @@
-# fix-dont-comment
+# root-cause
 
 Agents write comments to excuse a workaround instead of fixing the cause. "Needed because the user is sometimes undefined." "Retry because the test is flaky." The comment reads as care. It hides a bug that is still there.
 
-Fix the root cause, don't comment it. A comment that excuses a workaround becomes a fixed cause. A comment that says what the code does becomes clearer code. The one exception is a fact outside our code, such as a vendor bug, with its source. Say "fix, don't comment" or type `/fix-dont-comment`. The agent can also start it by itself: its description tells it to, before it writes a comment, a suppression, or a workaround.
+Fix the root cause, don't comment it. A comment that excuses a workaround becomes a fixed cause. A comment that says what the code does becomes clearer code. The one exception is a fact outside our code, such as a vendor bug, with its source. Say "find the root cause" or type `/root-cause`. The agent can also start it by itself: its description tells it to, before it writes a comment, a suppression, or a workaround.
 
 1. [How it works](#1-how-it-works)
 2. [Why a description is not enough](#2-why-a-description-is-not-enough)
@@ -24,7 +24,7 @@ Each new comment is one of three kinds. The full rules are in [SKILL.md](SKILL.m
 
 When the fix is bigger than the task, the agent stops and asks you. It never keeps a workaround on its own.
 
-It works on old comments too. Type `/fix-dont-comment <path>`, or say "remove the comments in <path>". The agent lists every comment in that file, folder, or repo, with its kind and what it will do, and waits for your yes. Then it deletes the what comments, and fixes each excuse at its cause, one at a time. An old excuse comment is a pointer to a bug that is still there, so it never deletes one and leaves the workaround.
+It works on old comments too. Type `/root-cause <path>`, or say "remove the comments in <path>". The agent lists every comment in that file, folder, or repo, with its kind and what it will do, and waits for your yes. Then it deletes the what comments, and fixes each excuse at its cause, one at a time. An old excuse comment is a pointer to a bug that is still there, so it never deletes one and leaves the workaround.
 
 ## 2. Why a description is not enough
 
@@ -34,7 +34,7 @@ The hook is optional. It runs on every edit of every session, so it is your choi
 
 ## 3. The hook: block and fix
 
-One script, [hooks/fix-dont-comment-hook.py](hooks/fix-dont-comment-hook.py), on two Claude Code events. It needs Python 3 and nothing else.
+One script, [hooks/root-cause-hook.py](hooks/root-cause-hook.py), on two Claude Code events. It needs Python 3 and nothing else.
 
 | Event | What it does |
 | --- | --- |
@@ -59,11 +59,11 @@ The `Stop` check blocks once per stop. When the agent tries again, it may finish
 
 ### With nstack
 
-Say "set up nstack". `setup-nstack-skills` asks if you want the hook, and where: for you (`~/.claude/settings.json`) or for a repo (`.claude/settings.json`). It shows the change and writes nothing before your yes. With a home repo, `setup-home-repo` owns hooks. Say "add the fix-dont-comment hook" there instead.
+Say "set up nstack". `setup-nstack-skills` asks if you want the hook, and where: for you (`~/.claude/settings.json`) or for a repo (`.claude/settings.json`). It shows the change and writes nothing before your yes. With a home repo, `setup-home-repo` owns hooks. Say "add the root-cause hook" there instead.
 
 ### By hand
 
-The script ships with the skill. When the skill is in `~/.claude/skills/fix-dont-comment/`, add this to `~/.claude/settings.json`:
+The script ships with the skill. When the skill is in `~/.claude/skills/root-cause/`, add this to `~/.claude/settings.json`:
 
 ```json
 {
@@ -71,19 +71,19 @@ The script ships with the skill. When the skill is in `~/.claude/skills/fix-dont
     "PreToolUse": [
       {
         "matcher": "Edit|Write|MultiEdit",
-        "hooks": [{ "type": "command", "command": "~/.claude/skills/fix-dont-comment/hooks/fix-dont-comment-hook.py" }]
+        "hooks": [{ "type": "command", "command": "~/.claude/skills/root-cause/hooks/root-cause-hook.py" }]
       }
     ],
     "Stop": [
       {
-        "hooks": [{ "type": "command", "command": "~/.claude/skills/fix-dont-comment/hooks/fix-dont-comment-hook.py" }]
+        "hooks": [{ "type": "command", "command": "~/.claude/skills/root-cause/hooks/root-cause-hook.py" }]
       }
     ]
   }
 }
 ```
 
-For a repo, put the skill in `.claude/skills/fix-dont-comment/` and use `"$CLAUDE_PROJECT_DIR"/.claude/skills/fix-dont-comment/hooks/fix-dont-comment-hook.py` in `.claude/settings.json`. Make the script executable (`chmod +x`). Merge into the `hooks` you already have. Do not replace them. Restart the session. `/hooks` shows it.
+For a repo, put the skill in `.claude/skills/root-cause/` and use `"$CLAUDE_PROJECT_DIR"/.claude/skills/root-cause/hooks/root-cause-hook.py` in `.claude/settings.json`. Make the script executable (`chmod +x`). Merge into the `hooks` you already have. Do not replace them. Restart the session. `/hooks` shows it.
 
 Other harnesses with hooks can run the same script. Map the events by what they do: before a file edit, and when the agent stops. The script reads Claude Code's input, so check the fields your harness sends.
 
