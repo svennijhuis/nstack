@@ -11,6 +11,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `setup-home-repo` | "set up a home repo" | Creates, updates, audits, and cleans up one repo that holds your shared skills, steering files, MCP servers, and hooks. Local only or git, and how it hands over to `setup-agents-md`: [README](skills/setup-home-repo/README.md). |
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](skills/setup-agents-md/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
+| `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
 
 ## How they work together
 
@@ -22,6 +23,7 @@ flowchart TD
     C -->|calls, per child repo| D[setup-agents-md<br/>lean AGENTS.md, code standards, ADRs, glossary]
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
     E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
+    F <-->|a new comment| R[comment-root-cause<br/>fix the cause, not the symptom]
     F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
     G -->|once a feature has shipped| H[setup-agents-md<br/>shipped decisions become ADRs,<br/>the design folder is offered for deletion]
     H --> E
