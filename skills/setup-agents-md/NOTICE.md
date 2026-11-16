@@ -8,8 +8,6 @@ The ideas behind this skill are Matt Pocock's and HumanLayer's:
 - The home repo pattern: https://www.aihero.dev/the-home-repo-pattern
 - HumanLayer, on the instruction budget: https://www.humanlayer.dev/blog/writing-a-good-claude-md
 
-Chapters 1 to 5 of the README follow "Delete (most of) your docs". Chapter 6 and the delete list follow the AGENTS.md guide. The sources do not cover chapters 7 to 9.
-
 The decision and revert rules, and the text of this skill, are our own.
 
 MIT License.
