@@ -32,7 +32,3 @@ Unsure if it is a business rule? Keep it. Cannot make the code better? Say why.
 ## Check a path
 
 `/comment-root-cause <path>` checks the comments already in a file, folder, or repo. List at most 20, each with its reason and what you will do, and wait for a yes. Say how many are left.
-
-## When you finish
-
-Name each shortcut that is still in the code, and why.
