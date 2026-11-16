@@ -1,8 +1,8 @@
-# root-cause
+# comment-check
 
 Agents write comments to excuse a workaround instead of fixing the cause. "Needed because the user is sometimes undefined." "Retry because the test is flaky." The comment reads as care. It hides a bug that is still there.
 
-This skill turns each new comment into a check. Say "find the root cause" or type `/root-cause`. The agent can also start it by itself: its description tells it to, before it writes a comment, a suppression, or a workaround.
+This skill turns each new comment into a check. Say "check my comments" or type `/comment-check`. The agent can also start it by itself: its description tells it to, before it writes a comment, a suppression, or a workaround.
 
 1. [How it works](#1-how-it-works)
 2. [Why a description is not enough](#2-why-a-description-is-not-enough)
@@ -32,7 +32,7 @@ The hook is optional. It runs on every edit of every session, so it is your choi
 
 ## 3. The hook: block and fix
 
-One script, [hooks/root-cause-hook.py](hooks/root-cause-hook.py), on two Claude Code events. It needs Python 3 and nothing else.
+One script, [hooks/comment-check-hook.py](hooks/comment-check-hook.py), on two Claude Code events. It needs Python 3 and nothing else.
 
 | Event | What it does |
 | --- | --- |
@@ -57,11 +57,11 @@ The `Stop` check blocks once per stop. When the agent tries again, it may finish
 
 ### With nstack
 
-Say "set up nstack". `setup-nstack-skills` asks if you want the hook, and where: for you (`~/.claude/settings.json`) or for a repo (`.claude/settings.json`). It shows the change and writes nothing before your yes. With a home repo, `setup-home-repo` owns hooks. Say "add the root-cause hook" there instead.
+Say "set up nstack". `setup-nstack-skills` asks if you want the hook, and where: for you (`~/.claude/settings.json`) or for a repo (`.claude/settings.json`). It shows the change and writes nothing before your yes. With a home repo, `setup-home-repo` owns hooks. Say "add the comment-check hook" there instead.
 
 ### By hand
 
-The script ships with the skill. When the skill is in `~/.claude/skills/root-cause/`, add this to `~/.claude/settings.json`:
+The script ships with the skill. When the skill is in `~/.claude/skills/comment-check/`, add this to `~/.claude/settings.json`:
 
 ```json
 {
@@ -69,19 +69,19 @@ The script ships with the skill. When the skill is in `~/.claude/skills/root-cau
     "PreToolUse": [
       {
         "matcher": "Edit|Write|MultiEdit",
-        "hooks": [{ "type": "command", "command": "~/.claude/skills/root-cause/hooks/root-cause-hook.py" }]
+        "hooks": [{ "type": "command", "command": "~/.claude/skills/comment-check/hooks/comment-check-hook.py" }]
       }
     ],
     "Stop": [
       {
-        "hooks": [{ "type": "command", "command": "~/.claude/skills/root-cause/hooks/root-cause-hook.py" }]
+        "hooks": [{ "type": "command", "command": "~/.claude/skills/comment-check/hooks/comment-check-hook.py" }]
       }
     ]
   }
 }
 ```
 
-For a repo, put the skill in `.claude/skills/root-cause/` and use `"$CLAUDE_PROJECT_DIR"/.claude/skills/root-cause/hooks/root-cause-hook.py` in `.claude/settings.json`. Make the script executable (`chmod +x`). Merge into the `hooks` you already have. Do not replace them. Restart the session. `/hooks` shows it.
+For a repo, put the skill in `.claude/skills/comment-check/` and use `"$CLAUDE_PROJECT_DIR"/.claude/skills/comment-check/hooks/comment-check-hook.py` in `.claude/settings.json`. Make the script executable (`chmod +x`). Merge into the `hooks` you already have. Do not replace them. Restart the session. `/hooks` shows it.
 
 Other harnesses with hooks can run the same script. Map the events by what they do: before a file edit, and when the agent stops. The script reads Claude Code's input, so check the fields your harness sends.
 

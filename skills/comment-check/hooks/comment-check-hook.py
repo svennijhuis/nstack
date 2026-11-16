@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""root-cause hook for Claude Code. Blocks a new comment that has no source.
+"""comment-check hook for Claude Code. Blocks a new comment that has no source.
 
 PreToolUse (Edit, Write, MultiEdit): refuses an edit that adds such a comment.
 Stop: before the agent finishes, checks the whole change once, for edits made
 another way (a shell command, a script).
 
 A comment with a source passes: a link, an issue (#123), a ticket (ABC-123),
-or an ADR (ADR-0012). See the root-cause skill for why.
+or an ADR (ADR-0012). See the comment-check skill for why.
 """
 import json
 import os
@@ -68,8 +68,8 @@ def read_lines(path):
 def message(hits, where):
     shown = "\n".join(f"  {h[:120]}" for h in hits[:10])
     return (
-        f"Blocked by root-cause: {where} adds comments or markers with no source:\n{shown}\n"
-        "Use the root-cause skill. A what comment: delete it, make the code say it. "
+        f"Blocked by comment-check: {where} adds comments or markers with no source:\n{shown}\n"
+        "Use the comment-check skill. A what comment: delete it, make the code say it. "
         "An excuse: find the cause, fix it, and remove the workaround. "
         "An outside why: add its source (a link, #123, ABC-123, ADR-0012). "
         "If the fix is bigger than the task, stop and ask the person."

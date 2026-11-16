@@ -1,5 +1,5 @@
 ---
-name: root-cause
+name: comment-check
 description: Use before you write a code comment, a lint or type suppression, a TODO or HACK, or a guard, retry, sleep, cast, or catch that works around behavior instead of fixing it. Also use when a hook flags a new comment, when a test is flaky or a value is "sometimes" wrong, and when the user asks to fix a bug at its root cause.
 ---
 
