@@ -11,7 +11,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `setup-home-repo` | "set up a home repo" | Creates, updates, audits, and cleans up one repo that holds your shared skills, steering files, MCP servers, and hooks. Local only or git, and how it hands over to `setup-agents-md`: [README](skills/setup-home-repo/README.md). |
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](skills/setup-agents-md/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. Offers the optional hooks, such as the `no-comments` hook. |
-| `no-comments` | "no comments" | No comments in code. A comment that explains the code becomes clearer code. A comment that excuses a workaround becomes a fixed root cause. Only a fact outside our code may stay, with its source. The agent can start it by itself. An optional hook blocks a new comment with no source until the agent fixes it: [README](skills/no-comments/README.md). |
+| `no-comments` | "no comments" | No comments in code. A comment that explains the code becomes clearer code. A comment that excuses a workaround becomes a fixed root cause. Only a fact outside our code may stay, with its source. Also cleans up old comments: `/no-comments <path>`. The agent can start it by itself. An optional hook blocks a new comment with no source until the agent fixes it: [README](skills/no-comments/README.md). |
 
 ## How they work together
 
