@@ -12,6 +12,7 @@ Agents copy the code they see, so a bad pattern spreads with every change. This 
 - **No breaking changes.** API, events, database schema, public exports, config names, CLI, and UI stay exactly as they are. See [contracts.md](references/contracts.md).
 - **Behavior stays.** Build, test, lint, and contract checks pass after every ticket.
 - **The majority does not win.** Count each variant, then judge it by [principles.md](references/principles.md).
+- **An anti-pattern is never consistent.** Used everywhere, it is still `bad`. See [anti-patterns.md](references/anti-patterns.md).
 - **No comments.** See [comments.md](references/comments.md).
 - **An unknown is a gap.** Never an assumption, a default, or a guess.
 - **Never invent a standard.** Options come from the code or a cited source. Only the person decides.

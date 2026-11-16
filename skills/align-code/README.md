@@ -39,6 +39,8 @@ This skill breaks that loop. It finds every place the code does one thing in mor
 
 The easy rule is "the most common pattern wins". It is wrong here. The most common pattern is often the bad one: it is common because it was copied. So the skill counts each variant, and then judges it against a short list of principles with sources, such as deep modules, errors that are handled once, and input parsed once at the edge. See [principles.md](references/principles.md). You can edit the list.
 
+A bad pattern used everywhere is still bad, so the skill also hunts a fixed list of anti-patterns that cheap agents write often: swallowed errors, null for failure, silent fallbacks, type escapes, flag parameters, forwarding layers, abstractions with one user, queries in a loop, and more. See [anti-patterns.md](references/anti-patterns.md). You can edit the list.
+
 It also reads the git history and sees which patterns are spreading right now. The questions come in order of danger:
 
 1. **Bad and spreading.** Every day it stays open adds copies.

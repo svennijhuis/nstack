@@ -23,6 +23,7 @@ A finding is an added line that:
 - copies the shape of a marked symbol
 - adds a comment not on the keep list of [comments.md](comments.md). Not sure? Flag it, and say why.
 - adds a suppression on a rule that catches bugs
+- adds an anti-pattern from [anti-patterns.md](anti-patterns.md)
 
 ```text
 File                  Line  Area      Finding                                 Fix
@@ -40,7 +41,7 @@ None: say the branch follows the standards.
 `/align-code advise`: the scope of the last `aligned` run, or the whole repo.
 
 1. Run the survey of every area with a standard, read only. Subagents return tables. They write nothing.
-2. Every variant that is not the standard and has no marker is drift.
+2. Every variant that is not the standard and has no marker is drift. So is every anti-pattern.
 3. Find the source: `git log --diff-filter=A -S<key text>` over its files. The oldest copy is where the agents copy from.
 
 ```text

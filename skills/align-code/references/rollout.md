@@ -68,6 +68,7 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
    - no file outside the list changed
    - nothing in Do not happened
    - every check passed, every contract check shows no difference
+   - no added anti-pattern from [anti-patterns.md](anti-patterns.md)
    - `deslop` finds nothing
 4. **Commit** on a pass: only the ticket's files, `align: T-<nnn> <title>`, write the commit, set `done`. A fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
 5. **Update the board** after every ticket.
@@ -86,7 +87,7 @@ Stop between any two tickets. On resume, `doing` and `review` go back to `todo` 
    Naming          none    no tool can check it                                 the check mode covers it  -
    ```
 
-   - One row per standard with `Checked by` set, plus every standard a rule could now check.
+   - One row per standard with `Checked by` set, plus every standard a rule could now check, plus every anti-pattern in [anti-patterns.md](anti-patterns.md) a rule can catch.
    - Use the repo's own linter, formatter, or type checker, or a well-known plugin for it. Name the exact rule id and setting. Never invent a rule: find it in the tool's installed docs or its source.
    - `Hits now`: run the tool once with the rule on the command line, never in a config file. Tool not installed: `-`.
    - No rule fits: say `none`, and that `/align-code check` covers it.

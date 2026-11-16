@@ -1,6 +1,6 @@
 # Survey
 
-Find every thing the code does more than one way. Count each way, see if it spreads, judge it. Never decide. Never change code.
+Find every thing the code does more than one way, and every anti-pattern in [anti-patterns.md](anti-patterns.md), even when the code does it one way. Count each, see if it spreads, judge it. Never decide. Never change code.
 
 ## Areas
 
@@ -45,7 +45,7 @@ Give this, and nothing from the conversation:
 Area: <name and Ask, word for word>
 Gap: <id>, in docs/align/<folder>/gaps.md
 Scope: <Scope from align.md>
-Principles: <full path to references/principles.md>, plus docs/agents/code-standards.md if it exists
+Principles: <full path to references/principles.md> and <full path to references/anti-patterns.md>, plus docs/agents/code-standards.md if it exists
 Contracts: <full path to references/contracts.md>. Mark every variant on a frozen surface.
 Write: docs/align/<folder>/survey/<area>.md
 Do not: change code, decide, call a live system, edit align.md
@@ -73,7 +73,7 @@ History: <from> to <to>
 <consistent | inconsistent>. <one line>
 
 ## Variants
-| Variant | Files | Last 90 days | Example | Verdict | Principle | Frozen |
+| Variant | Anti-pattern | Files | Last 90 days | Example | Verdict | Principle | Frozen |
 | --- | --- | --- | --- | --- | --- | --- |
 
 ## Exemplar
@@ -93,4 +93,5 @@ History: <from> to <to>
 
 - The subagent writes the Answer on the row, links the file, sets `decided`. The only gap an agent closes alone.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap.
-- One `good` variant: the area is `consistent`. No gap.
+- One `good` variant and no anti-pattern: the area is `consistent`. No gap.
+- An anti-pattern in every file of the area: danger `bad majority`, one grilling gap: how to remove it.
