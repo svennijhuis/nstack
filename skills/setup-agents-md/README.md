@@ -196,12 +196,3 @@ Each skill works without the others.
 ```
 
 Nothing is written or run before you approve the plan. Nothing is pushed.
-
-## Sources
-
-- Matt Pocock, "Delete (most of) your docs": https://www.youtube.com/watch?v=Fj8DKMbdIzU. Chapters 1 to 5.
-- Matt Pocock, A complete guide to AGENTS.md: https://www.aihero.dev/a-complete-guide-to-agents-md. Chapter 6 and the delete list.
-- Matt Pocock, The home repo pattern: https://www.aihero.dev/the-home-repo-pattern
-- HumanLayer: https://www.humanlayer.dev/blog/writing-a-good-claude-md. The instruction budget and "use a linter, not the agent".
-
-Chapters 7 to 9 are nstack's own. The sources do not cover them.
