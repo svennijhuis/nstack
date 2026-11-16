@@ -1,101 +1,94 @@
 # Rollout
 
-The rollout turns the decided standards into tickets, then runs them. Each ticket is one change a subagent can make and prove alone. The main session reviews every diff before it commits. Nothing breaks, nothing is pushed.
+One ticket, one subagent, one change it can prove alone. The main session reviews every diff. Nothing breaks. Nothing is pushed.
 
 ## Waves
 
-Tickets run in waves. A wave starts only when every ticket in the wave before it is `done` or `blocked`. Within a wave, tickets with no shared file run in parallel.
+A wave starts when the one before it is all `done` or `blocked`. Tickets in a wave with no shared file run in parallel.
 
-| Wave | Holds | Why this order |
-| --- | --- | --- |
-| 0. Checks | One ticket per missing contract check, run against the unchanged code to record the baseline | Nothing may change before it can be proven unchanged |
-| 1. Tools | Linter, formatter, and type checker config for every checkable standard, then their autofix | Cheap, mechanical, and stops new copies at once |
-| 2. Exemplars | Rewrite a module into the exemplar where the person accepted a prototype | Every later ticket copies the exemplar |
-| 3. Spreading | Standards with danger `bad spreading` | Each day open adds copies |
-| 4. Majority | Standards with danger `bad majority` | The next agent copies these first |
-| 5. The rest | `bad`, then `inconsistent` | |
-| 6. Markers | The frozen and exception markers from [contracts.md](contracts.md) | |
-| 7. Comments | Delete every comment that explains code, then fix each surprise and suppression it hid, by [comments.md](comments.md) | After the rewrites, so no comment is deleted twice |
-| 8. Tests | The tests area | Earlier tickets are proven by the old tests |
-| 9. Docs | Trim `code-standards.md`, write the ADRs | The code now says it |
+| Wave | Holds |
+| --- | --- |
+| 0. Checks | Every missing contract check, on the unchanged code |
+| 1. Tools | Lint, format, and type config for checkable standards, then autofix |
+| 2. Exemplars | Prototypes the person accepted, made real |
+| 3. Spreading | `bad spreading` |
+| 4. Majority | `bad majority` |
+| 5. Rest | `bad`, then `inconsistent` |
+| 6. Markers | Frozen and exception markers |
+| 7. Comments | Deletes by [comments.md](comments.md), then each fix it calls for |
+| 8. Tests | The tests area |
+| 9. Docs | Trim `code-standards.md`, write the ADRs |
 
 ## Ticket
 
-Each ticket in `rollout.md`:
-
 ```markdown
-### T-<nnn>: <what changes, in a few words>
+### T-<nnn>: <title>
 
 Wave: <n>
 Gaps: <ids and questions>
-Standard: <the standard sentence from align.md, word for word>
-Exemplar: <module, by name>
-Files: <every file this ticket may change, one per line>
+Standard: <from align.md, word for word>
+Exemplar: <module>
+Files: <every file it may change, one per line>
 Model: <cheap | mid | main>
-Checks: <build, test, lint commands from AGENTS.md, plus each contract check by name>
-Do not: add a comment that explains code, change a frozen surface, add a dependency, add or change a migration, change a test's expected value, change any file not listed
-Blocked by: <ticket ids, or none>
+Checks: <commands from AGENTS.md, plus each contract check>
+Do not: change a file not listed, change a frozen surface, add a dependency, add or change a migration, change or delete a test's expectation, add a comment [comments.md](comments.md) deletes
+Blocked by: <ids or none>
 Status: todo
 Commit:
 ```
 
-- **Size.** One module, or at most about 20 files of one mechanical change. Split anything larger.
-- **Files.** Listed by path. A subagent that needs another file stops and reports it. It never edits outside its list.
-- **Model.** `cheap` for mechanical work: renames, imports, moving files, applying a config. `mid` for work that needs judgment: error flow, boundaries, adapters, splitting a module. `main` only when the review of a `mid` ticket failed twice and the person asks for it. In Claude Code these are `haiku`, `sonnet`, and the session's own model. In another harness, use its cheapest, middle, and main model.
+- **Size:** one module, or at most 20 files of one mechanical change.
+- **Files:** needs another file? Stop and report. Never edit outside the list.
+- **Model:** `cheap` for mechanical work: renames, imports, moves, config. `mid` for judgment: error flow, boundaries, adapters, splits. `main` only after two failed `mid` reviews, when the person asks. In Claude Code: `haiku`, `sonnet`, the session model.
 
-`rollout.md` starts with the board, then the tickets:
+`rollout.md` starts with the board:
 
 ```text
-Wave  Ticket  Title                        Model  Status   Commit
-0     T-001   API schema snapshot          mid    done     4f2a1c9
-3     T-007   Errors: result type, billing mid    blocked  review failed twice: see T-007
+Wave  Ticket  Title                         Model  Status   Commit
+0     T-001   API schema snapshot           mid    done     4f2a1c9
+3     T-007   Errors: result type, billing  mid    blocked  failed review twice
 ```
 
 Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
 
-## Apply
+## Start
 
-### Start
+1. Status not `ready` or `applying`: say so and stop.
+2. Uncommitted changes to tracked files outside `docs/align/` and `docs/design/`: stop and report.
+3. First apply only: show the board, counts by wave and model, and the branch. Wait for a yes. Log `apply approved`.
+4. Branch `align/<yyyy-mm-dd>-<name>` from the current branch. Fill `Branch`. Status `applying`.
+5. Run every check once. Log what is already red.
 
-1. If the status is not `ready` or `applying`, say what it is and stop.
-2. If the repo has uncommitted changes to tracked files outside `docs/align/` and `docs/design/`, stop and report them.
-3. On the first apply, show the board, the ticket count by wave and model, and the branch name. Wait for a yes. Log `apply approved` with the date. Later sessions do not ask again.
-4. Work on a local branch `align/<yyyy-mm-dd>-<name>`, made from the current branch on the first apply. Fill `Branch` in the header. Set `Status: applying`.
-5. Run the build, test, lint, and contract checks once. Record anything already red in `log.md`. A ticket may not make it worse.
+## Each ticket
 
-### Each ticket
-
-1. **Pick.** The first `todo` tickets in the lowest open wave whose blockers are `done` and whose files no `doing` ticket holds. Run up to four at once. Set `doing`.
-2. **Brief.** Start one subagent per ticket, with the ticket's model, in its own git worktree from the apply branch when the harness supports it. Otherwise run tickets one at a time in the working tree. Give it the ticket text, the full path to the exemplar, the path to [contracts.md](contracts.md), and nothing from the conversation. It returns its diff and the output of every check.
-3. **Review.** In the main session, set `review` and read the diff. It passes only when:
+1. **Pick** `todo` tickets in the lowest open wave, blockers `done`, no file held by a `doing` ticket. Up to four. Set `doing`.
+2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket, the exemplar path, the [contracts.md](contracts.md) path, nothing from the conversation. It returns the diff and every check's output.
+3. **Review.** Set `review`. Pass only when:
    - every changed line follows the standard and looks like the exemplar
    - no file outside the list changed
-   - nothing in the Do not line happened
-   - every check passed, and every contract check shows no difference
-   - no added comment explains code, by [comments.md](comments.md)
-   - `deslop` finds nothing to remove
-4. **Commit or send back.** On a pass, bring the diff into the apply branch, commit only the ticket's files with the message `align: T-<nnn> <title>`, write the commit on the ticket, and set `done`. On a fail, send it back once with the reasons. On a second fail, set `blocked` with the reasons and move on.
-5. **Update the board** after each ticket. Nothing lives only in the chat.
+   - nothing in Do not happened
+   - every check passed, every contract check shows no difference
+   - `deslop` finds nothing
+4. **Commit** on a pass: only the ticket's files, `align: T-<nnn> <title>`, write the commit, set `done`. A fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
+5. **Update the board** after every ticket.
 
-A session may stop between tickets at any point. The board says where to start again. A `doing` or `review` ticket from a session that stopped goes back to `todo`, and its worktree is removed.
+Stop between any two tickets. On resume, `doing` and `review` go back to `todo` and their worktrees are removed.
 
-### The docs ticket
+## Docs
 
-The last wave. The code is the docs now, so most standards lines have nothing left to say.
+1. **Trim `docs/agents/code-standards.md`.** Delete every line the code, a tool, or a marker now shows. Nothing left: propose deleting the file.
+2. **ADRs.** One per area with a standard, in `docs/adr/`, in the repo's ADR format. Title `Code standard: <area>`. Decision, why with the principle, rejected variants, the exemplar, frozen and excepted code.
+3. **Show both as plan rows. Wait for a yes.** The person maintains `code-standards.md`: no line goes without its row.
+4. `writing-for-agents` on each file. Commit.
+5. File gone, or a pointer now stale: tell the person to run `/setup-agents-md`. Never edit `AGENTS.md`.
 
-1. **Trim `docs/agents/code-standards.md`.** For each line, ask: does the code, a lint rule, a type, or a marker now show this? If yes, delete the line. Keep a line only when the code cannot say it. If no line is left, propose deleting the file.
-2. **Write the ADRs.** One per area with a decided standard, in `docs/adr/`, in the format of the repo's newest ADR, or the format its `AGENTS.md` Decisions section names. Title: `Code standard: <area>`. Decision is the standard. Why names the principle. Rejected lists each rejected variant and why. Name the exemplar and any frozen or excepted code.
-3. **Show both as plan rows** and wait for a yes. The person maintains `code-standards.md`: never trim a line without its row.
-4. Commit on a yes. Call `writing-for-agents` on each file first.
-5. When the file was deleted or a line it pointed at is gone, tell the person to run `/setup-agents-md` to update the pointer in `AGENTS.md`. This skill never edits `AGENTS.md`.
+## Finish
 
-### Verify and finish
+1. Run the surveys again on every area with a standard.
+2. Pass: one variant left, apart from marked code.
+3. Fail: one ticket per leftover file, in a new wave. Stay `applying`.
+4. All pass, nothing `todo`: status `aligned`. Log the counts.
+5. Report tickets done and blocked, files changed, marked code left, and the branch.
+6. Offer to delete the align folder, as its own question. Say git does not keep its uncommitted files.
 
-1. Run each survey again on the areas with a decided standard, by [survey.md](survey.md), with the same models.
-2. Each area passes when the code shows one variant, apart from the code that carries a frozen or exception marker.
-3. An area that fails gets one new ticket per leftover file, in a new wave, and the run stays `applying`.
-4. When every area passes and no ticket is `todo`, set `Status: aligned`. Log the counts.
-5. Report: tickets done and blocked, files changed, the frozen and excepted code left as it is, and the branch to push.
-6. Offer to delete the align folder, as its own question. The ADRs, the lint rules, the markers, and the code now hold every decision. Say that uncommitted files in it are not kept by git.
-
-Never push. The person reviews the branch and pushes.
+Never push.
