@@ -4,7 +4,7 @@ Find every thing the code does more than one way. Count each way, see if it spre
 
 ## Areas
 
-Each area ends as a survey gap, a fog line, or `sweep <area>: n/a: <reason>` in `log.md`.
+Each area ends as a survey gap, a fog line, or `n/a: <reason>` in its section of `align.md`.
 
 | # | Area | Ask |
 | --- | --- | --- |
@@ -56,7 +56,7 @@ The subagent claims the gap: `owner`, status `research`.
 ## Counting
 
 - Read each hit before you count it. A search result is a candidate, not a count.
-- Count files, not lines.
+- Count files, not lines. `Files` and `Last 90 days` are both file counts.
 - Spread: new uses in `git log --since=90.days --diff-filter=AM -p` over the scope. Shallow clone: say how far back.
 - One example per variant, by module and symbol.
 
@@ -83,7 +83,7 @@ History: <from> to <to>
 <bad spreading | bad majority | bad | inconsistent | none>
 
 ## Questions
-- <one line per difference>
+- <one line per standard to decide. Never one per file or per line.>
 
 ## Still unknown
 - <what the code did not answer>

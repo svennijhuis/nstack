@@ -14,7 +14,7 @@
 | `prototypes/` | One rewrite per prototype gap. Never imported. | chart |
 | `rollout.md` | The board and the tickets | ready |
 
-Folders start empty, with a `.gitkeep`.
+Folders start with a `.gitkeep`. Delete it when the first file lands.
 
 ## Header
 
@@ -42,7 +42,7 @@ After `## Map`, one `## <Area>` per area in [survey.md](survey.md), in order. Ea
 
 ```markdown
 Standard: <one sentence>. <principle id>.
-Exemplar: <module>
+Exemplar: <module, or none: a rule of absence, such as comments>
 Outcome: <apply | adapter | new-only | exception>
 Rejected: <variant>: <why>.
 Checked by: <lint rule, type, or test, or none>
@@ -59,8 +59,11 @@ Columns, in order: `id`, `question`, `area`, `type`, `danger`, `status`, `owner`
 - `type`: `research`, `prototype`, `grilling`, `task`.
 - `danger`: `bad spreading`, `bad majority`, `bad`, `inconsistent`. Empty for research and task.
 - `status`: `open`, `research`, `waiting-on-input`, `decided`, `accepted-risk`.
+- `blocks`: the ids that must close before this one. Empty when none.
 - `outcome`: `apply`, `adapter`, `new-only`, `exception`. Grilling only.
 
 ## log.md
 
 `<yyyy-mm-dd> <mode> <id and question or title, or none>: <what changed>`
+
+One line per session. Several modes in one session: one line each.

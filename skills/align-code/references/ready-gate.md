@@ -24,7 +24,7 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 ### Standards
 
 8. Every section is `consistent`, `n/a` with a reason, or a standard with every field.
-9. Every exemplar exists in the code, or is an accepted prototype.
+9. Every exemplar exists in the code, or is an accepted prototype. `none` only for a rule of absence.
 10. Every outcome fits [contracts.md](contracts.md).
 11. Every `new-only` and `exception` has a reason.
 12. Every standard a tool can check names its rule. None named: fail.
@@ -34,14 +34,15 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 
 14. Every frozen surface in scope has a check, or a wave 0 ticket.
 15. No ticket changes a frozen surface.
+16. Every file a code-changing ticket lists is run by a check, or by a wave 0 test.
 
 ### Tickets
 
-16. Every file under `Changes` is in exactly one ticket per standard.
-17. Every ticket has every field.
-18. Two tickets that share a file are in different waves, or one blocks the other.
-19. Tests tickets are in the tests wave.
-20. No `TBD`, `TODO`, `???`, or unfilled `<...>`.
+17. Every file under `Changes` is in exactly one ticket per standard.
+18. Every ticket has every field.
+19. Two tickets that share a file are in different waves, or one blocks the other.
+20. Tests tickets are in the tests wave.
+21. No `TBD`, `TODO`, `???`, or unfilled `<...>`.
 
 ## Pass
 

@@ -8,7 +8,7 @@ A wave starts when the one before it is all `done` or `blocked`. Tickets in a wa
 
 | Wave | Holds |
 | --- | --- |
-| 0. Checks | Every missing contract check, on the unchanged code |
+| 0. Checks | Every missing contract check and characterization test, on the unchanged code |
 | 1. Tools | Lint, format, and type config for checkable standards, then autofix |
 | 2. Exemplars | Prototypes the person accepted, made real |
 | 3. Spreading | `bad spreading` |

@@ -15,19 +15,18 @@ None found: name `/align-code new <name>` and stop.
 
 ## Check
 
-`/align-code check`: the current branch's diff against the default branch.
+`/align-code check`: `git diff <default>...HEAD`. The default branch is `origin/HEAD`, else `main`, else `master`. Skip a standards source that does not exist.
 
 A finding is an added line that:
 
 - uses a rejected variant
 - copies the shape of a marked symbol
-- starts a new file that does not follow its area's exemplar
-- adds a comment [comments.md](comments.md) deletes
+- adds a comment not on the keep list of [comments.md](comments.md). Not sure? Flag it, and say why.
 - adds a suppression on a rule that catches bugs
 
 ```text
 File                  Line  Area      Finding                                 Fix
-src/orders/refund.ts  14    Errors    returns null on failure (rejected, P4)  return a Result, as in billing
+src/orders/refund.ts  14    Errors    returns null on failure (rejected, P4)  return { ok, error }, as billing
 src/api/v2/users.ts   3     API       copies the frozen v1 user shape         follow the API ADR
 src/cart/total.ts     22    Comments  explains the loop                       delete it
 

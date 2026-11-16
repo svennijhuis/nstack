@@ -9,7 +9,7 @@ Change how the code is written. Never what a caller sees.
 | API | Routes, methods, request and response shapes, field names, status codes, error bodies, headers |
 | Events | Names, payloads, ordering, delivery |
 | Database | Schema, names, stored formats. No migration. |
-| Public exports | Every exported name and type |
+| Public exports | Every name and type a caller outside this repo imports: a published package, another repo, another service |
 | Config | Environment names, keys, defaults |
 | CLI | Commands, flags, parsed output, exit codes |
 | UI | Look, behavior, text, routes, analytics |
@@ -17,6 +17,8 @@ Change how the code is written. Never what a caller sees.
 | Timing | Order of side effects, idempotency, sync or async |
 
 Not sure it is frozen? It is. Ask as a grilling gap.
+
+**Inside the repo nothing is frozen.** An export only this repo imports is internal. The ticket changes it and every caller in the same commit. Never keep an old shape as a wrapper for an internal caller: the next agent copies the wrapper.
 
 ## Outcomes
 
@@ -41,6 +43,8 @@ Exception: <reason>. Do not copy. See <ADR file>.
 ## Checks
 
 Every frozen surface in scope has a check that shows no difference before and after each ticket. A missing check is a task gap, and its ticket runs first, on the unchanged code.
+
+**Every file a ticket changes must be run by a check.** A file no test runs, or a frozen response no test asserts, gets a characterization test in wave 0: it records what the code does today, on the unchanged code. Tests may be added. Never changed. Checks may live outside the scope.
 
 | Surface | Check |
 | --- | --- |

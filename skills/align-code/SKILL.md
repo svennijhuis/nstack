@@ -52,9 +52,9 @@ A gap's name is its question. Use the question, never the bare id. **Claim** a g
 1. `bad spreading`: fails a principle and was added in the last 90 days.
 2. `bad majority`: fails a principle and is the most common variant.
 3. `bad`: fails a principle.
-4. `inconsistent`: every variant passes, the code just does it more than one way.
+4. `inconsistent`: no variant is `bad`, the code just does it more than one way. A `weak` variant lands here.
 
-Then by files touched.
+Then by files touched. Open research and task gaps come before all of them: they unblock the rest.
 
 ## Gap types
 
@@ -63,7 +63,7 @@ Never answer the person's side of a HITL gap.
 - **Research** (AFK). A fact. The survey of an area, by [survey.md](references/survey.md), or a principle that needs a source. A subagent with a fresh context does it.
 - **Grilling** (HITL). Which variant becomes the standard. Show the card, ask one question, stop. Call `codebase-design`, `grilling`, and `domain-modeling`.
 - **Prototype** (HITL). No module is good enough to be the exemplar. Rewrite one small module under `prototypes/`, never in the code. The person's reaction is the answer.
-- **Task** (HITL or AFK). Work a decision waits on, such as finding the contract checks. Drive it, or give the person a checklist.
+- **Task** (HITL or AFK). Work a decision waits on, such as writing a missing check. Drive it, or give the person a checklist. A question only the person can answer is grilling, not a task.
 
 ### The grilling card
 
@@ -93,15 +93,15 @@ Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`
 | `<name> apply` | [rollout.md](references/rollout.md) |
 | `check`, `advise` | [advise.md](references/advise.md) |
 
-Every session starts and ends by [resume.md](references/resume.md).
+Chart, work, ready, and apply sessions start and end by [resume.md](references/resume.md). `check` and `advise` do not.
 
 ### Chart
 
-1. **Preflight.** Read the build, test, and lint commands from `AGENTS.md`. None: name `/setup-agents-md` and stop. Read `docs/agents/code-standards.md` and the ADRs: each line is a candidate, never a standard. Find the contract checks by [contracts.md](references/contracts.md).
+1. **Preflight.** Read the build, test, and lint commands from `AGENTS.md`. None: name `/setup-agents-md` and stop. Read `docs/agents/code-standards.md` and the ADRs when they exist: each line is a candidate, never a standard. Find the contract checks by [contracts.md](references/contracts.md).
 2. **Destination.** Call `grilling` and `domain-modeling`. Agree the scope. Done when the person agrees with the destination.
-3. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a` with a reason in `log.md`.
+3. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>` in its section.
 4. **Create the folder** by [structure.md](references/structure.md). Status `draft`.
-5. **Add the gaps.** A frozen surface with no check is a task gap. Fill `blocks` in a second pass. Status `discussion`.
+5. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`, recommended yes. A frozen surface with no check is a task gap. Fill `blocks` in a second pass. Status `discussion`.
 6. **Start the surveys,** one subagent per area.
 7. **Stop.** Log. Say the gap count by type and the first frontier gap.
 
@@ -109,7 +109,7 @@ A `new` for a name that exists stops. Tell them to resume.
 
 ### Work
 
-1. **Catch up** by [resume.md](references/resume.md). Turn each finished survey into grilling gaps, one per difference, with its danger. One `good` variant: the area is `consistent`, no gap.
+1. **Catch up** by [resume.md](references/resume.md). Turn each finished survey into gaps: each Question a grilling gap with its danger, each Still unknown a gap. One `good` variant: the area is `consistent`, no gap.
 2. **Claim** the gap the person named, or the first on the frontier.
 3. **Resolve** it by type.
 4. **Record** the answer and outcome on the row, status `decided`. No answer: `waiting-on-input`. Advice never closes a gap.
