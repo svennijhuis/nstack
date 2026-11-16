@@ -3,7 +3,7 @@ name: align-code
 description: Use when the user wants to align a codebase on one set of code standards and principles, find where the code does the same thing in different ways, decide which way wins, and plan or run the rewrite without breaking changes.
 ---
 
-Agents copy the code they see, so a bad pattern spreads with every change. This skill charts one standard per area as a map at `docs/align/<yyyy-mm-dd>-<name>/`, closes one gap per session, then runs the rewrite with subagents. The code ends up worth copying, and the code is the docs.
+Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap per session, then rewrite the code with subagents.
 
 **Destination:** one decided standard and one exemplar per area, and a ticket for every change that gets the code there.
 
@@ -113,7 +113,7 @@ Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`
 
 ### Chart
 
-1. **Preflight.** Read the build, test, and lint commands from `AGENTS.md`. None: name `/setup-agents-md` and stop. Read `docs/agents/code-standards.md` and the ADRs when they exist: each line is a candidate, never a standard. List the frozen surfaces in scope and the check for each, by [contracts.md](references/contracts.md).
+1. **Check what the run needs.** Read the build, test, and lint commands from `AGENTS.md`. None: name `/setup-agents-md` and stop. Read `docs/agents/code-standards.md` and the ADRs when they exist: each line is a candidate, never a standard. List the frozen surfaces in scope and the check for each, by [contracts.md](references/contracts.md).
 2. **Destination.** Call `grilling` and `domain-modeling`. Agree the scope. Done when the person agrees with the destination.
 3. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>` in its section.
 4. **Create the folder** by [structure.md](references/structure.md). Status `draft`.

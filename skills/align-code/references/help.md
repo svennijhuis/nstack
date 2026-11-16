@@ -27,8 +27,8 @@ Help, list, and status change no file.
 One row per folder under `docs/align/`, newest first:
 
 ```text
-Run                 Scope        Status    Created     Updated     Open  Tickets
-2026-11-16-backend  api, worker  applying  2026-11-16  2026-11-24  0     31 done, 2 blocked, 9 todo
+Run       Scope    Status    Created  Updated  Open  Tickets
+<folder>  <scope>  <status>  <date>   <date>   <n>   <n> done, <n> blocked, <n> todo, or -
 ```
 
 None: say so and show the `new` line.
@@ -36,19 +36,19 @@ None: say so and show the `new` line.
 ## Status
 
 ```text
-<name>   Status: discussion   Scope: api, worker   Updated 2026-11-19
+<name>   Status: <status>   Scope: <scope>   Updated <date>
 
-Areas: 18. 9 decided, 4 consistent, 2 n/a, 3 surveying.
-Gaps:  22. 12 decided, 6 open (2 bad spreading, 1 bad majority), 1 waiting, 3 research.
-Fog:   1 line.
+Areas: <n>. <n> decided, <n> consistent, <n> n/a, <n> surveying.
+Gaps:  <n>. <n> decided, <n> open (<n> per danger), <n> waiting, <n> research.
+Fog:   <n> lines.
 
 Needs your answer
-  G-009  How should a failing call report its error?   bad spreading
+  <id>  <question>  <danger>
 Waiting on others
-  G-011  May the v1 user response gain a field?        Sam, due 2026-11-21
+  <id>  <question>  <who>, due <date>
 Agent alone
-  G-002  Survey: data access                            research
-Next: /align-code <name> grill G-009
+  <id>  <question>  <status>
+Next: /align-code <name> grill <id>
 ```
 
 During apply, add the board from [rollout.md](rollout.md). Leave out an empty group. End with what is left before ready.

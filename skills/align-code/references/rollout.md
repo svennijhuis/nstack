@@ -45,9 +45,8 @@ Commit:
 `rollout.md` starts with the board:
 
 ```text
-Wave  Ticket  Title                         Model  Status   Commit
-0     T-001   API schema snapshot           mid    done     4f2a1c9
-3     T-007   Errors: result type, billing  mid    blocked  failed review twice
+Wave  Ticket   Title    Model                  Status    Commit
+<n>   T-<nnn>  <title>  <cheap | mid | main>  <status>  <hash, or the reason it is blocked>
 ```
 
 Statuses: `todo`, `doing`, `review`, `done`, `blocked`. A `blocked` ticket goes back to `todo` only when the person asks, with model `main`.
@@ -86,8 +85,8 @@ Stop between any two tickets. Stop the session after 10 reviewed tickets, so eve
 2. **Lint advice.** Write `lint.md` in the align folder and show it:
 
    ```text
-   Standard         Tool    Rule and setting                                          Catches                 Hits now
-   Errors: no null  eslint  no-restricted-syntax ReturnStatement > Literal[raw="null"]  return null on failure  0
+   Standard  Tool             Rule and setting                 Catches   Hits now
+   <area>    <tool, or none>  <exact rule id and its setting>  <what>    <n, or ->>
    ```
 
    - One row per standard.

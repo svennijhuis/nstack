@@ -26,12 +26,10 @@ A finding is an added line that:
 - adds a `bad` variant: a `code-review` smell or a `codebase-design` break
 
 ```text
-File                  Line  Area      Finding                                 Fix
-src/orders/refund.ts  14    Errors    returns null on failure (rejected)  return { ok, error }, as billing
-src/api/v2/users.ts   3     API       copies the frozen v1 user shape         follow the API ADR
-src/cart/total.ts     22    Comments  explains the loop                       delete it
+File    Line  Area    Finding                        Fix
+<path>  <n>   <area>  <what, and the rule it breaks>  <one concrete action>
 
-3 findings. Fix them before the pull request.
+<n> findings. Fix them before the pull request.
 ```
 
 None: say the branch follows the standards.
@@ -45,11 +43,10 @@ None: say the branch follows the standards.
 3. Find the source: `git log --diff-filter=A -S<key text>` over its files. The oldest copy is where the agents copy from.
 
 ```text
-Sev     Area    Files  Finding                                  Copied from               Fix
-high    Errors  6      null on failure, 5 in the last 90 days   src/legacy/payments.ts    new run on errors, mark payments.ts
-medium  Naming  3      "Manager" suffix again                   src/users/userManager.ts  add a lint rule
+Sev                  Area    Files  Finding                           Copied from  Fix
+<high | medium | low>  <area>  <n>    <what, and <n> in the last 90 days>  <path>       <one concrete action>
 
-2 findings: 1 high, 1 medium.
+<n> findings: <n> high, <n> medium, <n> low.
 ```
 
 - `high`: `bad spreading`: `bad`, and the survey's `Last 90 days` is above 0.
