@@ -1,5 +1,5 @@
 ---
-name: root-cause
+name: comment-root-cause
 description: Use before you write a code comment, a lint or type suppression, a TODO or HACK, or a guard, retry, sleep, cast, or catch that works around behavior instead of fixing it. Also use when a hook flags a new comment, when a test is flaky or a value is "sometimes" wrong, when the user asks to fix a bug at its root cause, and when the user wants to remove or clean up the comments in a file, folder, or repo.
 ---
 
@@ -54,7 +54,7 @@ The loop is done when the cause is fixed, or the person chose in step 6.
 
 ## Clean up existing comments
 
-The person types `/root-cause <path>`, or asks to remove the comments from a file, a folder, or the repo. With no path, check only the current change.
+The person types `/comment-root-cause <path>`, or asks to remove the comments from a file, a folder, or the repo. With no path, check only the current change.
 
 1. **Find them.** List every comment and marker under the path. Skip docs, generated files, licence headers, and docstrings that a tool reads, such as an API doc generator.
 2. **Sort them.** Give each one its kind from the table above.

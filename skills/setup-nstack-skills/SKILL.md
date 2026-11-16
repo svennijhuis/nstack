@@ -1,6 +1,6 @@
 ---
 name: setup-nstack-skills
-description: Use when the user wants to set up nstack, an nstack skill fails because a skill it calls is missing, or the user wants an optional nstack hook such as the root-cause hook. Installs the missing external skills at the pinned commit and offers the hooks.
+description: Use when the user wants to set up nstack, an nstack skill fails because a skill it calls is missing, or the user wants an optional nstack hook such as the comment-root-cause hook. Installs the missing external skills at the pinned commit and offers the hooks.
 ---
 
 nstack skills call skills that live in other repos. This skill reads the list of those skills in [external-skills.md](external-skills.md), checks which ones are installed, and installs the missing ones at the pinned commit. Then it offers the optional hooks that nstack skills ship, by [Optional hooks](#optional-hooks).
@@ -54,13 +54,13 @@ Some nstack skills ship a hook that makes the skill hard to skip. Offer a hook o
 
 | Hook | Skill | Script | Events |
 | --- | --- | --- | --- |
-| root-cause | `root-cause` | `<skill folder>/hooks/root-cause-hook.py` | `PreToolUse` with matcher `Edit\|Write\|MultiEdit`, and `Stop` |
+| comment-root-cause | `comment-root-cause` | `<skill folder>/hooks/comment-root-cause-hook.py` | `PreToolUse` with matcher `Edit\|Write\|MultiEdit`, and `Stop` |
 
 What the hook does and the settings it needs are in that skill's README.
 
 1. **Check.** Read the settings file the hook would go in: `~/.claude/settings.json` for the person, `.claude/settings.json` for a repo. The hook is `registered` when each of its events already runs its script. Skip a registered hook.
 2. **Ask.** One question per hook: what it does in one line, and the choice of for you, for this repo, or no. Recommend for you. A no is final for this run.
-3. **With a home repo, hand over.** When the working directory or the person's setup has a home repo, `setup-home-repo` owns hooks. Tell the person to say "add the root-cause hook" there, and stop this step.
+3. **With a home repo, hand over.** When the working directory or the person's setup has a home repo, `setup-home-repo` owns hooks. Tell the person to say "add the comment-root-cause hook" there, and stop this step.
 4. **Show the change.** Print the JSON you will merge, with the full path to the script for the person's file, or `"$CLAUDE_PROJECT_DIR"/<path>` for a repo's. Wait for a yes.
 5. **Merge.** Add the entries to the `hooks` that are there. Keep every other key and hook. Make the script executable. On another harness, map the events by what they do, by the skill's README. If the harness has no matching event, say so and skip it.
 6. **Verify.** Read the file again and check that it is valid JSON and every event runs the script. Tell the person to restart the session and check with `/hooks`.
