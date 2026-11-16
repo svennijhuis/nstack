@@ -24,7 +24,7 @@ Unsure if it is a business rule? Keep it. Cannot make the code better? Say why.
 
 ## Fix the root cause
 
-1. Reproduce the problem with a test or a command.
+1. Reproduce the problem with a test or a command. Often that is hard: then write the smallest failing test you can, or run the code with the input that breaks it. Cannot reproduce it at all? Say so and ask the person for a failing case. Never guess a fix.
 2. Ask why until you reach the cause in our code.
 3. Fix it there. Remove the shortcut and its comment. The tests pass.
 4. Too big for this task, or outside our code: ask the person. Never keep a shortcut on your own.
