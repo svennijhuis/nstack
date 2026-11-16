@@ -32,7 +32,7 @@ A missing area the stack needs: add it, with the reason in `log.md`.
 ## When
 
 - End of chart: one subagent per survey gap, all at once.
-- Start of a session: one per survey or research gap still `open`. A gap in `research` with its file: read the file. Without its file: ask the person once whether the session that started it is still open. No: its subagent died with that session, so start it again.
+- Start of a session: one per survey or research gap still `open`. A gap in `research` with its file: read the file. Without its file: ask the person once whether the session that started it is still open. Yes: leave it and read its file next session. No: its subagent died with that session, so start it again.
 - During a session: a new survey gap starts before you stop.
 
 Surveys never block the session. Model: `mid` (`sonnet` in Claude Code).
@@ -46,8 +46,8 @@ Area: <name and Ask, word for word>
 Gap: <id>, in docs/align/<folder>/gaps.md
 Scope: <Scope from align.md>
 Judge: by the Judging section of <full path to SKILL.md>, with `codebase-design`, the `code-review` smell baseline, and <full path to references/comments.md>. Plus docs/agents/code-standards.md if it exists.
-Contracts: <full path to references/contracts.md>. Mark every variant on a frozen surface.
-Write: docs/align/<folder>/survey/<area>.md
+Contracts: <full path to references/contracts.md>. Fill the Frozen column: yes, no, or unsure. Unsure counts as frozen.
+Write: docs/align/<folder>/survey/<area>.md. Create its folder if it is missing.
 Do not: change code, decide, call a live system, edit any file but the one in Write
 ```
 
@@ -71,6 +71,7 @@ The file holds the answer, each fact with its source, and what is still unknown.
 - Count files, not lines. `Files` and `Last 90 days` are both file counts.
 - Spread: new uses in `git log --since=90.days --diff-filter=AM -p` over the scope. Shallow clone: say how far back.
 - One example per variant, by module and symbol.
+- No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. Any `unjudged` variant makes the Danger `unjudged`. Never guess a verdict.
 
 ## The file
 
@@ -92,7 +93,7 @@ History: <from> to <to>
 <module, and why. Or: none, propose a prototype.>
 
 ## Danger
-<a level from Danger first in SKILL.md, or none>
+<a level from Danger first in SKILL.md, none, or unjudged>
 
 ## Questions
 - <one line per standard to decide. Never one per file or per line.>
@@ -104,6 +105,6 @@ History: <from> to <to>
 ## Closing
 
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
-- Each Question becomes a grilling gap. Each Still unknown becomes a gap.
+- Each Question becomes a grilling gap. Each Still unknown becomes a gap. A missing source is a research gap that blocks the area's grilling gaps.
 - Only one variant, `good`: the area is `consistent`. No gap.
 - Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` and spreading is `bad spreading`, `bad` otherwise is `bad majority`, `weak` is `inconsistent`.

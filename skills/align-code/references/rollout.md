@@ -39,8 +39,8 @@ Commit:
 ```
 
 - **Size:** at most 20 files. One exception: an internal rename or retype is one ticket however many files, because every caller, tests included, changes in the same commit by [contracts.md](contracts.md). Past 20 files it gets model `mid`, runs alone, blocks every ticket that shares a file, and is reviewed 20 files at a time.
-- **Files:** needs another file? Stop and report. Never edit outside the list.
-- **Model:** `cheap` for mechanical work: renames, imports, moves, comment deletes. `mid` for wave 0 tests. `mid` for judgment: error flow, boundaries, adapters, splits. `main` only for a `blocked` ticket the person sends back. In Claude Code: `haiku`, `sonnet`, the session model.
+- **Files:** needs another file? Stop and report. Never edit outside the list. Leave existing comments: they belong to the comments wave.
+- **Model:** `cheap` for mechanical work up to 20 files: renames, imports, moves, comment deletes. `mid` for wave 0 tests. `mid` for judgment: error flow, boundaries, adapters, splits. `main` only for a `blocked` ticket the person sends back. In Claude Code: `haiku`, `sonnet`, the session model.
 
 `rollout.md` starts with the board:
 
@@ -54,11 +54,11 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`. A `blocked` ticket goes 
 ## Start
 
 1. Status not `ready` or `applying`: say so and stop.
-2. Status `applying`: check out `Branch`. Missing: stop and report. Then each `doing` or `review` ticket:
+2. Status `applying`: check out `Branch`. Runs before step 3. Missing: stop and report. Then each `doing` or `review` ticket:
    - `git log` has its `align: T-<nnn>` commit: write the commit, set `done`.
    - It has a `Worktree`: remove that worktree, set `todo`.
    - Neither: show `git status` and ask whether those changes are this ticket's leftovers. Yes: undo as in [Each ticket](#each-ticket) step 5, set `todo`. No: stop and report.
-3. Uncommitted changes to tracked files, or untracked files, outside `docs/align/` and `docs/design/`: stop and report.
+3. After step 2, any uncommitted changes to tracked files, or untracked files, left outside `docs/align/` and `docs/design/`: stop and report.
 4. Status `ready`, the first apply: show the board, counts by wave and model, and the branch. Wait for a yes. Log `apply approved`. Create `align/<yyyy-mm-dd>-<name>` from the current branch. Fill `Branch`. Status `applying`.
 5. Run every check once. Log what is already red.
 
