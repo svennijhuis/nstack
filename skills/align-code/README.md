@@ -54,7 +54,7 @@ So at the end of a run, the standards live in:
 
 - **The code.** One way per area, and one exemplar module per area that shows it best.
 - **Tools.** Every standard a linter, formatter, or type checker can enforce becomes a rule. A check runs on every change. A doc can only hope to be read.
-- **No comments that explain code.** The code says what it does. A comment stays only when it gives a why the code cannot: a decision or business rule, or an outside constraint. Every other comment is deleted, and a comment that hid a surprise becomes a fix in the code: a better name, a type, a test. Agents copy comments too, and a comment that explains code drifts like any doc. See [comments.md](references/comments.md).
+- **No comments.** The code says what it does. Only a one-line business or decision why, or an outside constraint, stays. A comment that hid a surprise becomes a fix in the code. Agents copy comments too, and a comment drifts like any doc. See [comments.md](references/comments.md).
 - **Markers.** Code that cannot change, because a contract freezes it, gets one comment: `Frozen contract: do not copy this shape.` The agent reads that where it would copy from.
 - **ADRs.** One per area: what was chosen, why, and what was rejected. The code shows what, never why.
 
