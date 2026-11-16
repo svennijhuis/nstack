@@ -39,7 +39,7 @@ This skill breaks that loop. It finds every place the code does one thing in mor
 
 The easy rule is "the most common pattern wins". It is wrong here. The most common pattern is often the bad one: it is common because it was copied. So the skill counts each variant, and then judges it against a short list of principles with sources, such as deep modules, errors that are handled once, and input parsed once at the edge. See [principles.md](references/principles.md). You can edit the list.
 
-A bad pattern used everywhere is still bad, so the skill also hunts a fixed list of anti-patterns that cheap agents write often: swallowed errors, null for failure, silent fallbacks, type escapes, flag parameters, forwarding layers, abstractions with one user, queries in a loop, and more. See [anti-patterns.md](references/anti-patterns.md). You can edit the list.
+A bad pattern used everywhere is still bad, so every variant is judged, even when it is the only one.
 
 It also reads the git history and sees which patterns are spreading right now. The questions come in order of danger:
 
@@ -94,7 +94,7 @@ flowchart TD
 2. **Survey.** Each subagent counts every variant, names an example, sees how many were added in the last 90 days, and judges each one. It changes nothing.
 3. **Grill.** One question per session. You see the variants, the counts, the verdicts, the exemplar, the files that would change, and the recommended answer. You choose. When no module is good enough to copy, the skill writes a rough rewrite of one for you to react to.
 4. **Ready.** A gate checks that every area has a standard and an exemplar, every change is a ticket, and no ticket can touch a contract. Then it writes the tickets.
-5. **Apply.** After your yes, on a local branch. The tickets run in waves: contract checks first, then the exemplars, then the spreading bad patterns, then the rest, then the comments, tests last. Mechanical tickets go to a cheap model, tickets that need judgment to a mid model. The main session reviews every diff and commits one ticket at a time. A ticket that fails twice is set aside, never forced.
+5. **Apply.** After your yes, on a local branch. The tickets run in waves: contract checks first, then the exemplars, then the spreading bad patterns, then the rest, then the comments, tests last. Mechanical tickets go to a cheap model, tickets that need judgment to a mid model. The main session reviews every diff with Matt Pocock's `code-review`, against your standards and its fixed list of code smells, and commits one ticket at a time. A ticket that fails twice is set aside, never forced.
 6. **Finish.** The surveys run again to prove each area now shows one way. The skill advises lint rules and asks whether a subagent should add them. It trims `code-standards.md`, writes the ADRs, and gives you the branch. It never pushes.
 
 Every session can stop at any point. The folder `docs/align/<date>-<name>/` holds the whole state.
@@ -111,4 +111,4 @@ Agents keep copying, so alignment needs a guard.
 
 - **`setup-agents-md`** comes first. align-code needs the build, test, and lint commands from `AGENTS.md`. It reads `code-standards.md` and, at the end, trims it after your yes. It never edits `AGENTS.md`: when the standards file is gone, run `/setup-agents-md` and it removes the pointer.
 - **`tech-design`** designs new features. Once the code is aligned, its builders copy aligned code. A breaking change to make a contract consistent is a design of its own.
-- **External skills.** align-code calls `grilling`, `domain-modeling`, `research`, `codebase-design`, `writing-for-agents`, and `deslop`. Run `/setup-nstack-skills` to install them.
+- **External skills.** align-code calls `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `writing-for-agents`, and `deslop`. Run `/setup-nstack-skills` to install them.

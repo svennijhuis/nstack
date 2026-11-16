@@ -12,7 +12,7 @@ Agents copy the code they see, so a bad pattern spreads with every change. This 
 - **No breaking changes.** API, events, database schema, public exports, config names, CLI, and UI stay exactly as they are. See [contracts.md](references/contracts.md).
 - **Behavior stays.** Build, test, lint, and contract checks pass after every ticket.
 - **The majority does not win.** Count each variant, then judge it by [principles.md](references/principles.md).
-- **An anti-pattern is never consistent.** Used everywhere, it is still `bad`. See [anti-patterns.md](references/anti-patterns.md).
+- **An anti-pattern is bad even when it is everywhere.** A variant that breaks a principle is never `consistent`.
 - **No comments.** See [comments.md](references/comments.md).
 - **An unknown is a gap.** Never an assumption, a default, or a guess.
 - **Never invent a standard.** Options come from the code or a cited source. Only the person decides.
@@ -25,11 +25,11 @@ Load only what the mode needs. The why is in the README: never load it.
 
 | Mode | Main session loads | Subagents load |
 | --- | --- | --- |
-| Chart | structure, survey, contracts | Survey: its brief, principles, anti-patterns, contracts |
+| Chart | structure, survey, contracts | Survey: its brief, principles, contracts |
 | Work | resume, the claimed gap's row and its one survey file, principles for the card | Research: its brief |
 | Ready | ready-gate, rollout, contracts | none |
-| Apply | rollout, resume | Ticket: its brief, contracts, comments, anti-patterns, the exemplar |
-| Check, advise | advise, comments, anti-patterns | Advise surveys: their brief |
+| Apply | rollout, resume | Ticket: its brief, contracts, comments, the exemplar. Review: `code-review` |
+| Check, advise | advise, comments | Advise surveys: their brief |
 | Help, status | help | none |
 
 Subagents return a short result. Everything else stays in files on disk.
@@ -96,7 +96,7 @@ Answers: a variant, the person's own standard, `exception` with a reason, or res
 
 ## Companion skills
 
-Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `writing-for-agents`, `deslop`. `writing-for-agents` on every edit of `code-standards.md` or an ADR. `deslop` on every diff in apply. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `writing-for-agents`, `deslop`. `code-review` and `deslop` on every ticket diff in apply. `writing-for-agents` on every edit of `code-standards.md` or an ADR. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
 
 ## Invocation
 

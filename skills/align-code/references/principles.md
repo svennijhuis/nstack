@@ -28,7 +28,6 @@ Every verdict and every recommendation names one of these ids. Edit this file to
 
 ## Use
 
-- Known bad patterns are listed in [anti-patterns.md](anti-patterns.md). Each names its principle.
 - Judge a variant by the principles its area touches. Name the id and one line.
 - Two principles pull apart: say so on the card, recommend one. The person decides.
 - No principle fits: research one with a source. Never judge without one.

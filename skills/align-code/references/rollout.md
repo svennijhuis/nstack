@@ -62,13 +62,13 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
 ## Each ticket
 
 1. **Pick** `todo` tickets in the lowest open wave, blockers `done`, no file held by a `doing` ticket. Up to four. Set `doing`.
-2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket and the full paths to the exemplar, [contracts.md](contracts.md), [comments.md](comments.md), and [anti-patterns.md](anti-patterns.md). Nothing from the conversation. It returns only: the worktree path, the files changed, one `pass` or `fail` line per check with the first error line, and anything it could not do. Never the full check output.
-3. **Review.** Set `review`. Read the diff with `git diff` in the worktree, file by file. Pass only when:
+2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket and the full paths to the exemplar, [contracts.md](contracts.md), and [comments.md](comments.md). Nothing from the conversation. It returns only: the worktree path, the files changed, one `pass` or `fail` line per check with the first error line, and anything it could not do. Never the full check output.
+3. **Review.** Set `review`. Run `code-review` on the worktree: fixed point the apply branch head the ticket started from, spec the ticket, standards the area sections of `align.md` and [comments.md](comments.md). Read the diff with `git diff`. Pass only when:
    - every changed line follows the standard and looks like the exemplar
    - no file outside the list changed
    - nothing in Do not happened
    - every check passed, every contract check shows no difference
-   - no added anti-pattern from [anti-patterns.md](anti-patterns.md)
+   - `code-review` reports no standards violation and no smell the ticket added
    - `deslop` finds nothing
 4. **Commit** on a pass: only the ticket's files, `align: T-<nnn> <title>`, write the commit, set `done`. A fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
 5. **Update the board** after every ticket.
@@ -87,7 +87,7 @@ Stop between any two tickets. Stop the session after about ten reviewed tickets,
    Naming          none    no tool can check it                                 the check mode covers it  -
    ```
 
-   - One row per standard with `Checked by` set, plus every standard a rule could now check, plus every anti-pattern in [anti-patterns.md](anti-patterns.md) a rule can catch.
+   - One row per standard with `Checked by` set, plus every standard a rule could now check, plus every principle a rule can catch.
    - Use the repo's own linter, formatter, or type checker, or a well-known plugin for it. Name the exact rule id and setting. Never invent a rule: find it in the tool's installed docs or its source.
    - `Hits now`: run the tool once with the rule on the command line, never in a config file. Tool not installed: `-`.
    - No rule fits: say `none`, and that `/align-code check` covers it.
