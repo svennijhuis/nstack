@@ -67,8 +67,9 @@ if found:
     shown = "\n".join(f"  {line[:120]}" for line in found[:5])
     print(
         f"New comment in {path}:\n{shown}\n"
-        "Check why it is there, with the comment-root-cause skill. "
-        "Does it cover a shortcut, a workaround, or an unfixed cause? Then fix the root cause.",
+        "Use the comment-root-cause skill. Why is this comment here? "
+        "Can the code be better, or is this the best it can be? "
+        "If it covers a shortcut, a workaround, or an unfixed cause, fix the root cause.",
         file=sys.stderr,
     )
     sys.exit(2)

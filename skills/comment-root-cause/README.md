@@ -2,7 +2,7 @@
 
 A comment often covers a problem. "Needed because the user is sometimes undefined." "Retry because the test is flaky." The comment reads as care, but the cause is still there.
 
-This skill makes the agent check why a comment is there. A comment that says what the code does becomes clearer code. A business rule, a decision, or a fact outside the code stays. A comment that covers a shortcut or a workaround means: fix the root cause. When that fix is too big, the agent asks you.
+This skill makes the agent ask two questions: why is this comment here, and can the code be better? When code needs a comment to explain what it does, it is often not the best code, so the agent makes the code better and the comment goes. A business rule, a decision, or a fact outside the code stays. A comment that covers a shortcut or a workaround means: fix the root cause. When that fix is too big, the agent asks you.
 
 Say "find the root cause" or type `/comment-root-cause`. The agent also starts it by itself when it writes a comment. `/comment-root-cause <path>` checks the comments already in a file, folder, or repo. The rules are in [SKILL.md](SKILL.md).
 
@@ -10,7 +10,7 @@ Say "find the root cause" or type `/comment-root-cause`. The agent also starts i
 
 An agent that is busy with a workaround does not always stop to check its own comment. The optional hook reminds it. It never blocks.
 
-[hooks/comment-root-cause-hook.py](hooks/comment-root-cause-hook.py) runs after each Edit, Write, or MultiEdit in Claude Code. When the edit adds a comment, a `TODO`, `HACK`, or `FIXME`, a suppression such as `@ts-ignore`, `eslint-disable`, or `noqa`, or an `as any`, it tells the agent to check why with this skill. It needs Python 3 and nothing else.
+[hooks/comment-root-cause-hook.py](hooks/comment-root-cause-hook.py) runs after each Edit, Write, or MultiEdit in Claude Code. When the edit adds a comment, a `TODO`, `HACK`, or `FIXME`, a suppression such as `@ts-ignore`, `eslint-disable`, or `noqa`, or an `as any`, it asks the agent why the comment is there and whether the code can be better. It needs Python 3 and nothing else.
 
 It skips docs and comments that were already there. After a Write of a whole file it cannot see the old file, so it also names comments that were there before.
 
