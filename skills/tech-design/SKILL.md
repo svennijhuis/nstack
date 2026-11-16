@@ -95,7 +95,7 @@ Work past the destination is out of scope. Drop the row and add one line under O
 
 ## Companion skills
 
-Call each by its exact name with the Skill tool: `grilling`, `domain-modeling`, `research`, `codebase-design`, `writing-for-agents`, `deslop`. On each edit of `design.md`, call `writing-for-agents`. When a code snippet changes, call `deslop`. If one is not installed, say so once, point to Setup in the pack readme, and do that step by the rules in this skill.
+Call each by its exact name with the Skill tool: `grilling`, `domain-modeling`, `research`, `codebase-design`, `writing-for-agents`, `deslop`. On each edit of `design.md`, call `writing-for-agents`. When a code snippet changes, call `deslop`. If one is not installed, say so once, name `/setup-nstack-skills`, and do that step by the rules in this skill.
 
 ## Invocation
 
@@ -109,6 +109,7 @@ The person types `/tech-design`. Read the first word after it.
 | `<name>` or `<name> grill [gap]` | Work |
 | `<name> status`, `close <gap>`, `drop <gap>` | See [help.md](references/help.md) |
 | `<name> ready` or `<name> ready anyway` | Ready |
+| `<name> committed`, `<name> abandoned` | Set that status, see [help.md](references/help.md) |
 
 Resolve one gap per session, then stop. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
 
@@ -118,16 +119,16 @@ Resolve one gap per session, then stop. Research gaps run beside it. Chart and r
 2. **Pick the size.** Propose `small`, `medium`, or `big` with reasons from [sizes.md](references/sizes.md). Record the types the person named. Done when the human confirms the size.
 3. **Map the frontier.** Grill again, breadth-first. List the decisions you can phrase. If you find no fog and one session can finish the design, stop and ask how to proceed.
 4. **Sweep.** Run all 18 categories in [gap-sweep.md](references/gap-sweep.md). Done when every category is a gap, a fog line, or `n/a` with a reason in `log.md`.
-5. **Create the folder** by [structure.md](references/structure.md): every entry, the header at `draft`, all 14 headings. Fill the map and what is already known. Every other section holds `n/a: <reason>` or one line naming the gaps it waits on. Add a Dependencies row for each outside system.
+5. **Create the folder** by [structure.md](references/structure.md), in the working directory: every entry, the header at `draft`, all 14 headings. Only when the working directory's `AGENTS.md` has a `## Repos` section, ask first: "Here, or in one of: <those repos>?" The repos are the pointer lines under `## Repos`. When those lines name `repos/<area>.md` files instead, read the files: an area is not a repo. Recommend here when the design changes more than one of those repos, and the one repo it changes otherwise. For another repo, create the folder there and tell the human to run later sessions from that repo. For the rest of this session, every `docs/design/` path in this skill and its references is under that repo's root, not the working directory. Use the full path in each step and in every subagent brief. Fill the map and what is already known. Every other section holds `n/a: <reason>` or one line naming the gaps it waits on. Add a Dependencies row for each outside system.
 6. **Add the gaps.** Each row starts `open`, with a category and a type. Fill `blocks` in a second pass, with real ids. A gap whose answer sits with a named person starts `waiting-on-input`, with its question sheet. Set status `discussion`.
 7. **Start the research subagents**, one per research gap, by [research.md](references/research.md).
 8. **Stop.** Log one line. Tell the human the size, the gap count by type, who is being waited on, and the first frontier gap. If the human asked for something short, offer a summary by [sizes.md](references/sizes.md). Never replace the map with it.
 
-A second `new` for a name that already exists stops. Tell them to resume.
+A second `new` for a name that already exists stops. Tell them to resume. Check again at step 5 in the repo the human picked, before you create the folder.
 
 ### Work through the map
 
-1. **Load and catch up** by [resume.md](references/resume.md): read the map, take in new files under `input/`, print the board, flag overdue gaps, start new research. If the status is `ready`, `committed`, or `abandoned`, say so and stop.
+1. **Load and catch up** by [resume.md](references/resume.md): read the map, take in new files under `input/`, print the board, flag overdue gaps, start new research. When no design of that name is here and the working directory's `AGENTS.md` has a `## Repos` section, look in the repos it points at. If it is in one, name that repo, tell the human to run the skill from there, and stop. If the status is `ready`, `committed`, or `abandoned`, say so and stop.
 2. **Choose the gap and claim it.** Use the one the person named. Otherwise take the first frontier gap. Set `owner` before any work.
 3. **Resolve it by type.** Read a related row or research file when you need it. On a grilling gap, advice comes before the one question.
 4. **Record the resolution.** Write the answer on the row and set `decided`, or `accepted-risk` when the human accepts the risk you named. With no answer, set `waiting-on-input` and write the question sheet. Advice alone never closes a gap.

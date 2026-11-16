@@ -5,7 +5,7 @@ Create only what has content. An empty folder is noise.
 ```text
 <home>/
   AGENTS.md            steering, Repos, Sources, Tools, Environment
-  CLAUDE.md            one line: @AGENTS.md   (Claude Code only)
+  CLAUDE.md            one line: @AGENTS.md   (only when asked for, see harnesses.md)
   .claude/             skills, rules, agents, hooks, settings   (Claude Code)
   .cursor/             rules, hooks, mcp.json                   (Cursor)
   .github/             instructions, hooks, agents, prompts     (Copilot)
@@ -15,7 +15,9 @@ Create only what has content. An empty folder is noise.
   repos/<area>.md      pointer files, only past about 20 repos
   wiki/                knowledge in markdown, only if there is any
   tools/               scripts the agent runs, only if there are any
-  .gitignore           local settings files, worktrees, secret files, child repo clones
+  docs/adr/            decisions about the home repo itself   (from setup-agents-md, left alone)
+  docs/design/         open designs that span repos           (from tech-design, left alone)
+  .gitignore           local settings files, worktrees, secret files, child repo clones   (git only)
 ```
 
 The exact files per harness are in [harnesses.md](harnesses.md).
@@ -25,10 +27,9 @@ The exact files per harness are in [harnesses.md](harnesses.md).
 Keep it short. It is loaded every session. A skill holds a procedure. `AGENTS.md` holds where things are.
 
 ```markdown
-# <team or person> home repo
+# Home repo
 
 Start every session here. Reach other repos and sources through the pointers below.
-Not sure which skill, repo, or source fits? Type the router: <router slash>.
 
 ## How to work across repos
 
@@ -36,6 +37,7 @@ Not sure which skill, repo, or source fits? Type the router: <router slash>.
 - One clone per repo. For a second task in the same repo at the same time, add a git worktree inside that clone.
 - Read a repo's own steering file before you change it.
 - Open one pull request per repo. Name the others in each description.
+- Record decisions, terms, and topic docs in the repo they are about. Only decisions about this home repo itself go here.
 
 ## Repos
 
@@ -89,6 +91,16 @@ runbooks (docs): Confluence space OPS. Reach via the MCP server `atlassian`.
 
 Nothing from a source is copied into the home repo. The pointer says where it is and how to reach it. If no access method exists yet, write `Reach via: none yet` and report it. Do not invent one.
 
+## The line that points home
+
+One fixed line in each child repo's steering file, under its first sentence, or as the first line when the file has none:
+
+```text
+Home repo: <local path>. Shared skills and pointers to the other repos and sources live there.
+```
+
+Every mode finds the line by its start, `Home repo:`.
+
 ## Many repos
 
 | Repos | Shape |
@@ -111,7 +123,13 @@ Each area file holds pointer lines in the same format. Ask the person for the ar
 
 ## Clones inside the home repo
 
-When the clones sit inside the home folder, they stay where they are. `.gitignore` lists each clone folder. The pointers use their paths.
+When the clones sit inside the home folder, they stay where they are. In a git home repo, `.gitignore` lists each clone folder. The pointers use their paths.
+
+## Local only
+
+A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit. The person shares its files by hand, or not at all. Every mode works the same there, with one difference: there is no undo. A mode still shows the diff and waits for a yes before it overwrites or removes a file, but it keeps no copy of the old one. The person chose that risk with local only. A person who wants an undo uses git.
+
+To share it later, the person types `/setup-home-repo add git`, see [add.md](add.md).
 
 ## Worktrees
 

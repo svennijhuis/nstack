@@ -1,11 +1,11 @@
 # Advise
 
-`/setup-home-repo advise` audits the home repo and says what to fix. It reads. It never writes, never runs a tool against a service, and never opens a secret file.
+`/setup-home-repo advise` audits the home repo and says what to fix. It reads. It never writes, never runs a tool against a service, and never opens a secret file. In a local-only home repo, read "tracked file" as any file in the folder.
 
 ## Steps
 
-1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder, the router's map.
-2. **Walk the registry** over the home repo, every pointed-at repo that is on disk, and the user folder. Use the Check column in [components.md](components.md).
+1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder.
+2. **Walk the registry** over the home repo, every pointed-at repo that is on disk, as it is checked out, and the user folder. Use the Check column in [components.md](components.md).
 3. **Run the checks below.** Each finding is one row.
 4. **Print the table**, worst first, then the summary line.
 
@@ -63,19 +63,19 @@ For a suspected secret, name the file and the key. Never print the value.
 | --- | --- |
 | `AGENTS.md` over about 200 lines | medium |
 | A procedure in `AGENTS.md` that a skill already holds | medium |
-| Child repo steering file that repeats the home repo's text | low |
-| Claude Code in use and no `CLAUDE.md` that imports `AGENTS.md` | high |
+| Child repo with no `AGENTS.md`, or with a `CLAUDE.md` that has text of its own. The Fix is `/setup-agents-md <repo>` when that skill is installed. Otherwise the Fix says what to change by hand. | medium |
+| Child repo without the line that points home, which starts with `Home repo:` | low |
+| A `CLAUDE.md` or `.claude/CLAUDE.md` in the home repo with text of its own | high |
+| A `.claude/CLAUDE.md` in the home repo whose only line is `@AGENTS.md`. It imports nothing and hides `AGENTS.md`. | high |
+| Claude Code in use, `claude --version` older than 2.1.277 or no answer, and no root `CLAUDE.md` that imports `AGENTS.md` | high |
+| Claude Code in use, a `CLAUDE.md` in the home repo or a folder above it, and a child repo below it with no `CLAUDE.md` that imports its `AGENTS.md`. Claude Code skips that `AGENTS.md`. | high |
 | The `## Repos` heading missing | high |
 
-### The router
+### Skills setup wrote
 
 | Finding | Severity |
 | --- | --- |
-| No router skill | high |
-| Map line whose item is gone | high |
-| Item with no map line | medium |
-| Flow step that names a skill that does not exist | high |
-| Map line that disagrees with the skill's own description | medium |
+| A skill whose file says `Written by setup-home-repo`, such as a router from an earlier version. Cleanup removes it and the line in `AGENTS.md` that names it. | medium |
 
 ### Worktrees, tools, wiki
 

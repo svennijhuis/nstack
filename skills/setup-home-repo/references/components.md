@@ -25,11 +25,12 @@ To support a new kind, add a row here and a row in the harness table. Change not
 
 ## Rules for the walk
 
-- Skip dependency and build folders: `node_modules`, `vendor`, `bin`, `obj`, `dist`, `target`, `.venv`.
+- Skip dependency and build folders: `node_modules`, `vendor`, `obj`, `dist`, `target`, `.venv`, and a `bin` that git ignores.
 - Skip `.env`, key files, and anything a `.gitignore` marks as a secret store. Note that a file exists. Do not open it.
 - Read the user folder of each harness too. Items there are the ones most likely to be stale.
 - Record for each item: kind, name, path, harness, the repo it sits in, and a hash of its content. The hash finds duplicates and drift.
-- A steering file in a child repo (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`) is `repo-specific` and skips the bucket rules. Apply step 7 in [setup.md](setup.md) trims it.
+- A steering file in a child repo (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`) is `repo-specific` and skips the bucket rules. Apply step 7 in [setup.md](setup.md) adds one line to it. The rest of it belongs to `setup-agents-md`.
+- `docs/adr/`, `docs/agents/`, `docs/design/`, `GLOSSARY.md`, `CONTEXT.md`, and `DECISIONS.md` in a child repo are `repo-specific` and skip the bucket rules. Decisions, terms, topic docs, and designs stay in the repo they are about. They are never a `wiki` item.
 - Two items are the same when name and kind match. They are a `duplicate` when the hashes match and `drift` when they do not. On drift, show both and ask which one wins. Never merge them yourself.
 
 ## Choosing the bucket
@@ -38,8 +39,9 @@ Take the first rule that fits.
 
 1. It comes from a plugin or a marketplace → `installed`.
 2. It is in two or more places → `duplicate`.
-3. It sits in one repo, and its body mentions that repo's name, a path, or a service 3 or more times, counting each occurrence → `repo-specific`.
-4. Otherwise → `shared`. When the count is 1 or 2, round two asks if it is `repo-specific`.
+3. It is a `tool` or a `wiki` item and sits in one repo only → `repo-specific`. A repo's own scripts and docs stay with its code.
+4. It sits in one repo, and its body mentions that repo's name, a path, or a service 3 or more times, counting each occurrence → `repo-specific`.
+5. Otherwise → `shared`. When the item sits in one repo only, round two asks if it is `repo-specific`.
 
 Propose the bucket. The person can change any row in the plan step.
 

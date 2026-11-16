@@ -60,6 +60,8 @@ Before you stop, in any mode, write state to disk. Nothing may live only in the 
 3. `Updated` in the header is today.
 4. The last thing you say is three lines: what changed, what waits on whom, and the next frontier gap by its question.
 
+Do not commit, switch branch, or push. The person commits the design folder.
+
 ## Start of every work session
 
 1. Read the header, the map, `gaps.md`, and the last five `log.md` lines. Do not read `research/` or `input/` yet.

@@ -4,3 +4,5 @@ Style inspired by Matt Pocock's wayfinder: https://github.com/mattpocock/skills/
 
 https://github.com/cursor/plugins/blob/main/pstack/skills/technical-writing/SKILL.md
 https://github.com/cursor/plugins/blob/main/pstack/skills/unslop/SKILL.md
+
+MIT License.
