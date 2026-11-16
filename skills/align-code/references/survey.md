@@ -51,7 +51,7 @@ Write: docs/align/<folder>/survey/<area>.md
 Do not: change code, decide, call a live system, edit align.md
 ```
 
-The subagent claims the gap: `owner`, status `research`.
+The subagent claims the gap: `owner`, status `research`. It returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
 
 ## Counting
 

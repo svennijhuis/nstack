@@ -4,8 +4,8 @@ Every session must stop safely and start cold from the files.
 
 ## Start
 
-1. Read the header, the map, `gaps.md`, and the last five `log.md` lines. Not `survey/` or `research/` yet.
-2. Turn every newly finished survey into gaps.
+1. Read the header, the map, `gaps.md`, and the last five `log.md` lines. Not `survey/` or `research/` yet. Later, read only the file of the gap you claim.
+2. Turn every newly finished survey into gaps. Read only its Danger, Questions, and Still unknown.
 3. Print the board from [help.md](help.md).
 4. Waiting gap past due: ask once: chase, extend, or accept the risk.
 5. Start subagents for open survey and research gaps.

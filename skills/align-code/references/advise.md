@@ -40,7 +40,7 @@ None: say the branch follows the standards.
 
 `/align-code advise`: the scope of the last `aligned` run, or the whole repo.
 
-1. Run the survey of every area with a standard, read only. Subagents return tables. They write nothing.
+1. Run the survey of every area with a standard, read only. Subagents write nothing and return only the drift rows.
 2. Every variant that is not the standard and has no marker is drift. So is every anti-pattern.
 3. Find the source: `git log --diff-filter=A -S<key text>` over its files. The oldest copy is where the agents copy from.
 

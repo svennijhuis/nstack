@@ -19,6 +19,21 @@ Agents copy the code they see, so a bad pattern spreads with every change. This 
 - **Read only until ready.** Before ready, write only the align folder. Code changes only in `apply`, on a local branch, after a yes. Never push.
 - **One gap per session.** Surveys and research run beside it.
 
+## Context
+
+Load only what the mode needs. The why is in the README: never load it.
+
+| Mode | Main session loads | Subagents load |
+| --- | --- | --- |
+| Chart | structure, survey, contracts | Survey: its brief, principles, anti-patterns, contracts |
+| Work | resume, the claimed gap's row and its one survey file, principles for the card | Research: its brief |
+| Ready | ready-gate, rollout, contracts | none |
+| Apply | rollout, resume | Ticket: its brief, contracts, comments, anti-patterns, the exemplar |
+| Check, advise | advise, comments, anti-patterns | Advise surveys: their brief |
+| Help, status | help | none |
+
+Subagents return a short result. Everything else stays in files on disk.
+
 ## The map
 
 The folder, files, and sections are in [structure.md](references/structure.md). Statuses: `draft`, `discussion`, `ready`, `applying`, `aligned`, `abandoned`.

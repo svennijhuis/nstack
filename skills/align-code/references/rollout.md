@@ -62,8 +62,8 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
 ## Each ticket
 
 1. **Pick** `todo` tickets in the lowest open wave, blockers `done`, no file held by a `doing` ticket. Up to four. Set `doing`.
-2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket, the exemplar path, the [contracts.md](contracts.md) path, nothing from the conversation. It returns the diff and every check's output.
-3. **Review.** Set `review`. Pass only when:
+2. **Brief** one subagent each, with its model, in its own worktree when the harness has one, else one at a time. Give the ticket and the full paths to the exemplar, [contracts.md](contracts.md), [comments.md](comments.md), and [anti-patterns.md](anti-patterns.md). Nothing from the conversation. It returns only: the worktree path, the files changed, one `pass` or `fail` line per check with the first error line, and anything it could not do. Never the full check output.
+3. **Review.** Set `review`. Read the diff with `git diff` in the worktree, file by file. Pass only when:
    - every changed line follows the standard and looks like the exemplar
    - no file outside the list changed
    - nothing in Do not happened
@@ -73,7 +73,7 @@ Statuses: `todo`, `doing`, `review`, `done`, `blocked`.
 4. **Commit** on a pass: only the ticket's files, `align: T-<nnn> <title>`, write the commit, set `done`. A fail goes back once with the reasons. A second fail: `blocked`, with the reasons.
 5. **Update the board** after every ticket.
 
-Stop between any two tickets. On resume, `doing` and `review` go back to `todo` and their worktrees are removed.
+Stop between any two tickets. Stop the session after about ten reviewed tickets, so every review gets a clean context. On resume, `doing` and `review` go back to `todo` and their worktrees are removed.
 
 ## Finish
 
