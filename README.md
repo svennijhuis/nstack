@@ -10,8 +10,8 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `tech-design` | "tech design" | Charts a technical design as a shared map, finds every gap, and closes them one per session until a developer or an agent can build from it without guessing. |
 | `setup-home-repo` | "set up a home repo" | Creates, updates, audits, and cleans up one repo that holds your shared skills, steering files, MCP servers, and hooks. Local only or git, and how it hands over to `setup-agents-md`: [README](skills/setup-home-repo/README.md). |
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](skills/setup-agents-md/README.md). |
-| `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. Offers the optional hooks, such as the `no-comments` hook. |
-| `no-comments` | "no comments" | No comments in code. A comment that explains the code becomes clearer code. A comment that excuses a workaround becomes a fixed root cause. Only a fact outside our code may stay, with its source. Also cleans up old comments: `/no-comments <path>`. The agent can start it by itself. An optional hook blocks a new comment with no source until the agent fixes it: [README](skills/no-comments/README.md). |
+| `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. Offers the optional hooks, such as the `fix-dont-comment` hook. |
+| `fix-dont-comment` | "fix, don't comment" | Fix the root cause, don't comment it. A comment that excuses a workaround becomes a fixed root cause. A comment that explains the code becomes clearer code. Only a fact outside our code may stay, with its source. Also cleans up old comments: `/fix-dont-comment <path>`. The agent can start it by itself. An optional hook blocks a new comment with no source until the agent fixes it: [README](skills/fix-dont-comment/README.md). |
 
 ## How they work together
 
@@ -23,7 +23,7 @@ flowchart TD
     C -->|calls, per child repo| D[setup-agents-md<br/>lean AGENTS.md, code standards, ADRs, glossary]
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
     E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
-    F <-->|a new comment| R[no-comments<br/>fix the cause, not the symptom]
+    F <-->|a new comment| R[fix-dont-comment<br/>fix the cause, not the symptom]
     F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
     G -->|once a feature has shipped| H[setup-agents-md<br/>shipped decisions become ADRs,<br/>the design folder is offered for deletion]
     H --> E
