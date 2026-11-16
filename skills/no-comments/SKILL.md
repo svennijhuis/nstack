@@ -1,9 +1,9 @@
 ---
-name: comment-check
+name: no-comments
 description: Use before you write a code comment, a lint or type suppression, a TODO or HACK, or a guard, retry, sleep, cast, or catch that works around behavior instead of fixing it. Also use when a hook flags a new comment, when a test is flaky or a value is "sometimes" wrong, and when the user asks to fix a bug at its root cause.
 ---
 
-An agent that cannot find the cause of a problem patches the symptom and writes a comment that makes the patch sound reasonable. The comment is the tell. This skill turns each new comment into a check: is this a fact about the world, or an excuse for code we own? An excuse means the cause is still there. Find it and fix it.
+No comments in code. An agent that cannot find the cause of a problem patches the symptom and writes a comment that makes the patch sound reasonable. The comment is the tell. So every new comment goes: a comment that says what the code does becomes clearer code, and a comment that excuses a workaround becomes a fixed cause. One exception: a fact outside code we own, with its source.
 
 ## Rules that outrank the rest
 
