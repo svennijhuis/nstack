@@ -33,6 +33,15 @@ By hand, with the skill in `~/.claude/skills/comment-root-cause/`, merge this in
 }
 ```
 
-For a repo, put the skill in `.claude/skills/comment-root-cause/`, use `python3 "$CLAUDE_PROJECT_DIR"/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py`, and merge into `.claude/settings.json`. On Windows, write `python` instead of `python3` when that is the name of your Python 3. Restart the session.
+The command differs per system:
+
+| System | Command |
+| --- | --- |
+| macOS, Linux | `python3 ~/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py` |
+| Windows | `py -3 "C:/Users/<name>/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py"` |
+
+On macOS, Python 3 comes with the Xcode command line tools (`xcode-select --install`) or from https://www.python.org. On Windows, install it from https://www.python.org, which also installs `py`. Without `py`, use `python`.
+
+For a repo, put the skill in `.claude/skills/comment-root-cause/`, use `"$CLAUDE_PROJECT_DIR"/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py` as the path, and merge into `.claude/settings.json`. Restart the session.
 
 To change what it looks for, edit `MARKER`, or add a language to `SLASH`, `HASH`, `DASH`, or `ANGLE`.

@@ -47,10 +47,10 @@ def old_lines(tool, path):
     return set()  # Write: the hook runs after it, so the old file is gone
 
 
-data = json.load(sys.stdin)
+data = json.loads(sys.stdin.buffer.read().decode("utf-8"))
 tool = data.get("tool_input", {})
 path = tool.get("file_path", "")
-if not path or path.endswith(DOCS):
+if not path or path.lower().endswith(DOCS):
     sys.exit(0)
 
 pattern = comment_pattern(path)
@@ -65,11 +65,11 @@ found = [
 ]
 if found:
     shown = "\n".join(f"  {line[:120]}" for line in found[:5])
-    print(
+    note = (
         f"New comment in {path}:\n{shown}\n"
         "Use the comment-root-cause skill. Why is this comment here? "
         "Can the code be better, or is this the best it can be? "
-        "If it covers a shortcut, a workaround, or an unfixed cause, fix the root cause.",
-        file=sys.stderr,
+        "If it covers a shortcut, a workaround, or an unfixed cause, fix the root cause.\n"
     )
+    sys.stderr.buffer.write(note.encode("utf-8"))
     sys.exit(2)
