@@ -24,6 +24,8 @@ Each new comment is one of three kinds. The full rules are in [SKILL.md](SKILL.m
 
 When the fix is bigger than the task, the agent stops and asks you. It never keeps a workaround on its own.
 
+It works on old comments too. Type `/no-comments <path>`, or say "remove the comments in <path>". The agent lists every comment in that file, folder, or repo, with its kind and what it will do, and waits for your yes. Then it deletes the what comments, and fixes each excuse at its cause, one at a time. An old excuse comment is a pointer to a bug that is still there, so it never deletes one and leaves the workaround.
+
 ## 2. Why a description is not enough
 
 A skill starts when its description matches the task. Here the trigger is the agent's own act of writing a comment, and an agent that is busy justifying a workaround does not always stop to check. The description catches most cases. A hook catches every one, because the harness runs it, not the agent.
