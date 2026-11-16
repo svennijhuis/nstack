@@ -16,7 +16,7 @@ It skips docs and comments that were already there. After a Write of a whole fil
 
 ### Install
 
-Say "set up nstack": `setup-nstack-skills` offers the hook and writes nothing before your yes. With a home repo, say "add the comment-root-cause hook" to `setup-home-repo`.
+Say "set up nstack": `setup-nstack-skills` asks if you want this skill and its hook, the skill only, or neither, and writes nothing before your yes. With a home repo, say "add the comment-root-cause hook" to `setup-home-repo`.
 
 By hand, with the skill in `~/.claude/skills/comment-root-cause/`, merge this into `~/.claude/settings.json`:
 

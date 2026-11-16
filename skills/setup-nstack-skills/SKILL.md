@@ -1,9 +1,9 @@
 ---
 name: setup-nstack-skills
-description: Use when the user wants to set up nstack, an nstack skill fails because a skill it calls is missing, or the user wants an optional nstack hook such as the comment-root-cause hook. Installs the missing external skills at the pinned commit and offers the hooks.
+description: Use when the user wants to set up nstack, an nstack skill fails because a skill it calls is missing, or the user wants an optional nstack skill or hook such as comment-root-cause. Installs the missing external skills at the pinned commit and asks about the optional skills and hooks.
 ---
 
-nstack skills call skills that live in other repos. This skill reads the list of those skills in [external-skills.md](external-skills.md), checks which ones are installed, and installs the missing ones at the pinned commit. Then it offers the optional hooks that nstack skills ship, by [Optional hooks](#optional-hooks).
+nstack skills call skills that live in other repos. This skill reads the list of those skills in [external-skills.md](external-skills.md), checks which ones are installed, and installs the missing ones at the pinned commit. Then it asks if the person wants each optional skill and its hook, by [Optional skills and hooks](#optional-skills-and-hooks).
 
 ## Rules that outrank the rest
 
@@ -15,7 +15,7 @@ nstack skills call skills that live in other repos. This skill reads the list of
 
 **Copy the folder whole.** Install every file in the skill's folder, not only `SKILL.md`. Never edit what you copy.
 
-**Never push.** This skill writes only to the local skill folder, and, after its own yes, to the settings file that registers an optional hook.
+**Never push.** This skill writes only to the local skill folder, and, after its own yes, to the settings file that registers an optional hook. It removes an optional skill folder only after its own yes.
 
 **A hook is opt-in.** Offer each hook once. Never register one without a yes. Never replace a hook that is already there.
 
@@ -46,11 +46,11 @@ nstack skills call skills that live in other repos. This skill reads the list of
    ```
 
 7. **Verify.** Run the check again. Every approved row must now be `installed`. Report any that is not, with the error text.
-8. **Offer the hooks**, by [Optional hooks](#optional-hooks). When every row was `installed` at step 4, still do this step before you stop.
+8. **Offer the optional skills and hooks**, by [Optional skills and hooks](#optional-skills-and-hooks). When every row was `installed` at step 4, still do this step before you stop.
 
-## Optional hooks
+## Optional skills and hooks
 
-Some nstack skills ship a hook that makes the skill hard to skip. Offer a hook only when its skill is installed, in the install folder or the project's `.claude/skills/`.
+Some nstack skills are optional and ship a hook that reminds the agent to use them. Ask the person if they want each one. Look for the skill in the install folder and the project's `.claude/skills/`.
 
 | Hook | Skill | Needs | Script | Events |
 | --- | --- | --- | --- | --- |
@@ -59,8 +59,13 @@ Some nstack skills ship a hook that makes the skill hard to skip. Offer a hook o
 What the hook does and the settings it needs are in that skill's README.
 
 1. **Check what it needs.** For Python 3, run `python3 --version`, then `python --version`, and use the first that prints Python 3. Neither does: tell the person the hook needs Python 3, do not install it yourself, and skip the hook.
-2. **Check.** Read the settings file the hook would go in: `~/.claude/settings.json` for the person, `.claude/settings.json` for a repo. The hook is `registered` when each of its events already runs its script. Skip a registered hook.
-3. **Ask.** One question per hook: what it does in one line, and the choice of for you, for this repo, or no. Recommend for you. A no is final for this run.
+2. **Check.** Read the settings file the hook would go in: `~/.claude/settings.json` for the person, `.claude/settings.json` for a repo. The hook is `registered` when each of its events already runs its script.
+3. **Ask.** One question per skill: what the skill and its hook do, one line each, and the choice:
+   - **Skill and hook** (recommended), for you or for this repo.
+   - **Skill only.** Register no hook.
+   - **Neither.** Register no hook. When the skill is installed, offer to remove its folder, and remove it only after a yes.
+
+   A no is final for this run. With the hook already registered, ask only whether to keep it.
 4. **With a home repo, hand over.** When the working directory or the person's setup has a home repo, `setup-home-repo` owns hooks. Tell the person to say "add the comment-root-cause hook" there, and stop this step.
 5. **Show the change.** Print the JSON you will merge. The command is the Python you found, then the full path to the script for the person's file, or `"$CLAUDE_PROJECT_DIR"/<path>` for a repo's. Wait for a yes.
 6. **Merge.** Add the entries to the `hooks` that are there. Keep every other key and hook. On another harness, map the events by what they do, by the skill's README. If the harness has no matching event, say so and skip it.
