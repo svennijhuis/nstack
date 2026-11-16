@@ -26,13 +26,13 @@ By hand, with the skill in `~/.claude/skills/comment-root-cause/`, merge this in
     "PostToolUse": [
       {
         "matcher": "Edit|Write|MultiEdit",
-        "hooks": [{ "type": "command", "command": "~/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py" }]
+        "hooks": [{ "type": "command", "command": "python3 ~/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py" }]
       }
     ]
   }
 }
 ```
 
-For a repo, put the skill in `.claude/skills/comment-root-cause/`, use `"$CLAUDE_PROJECT_DIR"/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py`, and merge into `.claude/settings.json`. Make the script executable and restart the session.
+For a repo, put the skill in `.claude/skills/comment-root-cause/`, use `python3 "$CLAUDE_PROJECT_DIR"/.claude/skills/comment-root-cause/hooks/comment-root-cause-hook.py`, and merge into `.claude/settings.json`. On Windows, write `python` instead of `python3` when that is the name of your Python 3. Restart the session.
 
 To change what it looks for, edit `MARKER`, or add a language to `SLASH`, `HASH`, `DASH`, or `ANGLE`.

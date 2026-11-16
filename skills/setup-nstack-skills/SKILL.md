@@ -52,18 +52,19 @@ nstack skills call skills that live in other repos. This skill reads the list of
 
 Some nstack skills ship a hook that makes the skill hard to skip. Offer a hook only when its skill is installed, in the install folder or the project's `.claude/skills/`.
 
-| Hook | Skill | Script | Events |
-| --- | --- | --- | --- |
-| comment-root-cause | `comment-root-cause` | `<skill folder>/hooks/comment-root-cause-hook.py` | `PostToolUse` with matcher `Edit\|Write\|MultiEdit` |
+| Hook | Skill | Needs | Script | Events |
+| --- | --- | --- | --- | --- |
+| comment-root-cause | `comment-root-cause` | Python 3 | `<skill folder>/hooks/comment-root-cause-hook.py` | `PostToolUse` with matcher `Edit\|Write\|MultiEdit` |
 
 What the hook does and the settings it needs are in that skill's README.
 
-1. **Check.** Read the settings file the hook would go in: `~/.claude/settings.json` for the person, `.claude/settings.json` for a repo. The hook is `registered` when each of its events already runs its script. Skip a registered hook.
-2. **Ask.** One question per hook: what it does in one line, and the choice of for you, for this repo, or no. Recommend for you. A no is final for this run.
-3. **With a home repo, hand over.** When the working directory or the person's setup has a home repo, `setup-home-repo` owns hooks. Tell the person to say "add the comment-root-cause hook" there, and stop this step.
-4. **Show the change.** Print the JSON you will merge, with the full path to the script for the person's file, or `"$CLAUDE_PROJECT_DIR"/<path>` for a repo's. Wait for a yes.
-5. **Merge.** Add the entries to the `hooks` that are there. Keep every other key and hook. Make the script executable. On another harness, map the events by what they do, by the skill's README. If the harness has no matching event, say so and skip it.
-6. **Verify.** Read the file again and check that it is valid JSON and every event runs the script. Tell the person to restart the session and check with `/hooks`.
+1. **Check what it needs.** For Python 3, run `python3 --version`, then `python --version`, and use the first that prints Python 3. Neither does: tell the person the hook needs Python 3, do not install it yourself, and skip the hook.
+2. **Check.** Read the settings file the hook would go in: `~/.claude/settings.json` for the person, `.claude/settings.json` for a repo. The hook is `registered` when each of its events already runs its script. Skip a registered hook.
+3. **Ask.** One question per hook: what it does in one line, and the choice of for you, for this repo, or no. Recommend for you. A no is final for this run.
+4. **With a home repo, hand over.** When the working directory or the person's setup has a home repo, `setup-home-repo` owns hooks. Tell the person to say "add the comment-root-cause hook" there, and stop this step.
+5. **Show the change.** Print the JSON you will merge. The command is the Python you found, then the full path to the script for the person's file, or `"$CLAUDE_PROJECT_DIR"/<path>` for a repo's. Wait for a yes.
+6. **Merge.** Add the entries to the `hooks` that are there. Keep every other key and hook. On another harness, map the events by what they do, by the skill's README. If the harness has no matching event, say so and skip it.
+7. **Verify.** Read the file again and check that it is valid JSON and every event runs the script. Tell the person to restart the session and check with `/hooks`.
 
 ## Adding a skill to the list
 
