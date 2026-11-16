@@ -23,11 +23,11 @@ A finding is an added line that:
 - copies the shape of a marked symbol
 - adds a comment not on the keep list of [comments.md](comments.md). Not sure? Flag it, and say why.
 - adds a suppression on a rule that catches bugs
-- adds a variant that breaks a principle in [principles.md](principles.md)
+- adds a `bad` variant: a `code-review` smell or a `codebase-design` break
 
 ```text
 File                  Line  Area      Finding                                 Fix
-src/orders/refund.ts  14    Errors    returns null on failure (rejected, P4)  return { ok, error }, as billing
+src/orders/refund.ts  14    Errors    returns null on failure (rejected)  return { ok, error }, as billing
 src/api/v2/users.ts   3     API       copies the frozen v1 user shape         follow the API ADR
 src/cart/total.ts     22    Comments  explains the loop                       delete it
 
@@ -52,8 +52,8 @@ medium  Naming  3      "Manager" suffix again                   src/users/userMa
 2 findings: 1 high, 1 medium.
 ```
 
-- `high`: fails a principle and grew in the last 30 days.
-- `medium`: fails a principle.
+- `high`: `bad` and grew in the last 30 days.
+- `medium`: `bad`.
 - `low`: only inconsistent.
 
 One concrete action per Fix. At most three lines of advice after the table, only with evidence.

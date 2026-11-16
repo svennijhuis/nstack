@@ -11,8 +11,8 @@ Agents copy the code they see, so a bad pattern spreads with every change. This 
 
 - **No breaking changes.** API, events, database schema, public exports, config names, CLI, and UI stay exactly as they are. See [contracts.md](references/contracts.md).
 - **Behavior stays.** Build, test, lint, and contract checks pass after every ticket.
-- **The majority does not win.** Count each variant, then judge it by [principles.md](references/principles.md).
-- **An anti-pattern is bad even when it is everywhere.** A variant that breaks a principle is never `consistent`.
+- **The majority does not win.** Count each variant, then judge it by [Judging](#judging).
+- **An anti-pattern is bad even when it is everywhere.** A `bad` variant is never `consistent`.
 - **No comments.** See [comments.md](references/comments.md).
 - **An unknown is a gap.** Never an assumption, a default, or a guess.
 - **Never invent a standard.** Options come from the code or a cited source. Only the person decides.
@@ -21,13 +21,11 @@ Agents copy the code they see, so a bad pattern spreads with every change. This 
 
 ## Context
 
-Load only what the mode needs. Never load [README.md](README.md): it holds the why.
-
 | Mode | Main session loads | Subagents load |
 | --- | --- | --- |
-| Chart | structure, survey, contracts | Survey: its brief, principles, contracts |
-| Work | resume, the claimed gap's row and its one survey file, principles for the card | Research: its brief |
-| Ready | ready-gate, rollout, contracts | none |
+| Chart | structure, survey, contracts | Survey: its brief, contracts, `codebase-design`, comments |
+| Work | resume, the claimed gap's row and its one survey file | Research: its brief |
+| Ready | ready-gate, rollout, contracts, `to-tickets` | none |
 | Apply | rollout, resume | Ticket: its brief, contracts, comments, the exemplar. Review: `code-review` |
 | Check, advise | advise, comments | Advise surveys: their brief |
 | Help, status | help | none |
@@ -63,11 +61,21 @@ A gap's name is its question. Use the question, never the bare id. **Claim** a g
 
 **Fog of war:** an in-scope question you cannot phrase yet is one line under Not yet specified. One you can phrase is a gap, even when blocked. Fog is `None.` at ready.
 
+## Judging
+
+Every verdict cites its source: a `codebase-design` term, a smell from the `code-review` baseline, [comments.md](references/comments.md), or a section of the language's or framework's official guide. No source: research one. Never judge without one.
+
+- `good`: breaks nothing. Copy it.
+- `weak`: breaks nothing, but makes the next change harder.
+- `bad`: breaks a source. Every copy costs.
+
+A rule the person states outranks every source, and goes on the gap row.
+
 ## Danger first
 
-1. `bad spreading`: fails a principle and was added in the last 90 days.
-2. `bad majority`: fails a principle and is the most common variant.
-3. `bad`: fails a principle.
+1. `bad spreading`: `bad`, and added in the last 90 days.
+2. `bad majority`: `bad`, and the most common variant.
+3. `bad`.
 4. `inconsistent`: no variant is `bad`, the code just does it more than one way. A `weak` variant lands here.
 
 Then by files touched. Open research and task gaps come before all of them: they unblock the rest.
@@ -76,7 +84,7 @@ Then by files touched. Open research and task gaps come before all of them: they
 
 Never answer the person's side of a HITL gap.
 
-- **Research** (AFK). A fact. The survey of an area, by [survey.md](references/survey.md), or a principle that needs a source. A subagent with a fresh context does it.
+- **Research** (AFK). A fact. The survey of an area, by [survey.md](references/survey.md), or a source a verdict needs. A subagent with a fresh context does it.
 - **Grilling** (HITL). Which variant becomes the standard. Show the card, ask one question, stop. Call `codebase-design`, `grilling`, and `domain-modeling`.
 - **Prototype** (HITL). No module is good enough to be the exemplar. Rewrite one small module under `prototypes/`, never in the code. The person's reaction is the answer.
 - **Task** (HITL or AFK). Work a decision waits on, such as writing a missing check. Drive it, or give the person a checklist. A question only the person can answer is grilling, not a task.
@@ -85,8 +93,8 @@ Never answer the person's side of a HITL gap.
 
 ```text
 <area> (<id>): <question>
-A. <variant>   <files> files, <n> in last 90 days   <good | weak | bad>: <principle id, one line>
-B. <variant>   ...                                   recommended: <why, with the principle>
+A. <variant>   <files> files, <n> in last 90 days   <good | weak | bad>: <source, one line>
+B. <variant>   ...                                   recommended: <why, with the source>
 Exemplar: <module>
 Contract: <none | the frozen surface, and the outcome you propose>
 Changes: <files>   Left open: <what keeps spreading>
@@ -96,7 +104,7 @@ Answers: a variant, the person's own standard, `exception` with a reason, or res
 
 ## Companion skills
 
-Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `writing-for-agents`, `deslop`. `code-review` and `deslop` on every ticket diff in apply. `writing-for-agents` on every edit of `code-standards.md` or an ADR. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `to-tickets`, `code-review`, `writing-for-agents`, `deslop`. `to-tickets` at ready, for the slicing. `code-review` and `deslop` on every ticket diff in apply. `writing-for-agents` on every edit of `code-standards.md` or an ADR. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
 
 ## Invocation
 

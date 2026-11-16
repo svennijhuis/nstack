@@ -42,7 +42,7 @@ After `## Map`, one `## <Area>` per area in [survey.md](survey.md), in order. Ea
 - A standard:
 
 ```markdown
-Standard: <one sentence>. <principle id>.
+Standard: <one sentence>. <source>.
 Exemplar: <module, or none: a rule of absence, such as comments>
 Outcome: <apply | adapter | new-only | exception>
 Rejected: <variant>: <why>.

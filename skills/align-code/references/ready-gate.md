@@ -4,7 +4,7 @@ Proves every area has a standard, every change is a ticket, and nothing can brea
 
 ## Run
 
-1. Draft the tickets by [rollout.md](rollout.md). Do not write them yet.
+1. Draft the tickets: call `to-tickets` for the slicing and to check the breakdown with the person. A rename or retype across many callers is expand-contract: add the new form, move callers in batches, delete the old form. Write each ticket in the [rollout.md](rollout.md) shape, with its file list, not to a tracker. Do not write them to disk yet.
 2. Walk every check. Print `pass` or `fail` with file, line, and what is wrong. Run all of them, even after a fail.
 3. Nothing to check is a fail.
 4. Any fail: status unchanged. A missing fact or decision becomes a gap. Say what to run next.

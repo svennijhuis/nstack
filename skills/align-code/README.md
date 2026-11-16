@@ -37,7 +37,7 @@ This skill breaks that loop. It finds every place the code does one thing in mor
 
 ## 3. Why the majority does not win
 
-The easy rule is "the most common pattern wins". It is wrong here. The most common pattern is often the bad one: it is common because it was copied. So the skill counts each variant, and then judges it against a short list of principles with sources, such as deep modules, errors that are handled once, and input parsed once at the edge. See [principles.md](references/principles.md). You can edit the list.
+The easy rule is "the most common pattern wins". It is wrong here. The most common pattern is often the bad one: it is common because it was copied. So the skill counts each variant, and then judges it against sources it does not invent: Matt Pocock's `codebase-design` (deep modules, clean seams), the code smells in his `code-review` (Fowler's list), the comments rule, and the language's own official guide. Every verdict names its source.
 
 A bad pattern used everywhere is still bad, so every variant is judged, even when it is the only one.
 
@@ -111,4 +111,4 @@ Agents keep copying, so alignment needs a guard.
 
 - **`setup-agents-md`** comes first. align-code needs the build, test, and lint commands from `AGENTS.md`. It reads `code-standards.md` and, at the end, trims it after your yes. It never edits `AGENTS.md`: when the standards file is gone, run `/setup-agents-md` and it removes the pointer.
 - **`tech-design`** designs new features. Once the code is aligned, its builders copy aligned code. A breaking change to make a contract consistent is a design of its own.
-- **External skills.** align-code calls `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `writing-for-agents`, and `deslop`. Run `/setup-nstack-skills` to install them.
+- **External skills.** align-code calls `grilling`, `domain-modeling`, `research`, `codebase-design`, `to-tickets`, `code-review`, `writing-for-agents`, and `deslop`. Run `/setup-nstack-skills` to install them.

@@ -87,7 +87,7 @@ Stop between any two tickets. Stop the session after about ten reviewed tickets,
    Naming          none    no tool can check it                                 the check mode covers it  -
    ```
 
-   - One row per standard with `Checked by` set, plus every standard a rule could now check, plus every principle a rule can catch.
+   - One row per standard with `Checked by` set, plus every standard a rule could now check.
    - Use the repo's own linter, formatter, or type checker, or a well-known plugin for it. Name the exact rule id and setting. Never invent a rule: find it in the tool's installed docs or its source.
    - `Hits now`: run the tool once with the rule on the command line, never in a config file. Tool not installed: `-`.
    - No rule fits: say `none`, and that `/align-code check` covers it.
@@ -96,7 +96,7 @@ Stop between any two tickets. Stop the session after about ten reviewed tickets,
    - On a no: nothing changes. `lint.md` and the ADRs keep the advice.
 4. **Docs.**
    1. Trim `docs/agents/code-standards.md`: delete every line the code, an added lint rule, or a marker now shows. Nothing left: propose deleting the file.
-   2. ADRs: one per area with a standard, in `docs/adr/`, in the repo's ADR format. Title `Code standard: <area>`. Decision, why with the principle, rejected variants, the exemplar, frozen and excepted code, and its lint rule: added, or advised and not added.
+   2. ADRs: one per area with a standard, in `docs/adr/`, in the repo's ADR format. Title `Code standard: <area>`. Decision, why with its source, rejected variants, the exemplar, frozen and excepted code, and its lint rule: added, or advised and not added.
    3. Show both as plan rows. Wait for a yes. The person maintains `code-standards.md`: no line goes without its row.
    4. `writing-for-agents` on each file. Commit.
    5. File gone, or a pointer now stale: tell the person to run `/setup-agents-md`. Never edit `AGENTS.md`.

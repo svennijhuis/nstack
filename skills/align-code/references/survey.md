@@ -45,7 +45,7 @@ Give this, and nothing from the conversation:
 Area: <name and Ask, word for word>
 Gap: <id>, in docs/align/<folder>/gaps.md
 Scope: <Scope from align.md>
-Principles: <full path to references/principles.md>, plus docs/agents/code-standards.md if it exists
+Judge: by the Judging section of <full path to SKILL.md>, with `codebase-design`, the `code-review` smell baseline, and <full path to references/comments.md>. Plus docs/agents/code-standards.md if it exists.
 Contracts: <full path to references/contracts.md>. Mark every variant on a frozen surface.
 Write: docs/align/<folder>/survey/<area>.md
 Do not: change code, decide, call a live system, edit any file but the one in Write
@@ -85,7 +85,7 @@ History: <from> to <to>
 <consistent | inconsistent>. <one line>
 
 ## Variants
-| Variant | Files | Last 90 days | Example | Verdict | Principle | Frozen |
+| Variant | Files | Last 90 days | Example | Verdict | Source | Frozen |
 | --- | --- | --- | --- | --- | --- | --- |
 
 ## Exemplar
