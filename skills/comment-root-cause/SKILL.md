@@ -14,7 +14,7 @@ Check only comments in lines you change, unless the person asks for a path. Leav
 
 | Reason | Example | Do |
 | --- | --- | --- |
-| It explains what the code does | `// loop over the users and skip the inactive ones` | Make the code clear: a name, a type, a smaller function. Then the comment goes. |
+| It explains what the code does | `// loop over the users and skip the inactive ones` | Often a shortcut in disguise. Say why the code needs it. A shortcut or a problem: fix the root cause. Otherwise make the code clear: a name, a type, a smaller function. Then the comment goes. |
 | It covers a shortcut, a workaround, or an unfixed cause | `// sometimes undefined`, `// retry because flaky`, `as any`, `@ts-ignore`, `TODO` | Fix the root cause. |
 | A business rule or decision | `// orders over €500 need a manual check by finance` | Keep it. |
 | A fact outside our code | `// the bank API returns 200 on failure: <link>` | Keep it, with its source. |
