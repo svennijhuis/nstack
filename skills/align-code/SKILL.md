@@ -1,42 +1,36 @@
 ---
 name: align-code
-description: Use when the user wants to align a codebase on one set of code standards and principles, find where the code does the same thing in different ways, decide which way wins, and plan or run the rewrite without breaking changes.
+description: Use when the user wants to align a codebase on one set of code standards and principles, find where the code does the same thing in different ways, and decide which way wins.
 ---
 
-Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap per session, then rewrite the code with subagents.
+Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap per session, and end with a report. Align the standards. Nothing more.
 
-**Destination:** one decided standard and one exemplar per area, and a ticket for every change that gets the code there.
+**Destination:** one decided standard and one exemplar per area, and a report of the files that do not match.
 
-## Rules that outrank the rest
+## Rules
 
-- **No breaking changes.** API, events, database schema, public exports, config names, CLI, and UI stay exactly as they are. See [contracts.md](references/contracts.md).
-- **Behavior stays.** Build, test, lint, and contract checks pass after every ticket.
-- **The majority does not win.** Count each variant, then judge it by [Judging](#judging).
-- **An anti-pattern is bad even when it is everywhere.** A `bad` variant is never `consistent`.
+- **Report only.** Write only the align folder. Never change code, config, or docs outside it. Never commit or push.
+- **The majority does not win.** Count each variant, then judge it by [Judging](#judging). An anti-pattern is bad even when it is everywhere.
+- **No breaking changes.** A standard never changes behavior, a public API, schema, config name, or UI. Such a change goes to Out of scope.
 - **No comments.** See [comments.md](references/comments.md).
-- **An unknown is a gap.** Never an assumption, a default, or a guess.
+- **An unknown is a gap.** Never an assumption or a guess.
 - **Never invent a standard.** Options come from the code or a cited source. Only the person decides.
-- **Read only until ready.** Before ready, write only the align folder. Code changes only in `apply`, on a local branch, after a yes. Never push.
-- **One gap per session.** Surveys and research run beside it.
+- **One gap per session.** Surveys run beside it.
 
 ## Invocation
 
-| Typed | Mode | Main session loads | Subagents load |
-| --- | --- | --- | --- |
-| nothing, `help`, `<name> status`, `close <gap>`, `drop <gap>`, `abandoned` | [help.md](references/help.md) | help. Close also structure, contracts | none |
-| `new <name>` | [Chart](#chart) | resume, structure, survey, contracts | Survey: its brief, contracts, `codebase-design`, comments |
-| `<name>` or `<name> grill [gap]` | [Work](#work) | resume, help, structure, survey, contracts, the claimed gap's row and its one survey file | Survey and research: their brief |
-| `<name> ready` | [ready-gate.md](references/ready-gate.md) | resume, help, ready-gate, structure, rollout, contracts, `to-tickets` | none |
-| `<name> apply` | [rollout.md](references/rollout.md), lint advice at the end | resume, help, rollout, survey, contracts, comments | Ticket: its brief, contracts, comments, the exemplar. Review: `code-review`. Verify: survey brief |
-| `check`, `advise` | [advise.md](references/advise.md) | advise, comments | Advise surveys: their brief |
+| Typed | Mode |
+| --- | --- |
+| nothing | List the runs under `docs/align/`, newest first, with the `new` line |
+| `new <name>` | [Chart](#chart) |
+| `<name>` | [Work](#work) |
+| `<name> report` | [Report](#report), by [report-gate.md](references/report-gate.md) |
 
-Chart, work, ready, and apply sessions start and end by [resume.md](references/resume.md). `check` and `advise` do not.
-
-Subagents return a short result and write only their own output file. Only the main session writes `gaps.md`, `align.md`, `log.md`, and `rollout.md`.
+`<name>` matches the folder with or without its date. Layout of the folder: [structure.md](references/structure.md).
 
 ## The map
 
-The folder, files, and sections are in [structure.md](references/structure.md). Statuses: `draft`, `discussion`, `ready`, `applying`, `aligned`, `abandoned`.
+Statuses: `draft`, `discussion`, `aligned`, `abandoned`. `aligned` only through the [report gate](references/report-gate.md).
 
 ```markdown
 ## Map
@@ -47,7 +41,6 @@ The folder, files, and sections are in [structure.md](references/structure.md). 
 ### Notes
 Scope: <parts or folders>
 Preferences: <the person's standing preferences>
-Execution: apply runs the rollout after ready.
 
 ### Decisions so far
 - <gap question> (<id>): <one-line gist>
@@ -59,13 +52,13 @@ Execution: apply runs the rollout after ready.
 <one line per question past the destination, and why. Every breaking change lands here.>
 ```
 
-A gap's name is its question. Use the question, never the bare id. **Claim** a gap by setting `owner` first. The **frontier** is `open`, unblocked, unclaimed, ordered danger first.
+A gap's name is its question. **Claim** a gap by setting `owner` first. The **frontier** is `open`, unblocked, unclaimed, ordered danger first.
 
 **Fog of war:** an in-scope question you cannot phrase yet is one line under Not yet specified. One you can phrase is a gap, even when blocked.
 
 ## Judging
 
-Every verdict cites its source: a `codebase-design` term, a smell from the `code-review` baseline, [comments.md](references/comments.md), or a section of the language's or framework's official guide. No source: research one. Never judge without one.
+Every verdict cites a source: a `codebase-design` term, a smell from the `code-review` baseline, [comments.md](references/comments.md), or a section of the language's or framework's official guide. No source: call `research`, or ask the person. Never judge without one.
 
 - `good`: breaks nothing. Copy it.
 - `weak`: breaks nothing, but makes the next change harder.
@@ -80,16 +73,12 @@ A rule the person states outranks every source, and goes on the gap row.
 3. `bad`.
 4. `inconsistent`: no variant is `bad`, but the code does it more than one way, or its one way is `weak`.
 
-Then by files touched. Open research and task gaps come before all of them: they unblock the rest.
+Research gaps come before all of them: they unblock the rest.
 
 ## Gap types
 
-Never answer the person's side of a HITL gap.
-
-- **Research** (AFK). A fact. The survey of an area, by [survey.md](references/survey.md), or a source a verdict needs. A subagent with a fresh context does it.
-- **Grilling** (HITL). Which variant becomes the standard. Show the card, ask one question, stop. Call `codebase-design`, `grilling`, and `domain-modeling`.
-- **Prototype** (HITL). No module is good enough to be the exemplar. Rewrite one small module under `prototypes/`, never in the code. The person's reaction is the answer.
-- **Task** (HITL or AFK). Work a decision waits on, such as writing a missing check. Drive it, or give the person a checklist. A question only the person can answer is grilling, not a task.
+- **Research** (AFK). The survey of one area, by [survey.md](references/survey.md). A subagent with a fresh context does it.
+- **Grilling** (HITL). Which variant becomes the standard. Show the card, ask one question, stop. Call `grilling`, `domain-modeling`, and `codebase-design`. Never answer the person's side.
 
 ### The grilling card
 
@@ -99,46 +88,47 @@ A. <variant>   <files> files, <n> in last 90 days   <good | weak | bad>: <source
 B. <variant>   ...
 Recommended: <exactly one letter>: <why, with the source>. Or: none, research first.
 Exemplar: <module>
-Contract: <none | the frozen surface, and the outcome you propose>
-Changes: <files>   Left open: <what keeps spreading>
+Changes: <files>
 ```
 
-Answers: a variant, the person's own standard, `exception` with a reason, or research first. Every answer gets an outcome from [contracts.md](references/contracts.md): `apply`, `adapter`, `new-only`, or `exception`.
+Answers: a variant, the person's own standard, `exception` with a reason, or research first.
 
 ## Companion skills
 
-Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `to-tickets`, `code-review`, `writing-for-agents`, `deslop`. `to-tickets` at ready, for the slicing. `code-review` and `deslop` on every ticket diff in apply. `writing-for-agents` on every edit of `code-standards.md` or an ADR. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`, `code-review`, `writing-for-agents`. `research` for a source a verdict needs. `writing-for-agents` on every edit of `align.md`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
 
 ## Modes
 
 ### Chart
 
-1. **Check what the run needs.** Read the build, test, and lint commands from `AGENTS.md`. None: name `/setup-agents-md` and stop. Read `docs/agents/code-standards.md` and the ADRs when they exist: each line is a candidate, never a standard. List the frozen surfaces in scope and the check for each, by [contracts.md](references/contracts.md).
-2. **Destination.** Call `grilling` and `domain-modeling`. Agree the scope. Done when the person agrees with the destination.
-3. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>` in its section.
-4. **Create the folder** by [structure.md](references/structure.md). Status `draft`.
-5. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`, with A. comments.md as written, B. comments.md with the person's edits. Recommended: A. Edits go on the row and outrank comments.md for this run. A frozen surface with no check is a task gap. Fill `blocks` in a second pass. Status `discussion`.
-6. **Start the surveys** by [survey.md](references/survey.md#when).
-7. **Stop.** Log. Say the gap count by type and the first frontier gap.
+1. **Scope.** Call `grilling` and `domain-modeling`. Agree the destination and the scope. Read `AGENTS.md` and `docs/agents/code-standards.md` when they exist: each line is a candidate, never a standard.
+2. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>`.
+3. **Create the folder** by [structure.md](references/structure.md). Status `draft`.
+4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. Status `discussion`.
+5. **Start the surveys**, one subagent per survey gap, all at once, by [survey.md](references/survey.md#when).
+6. **Stop.** Log. Say the gap count and the first frontier gap.
 
 A `new` for a name that exists stops. Tell them to resume.
 
 ### Work
 
-1. **Catch up** by [resume.md](references/resume.md). Turn each finished survey into gaps by [survey.md](references/survey.md#closing).
+1. **Catch up.** Read the header, the map, `gaps.md`, and the last five `log.md` lines. Turn each finished survey into gaps by [survey.md](references/survey.md#closing). Start any survey still `open`.
 2. **Claim** the gap the person named, or the first on the frontier.
 3. **Resolve** it by type.
-4. **Record** the answer and outcome on the row, status `decided`. A prototype gap records its exemplar. The standard and outcome go on the grilling gap it unblocks. No answer: `waiting-on-input`. Advice never closes a gap.
-5. **Write** a grilling gap's standard into its area section of `align.md`. Every gap: add the gist to Decisions so far.
-6. **Update the map.** Add the gaps it opens. Clear fog you can now phrase. A breaking change goes to Out of scope.
-7. **Stop.**
+4. **Record** the answer on the row, status `decided`. No answer: `waiting-on-input`. Advice never closes a gap.
+5. **Write** a grilling gap's standard into its area section of `align.md`. Add the gist to Decisions so far.
+6. **Update the map.** Add the gaps it opens. Clear fog you can now phrase.
+7. **End.** Append one line to `log.md`, set `Updated`, and say three lines: what changed, what waits on whom, what is next.
 
 Other sessions may edit the folder at the same time.
+
+### Report
+
+Run the [report gate](references/report-gate.md). On pass, print the report: for each area, the standard, the exemplar, and the files that do not match. Write no code. The person or an agent rewrites the code as normal work.
 
 ## When this is the wrong answer
 
 Say so and stop.
 
 - The code already does each thing one way.
-- The person wants a contract made consistent. That breaks callers: `/tech-design`.
-- No build or test command. Run `/setup-agents-md` first.
+- The person wants a public contract made consistent. That breaks callers: `/tech-design`.

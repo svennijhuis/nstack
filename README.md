@@ -10,7 +10,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `tech-design` | "tech design" | Charts a technical design as a shared map, finds every gap, and closes them one per session until a developer or an agent can build from it without guessing. |
 | `setup-home-repo` | "set up a home repo" | Creates, updates, audits, and cleans up one repo that holds your shared skills, steering files, MCP servers, and hooks. Local only or git, and how it hands over to `setup-agents-md`: [README](skills/setup-home-repo/README.md). |
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](skills/setup-agents-md/README.md). |
-| `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, and rewrites the rest with subagents, with no breaking changes. Agents copy code, so it makes the code worth copying: [README](skills/align-code/README.md). |
+| `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, and reports what does not match. Aligns standards only, never changes code: [README](skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
 
 ## How they work together
@@ -21,7 +21,7 @@ flowchart TD
     B -->|Yes| C[setup-home-repo<br/>once: skills, pointers, MCP, hooks]
     B -->|No| D
     C -->|calls, per child repo| D[setup-agents-md<br/>lean AGENTS.md, code standards, ADRs, glossary]
-    D -->|code written many ways| I[align-code<br/>one standard per area, rewrite, no breaking changes]
+    D -->|code written many ways| I[align-code<br/>one standard per area, report]
     I --> E
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
     E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
@@ -44,8 +44,7 @@ A design from start to shipped:
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
   each child repo that points home. `setup-agents-md` owns the rest of a repo's
   `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
-  `align-code` owns `docs/align/`, and trims `docs/agents/code-standards.md`
-  only after you approve.
+  `align-code` owns `docs/align/`.
 - **One branch per repo.** The two setup skills put every change to a repo on
   one local branch, after you approve the plan. You review and push it.
   `tech-design` writes only its design folder and commits nothing. You commit
@@ -66,8 +65,7 @@ install them. The list is in
   `codebase-design`, `writing-for-agents`, `deslop`, `technical-writing`, and
   `unslop`.
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
-  `codebase-design`, `to-tickets`, `code-review`, `writing-for-agents`, and
-  `deslop`.
+  `codebase-design`, `code-review`, and `writing-for-agents`.
 
 ## Install
 

@@ -23,9 +23,8 @@ Each area ends as a survey gap, a fog line, or `n/a: <reason>` in its section of
 | 13 | Logging | One logger, one shape, logged once? |
 | 14 | Comments | Every comment against [comments.md](comments.md). |
 | 15 | Duplicate helpers | The same helper twice? |
-| 16 | Slop | Unneeded checks, unused code, forwarding wrappers. Use `deslop`. |
-| 17 | UI components | One way to structure, hold state, fetch, style? |
-| 18 | Tests | One structure, naming, mocking, setup? |
+| 16 | UI components | One way to structure, hold state, fetch, style? |
+| 17 | Tests | One structure, naming, mocking, setup? |
 
 A missing area the stack needs: add it, with the reason in `log.md`.
 
@@ -46,24 +45,11 @@ Area: <name and Ask, word for word>
 Gap: <id>, in docs/align/<folder>/gaps.md
 Scope: <Scope from align.md>
 Judge: by the Judging section of <full path to SKILL.md>, with `codebase-design`, the `code-review` smell baseline, and <full path to references/comments.md>. Plus docs/agents/code-standards.md if it exists.
-Contracts: <full path to references/contracts.md>. Fill the Frozen column: yes, no, or unsure. Unsure counts as frozen.
 Write: docs/align/<folder>/survey/<area>.md. Create its folder if it is missing.
 Do not: change code, decide, call a live system, edit any file but the one in Write
 ```
 
-Before it starts, the main session sets the gap's `owner` to `survey`, or `research` for a research brief, and status `research`. The subagent returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
-
-## Research brief
-
-A research gap that is not a survey gets the same brief with these lines changed:
-
-```markdown
-Question: <the gap question, word for word>
-Write: docs/align/<folder>/research/<gap id>-<topic>.md
-Return: one line: <gap id>: <the answer in one sentence>, confidence <high | medium | low>, <path>
-```
-
-The file holds the answer, each fact with its source, and what is still unknown. Low confidence closes nothing.
+Before it starts, the main session sets the gap's `owner` to `survey` and status `research`. The subagent returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
 
 ## Counting
 
@@ -86,11 +72,11 @@ History: <from> to <to>
 <consistent: only one variant, and it is `good` | inconsistent: anything else>. <one line>
 
 ## Variants
-| Variant | Files | Last 90 days | Example | Verdict | Source | Frozen |
-| --- | --- | --- | --- | --- | --- | --- |
+| Variant | Files | Last 90 days | Example | Verdict | Source |
+| --- | --- | --- | --- | --- | --- |
 
 ## Exemplar
-<module, and why. Or: none, propose a prototype.>
+<module, and why. Or: none.>
 
 ## Danger
 <a level from Danger first in SKILL.md, none, or unjudged>
