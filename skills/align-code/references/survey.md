@@ -67,9 +67,9 @@ Before it starts, the main session sets the gap's `owner` to `survey` and status
 ## Counting
 
 - Read each hit before you count it. A search result is a candidate, not a count.
-- Count files, not lines. Time does not matter: count all code in scope.
+- Count files, not lines. A file that holds two variants counts once in each. "Most common" means most files. On a tie, take the worse danger. Time does not matter: count all code in scope.
 - One example per variant, by module and symbol.
-- No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. Any `unjudged` variant makes the Danger `unjudged`. Never guess a verdict.
+- No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. Any `unjudged` variant makes the Danger `unjudged`. A judging skill that is not installed is no source. Never guess a verdict.
 
 ## The file
 
