@@ -8,11 +8,11 @@ Build the list from the code in scope: the stack, its frameworks, the folders, a
 
 Rule: anything the code in scope does in two or more ways that no area on the list covers must become an area. The main session adds it to `align.md` with a one-line reason in `log.md`. A survey subagent only lists it under New areas in its own file. Add no other area unless the person adds it. A person-added area still needs a one-line Ask.
 
-Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. A dropped seed area stays on the list as `n/a: dropped by the person`. A dropped area that is not a seed is removed, its section included. Surveys skip `n/a`. An added area is `- <Area>: <one-line Ask>` on the Areas list, a section `## <Area>` of `Waiting on <gap id>.`, and a survey gap (`open`, type `research`). Start that gap before the session stops. After surveys have started, record a list change in `align.md` and in `log.md`. Close a dropped area's survey gap when its status is `open` or `research`, as `accepted-risk`, owner the person, answer `drift in this area stays because the area was dropped`.
+Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. Surveys skip `n/a`. After surveys have started, record a list change in `align.md` and in `log.md`.
+
+An area's section always shows its state: `n/a: <reason>`, `consistent: <the one way>. Exemplar: <module>.`, a standard, or `Waiting on <open gap ids>.`. Update it whenever one of its gaps opens or closes. Each area has exactly one survey gap: chart step 4 adds it; later additions add it then. Dropping an area closes every gap on it that is not `decided` as `accepted-risk`, owner the person, answer `drift in this area stays because the area was dropped`. A dropped seed stays on the list, and its section becomes `n/a: dropped by the person`. A dropped area that is not a seed is removed, its section included.
 
 Each area, seed or new, gets one line in `log.md`: why it is on the list, or why it is `n/a`.
-
-An `n/a` area's section is `n/a: <reason>`. Every other area gets a survey gap at chart, and its section is `Waiting on <gap ids>.` until that gap closes.
 
 ## Seed list
 
@@ -103,7 +103,7 @@ none
 ## Closing
 
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
-- New areas: if the section is only `none`, add nothing. For any other line, if that area is already on the list in `align.md`, skip it. Otherwise add it once as `- <Area>: <one-line Ask>`, add `## <Area>` with `Waiting on <gap id>.`, log the reason, add a survey gap (`open`, type `research`), and start that survey.
+- New areas: if the section is only `none`, add nothing. For any other line, if that area is already on the list in `align.md`, skip it. Otherwise add it once as `- <Area>: <one-line Ask>`, log the reason, and add its one survey gap.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap. A missing source is a research gap that blocks the area's grilling gaps.
 - Only one variant, `good`: the area is `consistent`. No gap.
 - Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` is `bad majority`, `weak` is `inconsistent`.

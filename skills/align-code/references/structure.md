@@ -29,7 +29,7 @@ After `## Map`, one `## <Area>` per area on the list in `align.md`, in order. Ea
 
 - `consistent: <the one way>. Exemplar: <module>.`
 - `n/a: <reason>`
-- `Waiting on <gap ids>.`
+- `Waiting on <open gap ids>.`
 - A standard:
 
 ```markdown
