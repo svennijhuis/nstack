@@ -4,15 +4,15 @@ Find every thing the code does more than one way. Judge every variant, even when
 
 ## Discover
 
-Build the list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the Areas list as `- <Area>: <Ask>` with the Ask copied from the table, or `- <Area>: n/a: <reason>`. A new area's Ask is one line. The survey brief copies that Ask word for word.
+Build the Areas list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the list as `- <Area>: <Ask>` (Ask copied from the table) or `- <Area>: n/a: <reason>`. A new area's Ask is one line.
 
-Rule: anything the code in scope does in two or more ways that no area on the list covers must become an area. The main session adds it to `align.md` with a one-line reason in `log.md`. A survey subagent only lists it under New areas in its own file. Add no other area unless the person adds it. A person-added area still needs a one-line Ask.
+New areas: only behavior that no area on the list could cover, even loosely. Query building is Data access, not a new area. Only the main session adds an area. A survey subagent lists candidates under New areas in its own file.
 
-Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. Surveys skip `n/a`. After surveys have started, record a list change in `align.md` and in `log.md`.
+Write the list into `align.md` before any survey starts, and show it. The person may add or drop areas. Surveys skip `n/a`. After surveys start, a list change goes in `align.md` and `log.md`.
 
-An `n/a` area's section is `n/a: <reason>`, written when the area is marked `n/a`. Every other section is created when its survey gap is added, as `Waiting on <that id>.`. The section stays `Waiting on <gap ids>.` while any of its gaps is `open`, `research`, or `waiting-on-input`, and those are the ids it lists. When none are, it is `consistent: <the one way>. Exemplar: <module>.` or a standard. Update it whenever one of its gaps opens or closes. Each area that is not `n/a` has exactly one survey gap, type `research`: chart step 4 adds it; later additions add it then. Dropping an area closes every gap on it whose status is `open`, `research`, or `waiting-on-input`, as `accepted-risk`, owner the person, answer `drift in this area stays because the area was dropped`. Leave a `decided` or `accepted-risk` row as it is. A dropped seed stays on the Areas list as `- <Area>: n/a: dropped by the person`, and its section is `n/a: dropped by the person`. A dropped area that is not a seed is removed from the list, its section included.
+Each area has one `research` survey gap, added when the area is approved. Its section in `align.md` is `n/a: <reason>`, `Waiting on <gap id>.`, or the standard. Dropping an area closes its open gaps as `accepted-risk`, owner the person. A dropped seed becomes `n/a: dropped by the person`. A dropped new area is removed.
 
-Each area, seed or new, gets one line in `log.md`: why it is on the list, or why it is `n/a`.
+Log one line per area added or dropped after the first list: `<yyyy-mm-dd> chart none: <area>: <why>`. The first list needs no per-area line.
 
 ## Seed list
 
@@ -103,7 +103,7 @@ none
 ## Closing
 
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
-- New areas: if the section is only `none`, add nothing. For any other line, if that area is already on the list in `align.md`, skip it. Otherwise add it once as `- <Area>: <one-line Ask>`, log the reason, and add its one survey gap.
+- New areas: skip `none` and any area the list already covers. Add the rest by the Discover rule, with its survey gap.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap. A missing source is a research gap that blocks the area's grilling gaps.
 - Only one variant, `good`: the area is `consistent`. No gap.
 - Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` is `bad majority`, `weak` is `inconsistent`.

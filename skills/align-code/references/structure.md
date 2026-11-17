@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | `align.md` | Header, map, one section per area. This is the report. | chart |
 | `gaps.md` | One row per gap | chart |
-| `log.md` | Append only. One line per session, plus one line per area at chart. | chart |
+| `log.md` | One line per session, append only | chart |
 | `survey/` | One file per area that is not n/a | first survey |
 
 ## Header
@@ -25,7 +25,7 @@ Owner: <person>
 
 ## Area sections
 
-After `## Map`, one `## <Area>` per area on the list in `align.md`, in order. Write an `n/a` section with the list. Add any other section when its survey gap is added. Each holds exactly one of:
+After `## Map`, one `## <Area>` per area on the Areas list, in order. Each holds exactly one of:
 
 - `consistent: <the one way>. Exemplar: <module>.`
 - `n/a: <reason>`
@@ -56,5 +56,3 @@ Columns, in order: `id`, `question`, `area`, `type`, `danger`, `status`, `owner`
 ## log.md
 
 `<yyyy-mm-dd> <mode> <id and question, or none>: <what changed>`
-
-At chart, one extra line per area, in the same shape: `<yyyy-mm-dd> chart none: <area>: <why it is on the list, or why it is n/a>`.

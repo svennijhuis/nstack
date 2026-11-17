@@ -6,8 +6,6 @@ Make every part of the code do the same thing the same way, so the code is worth
 
 Agents copy the code near the change. A bad pattern copied once is two, then four. This skill finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time. It aligns code to standards and principles. Nothing more.
 
-The areas are discovered per run because code conventions differ per stack. The tech-design sweep is a fixed list because every design must answer the same questions.
-
 ## How a run works
 
 It follows wayfinder: a map, a list of gaps, one decision per session.

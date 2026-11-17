@@ -106,21 +106,21 @@ Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`
 ### Chart
 
 1. **Scope.** Call `grilling` and `domain-modeling`. Agree the destination and the scope. Read `AGENTS.md` and `docs/agents/code-standards.md` when they exist: each line is a candidate, never a standard.
-2. **Discover** the areas from the code in scope, by [survey.md](references/survey.md#discover). Every seed area will be on the Areas list, active or `n/a: <reason>`. Decide the list in this step. Write the files in step 3.
-3. **Create the folder** by [structure.md](references/structure.md). Write the area list into `align.md`. Log one reason per area. Status `draft`. Show the list and wait: surveys start only after the person approves it, with any areas added or dropped.
-4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. One research gap for every approved area that is not `n/a`, including areas the person just added. Status `discussion`.
-5. **Start the surveys** on the list in `align.md`, one subagent per survey gap, all at once, by [survey.md](references/survey.md#when). Skip `n/a`.
+2. **Discover** the areas by [survey.md](references/survey.md#discover).
+3. **Create the folder** by [structure.md](references/structure.md), with the Areas list in `align.md`. Status `draft`. Show the list and wait: surveys start only after the person approves it.
+4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. One research gap per approved area that is not `n/a`. Status `discussion`.
+5. **Start the surveys**, one subagent per survey gap, all at once, by [survey.md](references/survey.md#when).
 6. **Stop.** Log. Say the gap count and the first frontier gap.
 
 A `new` for a name that exists stops. Tell them to resume.
 
 ### Work
 
-1. **Catch up.** Read the header, the map, `gaps.md`, the area lines in `log.md`, and the last five session lines. Turn each finished survey into gaps by [survey.md](references/survey.md#closing). Start any survey still `open`.
+1. **Catch up.** Read the header, the map, `gaps.md`, and the last five `log.md` lines. Turn each finished survey into gaps by [survey.md](references/survey.md#closing). Start any survey still `open`.
 2. **Claim** the gap the person named, or the first on the frontier.
 3. **Resolve** it by type.
 4. **Record** the answer on the row, status `decided`. No answer: `waiting-on-input`. Advice never closes a gap.
-5. **Write** the area section of `align.md` by the rule in [survey.md](references/survey.md#discover). Add the gist to Decisions so far.
+5. **Write** a grilling gap's standard into its area section of `align.md`. Add the gist to Decisions so far.
 6. **Update the map.** Add the gaps it opens. Clear fog you can now phrase.
 7. **End.** Append one line to `log.md`, set `Updated`, and say three lines: what changed, what waits on whom, what is next.
 

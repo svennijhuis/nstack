@@ -14,7 +14,7 @@ Proves every area has a standard and the report can be trusted. Changes no code.
 
 1. `align.md`, `gaps.md`, and `log.md` exist. Every file a gap row links to exists.
 2. Every header field has a value.
-3. Every area on the Areas list in `align.md` has its section. None is blank. Every seed area in [survey.md](survey.md) is on that list, with its Ask or `n/a: <reason>`.
+3. Every area on the Areas list in `align.md` has its section. None is blank. Every seed area in [survey.md](survey.md) is on the list.
 4. No gap is `open`, `research`, or `waiting-on-input`.
 5. Every `accepted-risk` gap has an owner and names the risk.
 6. Not yet specified is `None.`
