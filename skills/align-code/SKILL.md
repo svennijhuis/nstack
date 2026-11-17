@@ -11,7 +11,7 @@ Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap 
 
 - **Read only until aligned.** Before `aligned`, write only the align folder. Code changes only in `apply`, on a local branch, after a yes. Never push.
 - **The majority does not win.** Count each variant, then judge it by [Judging](#judging). An anti-pattern is bad even when it is everywhere.
-- **No breaking changes.** A standard never changes behavior, a public API, schema, config name, or UI. Such a change goes to Out of scope.
+- **No breaking changes.** A standard never changes behavior, a public API, schema, config name, or UI. Such a change goes to Out of scope. A bug fix that makes a hang, crash, or silent failure answer correctly is not a break: say so in the gap.
 - **Comments follow `comment-root-cause`.** See [comments.md](references/comments.md).
 - **An unknown is a gap.** Never an assumption or a guess.
 - **Never invent a standard.** Options come from the code or a cited source. Only the person decides.
@@ -66,14 +66,14 @@ A gap's name is its question. **Claim** a gap by setting `owner` first. The **fr
 Every verdict cites a source: a `codebase-design` term, a smell from the `code-review` baseline, [comments.md](references/comments.md), or a section of the language's or framework's official guide. No source: call `research`, or ask the person. Never judge without one.
 
 - `good`: breaks nothing. Copy it.
-- `weak`: breaks nothing, but makes the next change harder.
+- `weak`: breaks nothing, but makes the next change harder. A naming or style split is `weak`.
 - `bad`: breaks a source. Every copy costs.
 
 A rule the person states outranks every source, and goes on the gap row.
 
 ## Danger first
 
-1. `bad majority`: `bad`, and the most common variant. A lone `bad` variant is `bad majority`.
+1. `bad majority`: `bad`, and the most common variant. When `bad` is the only variant, it is `bad majority`.
 2. `bad`.
 3. `inconsistent`: no variant is `bad`, but the code does it more than one way, or its one way is `weak`.
 

@@ -65,8 +65,8 @@ Before it starts, the main session sets the gap's `owner` to `survey` and status
 ## Counting
 
 - Read each hit before you count it. A search result is a candidate, not a count.
-- Count files, not lines. A file that holds two variants counts once in each. "Most common" means most files. On a tie for most common, a tied `bad` variant counts as the most common only when it has 2 or more files. Time does not matter: count all code in scope.
-- A variant is one whole way of doing what the area asks. Parts of one way, such as what is thrown, what is logged, and how it is wrapped, are separate Questions, not separate variants. One example per variant, by module and symbol.
+- Count files, not lines. A file that holds two variants counts once in each. "Most common" means most files. On a tie for most common, a tied `bad` variant counts as the most common only when it has 2 or more files. Two tied `bad` variants beside a more common good one: `bad`. Time does not matter: count all code in scope.
+- A variant is one whole way of doing what the area asks. A helper copied across files is one variant per distinct implementation. Parts of one way, such as what is thrown, what is logged, and how it is wrapped, are separate Questions, not separate variants. One example per variant, by module and symbol.
 - No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. The judged variants set the Danger. It is `unjudged` only when no variant is judged. A judging skill that is not installed is not a source, but an official language or framework guide still is. Never guess a verdict.
 
 ## The file
@@ -91,7 +91,7 @@ Date: <yyyy-mm-dd>
 <a level from Danger first in SKILL.md, none, or unjudged>
 
 ## Questions
-- <one line per standard to decide. Never one per file or per line.>
+- <one line per standard to decide, at most 5, the most dangerous first. Never one per file or per line. Put the rest under Still unknown.>
 
 ## Still unknown
 - <what the code did not answer>
