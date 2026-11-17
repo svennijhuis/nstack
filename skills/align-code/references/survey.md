@@ -105,7 +105,7 @@ none
 ## Closing
 
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
-- New areas: skip `none` and any area the list already covers. Add the rest by the Discover rule, with its survey gap.
+- New areas: skip `none` and any area the list already covers. Match by behavior, not by name: `Translations` and `Localization` are one area. Add the rest by the Discover rule, with its survey gap.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap. A missing source is a research gap that blocks the area's grilling gaps.
 - Only one variant, `good`: the area is `consistent`. No gap.
 - Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` is `bad majority`, `weak` is `inconsistent`.

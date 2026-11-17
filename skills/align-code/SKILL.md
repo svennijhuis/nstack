@@ -108,7 +108,7 @@ Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`
 1. **Scope.** Call `grilling` and `domain-modeling`. Agree the destination and the scope. Read `AGENTS.md` and `docs/agents/code-standards.md` when they exist: each line is a candidate, never a standard.
 2. **Discover** the areas by [survey.md](references/survey.md#discover).
 3. **Create the folder** by [structure.md](references/structure.md), with the Areas list in `align.md`. Status `draft`. Show the list and wait: surveys start only after the person approves it.
-4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. One research gap per approved area that is not `n/a`. Status `discussion`.
+4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. Skip it when Comments is `n/a`. One research gap per approved area that is not `n/a`. Status `discussion`.
 5. **Start the surveys**, one subagent per survey gap, all at once, by [survey.md](references/survey.md#when).
 6. **Stop.** Log. Say the gap count and the first frontier gap.
 
