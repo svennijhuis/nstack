@@ -16,9 +16,11 @@ Take each category in order. Ask its question against the destination and everyt
 
 Find facts yourself before you add a gap. Read the code and the docs in the repo. A fact you can read is not a gap. A fact that needs a wide read or a source outside the repo is a research gap, see [research.md](research.md).
 
-The sweep is done when all 18 categories have one of the three endings.
+The sweep is done when every category in the table has one of the three endings.
 
 ## Categories
+
+The list is fixed on purpose: every design must answer these questions, whatever the stack. (align-code discovers its areas instead, because code conventions differ per stack.)
 
 | # | Category | Ask | Answers land in |
 | --- | --- | --- | --- |
@@ -53,4 +55,4 @@ Add these rows without asking whether to, as soon as the condition holds:
 
 ## Sweep again at ready
 
-At ready, run the 18 questions against the finished `design.md`. Any question the document cannot answer is a new gap, and ready stops.
+At ready, run every question in the table against the finished `design.md`. Any question the document cannot answer is a new gap, and ready stops.

@@ -12,6 +12,8 @@ Each area, seed or new, gets one line in `log.md`: why it is on the list, or why
 
 Each area on the list ends as a survey gap, a fog line, or `n/a: <reason>` in its section of `align.md`.
 
+Example: a TypeScript API with two logging libraries and no UI. Logging stays on the list (two ways). UI components is `n/a: no UI`. Dates is added only if the code formats dates in two or more ways.
+
 ## Seed list
 
 | # | Area | Ask |
