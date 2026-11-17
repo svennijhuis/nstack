@@ -23,8 +23,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 - Start: `<command>`
 - Build: `<command>`
 - Test: `<command>`. Run it before you finish a change.
-- Lint and typecheck: `<command>`
-- Lint rules: `<config file>`. Run `<command>`, and `<fix command>` to fix what it can.
+- Lint and typecheck: `<command>`. When the repo has linting rules, add: rules in `<config file>`, fix with `<fix command>`. No linting rules: no mention of linting.
 
 ## Pipelines
 
