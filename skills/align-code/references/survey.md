@@ -65,8 +65,8 @@ Before it starts, the main session sets the gap's `owner` to `survey` and status
 ## Counting
 
 - Read each hit before you count it. A search result is a candidate, not a count.
-- Count files, not lines. A file that holds two variants counts once in each. "Most common" means most files. On a tie for most common, a tied `bad` variant counts as the most common. Time does not matter: count all code in scope.
-- One example per variant, by module and symbol.
+- Count files, not lines. A file that holds two variants counts once in each. "Most common" means most files. On a tie for most common, a tied `bad` variant counts as the most common only when it has 2 or more files. Time does not matter: count all code in scope.
+- A variant is one whole way of doing what the area asks. Parts of one way, such as a logger and its message shape, are not separate variants. One example per variant, by module and symbol.
 - No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. The judged variants set the Danger. It is `unjudged` only when no variant is judged. A judging skill that is not installed is not a source, but an official language or framework guide still is. Never guess a verdict.
 
 ## The file
@@ -78,7 +78,7 @@ Gap: <id>
 Date: <yyyy-mm-dd>
 
 ## Answer
-<consistent: only one variant, and it is `good` | inconsistent: anything else>. <one line>
+<consistent: only one variant, and it is not `weak` or `bad` | inconsistent: anything else>. <one line>
 
 ## Variants
 | Variant | Files | Example | Verdict | Source |
@@ -105,5 +105,5 @@ none
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
 - New areas: skip `none` and any area the list already covers. Match by behavior, not by name: `Translations` and `Localization` are one area. Add the rest by the Discover rule, with its survey gap.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap. A missing source is a research gap that blocks the area's grilling gaps.
-- Only one variant, `good`: the area is `consistent`. No gap.
+- Only one variant, `good` or `unjudged`: the area is `consistent`. No gap. An `unjudged` one still gets its Still unknown gap.
 - Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` is `bad majority`, `weak` is `inconsistent`.
