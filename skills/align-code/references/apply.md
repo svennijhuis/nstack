@@ -15,11 +15,10 @@ Rewrite the code to match one decided standard at a time. Local branch. Never pu
 2. **Linter first.** If the repo already has a linter, check whether it can enforce the standard. If it can, add, change, or remove rules in its config, only where they enforce or conflict with this standard, and scope a new rule to the files under `Changes` when it would fail elsewhere. The config change goes in the same commit. No linter in the repo: skip this step and the next, and fix everything by hand. Never add a linter. A linter that `AGENTS.md` does not list: use it, and name `/setup-agents-md` to record it.
 3. **Run the linter with its fixer.** Fix what it reports for this standard in the files under `Changes`, with safe fixes only. Check the diff: a fix that changes behavior, public API, schema, config names, or UI is undone and done by hand.
 4. **Fix by hand** what the linter cannot: change the rest of the files under `Changes` to match the exemplar. Behavior, public API, schema, config names, and UI stay as they are. A change that needs one of them to break: stop, tell the person what would break, and find a solution together. Move it to Out of scope only when they say so.
-5. A comments standard: call `comment-root-cause` for each file. If it is missing, say so and name `/setup-nstack-skills`.
-6. Run build, test, and lint when it exists. Any fail: fix the change or revert it. Never edit a test to make it pass.
-7. Call `code-review` on the diff. Fix what it finds.
-8. One commit: `align(<area>): <standard>`.
-9. Add `Applied: <commit>` to the standard in `align.md`. Log. Stop.
+5. Run build, test, and lint when it exists. Any fail: fix the change or revert it. Never edit a test to make it pass.
+6. Call `code-review` on the diff. Fix what it finds.
+7. One commit: `align(<area>): <standard>`.
+8. Add `Applied: <commit>` to the standard in `align.md`. Log. Stop.
 
 ## End
 
