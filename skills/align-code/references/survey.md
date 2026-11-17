@@ -17,14 +17,15 @@ Each area ends as a survey gap, a fog line, or `n/a: <reason>` in its section of
 | 7 | Types | How strict? Escape hatches? Domain types or raw values? |
 | 8 | Async | One style? Timeouts, retries, cancellation? |
 | 9 | Validation | Where, and with what? Once at the edge? |
-| 10 | Data access | One layer, or queries anywhere? |
-| 11 | Dependencies | Injected, imported, or global? |
-| 12 | Config | Read in one place? |
-| 13 | Logging | One logger, one shape, logged once? |
-| 14 | Comments | Every comment against [comments.md](comments.md). |
-| 15 | Duplicate helpers | The same helper twice? |
-| 16 | UI components | One way to structure, hold state, fetch, style? |
-| 17 | Tests | One structure, naming, mocking, setup? |
+| 10 | Auth checks | Where is the caller checked, and with what? Same pattern on every path? |
+| 11 | Data access | One layer, or queries anywhere? One way to fetch and cache data? |
+| 12 | Dependencies | Injected, imported, or global? |
+| 13 | Config | Read in one place? |
+| 14 | Logging | One logger, one shape, logged once? |
+| 15 | Comments | Every comment against [comments.md](comments.md). |
+| 16 | Duplicate helpers | The same helper twice? |
+| 17 | UI components | One way to structure, hold state, and style? |
+| 18 | Tests | One structure, naming, mocking, setup? |
 
 A missing area the stack needs: add it, with the reason in `log.md`.
 
