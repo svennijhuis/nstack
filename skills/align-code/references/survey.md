@@ -4,7 +4,7 @@ Find every thing the code does more than one way. Judge every variant, even when
 
 ## Discover
 
-Build the list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the list, or marked `n/a: <reason>` in its section. Add a further area only when the code in scope does one thing in two or more ways and no seed area covers it.
+Build the list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the list, or marked `n/a: <reason>` in its section. Rule: anything the code in scope does in two or more ways that no area on the list covers must become an area. Add it to `align.md` with a one-line reason in `log.md`. Never add an area for anything else. This holds for the whole run, for the main session and for every survey subagent.
 
 Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. A dropped seed area becomes `n/a: dropped by the person`. Surveys run on that list, and skip `n/a`. An area changed after surveys start is edited in `align.md` and logged; a dropped area's open survey gap is dropped with it.
 
@@ -53,10 +53,11 @@ Gap: <id>, in docs/align/<folder>/gaps.md
 Scope: <Scope from align.md>
 Judge: by the Judging section of <full path to SKILL.md>, with `codebase-design`, the `code-review` smell baseline, and <full path to references/comments.md>. Plus docs/agents/code-standards.md if it exists.
 Write: docs/align/<folder>/survey/<area>.md. Create its folder if it is missing.
+New areas: anything done in two or more ways that no area in align.md covers goes under New areas in your file, one line each with its files
 Do not: change code, decide, call a live system, edit any file but the one in Write
 ```
 
-Before it starts, the main session sets the gap's `owner` to `survey` and status `research`. The subagent returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <path>`. The table stays in the file.
+Before it starts, the main session sets the gap's `owner` to `survey` and status `research`. The subagent returns one line: `<gap id> <area>: <consistent | inconsistent>, danger <danger>, <n> questions, <n> new areas, <path>`. The table stays in the file.
 
 ## Counting
 
@@ -91,11 +92,15 @@ Date: <yyyy-mm-dd>
 
 ## Still unknown
 - <what the code did not answer>
+
+## New areas
+- <area>: <the two or more ways>, <files>. Or: none.
 ```
 
 ## Closing
 
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
+- Each New areas line: the main session adds the area to `align.md`, logs its reason in `log.md`, and starts a survey for it.
 - Each Question becomes a grilling gap. Each Still unknown becomes a gap. A missing source is a research gap that blocks the area's grilling gaps.
 - Only one variant, `good`: the area is `consistent`. No gap.
 - Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` is `bad majority`, `weak` is `inconsistent`.
