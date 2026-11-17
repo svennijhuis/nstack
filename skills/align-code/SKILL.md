@@ -120,7 +120,7 @@ A `new` for a name that exists stops. Tell them to resume.
 2. **Claim** the gap the person named, or the first on the frontier.
 3. **Resolve** it by type.
 4. **Record** the answer on the row, status `decided`. No answer: `waiting-on-input`. Advice never closes a gap.
-5. **Write** the area section of `align.md` by the rule in [survey.md](references/survey.md#discover). Add the gist to Decisions so far.
+5. **Rewrite** the area section of `align.md` by [survey.md](references/survey.md). Add the gist to Decisions so far.
 6. **Update the map.** Add the gaps it opens. Clear fog you can now phrase.
 7. **End.** Append one line to `log.md`, set `Updated`, and say three lines: what changed, what waits on whom, what is next.
 

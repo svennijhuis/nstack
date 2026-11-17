@@ -10,7 +10,9 @@ Rule: anything the code in scope does in two or more ways that no area on the li
 
 Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. Surveys skip `n/a`. After surveys have started, record a list change in `align.md` and in `log.md`.
 
-An `n/a` area's section is `n/a: <reason>`, written when the area is marked `n/a`. Every other section is created when its survey gap is added, as `Waiting on <that id>.`. The section stays `Waiting on <gap ids>.` while any of its gaps is `open`, `research`, or `waiting-on-input`, and those are the ids it lists. When none are, it is `consistent: <the one way>. Exemplar: <module>.` or a standard. Update it whenever one of its gaps opens or closes. Each area that is not `n/a` has exactly one survey gap, type `research`: chart step 4 adds it; later additions add it then. Dropping an area closes every gap on it whose status is `open`, `research`, or `waiting-on-input`, as `accepted-risk`, owner the person, answer `drift in this area stays because the area was dropped`. Leave a `decided` or `accepted-risk` row as it is. A dropped seed stays on the Areas list as `- <Area>: n/a: dropped by the person`, and its section is `n/a: dropped by the person`. A dropped area that is not a seed is removed from the list, its section included.
+An area's section is derived from its gaps; rewrite it whenever one of them changes. n/a area (including dropped; its Areas line becomes `n/a: <reason>` and its unclosed gaps close as accepted-risk): `n/a: <reason>`. Any gap on the area not `decided` or `accepted-risk`: `Waiting on <those ids>.` Otherwise: `consistent: ...` if the survey said so, else one Standard block per decided grilling gap, plus `Accepted risk: <ids>` for any accepted-risk ones.
+
+Each non-n/a area gets one survey gap, type `research`, status `open`, if it does not already have one.
 
 Each area, seed or new, gets one line in `log.md`: why it is on the list, or why it is `n/a`.
 

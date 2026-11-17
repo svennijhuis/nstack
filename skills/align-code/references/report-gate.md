@@ -22,7 +22,7 @@ Proves every area has a standard and the report can be trusted. Changes no code.
 
 ### Standards
 
-8. Every section is `consistent`, `n/a` with a reason, or a standard with every field.
+8. Every section is `n/a` with a reason, `consistent`, or one or more standard blocks with every field, plus `Accepted risk: <ids>` when the area has any `accepted-risk` gap.
 9. Every exemplar exists in the code. `none` only for a rule of absence, such as comments.
 10. Every standard cites a source.
 11. No standard changes behavior, a public API, schema, config name, or UI.
