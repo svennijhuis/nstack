@@ -10,7 +10,9 @@ New areas: only behavior that no area on the list could cover, even loosely. Que
 
 Write the list into `align.md` before any survey starts, and show it. The person may add or drop areas. Surveys skip `n/a`. After surveys start, a list change goes in `align.md` and `log.md`.
 
-Each area has one `research` survey gap, added when the area is approved. Its section in `align.md` is `n/a: <reason>`, `Waiting on <gap id>.`, or the standard. Dropping an area closes its open gaps as `accepted-risk`, owner the person. A dropped seed becomes `n/a: dropped by the person`. A dropped new area is removed.
+An area's section is derived from its gaps; rewrite it whenever one of them changes. n/a area (including a dropped seed: its Areas line becomes `n/a: dropped by the person` and its unclosed gaps close as accepted-risk, owner the person; a dropped new area is removed): `n/a: <reason>`. Any gap on the area not `decided` or `accepted-risk`: `Waiting on <those ids>.` Otherwise: `consistent: ...` if the survey said so, else one Standard block per decided grilling gap, plus `Accepted risk: <ids>` for any accepted-risk ones.
+
+Each non-n/a area gets one survey gap, type `research`, status `open`, if it does not already have one.
 
 Log one line per area added or dropped after the first list: `<yyyy-mm-dd> chart none: <area>: <why>`. The first list needs no per-area line.
 

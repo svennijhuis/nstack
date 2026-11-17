@@ -25,12 +25,7 @@ Owner: <person>
 
 ## Area sections
 
-After `## Map`, one `## <Area>` per area on the Areas list, in order. Each holds exactly one of:
-
-- `consistent: <the one way>. Exemplar: <module>.`
-- `n/a: <reason>`
-- `Waiting on <gap ids>.`
-- A standard:
+After `## Map`, one `## <Area>` per area on the Areas list, in order. Derive each section by [survey.md](survey.md#discover). It may be `n/a: <reason>`, `Waiting on <gap ids>.`, `consistent: <the one way>. Exemplar: <module>.`, or one or more standard blocks, plus `Accepted risk: <ids>` when any of the area's gaps is `accepted-risk`:
 
 ```markdown
 Standard: <one sentence>. <source>.
