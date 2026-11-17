@@ -23,7 +23,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 - Start: `<command>`
 - Build: `<command>`
 - Test: `<command>`. Run it before you finish a change.
-- Lint and typecheck: `<command>`
+- Lint and typecheck: `<command>`. When the repo has linting rules, add: rules in `<config file>`, fix with `<fix command>`. No linting rules: no mention of linting.
 
 ## Pipelines
 
@@ -69,7 +69,7 @@ For a repo with several parts, replace Shape and Commands with Parts. Keep Pipel
 - Build: `<command>`
 - Test: `<command>`
 - Integration test: `<command>`. Needs <what must run first>.
-- Lint: `<command>`
+- Lint: `<command>`. Rules in `<config file>`. Fix: `<fix command>`.
 
 ### Infrastructure (<tool>)
 
