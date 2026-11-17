@@ -66,7 +66,7 @@ Before it starts, the main session sets the gap's `owner` to `survey` and status
 
 - Read each hit before you count it. A search result is a candidate, not a count.
 - Count files, not lines. A file that holds two variants counts once in each. "Most common" means most files. On a tie for most common, a tied `bad` variant counts as the most common only when it has 2 or more files. Time does not matter: count all code in scope.
-- A variant is one whole way of doing what the area asks. Parts of one way, such as a logger and its message shape, are not separate variants. One example per variant, by module and symbol.
+- A variant is one whole way of doing what the area asks. Parts of one way, such as what is thrown, what is logged, and how it is wrapped, are separate Questions, not separate variants. One example per variant, by module and symbol.
 - No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. The judged variants set the Danger. It is `unjudged` only when no variant is judged. A judging skill that is not installed is not a source, but an official language or framework guide still is. Never guess a verdict.
 
 ## The file

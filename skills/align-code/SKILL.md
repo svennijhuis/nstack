@@ -73,7 +73,7 @@ A rule the person states outranks every source, and goes on the gap row.
 
 ## Danger first
 
-1. `bad majority`: `bad`, and the most common variant.
+1. `bad majority`: `bad`, and the most common variant. A lone `bad` variant is `bad majority`.
 2. `bad`.
 3. `inconsistent`: no variant is `bad`, but the code does it more than one way, or its one way is `weak`.
 
