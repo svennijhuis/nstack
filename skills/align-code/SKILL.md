@@ -43,6 +43,9 @@ Statuses: `draft`, `discussion`, `aligned`, `abandoned`. `aligned` only through 
 Scope: <parts or folders>
 Preferences: <the person's standing preferences>
 
+### Areas
+- <Area>
+
 ### Decisions so far
 - <gap question> (<id>): <one-line gist>
 
@@ -102,10 +105,10 @@ Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`
 ### Chart
 
 1. **Scope.** Call `grilling` and `domain-modeling`. Agree the destination and the scope. Read `AGENTS.md` and `docs/agents/code-standards.md` when they exist: each line is a candidate, never a standard.
-2. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>`.
-3. **Create the folder** by [structure.md](references/structure.md). Status `draft`.
+2. **Discover** the areas from the code in scope, by [survey.md](references/survey.md#discover). Every seed area is covered or marked `n/a: <reason>`.
+3. **Create the folder** by [structure.md](references/structure.md). Write the area list into `align.md`. Log one reason per area. Status `draft`. Show the list; the person may add or drop areas.
 4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. Status `discussion`.
-5. **Start the surveys**, one subagent per survey gap, all at once, by [survey.md](references/survey.md#when).
+5. **Start the surveys** on the list in `align.md`, one subagent per survey gap, all at once, by [survey.md](references/survey.md#when). Skip `n/a`.
 6. **Stop.** Log. Say the gap count and the first frontier gap.
 
 A `new` for a name that exists stops. Tell them to resume.

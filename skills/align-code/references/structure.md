@@ -25,7 +25,7 @@ Owner: <person>
 
 ## Area sections
 
-After `## Map`, one `## <Area>` per area in [survey.md](survey.md), in order. Each holds exactly one of:
+After `## Map`, one `## <Area>` per area on the list in `align.md`, in order. Each holds exactly one of:
 
 - `consistent: <the one way>. Exemplar: <module>.`
 - `n/a: <reason>`
@@ -56,3 +56,5 @@ Columns, in order: `id`, `question`, `area`, `type`, `danger`, `status`, `owner`
 ## log.md
 
 `<yyyy-mm-dd> <mode> <id and question, or none>: <what changed>`
+
+At chart, one line per area: why it is on the list, or why it is `n/a`.

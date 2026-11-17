@@ -2,9 +2,17 @@
 
 Find every thing the code does more than one way. Judge every variant, even when it is the only one: an anti-pattern used everywhere is still `bad`. Count each. Never decide. Never change code.
 
-## Areas
+## Discover
 
-Each area ends as a survey gap, a fog line, or `n/a: <reason>` in its section of `align.md`.
+Build the list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the list, or marked `n/a: <reason>` in its section. Add any further area the code needs.
+
+Write the list into `align.md` before any survey starts. The person may add or drop areas. Surveys run on that list, and skip `n/a`.
+
+Each area, seed or new, gets one line in `log.md`: why it is on the list, or why it is `n/a`.
+
+Each area on the list ends as a survey gap, a fog line, or `n/a: <reason>` in its section of `align.md`.
+
+## Seed list
 
 | # | Area | Ask |
 | --- | --- | --- |
@@ -26,8 +34,6 @@ Each area ends as a survey gap, a fog line, or `n/a: <reason>` in its section of
 | 16 | Duplicate helpers | The same helper twice? |
 | 17 | UI components | One way to structure, hold state, and style? |
 | 18 | Tests | One structure, naming, mocking, setup? |
-
-A missing area the stack needs: add it, with the reason in `log.md`.
 
 ## When
 
