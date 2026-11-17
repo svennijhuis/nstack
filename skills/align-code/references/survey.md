@@ -6,7 +6,7 @@ Find every thing the code does more than one way. Judge every variant, even when
 
 Build the list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the list, or marked `n/a: <reason>` in its section. Add any further area the code needs.
 
-Write the list into `align.md` before any survey starts. The person may add or drop areas. Surveys run on that list, and skip `n/a`.
+Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. A dropped seed area becomes `n/a: dropped by the person`. Surveys run on that list, and skip `n/a`.
 
 Each area, seed or new, gets one line in `log.md`: why it is on the list, or why it is `n/a`.
 

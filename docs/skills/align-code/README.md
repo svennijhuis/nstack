@@ -12,7 +12,7 @@ It follows wayfinder: a map, a list of gaps, one decision per session.
 
 1. `/align-code new <name>`: agree the scope, discover the areas from the code (every seed area is covered or marked n/a), write the list into `align.md` so you can add or drop, and start one survey subagent per area on that list.
 2. `/align-code <name>`: one session, one gap. Each survey counts every variant and judges it against a cited source. You choose the standard.
-3. `/align-code <name> report`: the report gate checks every area. On pass, the report lists each standard, its exemplar, and the files that do not match.
+3. `/align-code <name> report`: the report gate checks every area on the list. On pass, the report lists each standard, its exemplar, and the files that do not match.
 4. `/align-code <name> apply`: rewrites one standard per session on a local branch `align/<name>`. You approve the file list first. If the repo has a linter, the rule goes into its config first, the linter fixes what it can, and the rest is fixed by hand. Build and test must pass, and lint too when the repo has one. Never pushes.
 
 The majority does not win. Every variant is judged, even a variant used everywhere, and questions come in order of danger: bad and common first, then bad, then only inconsistent.
