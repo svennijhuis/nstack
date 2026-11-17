@@ -8,8 +8,8 @@
 | --- | --- | --- |
 | `align.md` | Header, map, one section per area. This is the report. | chart |
 | `gaps.md` | One row per gap | chart |
-| `log.md` | One line per session, append only | chart |
-| `survey/` | One file per area | first survey |
+| `log.md` | Append only. One line per session, plus one line per area at chart. | chart |
+| `survey/` | One file per area that is not n/a | first survey |
 
 ## Header
 
@@ -57,4 +57,4 @@ Columns, in order: `id`, `question`, `area`, `type`, `danger`, `status`, `owner`
 
 `<yyyy-mm-dd> <mode> <id and question, or none>: <what changed>`
 
-At chart, one line per area: why it is on the list, or why it is `n/a`.
+At chart, one extra line per area, in the same shape: `<yyyy-mm-dd> chart none: <area>: <why it is on the list, or why it is n/a>`.
