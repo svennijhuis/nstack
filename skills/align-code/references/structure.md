@@ -25,11 +25,11 @@ Owner: <person>
 
 ## Area sections
 
-After `## Map`, one `## <Area>` per area on the list in `align.md`, in order. Each holds exactly one of:
+After `## Map`, one `## <Area>` per area on the list in `align.md`, in order. Write an `n/a` section with the list. Add any other section when its survey gap is added. Each holds exactly one of:
 
 - `consistent: <the one way>. Exemplar: <module>.`
 - `n/a: <reason>`
-- `Waiting on <open gap ids>.`
+- `Waiting on <gap ids>.`
 - A standard:
 
 ```markdown
