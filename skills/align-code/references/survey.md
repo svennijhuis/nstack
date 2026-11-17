@@ -4,9 +4,9 @@ Find every thing the code does more than one way. Judge every variant, even when
 
 ## Discover
 
-Build the list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the list, or marked `n/a: <reason>` in its section. Add any further area the code needs.
+Build the list from the code in scope: the stack, its frameworks, the folders, and every place the code does one thing in more than one way. The seed list below is a checklist, not the run's list. Every seed area is on the list, or marked `n/a: <reason>` in its section. Add a further area only when the code in scope does one thing in two or more ways and no seed area covers it.
 
-Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. A dropped seed area becomes `n/a: dropped by the person`. Surveys run on that list, and skip `n/a`.
+Write the list into `align.md` before any survey starts, with `n/a` areas marked on it. The person may add or drop areas. A dropped seed area becomes `n/a: dropped by the person`. Surveys run on that list, and skip `n/a`. An area changed after surveys start is edited in `align.md` and logged; a dropped area's open survey gap is dropped with it.
 
 Each area, seed or new, gets one line in `log.md`: why it is on the list, or why it is `n/a`.
 
