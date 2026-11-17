@@ -10,7 +10,7 @@ New areas: only behavior that no area on the list could cover, even loosely. Que
 
 Write the list into `align.md` before any survey starts, and show it. The person may add or drop areas. Surveys skip `n/a`. After surveys start, a list change goes in `align.md` and `log.md`.
 
-An area's section is derived from its gaps; rewrite it whenever one of them changes. n/a area (including a dropped seed: its Areas line becomes `n/a: dropped by the person` and its unclosed gaps close as accepted-risk, owner the person; a dropped new area is removed): `n/a: <reason>`. Any gap on the area not `decided` or `accepted-risk`: `Waiting on <those ids>.` Otherwise: `consistent: ...` if the survey said so, else one Standard block per decided grilling gap, plus `Accepted risk: <ids>` for any accepted-risk ones.
+An area's section is derived from its gaps; rewrite it whenever one of them changes. n/a area (including a dropped seed: its Areas line becomes `n/a: dropped by the person` and its unclosed gaps close as accepted-risk, owner the person; a dropped new area is removed): `n/a: <reason>`. Any gap on the area not `decided` or `accepted-risk`, or no gap yet: `Waiting on <those ids>.`, or `Waiting on survey.` Otherwise: `consistent: ...` if the survey said so, else one Standard block per decided grilling gap, plus `Accepted risk: <ids>` for any accepted-risk ones.
 
 Each non-n/a area gets one survey gap, type `research`, status `open`, if it does not already have one.
 
@@ -69,7 +69,7 @@ Before it starts, the main session sets the gap's `owner` to `survey` and status
 - Read each hit before you count it. A search result is a candidate, not a count.
 - Count files, not lines. A file that holds two variants counts once in each. "Most common" means most files. On a tie, take the worse danger. Time does not matter: count all code in scope.
 - One example per variant, by module and symbol.
-- No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. Any `unjudged` variant makes the Danger `unjudged`. A judging skill that is not installed is no source. Never guess a verdict.
+- No source for a verdict: write `unjudged` as the Verdict and `none` as the Source, and add a Still unknown line naming the source it needs. Any `unjudged` variant makes the Danger `unjudged`. A judging skill that is not installed is not a source, but an official language or framework guide still is. Never guess a verdict.
 
 ## The file
 
