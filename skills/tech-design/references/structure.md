@@ -15,7 +15,7 @@ Every design has the same folder, the same files, and the same sections in the s
 | `research/` | One file per research gap | chart |
 | `questions/` | One question sheet per person | chart |
 | `input/` | Answers and specs received from people | chart |
-| `tickets.md` | The tickets | ready |
+| `tickets.md` | The tickets, optional | `tickets`, after committed |
 
 Create the three folders empty at chart, each with a `.gitkeep`.
 

@@ -114,6 +114,7 @@ The person types `/tech-design`. Read the first word after it.
 | `<name> status`, `close <gap>`, `drop <gap>` | See [help.md](references/help.md) |
 | `<name> ready` or `<name> ready anyway` | Ready |
 | `<name> committed`, `<name> abandoned` | Set that status, see [help.md](references/help.md) |
+| `<name> tickets` | Only from `committed`, when the human asks: write `tickets.md`, see [the ready gate](references/ready-gate.md) |
 
 Claim one gap per session, then stop. Also close any other `open` or `waiting-on-input` gap whose outcome that answer states in full. `<name> batch` is the exception: it claims and closes every answered frontier grilling gap in that turn. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
 
@@ -154,4 +155,4 @@ Follow this on `<name> batch`, after load and catch up. Only grilling gaps are b
 
 ### Ready
 
-Follow [the ready gate](references/ready-gate.md). Walk every check and print pass or fail for each. Any fail stops ready and leaves the status unchanged. When all pass, set `ready` and write `tickets.md`. `ready anyway` exists only when the human types it. Each open gap is then accepted by name, one at a time, by the human.
+Follow [the ready gate](references/ready-gate.md). Walk every check and print pass or fail for each. Any fail stops ready and leaves the status unchanged. When all pass, set `ready`. Write no tickets. `ready anyway` exists only when the human types it. Each open gap is then accepted by name, one at a time, by the human.

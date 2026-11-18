@@ -36,8 +36,8 @@ A design from start to shipped:
 
 1. `/tech-design new <name>` charts the design and lists its gaps.
 2. `/tech-design <name>` claims one gap per session, and closes any other `open` or `waiting-on-input` gap whose outcome that answer states in full. `/tech-design <name> batch` claims and closes every answered frontier grilling gap in that turn.
-3. `/tech-design <name> ready` runs the gate and writes the tickets.
-4. `/tech-design <name> committed` records the sign-off. Builders start.
+3. `/tech-design <name> ready` runs the gate. The design goes to the business and the lead developer for review. A rejected design goes back to discussion.
+4. `/tech-design <name> committed` records the sign-off. Builders start. `/tech-design <name> tickets` writes tickets from the signed-off design, only when you ask.
 5. After the feature ships, `/setup-agents-md` in the repo that holds the
    design asks if it shipped, turns its decisions into ADRs, and offers to
    delete the folder.

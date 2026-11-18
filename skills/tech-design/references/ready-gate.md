@@ -1,6 +1,6 @@
 # Ready gate
 
-`design.md` is the spec. Ready proves a developer can build from it without guessing, then writes `tickets.md`. Ready writes nothing else and closes no gap.
+`design.md` is the spec. Ready proves a developer can build from it without guessing, so the business and the lead developer can review it. The design is the goal. Ready writes no tickets and closes no gap.
 
 ## How to run the gate
 
@@ -75,12 +75,13 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 ## After the gate passes
 
 1. Set `Status: ready` and `Updated`.
-2. Write `tickets.md`.
-3. Append one `log.md` line. Stop.
+2. Append one `log.md` line. Tell the human the design is ready for review by the business and the lead developer. Stop.
 
-Ready is done when `tickets.md` exists and no gap status changed, except those the human accepted.
+Ready is done when the status is `ready` and no gap status changed, except those the human accepted. A reviewer who rejects the design sends it back to `discussion` before any ticket exists.
 
-## Ticket
+## Tickets (optional)
+
+Tickets are not a goal of the design. Write `tickets.md` only on `/tech-design <name> tickets`, only when the status is `committed`, and only when the human asks.
 
 One ticket is one slice a developer can build and check alone. Every ticket in `tickets.md` has:
 
