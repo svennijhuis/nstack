@@ -7,7 +7,7 @@ Model one resource at a time and check it. Call the pinned companion skills by n
 
 ## When to run
 
-Run on any endpoint that changes stored state (create, update, delete, or a status change), and on a flow with shared state, retries, timeouts, ordering, or concurrency. Model the resource, not the endpoint: the entity's states, with the write endpoints as transitions. Read-only endpoints and pure UI skip with a one-line reason.
+Run on any endpoint that changes stored state (create, update, delete, or a status change), and on a flow with shared state, retries, timeouts, ordering, or concurrency. Model the resource, not the endpoint: the entity's states, with the write endpoints as transitions. A read (GET) on a resource that has writes is included. Pure UI is not.
 
 Default invariants to check:
 
@@ -31,8 +31,8 @@ Default invariants to check:
 
 First step in both modes, before any companion skill: decide `skip`, `partial`, or `full`, and log the one-line reason. Do not spend tokens on work the triage rules out.
 
-- `skip` when nothing changes stored state.
-- `partial`: check only the invariants the diff touches, and reuse an existing model when present. A new create endpoint, for example, checks idempotent retry, not the whole machine.
+- `skip` when there is no write to stored state and no read of a resource that has writes: pure UI, or a read with no related writes (static or pure lookup data).
+- `partial`: check only the invariants the diff touches, and reuse an existing model when present. A new create endpoint, for example, checks idempotent retry, not the whole machine. A read on a resource that has writes checks that no stale or leftover data is returned (cache after update or delete, a soft-deleted or half-written row visible, a read during an in-flight multi-step write).
 - `full` only for a new or changed state machine, concurrency, or a multi-step flow.
 
 ## Companion skills
