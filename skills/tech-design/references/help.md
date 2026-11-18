@@ -18,7 +18,6 @@ On `/tech-design help`, print this card and stop.
 /tech-design <name> ready           strict gate. refuses while anything is open
 /tech-design <name> ready anyway    ready with open gaps you accept one by one
 /tech-design <name> committed       builders follow this design now. only from ready
-/tech-design <name> tickets         write tickets. only from committed, only if you ask
 /tech-design <name> abandoned       the work stopped, with a reason
 /tech-design help                   this card
 ```
