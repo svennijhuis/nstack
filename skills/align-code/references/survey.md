@@ -104,6 +104,6 @@ none
 
 - On catch-up, the main session writes the Answer on the row, links the file, and sets `decided`. The only gap closed without the person.
 - New areas: skip `none` and any area the list already covers. Match by behavior, not by name: `Translations` and `Localization` are one area. Add the rest by the Discover rule, with its survey gap.
-- Each Question becomes a grilling gap. A Still unknown stays in the survey file and makes no gap, except a missing source: one research gap per area, which blocks that area's grilling gaps. A bug or a fact for another area goes to that area's survey, not a new gap.
-- Only one variant, `good` or `unjudged`: the area is `consistent`. No gap. An `unjudged` one still gets its Still unknown gap.
+- Each Question becomes a grilling gap. A Still unknown stays in the survey file and makes no gap, except a missing source: one research gap per area, which blocks that area's grilling gaps. A bug or a fact for another area goes to that area's survey, not a new gap. A Question whose answer needs a breaking change goes to Out of scope, not a gap. A gap takes the survey's Danger. `unjudged` or none counts as `inconsistent`.
+- Only one variant, `good` or `unjudged`: the area is `consistent`. No gap. An `unjudged` one still gets its missing-source research gap.
 - Only one variant, `weak` or `bad`: one grilling gap, what replaces it. Danger by Danger first in SKILL.md: `bad` is `bad majority`, `weak` is `inconsistent`.

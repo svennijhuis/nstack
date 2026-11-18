@@ -57,7 +57,7 @@ Preferences: <the person's standing preferences>
 <one line per question past the destination, and why. Every breaking change lands here.>
 ```
 
-A gap's name is its question. **Claim** a gap by setting `owner` first. The **frontier** is `open`, unblocked, unclaimed, ordered danger first.
+A gap's name is its question. **Claim** a gap by setting `owner` first. The **frontier** is `open`, unblocked, unclaimed, ordered danger first. Research gaps tie in the order of the Areas list.
 
 **Fog of war:** an in-scope question you cannot phrase yet is one line under Not yet specified. One you can phrase is a gap, even when blocked.
 
