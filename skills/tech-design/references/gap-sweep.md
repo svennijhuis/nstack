@@ -12,7 +12,7 @@ Take each category in order. Ask its question against the destination and everyt
 
 1. One or more gap rows, when you can phrase the question.
 2. One line under Not yet specified, when you can tell a question is coming but cannot phrase it yet.
-3. One `log.md` line `sweep <category>: n/a: <reason>`, when the category does not apply.
+3. One `log.md` line `sweep <category>: n/a: <reason>`, when the category does not apply, or when a gap or a held answer already covers it. At chart, hold these lines until the folder exists (step 5).
 
 Find facts yourself before you add a gap. Read the code and the docs in the repo. A fact you can read is not a gap. Do not assume the code is aligned: if the code does one thing in two ways, that fact stands. Which unknowns are gaps, and where a term is written, is the materiality rule in the skill. A fact that needs a wide read or a source outside the repo is a research gap, see [research.md](research.md).
 

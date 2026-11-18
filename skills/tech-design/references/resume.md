@@ -66,11 +66,12 @@ Do not commit, switch branch, or push. The person commits the design folder.
 ## Start of every work session
 
 1. Read the header, the map, `gaps.md`, and the last five `log.md` lines. Do not read `research/` or `input/` yet.
-2. Check `input/` for files newer than the last log line. Process each as above.
-3. Print the board from [help.md](help.md).
-4. Flag every waiting gap past its `due` date and ask the human once: chase, extend the date, or accept the risk.
-5. Start research subagents for new research gaps, see [research.md](research.md).
-6. Then choose one gap.
+2. An `open` gap with an `owner` that no log line from the last session explains is a stale claim, such as from a batch that stopped early. Ask the human once to clear it.
+3. Check `input/` for files newer than the last log line. Process each as above.
+4. Print the board from [help.md](help.md).
+5. Flag every waiting gap past its `due` date and ask the human once: chase, extend the date, or accept the risk.
+6. Start research subagents for new research gaps, see [research.md](research.md).
+7. Then choose one gap.
 
 ## More than one design
 
