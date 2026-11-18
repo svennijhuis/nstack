@@ -35,7 +35,7 @@ flowchart TD
 A design from start to shipped:
 
 1. `/tech-design new <name>` charts the design and lists its gaps.
-2. `/tech-design <name>` closes one gap per session.
+2. `/tech-design <name>` claims one gap per session, and closes any other open gap whose outcome that answer states in full.
 3. `/tech-design <name> ready` runs the gate and writes the tickets.
 4. `/tech-design <name> committed` records the sign-off. Builders start.
 5. After the feature ships, `/setup-agents-md` in the repo that holds the

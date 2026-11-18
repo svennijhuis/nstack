@@ -23,7 +23,7 @@ The sweep is done when all 18 categories have one of the three endings.
 | # | Category | Ask | Answers land in |
 | --- | --- | --- | --- |
 | 1 | actors | Is every human and every system that touches this named, with its permission level? | Actors |
-| 2 | scope | What would a reasonable reader expect that this will not do? Usually closes from the answers already in Out of scope and Decisions so far. | Goals and non-goals, Out of scope |
+| 2 | scope | What would a reasonable reader expect that this will not do? If the chart answers or Out of scope already name it, that part is not a gap. Add a gap only for an expectation they did not name. At chart, when nothing remains, log `sweep scope: n/a: named at chart`. | Goals and non-goals, Out of scope |
 | 3 | functional | Does every trigger have a stated response, including the unwanted inputs? | Requirements |
 | 4 | data model | For each entity: who owns it, how many, how long kept, how it migrates? | Design, Data model |
 | 5 | data flow | Can each piece of data be traced from source to sink, and what crosses each boundary? | Design, Flows |

@@ -76,7 +76,9 @@ On `/tech-design <name> close <gap>`, the human closes a gap directly.
 2. If the human gave no answer with the command, ask for it once.
 3. Write the answer on the row. Set `decided`. Clear the waiting fields.
 4. Write the result into the `design.md` section its category names, and add the gist to Decisions so far.
-5. Add any gap the answer opens. Log one line. Stop.
+5. Add any gap the answer opens.
+6. Close every other open gap this answer states in full, the same way: `decided`, `<gist> (from <id>)` in `answer or source`, the gist on Decisions so far, and the result in its section. Do not invent a further answer.
+7. Log one line. Stop.
 
 Only the human's own answer closes a gap this way. Do not fill it in for them.
 

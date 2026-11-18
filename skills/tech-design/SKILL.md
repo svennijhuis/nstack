@@ -49,10 +49,12 @@ Load this once per session. Open gaps stay in `gaps.md`.
 Domain: <one line>
 Skills: <only the skills this design needs>
 Preferences: <preferences for this design>
+Constraints: <time, stack, systems>
 
 ### Decisions so far
 
 - <gap question> (<id>): <one-line gist>
+- <decision>: <gist> (chart)
 
 ### Not yet specified
 
@@ -111,16 +113,16 @@ The person types `/tech-design`. Read the first word after it.
 | `<name> ready` or `<name> ready anyway` | Ready |
 | `<name> committed`, `<name> abandoned` | Set that status, see [help.md](references/help.md) |
 
-Resolve one gap per session, then stop. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
+Claim one gap per session, then stop. Also close any other open gap whose outcome that answer states in full. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
 
 ### Chart the map
 
-1. **Name the destination and scope.** Before any grilling or sweep, ask the human in one turn: what is in, what is deliberately out, what is already decided, and the hard constraints (time, stack, systems). Write those answers into Out of scope and Decisions so far, so the sweep never turns them into gaps. Then call `grilling` and `domain-modeling`. Done when the destination is one or two lines the human agrees with.
+1. **Name the destination and scope.** Before any grilling or sweep, ask the human in one turn: what is in, what is deliberately out, what is already decided, and the hard constraints (time, stack, systems). Hold the answers until `design.md` exists. Then call `grilling` and `domain-modeling`. Done when the destination is one or two lines the human agrees with and the four answers are recorded.
 2. **Pick the size.** Propose `small`, `medium`, or `big` with reasons from [sizes.md](references/sizes.md). Record the types the person named. Done when the human confirms the size.
 3. **Map the frontier.** Grill again, breadth-first. List the decisions you can phrase. If you find no fog and one session can finish the design, stop and ask how to proceed.
 4. **Sweep.** Run all 18 categories in [gap-sweep.md](references/gap-sweep.md). Done when every category is a gap, a fog line, or `n/a` with a reason in `log.md`.
-5. **Create the folder** by [structure.md](references/structure.md), in the working directory: every entry, the header at `draft`, all 14 headings. Only when the working directory's `AGENTS.md` has a `## Repos` section, ask first: "Here, or in one of: <those repos>?" The repos are the pointer lines under `## Repos`. When those lines name `repos/<area>.md` files instead, read the files: an area is not a repo. Recommend here when the design changes more than one of those repos, and the one repo it changes otherwise. For another repo, create the folder there and tell the human to run later sessions from that repo. For the rest of this session, every `docs/design/` path in this skill and its references is under that repo's root, not the working directory. Use the full path in each step and in every subagent brief. Fill the map and what is already known. Every other section holds `n/a: <reason>` or one line naming the gaps it waits on. Add a Dependencies row for each outside system.
-6. **Add the gaps.** Each row starts `open`, with a category and a type. Merge in a second pass: two gaps that ask for the same decision become one row; when gap A's answer would settle gap B, B gets `blocks: A`, so A is asked first. Then fill `blocks` with real ids. A gap whose answer sits with a named person starts `waiting-on-input`, with its question sheet. Set status `discussion`.
+5. **Create the folder** by [structure.md](references/structure.md), in the working directory: every entry, the header at `draft`, all 14 headings. Only when the working directory's `AGENTS.md` has a `## Repos` section, ask first: "Here, or in one of: <those repos>?" The repos are the pointer lines under `## Repos`. When those lines name `repos/<area>.md` files instead, read the files: an area is not a repo. Recommend here when the design changes more than one of those repos, and the one repo it changes otherwise. For another repo, create the folder there and tell the human to run later sessions from that repo. For the rest of this session, every `docs/design/` path in this skill and its references is under that repo's root, not the working directory. Use the full path in each step and in every subagent brief. Fill the map and what is already known. Write what is in into Context and scope, and into Goals and non-goals when it is a goal. Write each deliberately-out item under Out of scope as `<thing>: <why>`. Write each constraint in Notes as `Constraints: <time, stack, systems>`. Write each prior decision under Decisions so far as `- <decision>: <gist> (chart)`. Do not open a gap for those lines. Every other section holds `n/a: <reason>` or one line naming the gaps it waits on. Add a Dependencies row for each outside system.
+6. **Add the gaps.** Each row starts `open`, with a category, a type, and a real id. Then merge: two gaps that ask for the same decision become one row. Keep the lower id and note the dropped id in the surviving question. Repoint any `blocks` that named the dropped id to the survivor. A category whose only gap was merged stays covered by the survivor. Then fill `blocks` with ids that still exist. When gap A's answer would settle gap B, B gets `blocks: A`, so A is asked first. A gap whose answer sits with a named person starts `waiting-on-input`, with its question sheet. Set status `discussion`.
 7. **Start the research subagents**, one per research gap, by [research.md](references/research.md).
 8. **Stop.** Log one line. Tell the human the size, the gap count by type, who is being waited on, and the first frontier gap. If the human asked for something short, offer a summary by [sizes.md](references/sizes.md). Never replace the map with it.
 
@@ -133,7 +135,7 @@ A second `new` for a name that already exists stops. Tell them to resume. Check 
 3. **Resolve it by type.** Read a related row or research file when you need it. On a grilling gap, advice comes before the one question.
 4. **Record the resolution.** Write the answer on the row and set `decided`, or `accepted-risk` when the human accepts the risk you named. With no answer, set `waiting-on-input` and write the question sheet. Advice alone never closes a gap.
 5. **Write it into the design.** Put the result in the section its category names. Draw any diagram the answer now triggers, by [diagrams.md](references/diagrams.md). Add the gist to Decisions so far.
-6. **Update the map.** Add the gaps this answer opens, then fill `blocks`. Apply both rules at the top. Delete fog you can now phrase. Raise the size if a larger one now holds. Close every open gap this answer already settles as `decided`, with the closing gap id as its source in `answer or source`. Update rows it invalidates.
+6. **Update the map.** Add the gaps this answer opens, then fill `blocks`. Apply both rules at the top. Delete fog you can now phrase. Raise the size if a larger one now holds. Close every other open gap whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, add that gist to Decisions so far, and write the result into the section its category names. Do not infer a further answer. Update rows it invalidates.
 7. **Stop.** Write state. The session is done when that one gap is claimed and either closed or `waiting-on-input`.
 
 Other sessions may edit this folder at the same time.
