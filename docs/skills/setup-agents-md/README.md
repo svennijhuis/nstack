@@ -182,7 +182,7 @@ setup-agents-md          once shipped: decisions → ADRs, design folder → off
 Each skill works without the others.
 
 - **`setup-home-repo`** owns the home repo's `## Repos`, `## Sources`, `## Tools`, and `## Environment`, and the one line in each child repo that points home. This skill never touches them. It owns the rest of each child repo's `AGENTS.md`. `setup-home-repo` calls it for the child repos you pick, after setup and after `add <repo>`, and both commit on one branch per repo. Later, when a repo's structure has changed, run `/setup-agents-md <repo>` from the home repo or `/setup-agents-md` in the repo itself. This skill's advise reports an ADR or glossary in the home repo that belongs to a child repo.
-- **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `committed` and not yet shipped. This skill leaves them alone. `tech-design` has no status for shipped, so the skill asks you. After the feature ships, each real decision in Decisions so far becomes an ADR, a line that only records a fact does not, the design's project terms go into the glossary, and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
+- **`tech-design`** designs are live while they are `draft`, `discussion`, or `ready`, and while `approved` and not yet shipped. This skill leaves them alone. `tech-design` has no status for shipped, so the skill asks you. After the feature ships, each real decision in the Decisions table becomes an ADR, a line that only records a fact does not, the design's project terms go into the glossary, and the folder is offered for deletion. An `abandoned` design leaves one ADR that says what was not built and why.
 
 ## 10. Commands
 

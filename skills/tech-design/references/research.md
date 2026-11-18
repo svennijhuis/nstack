@@ -38,7 +38,7 @@ Give each subagent this, and nothing from the conversation:
 ```markdown
 Question: <the gap question, word for word>
 Gap: <id>, in docs/design/<folder>/gaps.md
-Destination: <the Destination lines from design.md>
+Destination: <the Destination lines from state.md>
 Why it matters: <the decision that waits on this fact>
 Look in: <repo paths, or the kind of outside source>
 Write: docs/design/<folder>/research/<gap-id>-<topic>.md
@@ -78,7 +78,7 @@ Date: <yyyy-mm-dd>
 
 ## Closing a research gap
 
-- When the Answer is backed by a source, the subagent writes the Answer on the row, links the file, and sets `decided`. This is the only gap an agent may close alone.
+- When the Answer is backed by a source, the subagent writes the Answer on the row, links the file, and sets `decided`. Without a new human answer, this is the only way an agent closes a gap besides the cascade.
 - Each line under Still unknown becomes a new gap. A person named there makes it `waiting-on-input`.
 - A decision that waited on the fact stays `open`. Research feeds the advice. The human still decides.
 - Confidence `low` on the Answer does not close the gap. Leave it `research` and say what is missing.

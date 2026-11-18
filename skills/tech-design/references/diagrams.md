@@ -34,7 +34,7 @@ A trigger that fires and a diagram you cannot draw yet is a gap. Add the row.
 ## Rules per diagram
 
 - **Sequence.** One scenario per diagram. Use `autonumber`. Show the failure path with `alt` or `break`: at least timeout or refusal for each outside call. Mark async messages with `-)`.
-- **State.** Start and end with `[*]`. Label each transition with its event and guard. Show the error and terminal states. The twin lists every illegal transition and what happens.
+- **State.** Start and end with `[*]`, which is not a state and has no row in the twin. Label each transition with its event and guard. Show the error and terminal states. The twin lists every illegal transition and what happens.
 - **Entity relationship.** Mark keys with `PK` and `FK`. Every relationship has a cardinality and a label.
 - **Data flow.** Show processes, stores, outside entities, and flows. Each crossing lists protocol, auth, and data classification.
 - **Context.** Every actor from the Actors section appears. Every outside system from Dependencies appears.

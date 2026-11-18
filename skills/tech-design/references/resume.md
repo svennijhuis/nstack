@@ -46,31 +46,33 @@ The human pastes the answer, or drops a file. Then:
 
 1. Save it under `input/<yyyy-mm-dd>-<person>-<gap id>.md`, word for word, with who said it and when.
 2. If it answers the question, write the answer on the row, set `decided`, and clear `waiting on`, `asked`, and `due`.
-3. If it answers part, close what it answers and add a new gap for the rest.
-4. If it raises new questions, add them as gaps.
+3. Close every other gap this answer states in full, by the close pass in Work step 6 of the skill.
+4. If it answers part, close what it answers and add a new gap for the rest.
+5. If it raises new questions, add them as gaps.
 
 An answer the human relays from memory counts. Record it in `input/` with "relayed by <human>".
 
 ## End of every session
 
-Before you stop, in any mode, write state to disk. Nothing may live only in the chat.
+Before you stop, in any mode that edits files, write state to disk. Nothing may live only in the chat.
 
 1. The gap row holds its new status and, when closed, its answer.
 2. `log.md` has one new dated line.
-3. `Updated` in the header is today.
+3. `Updated` in `state.md` is today.
 4. The last thing you say is three lines: what changed, what waits on whom, and the next frontier gap by its question.
 
 Do not commit, switch branch, or push. The person commits the design folder.
 
 ## Start of every work session
 
-1. Read the header, the map, `gaps.md`, and the last five `log.md` lines. Do not read `research/` or `input/` yet.
-2. Check `input/` for files newer than the last log line. Process each as above.
-3. Print the board from [help.md](help.md).
-4. Flag every waiting gap past its `due` date and ask the human once: chase, extend the date, or accept the risk.
-5. Start research subagents for new research gaps, see [research.md](research.md).
-6. Then choose one gap.
+1. Read `state.md`, `design.md`, `gaps.md`, and the last five `log.md` lines. Do not read `research/` or `input/` yet.
+2. An `open` gap with an `owner` that no log line from the last session explains is a stale claim, such as from a batch that stopped early. Ask the human once to clear it.
+3. Check `input/` for files newer than the last log line. Process each as above.
+4. Print the board from [help.md](help.md).
+5. Flag every waiting gap past its `due` date and ask the human once: chase, extend the date, or accept the risk.
+6. Start research subagents for new research gaps, see [research.md](research.md).
+7. Then choose one gap.
 
 ## More than one design
 
-Each design is its own dated folder. Sessions never mix them. When the human gives no name and more than one design is not `committed` or `abandoned`, list them and ask which.
+Each design is its own dated folder. Sessions never mix them. When the human gives no name and more than one design is not `approved` or `abandoned`, list them and ask which.
