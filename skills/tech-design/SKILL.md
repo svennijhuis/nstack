@@ -7,9 +7,11 @@ A technical design developers can build is too big for one session, and most of 
 
 Name the destination first. The destination is that design. It fixes the scope of every gap.
 
-## Two rules that outrank the rest
+## Three rules that outrank the rest
 
 **An unknown is a gap. Never write it as an assumption.** When the design needs a fact or a decision and no source gives it, add a row to `gaps.md`. Do not fill it with a default, a guess, or wording that reads the same under two answers.
+
+**Open a gap only when the answer changes what gets built or its risk.** Behaviour, contract, data, security, cost, or reversibility. Naming, wording, and other choices a builder can change cheaply later are not gaps: pick one, record it (terms go in `glossary.md`), and the human can override. Size sets the depth of required content, never the bar for what counts as a gap.
 
 **An outside system opens its gaps at once.** The moment a system, source, or vendor outside this codebase is named, add its row to Dependencies and one gap per empty field: owner, access, credentials, environments, contract, limits, change notice, proof. See [dependency-contract.md](references/dependency-contract.md). How to connect and how to authenticate are never left for the builder to find out.
 
@@ -109,11 +111,12 @@ The person types `/tech-design`. Read the first word after it.
 | `help` | Help, see [help.md](references/help.md) |
 | `new <name> [types]` | Chart |
 | `<name>` or `<name> grill [gap]` | Work |
+| `<name> batch` | Batch |
 | `<name> status`, `close <gap>`, `drop <gap>` | See [help.md](references/help.md) |
 | `<name> ready` or `<name> ready anyway` | Ready |
 | `<name> committed`, `<name> abandoned` | Set that status, see [help.md](references/help.md) |
 
-Claim one gap per session, then stop. Also close any other open gap whose outcome that answer states in full. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
+Claim one gap per session, then stop. Also close any other open gap whose outcome that answer states in full. `<name> batch` is the exception: it shows every frontier grilling gap at once. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
 
 ### Chart the map
 
@@ -135,10 +138,16 @@ A second `new` for a name that already exists stops. Tell them to resume. Check 
 3. **Resolve it by type.** Read a related row or research file when you need it. On a grilling gap, advice comes before the one question.
 4. **Record the resolution.** Write the answer on the row and set `decided`, or `accepted-risk` when the human accepts the risk you named. With no answer, set `waiting-on-input` and write the question sheet. Advice alone never closes a gap.
 5. **Write it into the design.** Put the result in the section its category names. Draw any diagram the answer now triggers, by [diagrams.md](references/diagrams.md). Add the gist to Decisions so far.
-6. **Update the map.** Add the gaps this answer opens, then fill `blocks`. Apply both rules at the top. Delete fog you can now phrase. Raise the size if a larger one now holds. Close every other open gap whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, add that gist to Decisions so far, and write the result into the section its category names. Do not infer a further answer. Update rows it invalidates.
+6. **Update the map.** Add the gaps this answer opens, then fill `blocks`. Apply the rules at the top. Delete fog you can now phrase. Raise the size if a larger one now holds. Close every other open gap whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, add that gist to Decisions so far, and write the result into the section its category names. Do not infer a further answer. Update rows it invalidates.
 7. **Stop.** Write state. The session is done when that one gap is claimed and either closed or `waiting-on-input`.
 
 Other sessions may edit this folder at the same time.
+
+### Batch
+
+On `<name> batch`, after load and catch up, show every frontier grilling gap at once, numbered. For each, print the question, the recommended option, and one line of why. Research and task gaps are not batched. Plain `<name>` still claims one gap per session.
+
+The human answers in one turn: `ok` accepts every recommendation, or they override or skip by number. Claim each answered gap and close it by Work steps 4 to 6. A skipped gap stays open. Then stop.
 
 ### Ready
 

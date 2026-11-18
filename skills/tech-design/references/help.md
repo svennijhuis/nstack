@@ -1,4 +1,4 @@
-# Help, list, status, close, drop, committed, abandoned
+# Help, list, status, batch, close, drop, committed, abandoned
 
 These modes let the human see where a design stands and steer it. Help, list, and status change no file.
 
@@ -11,6 +11,7 @@ On `/tech-design help`, print this card and stop.
 /tech-design new <name> [types]     chart a new design. types: web api data integration
 /tech-design <name>                 resume: show the board, then work one gap
 /tech-design <name> grill [gap]     work one gap by question and answer
+/tech-design <name> batch           every frontier grilling gap at once
 /tech-design <name> status          the board and what you need to do. changes nothing
 /tech-design <name> close <gap>     you give the answer, the gap closes
 /tech-design <name> drop <gap>      move a gap out of scope, with a reason
@@ -67,6 +68,14 @@ Next: /tech-design <name> grill G-007
 ```
 
 End with one line saying how far ready is: the count of gaps and sections still to close.
+
+## Batch
+
+On `/tech-design <name> batch`, after load and catch up, show every frontier grilling gap at once, numbered. For each, print the question, the recommended option, and one line of why. Research and task gaps are not batched.
+
+The human answers in one turn: `ok` accepts every recommendation, or they override or skip by number. Claim each answered gap and close it by Work steps 4 to 6 in the skill. A skipped gap stays open. Then stop.
+
+Plain `/tech-design <name>` still claims one gap per session.
 
 ## Close
 

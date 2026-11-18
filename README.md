@@ -7,7 +7,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 
 | Skill | Say | What it does |
 |---|---|---|
-| `tech-design` | "tech design" | Charts a technical design as a shared map, finds every gap, and closes them one per session until a developer or an agent can build from it without guessing. |
+| `tech-design` | "tech design" | Charts a technical design as a shared map, finds every gap, and closes them one per session, or in a batch of frontier grilling gaps, until a developer or an agent can build from it without guessing. |
 | `setup-home-repo` | "set up a home repo" | Creates, updates, audits, and cleans up one repo that holds your shared skills, steering files, MCP servers, and hooks. Local only or git, and how it hands over to `setup-agents-md`: [README](docs/skills/setup-home-repo/README.md). |
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](docs/skills/setup-agents-md/README.md). |
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](docs/skills/align-code/README.md). |
@@ -35,7 +35,7 @@ flowchart TD
 A design from start to shipped:
 
 1. `/tech-design new <name>` charts the design and lists its gaps.
-2. `/tech-design <name>` claims one gap per session, and closes any other open gap whose outcome that answer states in full.
+2. `/tech-design <name>` claims one gap per session, and closes any other open gap whose outcome that answer states in full. `/tech-design <name> batch` is the exception: it shows every frontier grilling gap at once.
 3. `/tech-design <name> ready` runs the gate and writes the tickets.
 4. `/tech-design <name> committed` records the sign-off. Builders start.
 5. After the feature ships, `/setup-agents-md` in the repo that holds the
