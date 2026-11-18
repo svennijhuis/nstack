@@ -79,10 +79,10 @@ On `/tech-design <name> close <gap>`, the human closes a gap directly.
 
 1. Find the row. If the words match more than one, list them and ask which.
 2. If the human gave no answer with the command, ask for it once.
-3. Write the answer on the row. Set `decided`. Clear the waiting fields.
+3. Write the answer on the row. Set `decided`. Clear `owner` and the waiting fields.
 4. Write the result into the `design.md` section its category names, and add the gist to Decisions.
 5. Add any gap the answer opens.
-6. Close every other gap in `open` or `waiting-on-input` whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, clear `owner`, `waiting on`, `asked`, and `due`, move its question sheet from Open to Answered when it has one, add that gist to Decisions, and write the result into the section its category names. Do not infer a further answer.
+6. Close every other gap in `open` or `waiting-on-input` whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, clear `owner`, `waiting on`, `asked`, and `due`, move its question sheet from Open to Answered when it has one, add that gist to Decisions, and write the result into the section its category names. Remove its id from every other row's `blocks`. Do not infer a further answer.
 7. Log one line. Stop.
 
 Only the human's own answer closes a gap this way. Do not fill it in for them.

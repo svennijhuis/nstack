@@ -18,12 +18,12 @@ Size only goes up. When a session finds a `medium` or `big` line holds, raise `S
 
 | | `small` | `medium` | `big` |
 | --- | --- | --- | --- |
-| `design.md` budget | 150 lines | 500 lines | 1200 lines |
+| `design.md` budget | 300 lines | 600 lines | 1200 lines |
 | `n/a: <reason>` allowed in | Actors, Failure modes, Dependencies, Cross-cutting, Design subsections | Cross-cutting subsections, Dependencies when no outside system is named, and Design subsections whose diagram trigger did not fire | Same as medium |
 | Diagrams | Only those whose trigger fires | Context, plus those whose trigger fires | Medium, plus deployment and one failure sequence per main flow |
 | Alternatives | "do nothing" and one other | "do nothing" and two others | Same, each with a cost |
 | Rollout and rollback | One line | Steps to enable and to roll back | The six rollout questions below |
-| Approvers | One | One per team that changes | One per team, plus security when data is sensitive |
+| Approvers, named in Sign-off | One | One per team that changes | One per team, plus security when data is sensitive |
 
 A page limit from the human sets the budget for a summary document only. The summary links `gaps.md` and `research/`, names each open gap by its question and owner, and does not lower the size.
 
@@ -46,7 +46,7 @@ The person may name types at chart. Each type adds requirements on top of the si
 
 | Type | Adds |
 | --- | --- |
-| `api` | Under `### Boundaries and contracts`: a table of every endpoint with method, path, auth level, request, response, and each error with its status. One sequence diagram per main flow, with the auth level on each arrow. Include an endpoint only when a source lists it or a gap decided it. |
+| `api` | Under `### Boundaries and contracts`: a table of every endpoint with method, path (a naming choice, not a gap), auth level, request, response, and each error with its status. One sequence diagram per main flow, with the auth level on each arrow. Include an endpoint only when a source lists it or a gap decided it. |
 | `integration` | A dependency contract row per outside system. One sequence diagram per main flow, with an error path. A failure mode row per outside call: timeout, bad response, duplicate, out of order. |
 | `data` | An ER diagram. Under `### Data model`: owner, retention, and classification per entity. A migration plan with a way back under `### Rollout and rollback`. |
 | `web` | A screen flow diagram. Under `### Flows`: each screen, its states (empty, loading, error, full), and who may see it. |

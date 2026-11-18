@@ -8,7 +8,7 @@ Every design has the same folder, the same files, and the same sections in the s
 
 | Entry | Holds | Created |
 | --- | --- | --- |
-| `design.md` | The design, readable alone by the business and the lead developer | chart |
+| `design.md` | The design, readable alone by every approver | chart |
 | `state.md` | Status, size, types, dates, destination, and notes. Working state, not for the business | chart |
 | `gaps.md` | One row per gap | chart |
 | `glossary.md` | One meaning per term | chart |
@@ -21,13 +21,12 @@ Create the three folders empty at chart, each with a `.gitkeep`.
 
 ## Header
 
-`design.md` opens with the title, then the owner and approvers. Nothing else: no status, size, skills, or dates of work.
+`design.md` opens with the title, then the owner. The approvers are the rows of Sign-off. Nothing else: no status, size, skills, or dates of work.
 
 ```markdown
 # <name>
 
 Owner: <person driving the design>
-Approvers: <people who sign off>
 ```
 
 `state.md` holds the working state:
@@ -74,8 +73,8 @@ Set `Updated` on every session that changes a file. At ready with accepted open 
 | 11 | `## Cross-cutting` | `### Security`, `### Privacy`, `### Observability`, `### Rollout and rollback`, `### Testing` | Each has content or `n/a: <reason>` |
 | 12 | `## Assumptions and risks` | Table: statement, owner, consequence if wrong, how it is checked | Every row has an owner |
 | 13 | `## Acceptance criteria` | One table row per criterion, see below | Every requirement is cited at least once |
-| 14 | `## Open questions` | Table: question, why open, possible answers, risk if open, follow-up action, owner, due. Or `None.` While the design is in `discussion`, a row may leave Follow-up, Owner, and Due as `-`. At `ready`, every cell is filled. At ready anyway, one row per accepted open question | Reads `None.` at ready |
-| 15 | `## Sign-off` | Table: approver, date, verdict | Before `approved`, each verdict reads `pending`. Filled at `approved` |
+| 14 | `## Open questions` | Table: question, why open, possible answers, risk if open, follow-up action, owner, due. Or `None.` Holds fog lines and, at ready anyway, accepted rows. An open gap is not listed here. While the design is in `discussion`, a row may leave Follow-up, Owner, and Due as `-`. At `ready`, every cell is filled. At ready anyway, one row per accepted open question | Reads `None.` at ready |
+| 15 | `## Sign-off` | Table: approver, date, verdict. Rows are filled at chart from the approvers the human names, with verdict `pending` | Before `approved`, each verdict reads `pending`. Filled at `approved` |
 
 `design.md` stands alone for a business reader: no gap ids, no links or paths to local files, no references to `input/` or `research/`. Name systems and symbols in words. Do not paste code. Prefer tables for anything with the same fields on every item. Keep answers on the gap row and research in `research/`. `design.md` holds the result, not the discussion.
 
@@ -84,12 +83,12 @@ Set `Updated` on every session that changes a file. At ready with accepted open 
 One table. One row per requirement.
 
 ```markdown
-| ID | When | The system MUST | Number source |
+| ID | When | Response, starting with MUST | Number source |
 | --- | --- | --- | --- |
-| R-001 | WHEN <trigger> | <response> | decided |
-| R-002 | WHILE <state> | <response> | |
-| R-003 | IF <unwanted condition> | <response> | |
-| R-004 | Always | <response> | |
+| R-001 | WHEN <trigger> | MUST <response> | decided |
+| R-002 | WHILE <state> | MUST <response> | |
+| R-003 | IF <unwanted condition> | MUST <response> | |
+| R-004 | Always | MUST <response> | |
 ```
 
 One requirement states one behaviour. Write MUST in capitals. Do not write "should". A requirement with a number fills `Number source`: `measured`, `decided`, or `guessed`. A `guessed` number is a gap until a person decides it or research measures it.
