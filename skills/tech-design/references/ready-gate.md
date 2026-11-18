@@ -66,11 +66,11 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 
 1. Run the whole gate first and print it.
 2. Checks 1 to 5 and 10 to 28 still stop ready. Only the gap checks 6, 8, and 9 can be accepted.
-3. For each open, research, or waiting gap, and each fog line, show: the question, what a builder would have to guess, and what goes wrong if the guess is wrong.
+3. For each open, research, or waiting gap, and each fog line, show: the question, what a builder would have to guess, what goes wrong if the guess is wrong, the possible answers (the options from the advice or research), and the follow-up action that would settle it, with who does it.
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human as owner, today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.
 6. A gap they do not accept stops ready.
-7. Add `Open at ready: <n>` to the header. Add a section `## Open at ready` after Sign-off: one line per accepted gap with the question, the risk, the owner, and the date.
+7. Add `Open at ready: <n>` to the header. Add a section `## Open at ready` after Sign-off, written for a business reader like the rest of `design.md`, with no gap ids. One entry per accepted gap: the open question or undecided decision in words, why it is not decided, the possible answers, the risk if it stays open, the follow-up action needed with its owner and date, and who accepted it.
 
 ## After the gate passes
 
