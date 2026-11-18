@@ -33,12 +33,11 @@ First step in both modes, before any companion skill. Triage is the main cost co
 
 Answer these in order. The first match decides.
 
-Before the questions: an existing model with `status: aligned`, whose transitions the diff or the plan does not touch, is `skip`. Name the model in the reason.
-
 1. Does the change write stored state, or read a resource that has writes? No: `skip`. This covers pure UI, static or pure lookup data, formatting, copy, and renames with no behavior change.
 2. Does it add or change a state machine, a concurrency path, a retry or timeout, an ordering rule, or a multi-step flow? Yes: `full`.
 3. Does a second writer, a background job, or a cache touch the same fields or status the change reads or writes? Yes: `full`. Name it in the reason. A second writer that sets only other fields, with a cache that does not hold these fields, does not count: go to 4. A writer with no caller does not count either, but name it in the reason.
-4. Otherwise: `partial`. Check only the invariants the diff or the plan touches.
+4. Does the change write stored state, is there an existing model with `status: aligned`, and does the diff or the plan leave every state, guard, written field, written status, and who may take a step unchanged? Yes: `skip`. Name the model in the reason. A read of a resource that has writes is not this question.
+5. Otherwise: `partial`. Check only the invariants the diff or the plan touches.
    - A new create endpoint checks idempotent retry, not the whole machine.
    - A single-field update checks lost update and authorization.
    - A read on a resource that has writes checks that no stale or leftover data is returned (cache after update or delete, a soft-deleted or half-written row visible, a read during an in-flight multi-step write).
@@ -56,7 +55,7 @@ Use a cheap subagent (the smallest model tier available) for mechanical work onl
 
 Delegate:
 
-- **Triage facts.** Give the subagent the diff and the resource name. It returns a short list: every file that writes the resource, every job, cron, queue consumer, or cache that touches it, whether anything calls it, the fields each writer sets (a writer that applies an arbitrary patch counts as setting every field), and which of the triage questions 1 to 3 the facts bear on. It does not return a level.
+- **Triage facts.** Give the subagent the diff or the plan, and the resource name. It returns a short list: every file that writes the resource, every job, cron, queue consumer, or cache that touches it, whether anything calls it, the fields each writer sets (a writer that applies an arbitrary patch counts as setting every field), and which of the triage questions 1 to 3 the facts bear on. It does not return a level.
 - **Replay.** One subagent per broken path. It runs the steps against the code or a test and returns the exact steps run, the output, and `reproduces` or `does not reproduce`.
 - **Model against code.** It returns each place the model and the code differ, with file and line. It does not say which one is wrong.
 
@@ -66,7 +65,7 @@ Rules:
 
 - A subagent result without its evidence (files, steps, output) does not count. Ask again or do the step yourself.
 - Check every `does not reproduce` yourself before you change the model: rerun the steps. A cheap subagent may have run them wrong.
-- If a subagent finds a writer, job, or cache the diff did not mention, that fact can only raise the triage level, never lower it.
+- If a subagent finds a writer, job, or cache the diff or the plan did not mention, that fact can only raise the triage level, never lower it.
 - Run subagents for different paths in parallel. If no subagent tool exists, do the same steps yourself.
 
 ## Companion skills
@@ -93,17 +92,17 @@ Pass `statechart` `--out` a new empty folder in the scratch folder, because the 
 
 ### Before
 
-Triage first. On `skip`, stop. When `SPEC.tla` is already in the folder and the triage is `partial`, edit `SPEC.tla` and `invariants.md` so they include only the invariants the diff or the plan touches, then call `statechart` on that spec. Do not write a new spec from scratch. When the file is missing, or the triage is `full`, call `statechart` and write a TLA+ spec in a scratch folder outside the repo. Do not call `create-formal-verification-skill` or `maintain-formal-verification-skill`. Include every default invariant the triage keeps. Copy the model files and `chart.mmd` (when `statechart` writes it) into the folder, plus `invariants.md`, `planned-tests.md`, and `omitted.md`. Write `status: intent` in `triage.md` only when no code for this resource exists yet. If code already exists, do not change the status in `before`.
+Triage first. On `skip`, stop. When `SPEC.tla` is already in the folder and the triage is `partial`, copy the spec to the scratch folder. Edit that copy so this run checks only the invariants the diff or the plan touches. Edit the stored spec only where those transitions changed. Do not delete other invariants from the stored spec, and do not write a new spec from scratch. Call `statechart` on the copy. Append every invariant this run does not check to `omitted.md`. When the file is missing, or the triage is `full`, call `statechart` and write a TLA+ spec in a scratch folder outside the repo. Do not call `create-formal-verification-skill` or `maintain-formal-verification-skill`. Include every default invariant the triage keeps. Copy the model files and `chart.mmd` (when `statechart` writes it) into the folder, plus `invariants.md`, `planned-tests.md`, and `omitted.md`. Write `status: intent` in `triage.md` only when no code for this resource exists yet. If code already exists, do not change the status in `before`.
 
 ### After
 
 After does not require a `before` run. Triage first. On `skip`, stop. If `SPEC.tla` exists, start from it.
 
-If a project-local verify skill names this resource, call `maintain-formal-verification-skill` and do not call create. A skill for a different resource does not count. If none does, call `create-formal-verification-skill` once. Name this resource and one invariant this triage keeps. Do not call create again in this run, and do not call maintain in this run. Write the other invariants to `invariants.md` as not checked yet.
+If a project-local verify skill names this resource, call `maintain-formal-verification-skill` and name this resource. Do not call create. A skill for a different resource does not count. If none does, call `create-formal-verification-skill` once. Name this resource and one invariant this triage keeps. Do not call create again in this run, and do not call maintain in this run. Append the other invariants to `omitted.md` as not checked yet.
 
-If the check is TLA+, rerun `statechart` in a scratch folder, scoped to the triage, and copy the same files as `before`. If it is not TLA+, do not call `statechart`.
+If the check is TLA+, call `statechart` with `--out` set to a new empty folder in the scratch folder. If `SPEC.tla` is missing, write it in that scratch folder first, with the invariants this triage keeps. If it exists, check those invariants on a scratch copy and do not delete the others from the stored spec. Copy `SPEC.tla`, `SPEC.cfg`, `view.ts`, and `chart.mmd` when `statechart` writes one. If the check is not TLA+, do not call `statechart`.
 
-At the start of a non-skip `after`, if the status is missing, or is `aligned` and the diff or the plan touches the model's transitions, set `status: drifted` before you compare. List each difference between the model and the code, and decide for each one whether the code or the model is wrong. A code bug is a finding. A model gap is fixed in the model. When the model and the code agree, set `status: aligned`.
+At the start of a non-skip `after`, set `status: drifted` when the status is missing or `intent`, or when it is `aligned` and the diff or the plan changes a state, a guard, a written field or status, or who may take a step. List each difference between the model and the code, and decide for each one whether the code or the model is wrong. A code bug is a finding. A model gap is fixed in the model. When the model and the code agree, set `status: aligned`. When a code bug remains, leave `status: drifted`.
 
 Replay each broken path against the code. If a path does not reproduce, the model is wrong: fix the model or the verify skill and rerun before any test. Stop if you cannot show the model is right. If a path does reproduce, add a regression test beside the resource's existing tests. Write the test file and do not commit it unless the person asks. This outranks maintain's rule against adding a repro to product code. If the repo has no test runner, put the steps in `report.md` and do not claim a test exists.
 
