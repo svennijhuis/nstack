@@ -24,7 +24,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 
 6. No row in `gaps.md` is `open`, `research`, or `waiting-on-input`.
 7. Every `accepted-risk` row has an owner and names the risk.
-8. Open questions reads `None.`
+8. Open questions reads `None.` On `ready anyway` only, it may hold rows the human accepted.
 9. The sweep in [gap-sweep.md](gap-sweep.md), run again against the finished document, finds no new gap.
 
 ### Wording
