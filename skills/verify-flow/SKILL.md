@@ -3,7 +3,7 @@ name: verify-flow
 description: Use when you plan or write code that creates, updates, or deletes stored state, changes a status, or runs a flow with shared state, retries, timeouts, ordering, or concurrency, or when the user asks to verify a flow. Models the resource, checks it against the code, and turns broken paths into tests. Run `before` on the design or plan, `after` on the code.
 ---
 
-Model one resource at a time and check it. Call the pinned companion skills by name. Do not copy their text. If one is not installed, say so once, name `/setup-nstack-skills`, and do that step by the rules in this skill.
+Model one resource at a time and check it. Call the pinned companion skills by name. Do not copy their text. If one is not installed, say so once, name `/setup-nstack-skills`, and stop that step until it is installed.
 
 ## When to run
 
@@ -23,7 +23,7 @@ Default invariants to check:
 
 **Label states in the reader's language.**
 
-**Run `statechart` work in a scratch folder outside the repo.** Copy only the required outputs into the output folder.
+**Run `statechart` work in a scratch folder outside the repo.** Copy only the files named under Output into `docs/verify-flow/<resource>/`.
 
 **One resource at a time.** Finish it before you start another.
 
@@ -48,7 +48,7 @@ Bias and limits:
 - `full` on more than one resource: triage each resource alone and run them one at a time.
 - An existing model with status `aligned` and a diff that does not touch its transitions is `skip`, with the model named in the reason.
 
-Log one line: `triage: <skip|partial|full> | <resource> | <reason, with the deciding question number>`. In `after`, if the triage differs from the one logged in `before`, say why in the report.
+Write one line to `triage.md`: `triage: <skip|partial|full> | <resource> | <reason, with the deciding question number>`. In `after`, if the triage differs from the one in `triage.md` from `before`, say why in the report.
 
 ## Delegation
 
@@ -71,20 +71,40 @@ Rules:
 
 ## Companion skills
 
-Call each by its exact name with the Skill tool: `create-formal-verification-skill`, `maintain-formal-verification-skill`, `statechart`.
+Call a companion by its exact name with the Skill tool: `create-formal-verification-skill`, `maintain-formal-verification-skill`, `statechart`. The mode sections say which one to call. The companions are marked manual-only in their own frontmatter. If the Skill tool refuses one, read its pinned `SKILL.md` (the link is in `external-skills.md`) and follow it. Do not copy its text into this skill.
 
 ## Invocation
 
-The person types `/verify-flow <mode>`, or you start it yourself when the description matches: `before` once a design or plan for such a change is agreed, `after` once the code is written and before you hand it over. The mode is `before` or `after`. If the person gives no mode and the context does not make it clear, say the two modes and stop. When you start it yourself, the triage runs first, so a change that needs nothing ends at `skip` after one line.
+The person types `/verify-flow <before|after> <resource>`. `<resource>` is the entity, in kebab-case. You can also start it yourself when the description matches: `before` once a design or plan for such a change is agreed, `after` once the code is written and before you hand it over. Pick the resource yourself then. If the mode or the resource is missing when the person types it, say that form and stop. When you start it yourself, the triage runs first, so a change that needs nothing ends at `skip` after one line.
 
-Write into the design or plan folder when one exists. Otherwise write into `docs/verify-flow/<resource>/`.
+## Output
+
+Write only under `docs/verify-flow/<resource>/`. Do not write into `docs/design/`. Files:
+
+- `triage.md`: the triage line, then `status: intent`, `status: aligned`, or `status: drifted`.
+- `SPEC.tla`, `SPEC.cfg`, and `view.ts`: the model, copied out of the scratch folder.
+- `chart.mmd`: only when `statechart` writes one. If it writes none, say that in `report.md`.
+- `invariants.md`: the invariants this triage includes, each as a requirement.
+- `omitted.md`: what the model leaves out.
+- `planned-tests.md`: the shortest broken paths (`before`).
+- `report.md`: the `after` report.
+
+Leave `tlc.out` in the scratch folder. The output folder in the `statechart` rule is this folder.
 
 ### Before
 
-Triage first. On `skip`, stop. Otherwise call `create-formal-verification-skill`, then `statechart`, scoped to the triage. Write into the folder: the model, a mermaid chart, the invariants as requirements, the shortest paths to broken invariants as planned test cases, and an explicit list of what the model leaves out. Put `status: intent` at the top of the model. The model describes what the code should do, so no code exists yet to match it.
+Triage first. On `skip`, stop. When `SPEC.tla` is already in the folder and the triage is `partial`, check only the invariants the diff touches. When the file is missing, or the triage is `full`, call `statechart` and write a TLA+ spec in a scratch folder outside the repo. Do not call `create-formal-verification-skill` or `maintain-formal-verification-skill`. Include every default invariant the triage keeps. Copy the model files and `chart.mmd` (when `statechart` writes it) into the folder, plus `invariants.md`, `planned-tests.md`, and `omitted.md`. Write `status: intent` in `triage.md`: the model describes what the code should do, and no code exists yet to match it.
 
 ### After
 
-After works alone. Triage first. On `skip`, stop. Reuse the model from `before` when it exists. If it does not, build it from the real code with `create-formal-verification-skill`, then continue.
+After does not require a `before` run. Triage first. On `skip`, stop. If `SPEC.tla` exists, start from it.
 
-Read the `status` of the `before` model: `intent` or `drifted` means it may differ from the code. List each difference between the model and the code, and decide for each one whether the code or the model is wrong. A code bug becomes a finding. A model gap is fixed in the model. Then call `maintain-formal-verification-skill` so the model matches the real code, set `status: aligned`, and rerun `statechart`, scoped to the triage. Replay each broken path against the code. A path that does not reproduce means the model is wrong until proven otherwise. Each path that reproduces becomes a regression test. If the code changes later and the model is not rerun, set `status: drifted`. Write a short report for the PR body: the triage line, the model status before and after, the differences found, and the regression tests added.
+If a project-local verify skill for this resource exists, call `maintain-formal-verification-skill`. If it does not, call `create-formal-verification-skill` and do not call maintain in this run. One create call checks one property: name it, and repeat for each default invariant the triage keeps.
+
+If the check is TLA+, rerun `statechart` in a scratch folder, scoped to the triage, and copy the same files as `before`. If it is not TLA+, do not call `statechart`.
+
+If the model has `status: intent` or `status: drifted`, list each difference between the model and the code first, and decide for each one whether the code or the model is wrong. A code bug is a finding. A model gap is fixed in the model. When the model and the code agree, set `status: aligned`. If the code changes later and the model is not rerun, set `status: drifted`.
+
+Replay each broken path against the code. If a path does not reproduce, the model is wrong: fix the model or the verify skill and rerun before any test. Stop if you cannot show the model is right. If a path does reproduce, add a regression test beside the resource's existing tests. Write the test file and do not commit it unless the person asks. This outranks maintain's rule against adding a repro to product code. If the repo has no test runner, put the steps in `report.md` and do not claim a test exists.
+
+Write `report.md`: the triage line, the model status before and after, the outcome (`in sync`, `updated`, `bug`, or `blocked`), the differences found, each broken path, and what is still left out. If a PR is open, use that text as the PR body.

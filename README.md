@@ -47,7 +47,7 @@ A design from start to shipped:
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
   each child repo that points home. `setup-agents-md` owns the rest of a repo's
   `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
-  `align-code` owns `docs/align/`.
+  `align-code` owns `docs/align/`. `verify-flow` owns `docs/verify-flow/`.
 - **One branch per repo.** The two setup skills put every change to a repo on
   one local branch, after you approve the plan. You review and push it.
   `tech-design` writes only its design folder and commits nothing. You commit
