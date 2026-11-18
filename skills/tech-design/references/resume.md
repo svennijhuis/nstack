@@ -75,4 +75,4 @@ Do not commit, switch branch, or push. The person commits the design folder.
 
 ## More than one design
 
-Each design is its own dated folder. Sessions never mix them. When the human gives no name and more than one design is not `committed` or `abandoned`, list them and ask which.
+Each design is its own dated folder. Sessions never mix them. When the human gives no name and more than one design is not `approved` or `abandoned`, list them and ask which.

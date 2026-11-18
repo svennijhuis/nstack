@@ -41,7 +41,7 @@
 | --- | --- |
 | A doc that explains how the code works | medium |
 | A spec, PRD, or plan for a feature that has shipped | medium |
-| A `tech-design` folder whose status is `abandoned`, or `committed` when the person says the feature has shipped | medium |
+| A `tech-design` folder whose status is `abandoned`, or `approved` when the person says the feature has shipped | medium |
 | A doc or a code standards line that says something a type, a test, or a lint rule could enforce. The Fix names which one. | low |
 | A topic file nothing points at | low |
 | A pasted code snippet that differs from the code now | medium |
@@ -70,7 +70,7 @@ Only when the target is in a home repo setup. On the home repo's own `AGENTS.md`
 | A child repo `AGENTS.md` that repeats the home repo's text | low |
 | A rule in the home repo `AGENTS.md` for only one child repo | medium |
 | A `tech-design` folder in the home repo about one child repo. It belongs in that repo. | low |
-| An abandoned `tech-design` folder in the home repo, or a `committed` one the person says has shipped, whose decisions are not ADRs in the child repos | medium |
+| An abandoned `tech-design` folder in the home repo, or a `approved` one the person says has shipped, whose decisions are not ADRs in the child repos | medium |
 
 ## Output
 

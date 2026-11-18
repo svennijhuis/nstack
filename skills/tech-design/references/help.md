@@ -1,4 +1,4 @@
-# Help, list, status, batch, close, drop, committed, abandoned
+# Help, list, status, batch, close, drop, approved, abandoned
 
 These modes let the human see where a design stands and steer it. Help, list, and status change no file.
 
@@ -17,7 +17,7 @@ On `/tech-design help`, print this card and stop.
 /tech-design <name> drop <gap>      move a gap out of scope, with a reason
 /tech-design <name> ready           strict gate. refuses while anything is open
 /tech-design <name> ready anyway    ready with open gaps you accept one by one
-/tech-design <name> committed       builders follow this design now. only from ready
+/tech-design <name> approved       builders follow this design now. only from ready
 /tech-design <name> abandoned       the work stopped, with a reason
 /tech-design help                   this card
 ```
@@ -97,15 +97,15 @@ On `/tech-design <name> drop <gap>`:
 
 Drop a gap only when it sits past the destination. A gap that is in scope but unanswered is not dropped. It is closed, or accepted as a risk at ready.
 
-## Committed and abandoned
+## Approved and abandoned
 
 Only the human's own command sets these two. Never set one yourself.
 
-On `/tech-design <name> committed`:
+On `/tech-design <name> approved`:
 
 1. If the status is not `ready`, say what it is and stop.
 2. Ask for each approver's verdict and date. Fill Sign-off.
-3. Set `Status: committed` and `Updated`. Log one line. Stop.
+3. Set `Status: approved` and `Updated`. Log one line. Stop.
 
 On `/tech-design <name> abandoned`, from any status:
 

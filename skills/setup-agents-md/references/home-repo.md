@@ -31,7 +31,7 @@ So the home repo may hold open designs. It never holds a shipped design or an AD
 
 ### A shipped design in the home repo
 
-A run on the home repo itself, and a run with `all`, handles each design in the home `docs/design/` that is `abandoned`, or `committed` and shipped by the person's word.
+A run on the home repo itself, and a run with `all`, handles each design in the home `docs/design/` that is `abandoned`, or `approved` and shipped by the person's word.
 
 1. Ask which repos the design changed and which one owns the change, with the repos its text names as the recommended answer. For an `abandoned` design, ask which repo would have owned it: the one ADR goes there.
 2. In each of those repos, write the ADRs by the cross-repo rule above, as that repo's own plan, on that repo's branch, after its own yes.

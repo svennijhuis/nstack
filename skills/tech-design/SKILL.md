@@ -31,7 +31,7 @@ Every design has the same folder, the same files, and the same 15 sections in th
 
 `design.md` is the spec. It opens with the Summary, so the business reader gets the point first. Its header carries only the owner and approvers. `state.md` carries the status, size, types, dates, destination, and notes. `gaps.md` holds the gaps. Each closed gap is one row under Decisions. The answer stays on the row, and the result is written into the section its category names.
 
-The status words are `draft`, `discussion`, `ready`, `committed`, and `abandoned`. `draft` is the new folder. `discussion` means gaps are still open. `ready` means the gate passed. `committed` means builders follow this design. `abandoned` means the work stopped.
+The status words are `draft`, `discussion`, `ready`, `approved`, and `abandoned`. `draft` is the new folder. `discussion` means gaps are still open. `ready` means the gate passed. `approved` means builders follow this design. `abandoned` means the work stopped.
 
 **`design.md` stands alone.** A business reader with no repo access must be able to read it. It holds flows, decisions, and technical decisions. It has no gap ids, no links or paths to local files, no `input/` or `research/` references, and no process words such as gap, session, or chart. Name systems, components, and symbols in words. Do not paste code. Say each fact once, in the section that owns it, and refer to that section by name. Restate only where the reader could not follow without it. Gap ids, sources, and links live in `gaps.md`, `research/`, and `log.md`. Read dates from the system clock.
 
@@ -86,7 +86,7 @@ The person types `/tech-design`. Read the first word after it.
 | `<name> batch` | Batch |
 | `<name> status`, `close <gap>`, `drop <gap>` | See [help.md](references/help.md) |
 | `<name> ready` or `<name> ready anyway` | Ready |
-| `<name> committed`, `<name> abandoned` | Set that status, see [help.md](references/help.md) |
+| `<name> approved`, `<name> abandoned` | Set that status, see [help.md](references/help.md) |
 
 Claim one gap per session, then stop. Also close any other `open` or `waiting-on-input` gap whose outcome that answer states in full. `<name> batch` is the exception: it claims and closes every answered frontier grilling gap in that turn. Research gaps run beside it. Chart and ready close no gap. Every session ends by writing state to disk, see [resume.md](references/resume.md).
 
@@ -105,7 +105,7 @@ A second `new` for a name that already exists stops. Tell them to resume. Check 
 
 ### Work through the map
 
-1. **Load and catch up** by [resume.md](references/resume.md): read `state.md` and `design.md`, take in new files under `input/`, print the board, flag overdue gaps, start new research. When no design of that name is here and the working directory's `AGENTS.md` has a `## Repos` section, look in the repos it points at. If it is in one, name that repo, tell the human to run the skill from there, and stop. If the status is `ready`, `committed`, or `abandoned`, say so and stop.
+1. **Load and catch up** by [resume.md](references/resume.md): read `state.md` and `design.md`, take in new files under `input/`, print the board, flag overdue gaps, start new research. When no design of that name is here and the working directory's `AGENTS.md` has a `## Repos` section, look in the repos it points at. If it is in one, name that repo, tell the human to run the skill from there, and stop. If the status is `ready`, `approved`, or `abandoned`, say so and stop.
 2. **Choose the gap and claim it.** Use the one the person named. Otherwise take the first frontier gap. Set `owner` before any work.
 3. **Resolve it by type.** Read a related row or research file when you need it. On a grilling gap, advice comes before the one question.
 4. **Record the resolution.** Write the answer on the row and set `decided`, or `accepted-risk` when the human accepts the risk you named. With no answer, set `waiting-on-input` and write the question sheet. Advice alone never closes a gap.

@@ -75,7 +75,7 @@ Set `Updated` on every session that changes a file. At ready with accepted open 
 | 12 | `## Assumptions and risks` | Table: statement, owner, consequence if wrong, how it is checked | Every row has an owner |
 | 13 | `## Acceptance criteria` | One table row per criterion, see below | Every requirement is cited at least once |
 | 14 | `## Open questions` | Table: question, why open, possible answers, risk if open, follow-up action, owner, due. Or `None.` While the design is in `discussion`, a row may leave Follow-up, Owner, and Due as `-`. At `ready`, every cell is filled. At ready anyway, one row per accepted open question | Reads `None.` at ready |
-| 15 | `## Sign-off` | Table: approver, date, verdict | Before `committed`, each verdict reads `pending`. Filled at `committed` |
+| 15 | `## Sign-off` | Table: approver, date, verdict | Before `approved`, each verdict reads `pending`. Filled at `approved` |
 
 `design.md` stands alone for a business reader: no gap ids, no links or paths to local files, no references to `input/` or `research/`. Name systems and symbols in words. Do not paste code. Prefer tables for anything with the same fields on every item. Keep answers on the gap row and research in `research/`. `design.md` holds the result, not the discussion.
 
