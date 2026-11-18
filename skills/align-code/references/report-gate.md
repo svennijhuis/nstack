@@ -14,7 +14,7 @@ Proves every area has a standard and the report can be trusted. Changes no code.
 
 1. `align.md`, `gaps.md`, and `log.md` exist. Every file a gap row links to exists.
 2. Every header field has a value.
-3. Every area has its section. None is blank.
+3. Every area on the Areas list in `align.md` has its section. None is blank. Every seed area in [survey.md](survey.md) is on that list as `- <Area>: <Ask>` (Ask copied from the seed table) or `- <Area>: n/a: <reason>`.
 4. No gap is `open`, `research`, or `waiting-on-input`.
 5. Every `accepted-risk` gap has an owner and names the risk.
 6. Not yet specified is `None.`
@@ -22,10 +22,10 @@ Proves every area has a standard and the report can be trusted. Changes no code.
 
 ### Standards
 
-8. Every section is `consistent`, `n/a` with a reason, or a standard with every field.
+8. Every section is `n/a` with a reason, `consistent`, one or more standard blocks with every field, or only `Accepted risk: <ids>`. A `consistent` or standard section also ends with `Accepted risk: <ids>` when the area has any `accepted-risk` gap.
 9. Every exemplar exists in the code. `none` only for a rule of absence, such as comments.
 10. Every standard cites a source.
-11. No standard changes behavior, a public API, schema, config name, or UI.
+11. No standard changes a public API, schema, config name, or UI, and none changes behavior unless its gap answer starts with `bug fix:`.
 12. No two standards contradict. Compare every pair. Print each pair that conflicts.
 13. Every file under `Changes` is in exactly one standard.
 14. No `TBD`, `TODO`, `???`, or unfilled `<...>`.

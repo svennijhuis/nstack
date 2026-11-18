@@ -3,15 +3,15 @@ name: align-code
 description: Use when the user wants to align a codebase on one set of code standards and principles, find where the code does the same thing in different ways, and decide which way wins.
 ---
 
-Chart one standard per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap per session, end with a report, then rewrite the code one standard at a time. Align the code to the standards. Nothing more.
+Chart one or more standards per area in `docs/align/<yyyy-mm-dd>-<name>/`, close one gap per session, end with a report, then rewrite the code one standard at a time. Align the code to the standards. Nothing more.
 
-**Destination:** one decided standard and one exemplar per area, a report of the files that do not match, and the code rewritten to match.
+**Destination:** one or more decided standards per area, each with one exemplar, a report of the files that do not match, and the code rewritten to match.
 
 ## Rules
 
 - **Read only until aligned.** Before `aligned`, write only the align folder. Code changes only in `apply`, on a local branch, after a yes. Never push.
 - **The majority does not win.** Count each variant, then judge it by [Judging](#judging). An anti-pattern is bad even when it is everywhere.
-- **No breaking changes.** A standard never changes behavior, a public API, schema, config name, or UI. Such a change goes to Out of scope.
+- **No breaking changes.** A standard never changes a public API, schema, config name, or UI, and it never changes behavior except a hang, crash, or silent failure. Any other change goes to Out of scope. When a standard uses that exception, write `bug fix: <the wrong behavior>` in the gap's `answer or source` column.
 - **Comments follow `comment-root-cause`.** See [comments.md](references/comments.md).
 - **An unknown is a gap.** Never an assumption or a guess.
 - **Never invent a standard.** Options come from the code or a cited source. Only the person decides.
@@ -43,6 +43,10 @@ Statuses: `draft`, `discussion`, `aligned`, `abandoned`. `aligned` only through 
 Scope: <parts or folders>
 Preferences: <the person's standing preferences>
 
+### Areas
+- <Area>: <Ask>
+- <Area>: n/a: <reason>
+
 ### Decisions so far
 - <gap question> (<id>): <one-line gist>
 
@@ -53,7 +57,7 @@ Preferences: <the person's standing preferences>
 <one line per question past the destination, and why. Every breaking change lands here.>
 ```
 
-A gap's name is its question. **Claim** a gap by setting `owner` first. The **frontier** is `open`, unblocked, unclaimed, ordered danger first.
+A gap's name is its question. **Claim** a gap by setting `owner` first. The **frontier** is `open`, unblocked, unclaimed, ordered danger first. Research gaps tie in the order of the Areas list.
 
 **Fog of war:** an in-scope question you cannot phrase yet is one line under Not yet specified. One you can phrase is a gap, even when blocked.
 
@@ -62,14 +66,14 @@ A gap's name is its question. **Claim** a gap by setting `owner` first. The **fr
 Every verdict cites a source: a `codebase-design` term, a smell from the `code-review` baseline, [comments.md](references/comments.md), or a section of the language's or framework's official guide. No source: call `research`, or ask the person. Never judge without one.
 
 - `good`: breaks nothing. Copy it.
-- `weak`: breaks nothing, but makes the next change harder.
+- `weak`: breaks nothing, but makes the next change harder. A naming or style variant that breaks no source is `weak`.
 - `bad`: breaks a source. Every copy costs.
 
 A rule the person states outranks every source, and goes on the gap row.
 
 ## Danger first
 
-1. `bad majority`: `bad`, and the most common variant.
+1. `bad majority`: `bad`, and the most common variant. When `bad` is the only variant, it is `bad majority`.
 2. `bad`.
 3. `inconsistent`: no variant is `bad`, but the code does it more than one way, or its one way is `weak`.
 
@@ -102,9 +106,9 @@ Call by exact name: `grilling`, `domain-modeling`, `research`, `codebase-design`
 ### Chart
 
 1. **Scope.** Call `grilling` and `domain-modeling`. Agree the destination and the scope. Read `AGENTS.md` and `docs/agents/code-standards.md` when they exist: each line is a candidate, never a standard.
-2. **Sweep** every area in [survey.md](references/survey.md). Each ends as a survey gap, a fog line, or `n/a: <reason>`.
-3. **Create the folder** by [structure.md](references/structure.md). Status `draft`.
-4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. Status `discussion`.
+2. **Discover** the areas by [survey.md](references/survey.md#discover).
+3. **Create the folder** by [structure.md](references/structure.md), with the Areas list in `align.md`. Status `draft`. Show the list and stop. On the person's reply, add and drop areas on that list by [survey.md](references/survey.md#discover), then continue at step 4.
+4. **Add the gaps.** One grilling gap: `Is comments.md our comments standard?`. A. as written, B. with the person's edits. Recommended: A. Skip it when Comments is `n/a`. One research gap per approved area that is not `n/a`. Status `discussion`.
 5. **Start the surveys**, one subagent per survey gap, all at once, by [survey.md](references/survey.md#when).
 6. **Stop.** Log. Say the gap count and the first frontier gap.
 
@@ -112,11 +116,11 @@ A `new` for a name that exists stops. Tell them to resume.
 
 ### Work
 
-1. **Catch up.** Read the header, the map, `gaps.md`, and the last five `log.md` lines. Turn each finished survey into gaps by [survey.md](references/survey.md#closing). Start any survey still `open`.
+1. **Catch up.** A `draft` folder with no gaps: add and drop areas from the reply on the Areas list by [survey.md](references/survey.md#discover), then continue Chart at step 4. Read the header, the map, `gaps.md`, and the last five `log.md` lines. Turn each finished survey into gaps by [survey.md](references/survey.md#closing). Start any survey still `open`.
 2. **Claim** the gap the person named, or the first on the frontier.
 3. **Resolve** it by type.
 4. **Record** the answer on the row, status `decided`. No answer: `waiting-on-input`. Advice never closes a gap.
-5. **Write** a grilling gap's standard into its area section of `align.md`. Add the gist to Decisions so far.
+5. **Rewrite** the area section of `align.md` by [survey.md](references/survey.md). Add the gist to Decisions so far.
 6. **Update the map.** Add the gaps it opens. Clear fog you can now phrase.
 7. **End.** Append one line to `log.md`, set `Updated`, and say three lines: what changed, what waits on whom, what is next.
 
@@ -124,7 +128,7 @@ Other sessions may edit the folder at the same time.
 
 ### Report
 
-Run the [report gate](references/report-gate.md). On pass, print the report: for each area, the standard, the exemplar, and the files that do not match. Write no code. Rewriting is `apply`.
+Run the [report gate](references/report-gate.md). On pass, print the report: for each area, each standard, its exemplar, and the files that do not match. Write no code. Rewriting is `apply`.
 
 ## When this is the wrong answer
 
