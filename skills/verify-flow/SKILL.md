@@ -71,7 +71,7 @@ Rules:
 
 ## Companion skills
 
-Call a companion by its exact name with the Skill tool: `create-formal-verification-skill`, `maintain-formal-verification-skill`, `statechart`. The mode sections say which one to call. The companions are marked manual-only in their own frontmatter. If the Skill tool refuses one, read its pinned `SKILL.md` (the link is in `external-skills.md`) and follow it. Do not copy its text into this skill.
+Call a companion by its exact name with the Skill tool: `create-formal-verification-skill`, `maintain-formal-verification-skill`, `statechart`. The mode sections say which one to call. The companions are marked manual-only in their own frontmatter, so the Skill tool can refuse one. Then read its `SKILL.md` from disk and follow it: first `~/.claude/skills/<name>/SKILL.md`, then the project's `.claude/skills/<name>/SKILL.md`. That is where `/setup-nstack-skills` installs them. Only when neither exists, say so once and name `/setup-nstack-skills`. Do not fetch the pinned commit from the network. Do not copy the companion's text into this skill.
 
 ## Invocation
 
