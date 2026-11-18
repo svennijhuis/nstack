@@ -45,7 +45,7 @@ Set `Updated` on every session that changes a file. At ready with accepted open 
 | --- | --- | --- | --- |
 | 1 | `## Map` | Destination, Notes, Decisions so far, Not yet specified, Out of scope, as `###` headings | Destination is one or two lines |
 | 2 | `## Summary` | One paragraph for a business reader: who gains what, and how it is measured | A reader with no code knowledge can repeat it |
-| 3 | `## Context and scope` | What exists today, what forces the change, what is inside the boundary | Links the code or systems it names |
+| 3 | `## Context and scope` | What exists today, what forces the change, what is inside the boundary | Names the code areas and systems in words, with no links or paths |
 | 4 | `## Goals and non-goals` | Goals as outcomes. Non-goals a reader might expect but will not get | Each goal can be checked |
 | 5 | `## Actors` | Table: actor, human or system, permission level, what it does here | Every actor in a diagram is in the table |
 | 6 | `## Requirements` | One line per requirement, see below | Every line follows the form |
@@ -58,7 +58,7 @@ Set `Updated` on every session that changes a file. At ready with accepted open 
 | 13 | `## Acceptance criteria` | One line per criterion, see below | Every requirement is cited at least once |
 | 14 | `## Sign-off` | Table: approver, date, verdict | Filled at `committed` |
 
-Link files and symbols. Do not paste code. Keep answers on the gap row and research in `research/`. `design.md` holds the result, not the discussion.
+`design.md` stands alone for a business reader: no gap ids, no links or paths to local files, no references to `input/` or `research/`. Name systems and symbols in words. Do not paste code. Keep answers on the gap row and research in `research/`. `design.md` holds the result, not the discussion.
 
 ## Requirement form
 

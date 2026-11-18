@@ -18,7 +18,7 @@ One row per outside system. Columns, in this order:
 | Contract | The spec or document that defines requests, responses, and errors, as a link or a file in `input/` |
 | Limits | Rate limits, quotas, payload size, timeouts, cost per call |
 | Change notice | How this team learns that the system changes or goes down |
-| Proof | The file in `input/` or `research/` that backs the row |
+| Proof | What backs the row, in words and with its date, such as `vendor API spec v3, received 2026-11-10`. The file sits in `input/` or `research/`, never linked from `design.md` |
 
 ## Rules
 
@@ -29,4 +29,4 @@ One row per outside system. Columns, in this order:
 - Make no live call to the system to find an answer.
 - "Not needed" is an answer only with a reason: `none: public read-only endpoint`.
 
-The table is done when every row has every field filled and a proof file.
+The table is done when every row has every field filled and a proof.

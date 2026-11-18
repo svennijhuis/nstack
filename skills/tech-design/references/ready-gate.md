@@ -48,7 +48,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 20. Every arrow that crosses a boundary carries an auth level.
 21. Every sequence diagram for type `api` or `integration` shows a failure path.
 22. Every actor in a diagram is in Actors. Every outside system in a diagram is in Dependencies.
-23. Every Dependencies row has every field filled and a proof file, see [dependency-contract.md](dependency-contract.md).
+23. Every Dependencies row has every field filled and a proof, see [dependency-contract.md](dependency-contract.md).
 24. Every outside call and every dependency has a Failure modes row.
 25. Alternatives includes "do nothing". Assumptions and risks has an owner on every row.
 26. The type requirements in [sizes.md](sizes.md) are met for each type in the header.
