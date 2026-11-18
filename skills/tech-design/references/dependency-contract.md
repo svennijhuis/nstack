@@ -25,7 +25,7 @@ One row per outside system. Columns, in this order:
 - Add the row the moment the system is named. Do not wait for the design to reach it.
 - For each empty field, add one gap. The question names the system and the field: "How does the billing service authenticate callers?"
 - Pick the gap type by where the answer lives. Public docs answer it: `research`. Only the owner answers it: `grilling` with the human, or `waiting-on-input` when the human must ask the owner. Someone must request access: `task`.
-- Proof is a spec, a document, or a written answer saved in `input/`. A line in chat is not proof.
+- Proof is a spec, a document, or a written answer saved in `input/` or `research/`. A line in chat is not proof.
 - Make no live call to the system to find an answer.
 - "Not needed" is an answer only with a reason: `none: public read-only endpoint`.
 

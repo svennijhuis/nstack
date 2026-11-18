@@ -47,9 +47,9 @@ Updated: <yyyy-mm-dd>
 
 ## Notes
 
-Domain: <one line>
-Skills: <only the skills this design needs>
-Preferences: <preferences for this design>
+Domain: <one line, or `none`>
+Skills: <only the skills this design needs, or `none`>
+Preferences: <preferences for this design, or `none`>
 Constraints: <time, stack, systems>
 ```
 

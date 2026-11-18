@@ -54,7 +54,7 @@ An answer the human relays from memory counts. Record it in `input/` with "relay
 
 ## End of every session
 
-Before you stop, in any mode, write state to disk. Nothing may live only in the chat.
+Before you stop, in any mode that edits files, write state to disk. Nothing may live only in the chat.
 
 1. The gap row holds its new status and, when closed, its answer.
 2. `log.md` has one new dated line.

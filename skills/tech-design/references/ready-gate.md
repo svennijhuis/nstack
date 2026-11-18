@@ -29,7 +29,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 
 ### Wording
 
-10. No placeholder remains: `TBD`, `TODO`, `???`, or an unfilled `<...>`.
+10. No placeholder remains: `TBD`, `TODO`, `???`, `Pending:`, or an unfilled `<...>`.
 11. No vague word stands without a number in a requirement or criterion row: fast, scalable, robust, secure, intuitive, user-friendly, efficient, appropriate, as needed, etc.
 12. Every term used in two places means the same thing, and is in `glossary.md`.
 13. Each fact, number, and decision is stated once in `design.md`, in the section that owns it. Owners: behaviour and internal numbers in Requirements, vendor limits in Dependencies, alert and log thresholds in Observability, flows in Design, failures in Failure modes, the choice and its reason in Decisions. Other sections refer to the owner by section name or by `R-` id. Restating is allowed only in these places: the Summary, one Decisions row per decision, the table or list directly under a diagram as its text twin, and an acceptance criterion, which repeats the number it tests. A restated number must match its owner. A fail names both places and says which copy to cut.
@@ -66,7 +66,7 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 `/tech-design <name> ready anyway` lets the human go ready while gaps are open. Use it only when the human types it. Never suggest it. Never accept a risk for them.
 
 1. Run the whole gate first and print it.
-2. Checks 1 to 5 and 10 to 29 still stop ready. Only the gap checks 6, 8, and 9 can be accepted. If any other check fails, stop here: accept nothing, write nothing, and leave the status unchanged. Steps 3 to 7 run only when every other check passes.
+2. Checks 1 to 5, 7, and 10 to 29 still stop ready. Only the gap checks 6, 8, and 9 can be accepted. If any other check fails, stop here: accept nothing, write nothing, and leave the status unchanged. Steps 3 to 7 run only when every other check passes.
 3. For each open, research, or waiting gap, and each fog line, show: the question, what a builder would have to guess, what goes wrong if the guess is wrong, the possible answers (the options from the advice or research), and the follow-up action that would settle it, with who does it.
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human as owner, today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.

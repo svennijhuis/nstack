@@ -19,7 +19,7 @@ Size only goes up. When a session finds a `medium` or `big` line holds, raise `S
 | | `small` | `medium` | `big` |
 | --- | --- | --- | --- |
 | `design.md` budget | 150 lines | 500 lines | 1200 lines |
-| `n/a: <reason>` allowed in | Actors, Failure modes, Dependencies, Cross-cutting, Design subsections | Only Design subsections whose diagram trigger did not fire | Same as medium |
+| `n/a: <reason>` allowed in | Actors, Failure modes, Dependencies, Cross-cutting, Design subsections | Cross-cutting subsections, Dependencies when no outside system is named, and Design subsections whose diagram trigger did not fire | Same as medium |
 | Diagrams | Only those whose trigger fires | Context, plus those whose trigger fires | Medium, plus deployment and one failure sequence per main flow |
 | Alternatives | "do nothing" and one other | "do nothing" and two others | Same, each with a cost |
 | Rollout and rollback | One line | Steps to enable and to roll back | The six rollout questions below |
