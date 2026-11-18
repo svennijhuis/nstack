@@ -12,7 +12,7 @@ At chart, propose a size with the reasons, and let the human confirm. Take the l
 | `medium` | Two or more services or teams change. A new API or schema. Data crosses a trust boundary. A new external dependency. Options with real trade-offs. |
 | `big` | Many teams or the whole organisation. A new platform or data store. Hard or impossible to reverse. Regulated or sensitive data. |
 
-Size only goes up. When a session finds a `medium` or `big` line holds, raise `Size` in `state.md`, log it, and add the sections and diagrams the new size requires as gaps.
+Size only goes up. When a session finds a `medium` or `big` line holds, raise `Size` in `state.md`, log it, and add gaps for the diagrams and the depth that size now requires. Do not add headings.
 
 ## Depth per size
 

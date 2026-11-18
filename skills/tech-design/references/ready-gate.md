@@ -25,7 +25,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 6. No row in `gaps.md` is `open`, `research`, or `waiting-on-input`.
 7. Every `accepted-risk` row has an owner and names the risk.
 8. Open questions reads `None.` On `ready anyway` only, it may hold rows the human accepted.
-9. The sweep re-check in [gap-sweep.md](gap-sweep.md) passes. For each of the 18 categories, print one line with the section it read. It passes when every `Answers land in` section for that category states an answer to the category's Ask question, or holds `n/a: <reason>` that matches a logged `sweep <category>: n/a` line. It fails when a section is silent on the question, or its `n/a` has no matching log line. Each fail becomes a gap row. Do not look for questions beyond the 18.
+9. The sweep re-check in [gap-sweep.md](gap-sweep.md) passes. For each of the 18 categories, print one line with the section it read. It passes when every `Answers land in` section for that category states an answer to the category's Ask question, or holds `n/a: <reason>` that matches a logged `sweep <category>: n/a` line. It fails when a section is silent on the question, or its `n/a` has no matching log line. Each fail becomes a gap row. Do not look for questions beyond the 18. Category 18 passes when `glossary.md` has one line per held term, or the log line is `sweep terminology: n/a: no new terms`.
 
 ### Wording
 
@@ -66,7 +66,7 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 `/tech-design <name> ready anyway` lets the human go ready while gaps are open. Use it only when the human types it. Never suggest it. Never accept a risk for them.
 
 1. Run the whole gate first and print it.
-2. Checks 1 to 5, 7, and 10 to 29 still stop ready. Only the gap checks 6, 8, and 9 can be accepted. If any other check fails, stop here: accept nothing, write nothing, and leave the status unchanged. Steps 3 to 7 run only when every other check passes.
+2. Checks 1 to 5, 7, and 10 to 29 still stop ready. Only the gap checks 6, 8, and 9 can be accepted. If any other check fails, stop here: accept nothing and leave the status unchanged. Keep the gap rows the gate added for missing facts. Do not write Sign-off, Open questions, or `Open at ready`. Steps 3 to 7 run only when every other check passes.
 3. For each open, research, or waiting gap, and each fog line, show: the question, what a builder would have to guess, what goes wrong if the guess is wrong, the possible answers (the options from the advice or research), and the follow-up action that would settle it, with who does it.
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human who accepted it as owner on that row (the Open questions owner is whoever must settle it), today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.

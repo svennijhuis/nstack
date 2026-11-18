@@ -20,7 +20,7 @@ The sweep is done when all 18 categories have one of the three endings.
 
 ## The sweep at ready
 
-At ready the sweep is a check, not a new search. Do not invent new questions. For each category, read the sections in its `Answers land in` column in the finished `design.md`. The category passes when those sections state an answer to its Ask question, or hold `n/a: <reason>` that matches the `sweep <category>: n/a` line in `log.md`. It fails when a section is silent on the question or its `n/a` has no matching log line. Each fail becomes a gap row. Print one line per category with the section you read.
+This is the only ready sweep. At ready it is a check, not a new search. Do not invent questions beyond the 18. For each category except terminology, read the sections in its `Answers land in` column in the finished `design.md`. The category passes when those sections state an answer to its Ask, or hold `n/a: <reason>` that matches the `sweep <category>: n/a` line in `log.md`. It fails when a section is silent on the question or its `n/a` has no matching log line. Category 18 passes when `glossary.md` has one line per held term, or the log line is `sweep terminology: n/a: no new terms`. A fail's gap question is that category's Ask. Print one line per category with the section you read.
 
 ## Categories
 
@@ -54,7 +54,3 @@ Add these rows without asking whether to, as soon as the condition holds:
 - **Guessed number.** Any number tagged `guessed` is a gap in category performance and limits.
 - **Person named as the source.** When the human says someone else knows, add the gap with status `waiting-on-input` and that person in `waiting on`. See [resume.md](resume.md).
 - **Status word used.** When something is said to have statuses or stages, add a gap in category state for the full list of transitions.
-
-## Sweep again at ready
-
-At ready, run the 18 questions against the finished `design.md`. Any question the document cannot answer is a new gap, and ready stops.
