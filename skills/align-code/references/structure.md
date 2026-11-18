@@ -8,7 +8,7 @@
 | --- | --- | --- |
 | `align.md` | Header, map, one section per area. This is the report. | chart |
 | `gaps.md` | One row per gap | chart |
-| `log.md` | One line per session, append only | chart |
+| `log.md` | Append only. One line per session, plus one line per area added or dropped after the first list. | chart |
 | `survey/` | One file per area that is not n/a | first survey |
 
 ## Header
@@ -25,7 +25,7 @@ Owner: <person>
 
 ## Area sections
 
-After `## Map`, one `## <Area>` per area on the Areas list, in order. Derive each section by [survey.md](survey.md#discover). It may be `n/a: <reason>`, `Waiting on <gap ids>.`, `consistent: <the one way>. Exemplar: <module>.`, or one or more standard blocks, plus `Accepted risk: <ids>` when any of the area's gaps is `accepted-risk`:
+After `## Map`, one `## <Area>` per area on the Areas list, in order. Derive each section by [survey.md](survey.md#discover). It may be `n/a: <reason>`, `Waiting on <gap ids>.`, `Waiting on survey.`, `consistent: <the one way>. Exemplar: <module>.`, or one or more standard blocks, plus `Accepted risk: <ids>` when any of the area's gaps is `accepted-risk`:
 
 ```markdown
 Standard: <one sentence>. <source>.

@@ -22,7 +22,7 @@ flowchart TD
     B -->|Yes| C[setup-home-repo<br/>once: skills, pointers, MCP, hooks]
     B -->|No| D
     C -->|calls, per child repo| D[setup-agents-md<br/>lean AGENTS.md, code standards, ADRs, glossary]
-    D -->|code written many ways| I[align-code<br/>one standard per area, report]
+    D -->|code written many ways| I[align-code<br/>one or more standards per area, report]
     I --> E
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
     E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
