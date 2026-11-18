@@ -35,7 +35,7 @@ Answer these in order. The first match decides.
 
 1. Does the change write stored state, or read a resource that has writes? No: `skip`. This covers pure UI, static or pure lookup data, formatting, copy, and renames with no behavior change.
 2. Does it add or change a state machine, a concurrency path, a retry or timeout, an ordering rule, or a multi-step flow? Yes: `full`.
-3. Does a second writer, a background job, or a cache touch the same resource? Yes: `full`. Name the second writer in the reason.
+3. Does a second writer, a background job, or a cache touch the same fields or status the change reads or writes? Yes: `full`. Name it in the reason. A second writer that sets only other fields, with a cache that does not hold these fields, does not count: go to 4. A writer with no caller does not count either, but name it in the reason.
 4. Otherwise: `partial`. Check only the invariants the diff touches.
    - A new create endpoint checks idempotent retry, not the whole machine.
    - A single-field update checks lost update and authorization.
@@ -56,7 +56,7 @@ Use a cheap subagent (the smallest model tier available) for mechanical work onl
 
 Delegate:
 
-- **Triage facts.** Give the subagent the diff and the resource name. It returns a short list: every file that writes the resource, every job, cron, queue consumer, or cache that touches it, and which of the triage questions 1 to 3 the facts bear on. It does not return a level.
+- **Triage facts.** Give the subagent the diff and the resource name. It returns a short list: every file that writes the resource, every job, cron, queue consumer, or cache that touches it, whether anything calls it, the fields each writer sets (a writer that applies an arbitrary patch counts as setting every field), and which of the triage questions 1 to 3 the facts bear on. It does not return a level.
 - **Replay.** One subagent per broken path. It runs the steps against the code or a test and returns the exact steps run, the output, and `reproduces` or `does not reproduce`.
 - **Model against code.** It returns each place the model and the code differ, with file and line. It does not say which one is wrong.
 
