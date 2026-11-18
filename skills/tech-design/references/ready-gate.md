@@ -32,31 +32,32 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 10. No placeholder remains: `TBD`, `TODO`, `???`, or an unfilled `<...>`.
 11. No vague word stands without a number in a requirement or criterion row: fast, scalable, robust, secure, intuitive, user-friendly, efficient, appropriate, as needed, etc.
 12. Every term used in two places means the same thing, and is in `glossary.md`.
-13. No em dash or en dash.
+13. Each fact, number, and decision is stated once in `design.md`, in the section that owns it: behaviour and numbers in Requirements, flows in Design, failures in Failure modes, the choice and its reason in Decisions. Other sections refer to it by name. A restatement is allowed only where the reader could not follow without it: the Summary, one Decisions row, and a diagram's text twin. A restated number must match its owner. A fail names both places.
+14. No em dash or en dash.
 
 ### Requirements
 
-14. Every requirement has an `R-` id, one behaviour, and MUST in capitals. No "should".
-15. Every number in a requirement is tagged `measured` or `decided`. None is `guessed`.
-16. Every `R-` id is cited by at least one `AC-`. Every `AC-` cites at least one `R-` and names its test kind.
-17. Every acceptance criterion can fail: it names an observable result.
+15. Every requirement has an `R-` id, one behaviour, and MUST in capitals. No "should".
+16. Every number in a requirement is tagged `measured` or `decided`. None is `guessed`.
+17. Every `R-` id is cited by at least one `AC-`. Every `AC-` cites at least one `R-` and names its test kind.
+18. Every acceptance criterion can fail: it names an observable result.
 
 ### Design
 
-18. Every diagram whose trigger fires is present, see [diagrams.md](diagrams.md).
-19. Every diagram has `accTitle`, a lead-in sentence, labelled one-way arrows, and a text twin that agrees with it.
-20. Every arrow that crosses a boundary carries an auth level.
-21. Every sequence diagram for type `api` or `integration` shows a failure path.
-22. Every actor in a diagram is in Actors. Every outside system in a diagram is in Dependencies. A system inside this codebase's boundary, such as its own database or secret store, is an actor of type system. A system outside it is a dependency. Never both.
-23. Every Dependencies row has every field filled and a proof, see [dependency-contract.md](dependency-contract.md).
-24. Every outside call and every dependency has a Failure modes row.
-25. Alternatives includes "do nothing". Assumptions and risks has an owner on every row.
-26. The type requirements in [sizes.md](sizes.md) are met for each type in `state.md`.
+19. Every diagram whose trigger fires is present, see [diagrams.md](diagrams.md).
+20. Every diagram has `accTitle`, a lead-in sentence, labelled one-way arrows, and a text twin that agrees with it.
+21. Every arrow that crosses a boundary carries an auth level.
+22. Every sequence diagram for type `api` or `integration` shows a failure path.
+23. Every actor in a diagram is in Actors. Every outside system in a diagram is in Dependencies. A system inside this codebase's boundary, such as its own database or secret store, is an actor of type system. A system outside it is a dependency. Never both.
+24. Every Dependencies row has every field filled and a proof, see [dependency-contract.md](dependency-contract.md).
+25. Every outside call and every dependency has a Failure modes row.
+26. Alternatives includes "do nothing". Assumptions and risks has an owner on every row.
+27. The type requirements in [sizes.md](sizes.md) are met for each type in `state.md`.
 
 ### Prose
 
-27. `design.md` follows the `technical-writing` skill. Read the skill, then check each section against its rules. A fail names the file, the line, and the rule broken.
-28. Run the `unslop` skill over `design.md` and every file in the folder. This check goes last. It passes when unslop finds nothing left to fix. A fail lists each file and line it would change.
+28. `design.md` follows the `technical-writing` skill. Read the skill, then check each section against its rules. A fail names the file, the line, and the rule broken.
+29. Run the `unslop` skill over `design.md` and every file in the folder. This check goes last. It passes when unslop finds nothing left to fix. A fail lists each file and line it would change.
 
 When the skill a check needs is not installed, that check fails: `fail: <skill> not installed`. Name `/setup-nstack-skills`.
 
@@ -65,7 +66,7 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 `/tech-design <name> ready anyway` lets the human go ready while gaps are open. Use it only when the human types it. Never suggest it. Never accept a risk for them.
 
 1. Run the whole gate first and print it.
-2. Checks 1 to 5 and 10 to 28 still stop ready. Only the gap checks 6, 8, and 9 can be accepted. If any other check fails, stop here: accept nothing, write nothing, and leave the status unchanged. Steps 3 to 7 run only when every other check passes.
+2. Checks 1 to 5 and 10 to 29 still stop ready. Only the gap checks 6, 8, and 9 can be accepted. If any other check fails, stop here: accept nothing, write nothing, and leave the status unchanged. Steps 3 to 7 run only when every other check passes.
 3. For each open, research, or waiting gap, and each fog line, show: the question, what a builder would have to guess, what goes wrong if the guess is wrong, the possible answers (the options from the advice or research), and the follow-up action that would settle it, with who does it.
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human as owner, today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.

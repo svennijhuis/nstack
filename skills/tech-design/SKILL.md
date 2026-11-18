@@ -33,7 +33,7 @@ Every design has the same folder, the same files, and the same 15 sections in th
 
 The status words are `draft`, `discussion`, `ready`, `committed`, and `abandoned`. `draft` is the new folder. `discussion` means gaps are still open. `ready` means the gate passed. `committed` means builders follow this design. `abandoned` means the work stopped.
 
-**`design.md` stands alone.** A business reader with no repo access must be able to read it. It holds flows, decisions, and technical decisions. It has no gap ids, no links or paths to local files, no `input/` or `research/` references, and no process words such as gap, session, or chart. Name systems, components, and symbols in words. Do not paste code. Gap ids, sources, and links live in `gaps.md`, `research/`, and `log.md`. Read dates from the system clock.
+**`design.md` stands alone.** A business reader with no repo access must be able to read it. It holds flows, decisions, and technical decisions. It has no gap ids, no links or paths to local files, no `input/` or `research/` references, and no process words such as gap, session, or chart. Name systems, components, and symbols in words. Do not paste code. Say each fact once, in the section that owns it, and refer to that section by name. Restate only where the reader could not follow without it. Gap ids, sources, and links live in `gaps.md`, `research/`, and `log.md`. Read dates from the system clock.
 
 ### The state file
 
