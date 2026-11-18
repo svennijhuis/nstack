@@ -32,7 +32,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 10. No placeholder remains: `TBD`, `TODO`, `???`, or an unfilled `<...>`.
 11. No vague word stands without a number in a requirement or criterion row: fast, scalable, robust, secure, intuitive, user-friendly, efficient, appropriate, as needed, etc.
 12. Every term used in two places means the same thing, and is in `glossary.md`.
-13. Each fact, number, and decision is stated once in `design.md`, in the section that owns it: behaviour and numbers in Requirements, flows in Design, failures in Failure modes, the choice and its reason in Decisions. Other sections refer to it by name. A restatement is allowed only where the reader could not follow without it: the Summary, one Decisions row, and a diagram's text twin. A restated number must match its owner. A fail names both places.
+13. Each fact, number, and decision is stated once in `design.md`, in the section that owns it. Owners: behaviour and internal numbers in Requirements, vendor limits in Dependencies, alert and log thresholds in Observability, flows in Design, failures in Failure modes, the choice and its reason in Decisions. Other sections refer to the owner by section name or by `R-` id. Restating is allowed only in these places: the Summary, one Decisions row per decision, the table or list directly under a diagram as its text twin, and an acceptance criterion, which repeats the number it tests. A restated number must match its owner. A fail names both places and says which copy to cut.
 14. No em dash or en dash.
 
 ### Requirements
