@@ -1,6 +1,6 @@
 # Gap sweep
 
-Grilling finds the gaps the human thinks of. The sweep finds the ones nobody thought of. Run it at chart, after the breadth-first grill, and again at ready.
+Grilling finds the gaps the human thinks of. The sweep finds the ones nobody thought of. Run it at chart, after the breadth-first grill. At ready, run it as a check, see below.
 
 ## The rule
 
@@ -17,6 +17,10 @@ Take each category in order. Ask its question against the destination and everyt
 Find facts yourself before you add a gap. Read the code and the docs in the repo. A fact you can read is not a gap. Do not assume the code is aligned: if the code does one thing in two ways, that fact stands. Which unknowns are gaps, and where a term is written, is the materiality rule in the skill. A fact that needs a wide read or a source outside the repo is a research gap, see [research.md](research.md).
 
 The sweep is done when all 18 categories have one of the three endings.
+
+## The sweep at ready
+
+At ready the sweep is a check, not a new search. Do not invent new questions. For each category, read the sections in its `Answers land in` column in the finished `design.md`. The category passes when those sections state an answer to its Ask question, or hold `n/a: <reason>` that matches the `sweep <category>: n/a` line in `log.md`. It fails when a section is silent on the question or its `n/a` has no matching log line. Each fail becomes a gap row. Print one line per category with the section you read.
 
 ## Categories
 

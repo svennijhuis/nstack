@@ -25,7 +25,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 6. No row in `gaps.md` is `open`, `research`, or `waiting-on-input`.
 7. Every `accepted-risk` row has an owner and names the risk.
 8. Open questions reads `None.` On `ready anyway` only, it may hold rows the human accepted.
-9. The sweep in [gap-sweep.md](gap-sweep.md), run again against the finished document, finds no new gap.
+9. The sweep re-check in [gap-sweep.md](gap-sweep.md) passes. For each of the 18 categories, print one line with the section it read. It passes when every `Answers land in` section for that category states an answer to the category's Ask question, or holds `n/a: <reason>` that matches a logged `sweep <category>: n/a` line. It fails when a section is silent on the question, or its `n/a` has no matching log line. Each fail becomes a gap row. Do not look for questions beyond the 18.
 
 ### Wording
 
