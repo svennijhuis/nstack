@@ -1,6 +1,6 @@
 ---
 name: verify-flow
-description: Use when a change writes stored state, or a flow has shared state, retries, timeouts, ordering, or concurrency, to model the resource and check it against the code.
+description: Use when you plan or write code that creates, updates, or deletes stored state, changes a status, or runs a flow with shared state, retries, timeouts, ordering, or concurrency, or when the user asks to verify a flow. Models the resource, checks it against the code, and turns broken paths into tests. Run `before` on the design or plan, `after` on the code.
 ---
 
 Model one resource at a time and check it. Call the pinned companion skills by name. Do not copy their text. If one is not installed, say so once, name `/setup-nstack-skills`, and do that step by the rules in this skill.
@@ -75,7 +75,7 @@ Call each by its exact name with the Skill tool: `create-formal-verification-ski
 
 ## Invocation
 
-The person types `/verify-flow`. The next word is the mode: `before` or `after`. If there is no mode, say the two modes and stop.
+The person types `/verify-flow <mode>`, or you start it yourself when the description matches: `before` once a design or plan for such a change is agreed, `after` once the code is written and before you hand it over. The mode is `before` or `after`. If the person gives no mode and the context does not make it clear, say the two modes and stop. When you start it yourself, the triage runs first, so a change that needs nothing ends at `skip` after one line.
 
 Write into the design or plan folder when one exists. Otherwise write into `docs/verify-flow/<resource>/`.
 
