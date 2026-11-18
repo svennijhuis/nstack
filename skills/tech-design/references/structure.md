@@ -62,44 +62,62 @@ Set `Updated` on every session that changes a file. At ready with accepted open 
 
 | # | Heading | Holds | Done when |
 | --- | --- | --- | --- |
-| 1 | `## Summary` | What this is and why, for a business reader: who gains what, and how it is measured | A reader with no code knowledge can repeat it |
+| 1 | `## Summary` | A one-sentence TL;DR, then who gains what, how it is measured, and what the approvers are asked to decide | A reader with no code knowledge can repeat it |
 | 2 | `## Context and scope` | What exists today, what forces the change, what is inside the boundary | Names the code areas and systems in words, with no links or paths |
 | 3 | `## Goals and non-goals` | Goals as outcomes. Non-goals: what a reader might expect but will not get, and what is deliberately out, each with the reason | Each goal can be checked. Each non-goal has a reason |
-| 4 | `## Decisions` | One line per decision taken, business and technical: `<decision>: <one-line gist>` | Every closed decision is here |
-| 5 | `## Open questions` | One line per question not yet decided, or `None.` At ready anyway, one entry per accepted open question, see [ready-gate.md](ready-gate.md) | Reads `None.` at ready |
-| 6 | `## Actors` | Table: actor, human or system, permission level, what it does here | Every actor in a diagram is in the table |
-| 7 | `## Requirements` | One line per requirement, see below | Every line follows the form |
-| 8 | `## Design` | `### Overview`, `### Context`, `### Boundaries and contracts`, `### Data model`, `### Flows`, `### State` | Every required diagram is present with its text twin |
-| 9 | `## Failure modes` | Table: step or dependency, failure, how it is detected, what the user sees, mitigation | Every dependency and every flow step with an outside call has a row |
-| 10 | `## Dependencies` | The contract table from [dependency-contract.md](dependency-contract.md) | No empty cell |
-| 11 | `## Alternatives` | Each option considered, why it lost. Includes "do nothing" | At least "do nothing" and one other |
-| 12 | `## Cross-cutting` | `### Security`, `### Privacy`, `### Observability`, `### Rollout and rollback`, `### Testing` | Each has content or `n/a: <reason>` |
-| 13 | `## Assumptions and risks` | Table: statement, owner, consequence if wrong, how it is checked | Every row has an owner |
-| 14 | `## Acceptance criteria` | One line per criterion, see below | Every requirement is cited at least once |
+| 4 | `## Decisions` | Table: decision, choice, why. Business and technical decisions, one row each | Every closed decision is a row |
+| 5 | `## Actors` | Table: actor, human or system, permission level, what it does here | Every actor in a diagram is in the table |
+| 6 | `## Requirements` | One table row per requirement, see below | Every row follows the form |
+| 7 | `## Design` | `### Overview`, `### Context`, `### Boundaries and contracts`, `### Data model`, `### Flows`, `### State` | Every required diagram is present with its text twin |
+| 8 | `## Failure modes` | Table: step or dependency, failure, how it is detected, what the user sees, mitigation | Every dependency and every flow step with an outside call has a row |
+| 9 | `## Dependencies` | The contract table from [dependency-contract.md](dependency-contract.md) | No empty cell |
+| 10 | `## Alternatives` | Table: option, why it lost. Includes "do nothing" | At least "do nothing" and one other |
+| 11 | `## Cross-cutting` | `### Security`, `### Privacy`, `### Observability`, `### Rollout and rollback`, `### Testing` | Each has content or `n/a: <reason>` |
+| 12 | `## Assumptions and risks` | Table: statement, owner, consequence if wrong, how it is checked | Every row has an owner |
+| 13 | `## Acceptance criteria` | One table row per criterion, see below | Every requirement is cited at least once |
+| 14 | `## Open questions` | Table: question, why open, possible answers, risk if open, follow-up action, owner, due. Or `None.` At ready anyway, one row per accepted open question | Reads `None.` at ready |
 | 15 | `## Sign-off` | Table: approver, date, verdict | Filled at `committed` |
 
-`design.md` stands alone for a business reader: no gap ids, no links or paths to local files, no references to `input/` or `research/`. Name systems and symbols in words. Do not paste code. Keep answers on the gap row and research in `research/`. `design.md` holds the result, not the discussion.
+`design.md` stands alone for a business reader: no gap ids, no links or paths to local files, no references to `input/` or `research/`. Name systems and symbols in words. Do not paste code. Prefer tables for anything with the same fields on every item. Keep answers on the gap row and research in `research/`. `design.md` holds the result, not the discussion.
 
 ## Requirement form
 
+One table. One row per requirement.
+
 ```markdown
-- R-001: WHEN <trigger>, the <system> MUST <response>. (decided)
-- R-002: WHILE <state>, the <system> MUST <response>.
-- R-003: IF <unwanted condition>, THEN the <system> MUST <response>.
-- R-004: The <system> MUST <response>.
+| ID | When | The system MUST | Number source |
+| --- | --- | --- | --- |
+| R-001 | WHEN <trigger> | <response> | decided |
+| R-002 | WHILE <state> | <response> | |
+| R-003 | IF <unwanted condition> | <response> | |
+| R-004 | Always | <response> | |
 ```
 
-One requirement states one behaviour. Write MUST in capitals. Do not write "should". A requirement with a number ends with its source in brackets: `measured`, `decided`, or `guessed`. A `guessed` number is a gap until a person decides it or research measures it.
+One requirement states one behaviour. Write MUST in capitals. Do not write "should". A requirement with a number fills `Number source`: `measured`, `decided`, or `guessed`. A `guessed` number is a gap until a person decides it or research measures it.
 
-Do not use these words without a number on the same line: fast, scalable, robust, secure, intuitive, user-friendly, efficient, appropriate, as needed, etc.
+Do not use these words without a number in the same row: fast, scalable, robust, secure, intuitive, user-friendly, efficient, appropriate, as needed, etc.
 
 ## Acceptance criterion form
 
 ```markdown
-- AC-001 (R-001, R-003): Given <state>, when <action>, then <observable result>. Test: <unit | integration | manual>.
+| ID | Covers | Given | When | Then | Test |
+| --- | --- | --- | --- | --- | --- |
+| AC-001 | R-001, R-003 | <state> | <action> | <observable result> | unit / integration / manual |
 ```
 
 A criterion can fail. "Handles errors well" is not a criterion. "Returns 400 naming the missing field" is.
+
+## Decisions and open questions form
+
+```markdown
+| Decision | Choice | Why |
+| --- | --- | --- |
+| <what was decided> | <the choice> | <the reason in one line> |
+
+| Question | Why open | Possible answers | Risk if open | Follow-up | Owner | Due |
+| --- | --- | --- | --- | --- | --- | --- |
+| <the question in words> | <why not decided> | <option A, option B> | <what goes wrong> | <action that settles it> | <person> | <yyyy-mm-dd> |
+```
 
 ## gaps.md
 

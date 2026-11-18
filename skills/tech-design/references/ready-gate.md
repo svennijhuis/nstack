@@ -30,7 +30,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 ### Wording
 
 10. No placeholder remains: `TBD`, `TODO`, `???`, or an unfilled `<...>`.
-11. No vague word stands without a number on a requirement or criterion line: fast, scalable, robust, secure, intuitive, user-friendly, efficient, appropriate, as needed, etc.
+11. No vague word stands without a number in a requirement or criterion row: fast, scalable, robust, secure, intuitive, user-friendly, efficient, appropriate, as needed, etc.
 12. Every term used in two places means the same thing, and is in `glossary.md`.
 13. No em dash or en dash.
 
@@ -70,7 +70,7 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human as owner, today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.
 6. A gap they do not accept stops ready.
-7. Add `Open at ready: <n>` to `state.md`. Fill `## Open questions` with one entry per accepted gap, written for a business reader like the rest of `design.md`, with no gap ids: the open question or undecided decision in words, why it is not decided, the possible answers, the risk if it stays open, the follow-up action needed with its owner and date, and who accepted it.
+7. Add `Open at ready: <n>` to `state.md`. Fill `## Open questions` with one table row per accepted gap, written for a business reader like the rest of `design.md`, with no gap ids, in the columns of [structure.md](structure.md). The owner is who must settle it. Log who accepted the risk in `log.md`.
 
 ## After the gate passes
 
