@@ -13,6 +13,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](docs/skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
 | `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
+| `verify-flow` | "verify flow" | Models a resource that writes stored state, checks default invariants, and after the code exists replays broken paths into tests: [SKILL.md](skills/verify-flow/SKILL.md). |
 
 ## How they work together
 
@@ -46,7 +47,7 @@ A design from start to shipped:
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
   each child repo that points home. `setup-agents-md` owns the rest of a repo's
   `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
-  `align-code` owns `docs/align/`.
+  `align-code` owns `docs/align/`. `verify-flow` owns `docs/verify-flow/`.
 - **One branch per repo.** The two setup skills put every change to a repo on
   one local branch, after you approve the plan. You review and push it.
   `tech-design` writes only its design folder and commits nothing. You commit
@@ -69,6 +70,8 @@ install them. The list is in
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
+- `verify-flow` uses `create-formal-verification-skill`,
+  `maintain-formal-verification-skill`, and `statechart`.
 
 ## Install
 
