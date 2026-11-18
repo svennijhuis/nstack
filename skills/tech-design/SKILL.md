@@ -11,7 +11,7 @@ Name the destination first. The destination is that design. It fixes the scope o
 
 **An unknown is a gap. Never write it as an assumption.** When the design needs a fact or a decision and no source gives it, add a row to `gaps.md`. Do not fill it with a default, a guess, or wording that reads the same under two answers.
 
-**Open a gap only when the answer changes what gets built or its risk.** Behaviour, contract, data, security, cost, or reversibility. Naming, wording, and other choices a builder can change cheaply later are not gaps: pick one, record it (terms go in `glossary.md`), and the human can override. Size sets the depth of required content, never the bar for what counts as a gap.
+**Open a gap only when the answer changes what gets built or its risk.** Behaviour, contract, data, security, cost, or reversibility. Naming is never a gap: follow the existing conventions and record terms in `glossary.md`. Wording and other choices a builder can change cheaply later are not gaps: pick one, record it, and the human can override. Size sets the depth of required content, never the bar for what counts as a gap.
 
 **An outside system opens its gaps at once.** The moment a system, source, or vendor outside this codebase is named, add its row to Dependencies and one gap per empty field: owner, access, credentials, environments, contract, limits, change notice, proof. See [dependency-contract.md](references/dependency-contract.md). How to connect and how to authenticate are never left for the builder to find out.
 
