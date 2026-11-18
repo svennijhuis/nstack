@@ -29,11 +29,26 @@ Default invariants to check:
 
 ## Triage
 
-First step in both modes, before any companion skill: decide `skip`, `partial`, or `full`, and log the one-line reason. Do not spend tokens on work the triage rules out.
+First step in both modes, before any companion skill. Triage is the main cost control: spend real effort here, because every later step costs more. Read the diff or the plan, and grep for other writers of the same resource. Do not start a companion skill until the triage is logged.
 
-- `skip` when there is no write to stored state and no read of a resource that has writes: pure UI, or a read with no related writes (static or pure lookup data).
-- `partial`: check only the invariants the diff touches, and reuse an existing model when present. A new create endpoint, for example, checks idempotent retry, not the whole machine. A read on a resource that has writes checks that no stale or leftover data is returned (cache after update or delete, a soft-deleted or half-written row visible, a read during an in-flight multi-step write).
-- `full` only for a new or changed state machine, concurrency, or a multi-step flow.
+Answer these in order. The first match decides.
+
+1. Does the change write stored state, or read a resource that has writes? No: `skip`. This covers pure UI, static or pure lookup data, formatting, copy, and renames with no behavior change.
+2. Does it add or change a state machine, a concurrency path, a retry or timeout, an ordering rule, or a multi-step flow? Yes: `full`.
+3. Does a second writer, a background job, or a cache touch the same resource? Yes: `full`. Name the second writer in the reason.
+4. Otherwise: `partial`. Check only the invariants the diff touches.
+   - A new create endpoint checks idempotent retry, not the whole machine.
+   - A single-field update checks lost update and authorization.
+   - A read on a resource that has writes checks that no stale or leftover data is returned (cache after update or delete, a soft-deleted or half-written row visible, a read during an in-flight multi-step write).
+
+Bias and limits:
+
+- Choose the lower level when two fit, and write what new fact would raise it.
+- Never go below `partial` because a test already exists. A test that covers one path does not cover the interleavings.
+- `full` on more than one resource: triage each resource alone and run them one at a time.
+- An existing model with status `aligned` and a diff that does not touch its transitions is `skip`, with the model named in the reason.
+
+Log one line: `triage: <skip|partial|full> | <resource> | <reason, with the deciding question number>`. In `after`, if the triage differs from the one logged in `before`, say why in the report.
 
 ## Companion skills
 
@@ -47,10 +62,10 @@ Write into the design or plan folder when one exists. Otherwise write into `docs
 
 ### Before
 
-Triage first. On `skip`, stop. Otherwise call `create-formal-verification-skill`, then `statechart`, scoped to the triage. Write into the folder: the model, a mermaid chart, the invariants as requirements, the shortest paths to broken invariants as planned test cases, and an explicit list of what the model leaves out.
+Triage first. On `skip`, stop. Otherwise call `create-formal-verification-skill`, then `statechart`, scoped to the triage. Write into the folder: the model, a mermaid chart, the invariants as requirements, the shortest paths to broken invariants as planned test cases, and an explicit list of what the model leaves out. Put `status: intent` at the top of the model. The model describes what the code should do, so no code exists yet to match it.
 
 ### After
 
 After works alone. Triage first. On `skip`, stop. Reuse the model from `before` when it exists. If it does not, build it from the real code with `create-formal-verification-skill`, then continue.
 
-Call `maintain-formal-verification-skill` so the model matches the real code, then rerun `statechart`, scoped to the triage. Replay each broken path against the code. A path that does not reproduce means the model is wrong until proven otherwise. Each path that reproduces becomes a regression test. Write a short report for the PR body.
+Read the `status` of the `before` model: `intent` or `drifted` means it may differ from the code. List each difference between the model and the code, and decide for each one whether the code or the model is wrong. A code bug becomes a finding. A model gap is fixed in the model. Then call `maintain-formal-verification-skill` so the model matches the real code, set `status: aligned`, and rerun `statechart`, scoped to the triage. Replay each broken path against the code. A path that does not reproduce means the model is wrong until proven otherwise. Each path that reproduces becomes a regression test. If the code changes later and the model is not rerun, set `status: drifted`. Write a short report for the PR body: the triage line, the model status before and after, the differences found, and the regression tests added.
