@@ -71,11 +71,7 @@ End with one line saying how far ready is: the count of gaps and sections still 
 
 ## Batch
 
-On `/tech-design <name> batch`, after load and catch up, show every frontier grilling gap at once, numbered. For each, print the question, the recommended option, and one line of why. Research and task gaps are not batched.
-
-The human answers in one turn: `ok` accepts every recommendation, or they override or skip by number. Claim each answered gap and close it by Work steps 4 to 6 in the skill. A skipped gap stays open. Then stop.
-
-Plain `/tech-design <name>` still claims one gap per session.
+Follow Batch in the skill. Plain `/tech-design <name>` still claims one gap per session.
 
 ## Close
 
@@ -86,7 +82,7 @@ On `/tech-design <name> close <gap>`, the human closes a gap directly.
 3. Write the answer on the row. Set `decided`. Clear the waiting fields.
 4. Write the result into the `design.md` section its category names, and add the gist to Decisions so far.
 5. Add any gap the answer opens.
-6. Close every other open gap this answer states in full, the same way: `decided`, `<gist> (from <id>)` in `answer or source`, the gist on Decisions so far, and the result in its section. Do not invent a further answer.
+Close every other gap in `open` or `waiting-on-input` whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, clear `waiting on`, `asked`, and `due`, move its question sheet from Open to Answered when it has one, add that gist to Decisions so far, and write the result into the section its category names. Do not infer a further answer.
 7. Log one line. Stop.
 
 Only the human's own answer closes a gap this way. Do not fill it in for them.

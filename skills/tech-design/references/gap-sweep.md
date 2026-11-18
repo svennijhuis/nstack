@@ -14,7 +14,7 @@ Take each category in order. Ask its question against the destination and everyt
 2. One line under Not yet specified, when you can tell a question is coming but cannot phrase it yet.
 3. One `log.md` line `sweep <category>: n/a: <reason>`, when the category does not apply.
 
-Find facts yourself before you add a gap. Read the code and the docs in the repo. A fact you can read is not a gap. Always assume the code is aligned. Naming is never a gap: follow the existing code conventions, and the standards in `docs/align/` or `AGENTS.md` when present, and record terms in `glossary.md`. A fact that needs a wide read or a source outside the repo is a research gap, see [research.md](research.md). Open a gap only when the answer changes what gets built or its risk (behaviour, contract, data, security, cost, reversibility).
+Find facts yourself before you add a gap. Read the code and the docs in the repo. A fact you can read is not a gap. Do not assume the code is aligned: if the code does one thing in two ways, that fact stands. Which unknowns are gaps, and where a term is written, is the materiality rule in the skill. A fact that needs a wide read or a source outside the repo is a research gap, see [research.md](research.md).
 
 The sweep is done when all 18 categories have one of the three endings.
 
@@ -39,7 +39,7 @@ The sweep is done when all 18 categories have one of the three endings.
 | 15 | dependencies | For each outside system: is every field of its contract filled? | Dependencies |
 | 16 | assumptions | What is being taken as true without a source, and who owns checking it? | Assumptions and risks |
 | 17 | business outcome | Which measure moves, by how much, and when is it read? | Summary, Goals and non-goals |
-| 18 | terminology | Does each term mean one thing everywhere? Naming is never a gap: follow the existing conventions, pick a meaning, and record it in `glossary.md`. | `glossary.md` |
+| 18 | terminology | Does each term mean one thing everywhere? Naming is not a gap. Apply the materiality rule in the skill. Log `sweep terminology: n/a: recorded in glossary` when a term was held for `glossary.md`, otherwise `sweep terminology: n/a: no new terms`. | `glossary.md` |
 
 ## Gaps that are always added
 

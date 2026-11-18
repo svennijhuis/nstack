@@ -46,8 +46,9 @@ The human pastes the answer, or drops a file. Then:
 
 1. Save it under `input/<yyyy-mm-dd>-<person>-<gap id>.md`, word for word, with who said it and when.
 2. If it answers the question, write the answer on the row, set `decided`, and clear `waiting on`, `asked`, and `due`.
-3. If it answers part, close what it answers and add a new gap for the rest.
-4. If it raises new questions, add them as gaps.
+3. Close every other gap this answer states in full, by the close pass in Work step 6 of the skill.
+4. If it answers part, close what it answers and add a new gap for the rest.
+5. If it raises new questions, add them as gaps.
 
 An answer the human relays from memory counts. Record it in `input/` with "relayed by <human>".
 
