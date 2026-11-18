@@ -29,7 +29,7 @@ Default invariants to check:
 
 ## Triage
 
-First step in both modes, before any companion skill. Triage is the main cost control: spend real effort here, because every later step costs more. Read the diff or the plan, and grep for other writers of the same resource. Do not start a companion skill until the triage is logged.
+First step in both modes, before any companion skill. Triage is the main cost control: spend real effort here, because every later step costs more. Read the diff or the plan, and find other writers of the same resource (delegate this, see Delegation). Do not start a companion skill until the triage is logged.
 
 Answer these in order. The first match decides.
 
@@ -49,6 +49,25 @@ Bias and limits:
 - An existing model with status `aligned` and a diff that does not touch its transitions is `skip`, with the model named in the reason.
 
 Log one line: `triage: <skip|partial|full> | <resource> | <reason, with the deciding question number>`. In `after`, if the triage differs from the one logged in `before`, say why in the report.
+
+## Delegation
+
+Use a cheap subagent (the smallest model tier available) for mechanical work only. The main agent keeps every judgment.
+
+Delegate:
+
+- **Triage facts.** Give the subagent the diff and the resource name. It returns a short list: every file that writes the resource, every job, cron, queue consumer, or cache that touches it, and which of the triage questions 1 to 3 the facts bear on. It does not return a level.
+- **Replay.** One subagent per broken path. It runs the steps against the code or a test and returns the exact steps run, the output, and `reproduces` or `does not reproduce`.
+- **Model against code.** It returns each place the model and the code differ, with file and line. It does not say which one is wrong.
+
+Keep with the main agent: the triage level, the invariants, the model, and the decision whether the code or the model is wrong.
+
+Rules:
+
+- A subagent result without its evidence (files, steps, output) does not count. Ask again or do the step yourself.
+- Check every `does not reproduce` yourself before you change the model: rerun the steps. A cheap subagent may have run them wrong.
+- If a subagent finds a writer, job, or cache the diff did not mention, that fact can only raise the triage level, never lower it.
+- Run subagents for different paths in parallel. If no subagent tool exists, do the same steps yourself.
 
 ## Companion skills
 
