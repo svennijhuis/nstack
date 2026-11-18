@@ -11,60 +11,33 @@ Name the destination first. The destination is that design. It fixes the scope o
 
 **An unknown that changes what gets built or its risk is a gap. Never write that unknown as an assumption.** When the design needs a fact or a decision and no source gives it, add a row to `gaps.md`. Do not fill it with a default, a guess, or wording that reads the same under two answers.
 
-**Open a gap only when the answer changes what gets built or its risk.** Behaviour, contract, data, security, cost, or reversibility. This qualifies the rule above. The outside-system rule still opens one gap per empty contract field. Naming is not a gap: follow the convention named in `docs/align/` or `AGENTS.md` when there is one, otherwise the convention the code already uses. When the design needs a new term and neither source names it, ask the human once. Hold that meaning with the chart answers and write it to `glossary.md` in step 5, one line per term. A choice outside the list above is not a gap, and it is not an assumption: hold it the same way, then write it in the section that would have held the answer and add `- <choice>: <gist>` under Decisions so far. The human overrides that line by replacing it in a later session. Do not use this to keep a vague requirement: ready-gate check 11 still fails it. Size sets depth, see [sizes.md](references/sizes.md). It never changes this bar.
+**Open a gap only when the answer changes what gets built or its risk.** Behaviour, contract, data, security, cost, or reversibility. This qualifies the rule above. The outside-system rule still opens one gap per empty contract field. Naming is not a gap: follow the convention named in `docs/align/` or `AGENTS.md` when there is one, otherwise the convention the code already uses. When the design needs a new term and neither source names it, ask the human once. Hold that meaning with the chart answers and write it to `glossary.md` in step 5, one line per term. A choice outside the list above is not a gap, and it is not an assumption: hold it the same way, then write it in the section that would have held the answer and add `- <choice>: <gist>` under Decisions. The human overrides that line by replacing it in a later session. Do not use this to keep a vague requirement: ready-gate check 11 still fails it. Size sets depth, see [sizes.md](references/sizes.md). It never changes this bar.
 
 **An outside system opens its gaps at once.** The moment a system, source, or vendor outside this codebase is named, add its row to Dependencies and one gap per empty field: owner, access, credentials, environments, contract, limits, change notice, proof. See [dependency-contract.md](references/dependency-contract.md). How to connect and how to authenticate are never left for the builder to find out.
 
 ## Plan, don't do
 
-Each gap resolves a decision. The map is done when every gap is closed and a developer can build. Builders start after the map is done. Notes may say this effort also does the work. Otherwise stop at the decision.
+Each gap resolves a decision. The design is done when every gap is closed and a developer can build. Builders start after the design is done. `state.md` Notes may say this effort also does the work. Otherwise stop at the decision.
 
 A length request limits a summary only, see [sizes.md](references/sizes.md). It never skips gaps, research, dependency rows, or the log, and never lowers the size.
 
 ## Refer by name
 
-A gap's name is its question. Use the question when you talk to the human and in Decisions so far. The id rides along with the question in `gaps.md` and `log.md`. It never stands in for it, and it never appears in `design.md`.
+A gap's name is its question. Use the question when you talk to the human and in Decisions. The id rides along with the question in `gaps.md` and `log.md`. It never stands in for it, and it never appears in `design.md`.
 
 ## The map
 
-Every design has the same folder, the same files, and the same 14 sections in the same order. See [structure.md](references/structure.md) for all of it. Size and types change depth, never structure. See [sizes.md](references/sizes.md).
+Every design has the same folder, the same files, and the same 15 sections in the same order. See [structure.md](references/structure.md) for all of it. Size and types change depth, never structure. See [sizes.md](references/sizes.md).
 
-`design.md` is the spec. Its header carries the status, size, types, dates, owner, and approvers. Its first section is the map. `gaps.md` holds the gaps. Each closed gap is one gist line on the map. The answer stays on the row, and the result is written into the section its category names.
+`design.md` is the spec. It opens with the Summary, so the business reader gets the point first. Its header carries only the owner and approvers. `state.md` carries the status, size, types, dates, destination, and notes. `gaps.md` holds the gaps. Each closed gap is one gist line under Decisions. The answer stays on the row, and the result is written into the section its category names.
 
 The status words are `draft`, `discussion`, `ready`, `committed`, and `abandoned`. `draft` is the new folder. `discussion` means gaps are still open. `ready` means the gate passed. `committed` means builders follow this design. `abandoned` means the work stopped.
 
 **`design.md` stands alone.** A business reader with no repo access must be able to read it. It holds flows, decisions, and technical decisions. It has no gap ids, no links or paths to local files, no `input/` or `research/` references, and no process words such as gap, session, or chart. Name systems, components, and symbols in words. Do not paste code. Gap ids, sources, and links live in `gaps.md`, `research/`, and `log.md`. Read dates from the system clock.
 
-### The map body
+### The state file
 
-Load this once per session. Open gaps stay in `gaps.md`.
-
-```markdown
-## Map
-
-### Destination
-
-<one or two lines. The technical design this effort ends on. Read this before you pick a gap.>
-
-### Notes
-
-Domain: <one line>
-Skills: <only the skills this design needs>
-Preferences: <preferences for this design>
-Constraints: <time, stack, systems>
-
-### Decisions so far
-
-- <decision>: <one-line gist>
-
-### Not yet specified
-
-<one line per in-scope question you cannot phrase yet, or None.>
-
-### Out of scope
-
-<one line per question past the destination, and why>
-```
+Load `state.md` once per session. Open gaps stay in `gaps.md`. It holds the status, size, types, dates, the Destination, and the Notes, in the form in [structure.md](references/structure.md). None of it goes into `design.md`.
 
 ### Gaps
 
@@ -88,13 +61,13 @@ While a gap is studied, its status is `research`. No answer yet sets `waiting-on
 
 ## Fog of war
 
-Not yet specified is the **fog of war**: in-scope questions still too vague to be gaps. A question you can phrase now is a gap, even when it is blocked. A question you cannot phrase stays one line in the fog. Resolving a gap lets you phrase the next ones. Write each as a gap and delete its line. One line may become several gaps, or none.
+Open questions is also the **fog of war**: in-scope questions still too vague to be gaps. A question you can phrase now is a gap, even when it is blocked. A question you cannot phrase stays one line in the fog. Resolving a gap lets you phrase the next ones. Write each as a gap and delete its line. One line may become several gaps, or none.
 
 Fog is legal while the design is in `discussion`. It must be `None.` at ready.
 
 ## Out of scope
 
-Work past the destination is out of scope. Drop the row and add one line under Out of scope with the question and why. It never comes back into this design. Start a new design if the destination changes.
+Work past the destination is out of scope. Drop the row and add one line under Goals and non-goals, as a non-goal, with the question and why. It never comes back into this design. Start a new design if the destination changes.
 
 ## Companion skills
 
@@ -124,7 +97,7 @@ Claim one gap per session, then stop. Also close any other `open` or `waiting-on
 2. **Pick the size.** Propose `small`, `medium`, or `big` with reasons from [sizes.md](references/sizes.md). Record the types the person named. Done when the human confirms the size.
 3. **Map the frontier.** Grill again, breadth-first. List the decisions you can phrase. If you find no fog and one session can finish the design, stop and ask how to proceed.
 4. **Sweep.** Run all 18 categories in [gap-sweep.md](references/gap-sweep.md). Done when every category is a gap, a fog line, or `n/a` with a reason in `log.md`.
-5. **Create the folder** by [structure.md](references/structure.md), in the working directory: every entry, the header at `draft`, all 14 headings. Only when the working directory's `AGENTS.md` has a `## Repos` section, ask first: "Here, or in one of: <those repos>?" The repos are the pointer lines under `## Repos`. When those lines name `repos/<area>.md` files instead, read the files: an area is not a repo. Recommend here when the design changes more than one of those repos, and the one repo it changes otherwise. For another repo, create the folder there and tell the human to run later sessions from that repo. For the rest of this session, every `docs/design/` path in this skill and its references is under that repo's root, not the working directory. Use the full path in each step and in every subagent brief. Fill the map and what is already known. Write what is in into Context and scope, and into Goals and non-goals when it is a goal. Write each deliberately-out item under Out of scope as `<thing>: <why>`. Write each constraint in Notes as `Constraints: <time, stack, systems>`. Write each prior decision under Decisions so far as `- <decision>: <gist>`. Do not open a gap for those lines. Write each held term into `glossary.md`, one line per term with its one meaning. Write each held gapless choice into the section that would have held the answer, and under Decisions so far as `- <choice>: <gist>`. Every other section holds `n/a: <reason>` or `Pending: <the open question in words>`, with no gap id. Write the held sweep endings from step 4 into `log.md` now. Add a Dependencies row for each outside system.
+5. **Create the folder** by [structure.md](references/structure.md), in the working directory: every entry, `state.md` at `draft`, `design.md` with all 15 headings, Summary first. Only when the working directory's `AGENTS.md` has a `## Repos` section, ask first: "Here, or in one of: <those repos>?" The repos are the pointer lines under `## Repos`. When those lines name `repos/<area>.md` files instead, read the files: an area is not a repo. Recommend here when the design changes more than one of those repos, and the one repo it changes otherwise. For another repo, create the folder there and tell the human to run later sessions from that repo. For the rest of this session, every `docs/design/` path in this skill and its references is under that repo's root, not the working directory. Use the full path in each step and in every subagent brief. Fill the map and what is already known. Write what is in into Summary and Context and scope, and into Goals and non-goals when it is a goal. Write the Destination into `state.md`. Write each deliberately-out item under Goals and non-goals as a non-goal `<thing>: <why>`. Write each constraint in `state.md` Notes as `Constraints: <time, stack, systems>`. Write each prior decision under Decisions as `- <decision>: <gist>`. Do not open a gap for those lines. Write each held term into `glossary.md`, one line per term with its one meaning. Write each held gapless choice into the section that would have held the answer, and under Decisions as `- <choice>: <gist>`. Every other section holds `n/a: <reason>` or `Pending: <the open question in words>`, with no gap id. Write the held sweep endings from step 4 into `log.md` now. Add a Dependencies row for each outside system.
 6. **Add the gaps.** Each row starts `open`, with a category, a type, and a real id. Then merge: two gaps that ask for the same decision become one row. Keep the lower id. Leave its question unchanged. Add the line `merged <dropped id> into <kept id>` to `log.md`. Repoint any `blocks` cell that named the dropped id to the kept id. If that was the category's only gap, log `sweep <category>: n/a: same decision as <kept id>`. Then fill `blocks` with ids that still exist. When gap A's answer would settle gap B, set B's `blocks` to A's id, so A is asked first. A gap whose answer sits with a named person starts `waiting-on-input`, with its question sheet. Set status `discussion`.
 7. **Start the research subagents**, one per research gap, by [research.md](references/research.md).
 8. **Stop.** Log one line. Tell the human the size, the gap count by type, who is being waited on, and the first frontier gap. If the human asked for something short, offer a summary by [sizes.md](references/sizes.md). Never replace the map with it.
@@ -133,12 +106,12 @@ A second `new` for a name that already exists stops. Tell them to resume. Check 
 
 ### Work through the map
 
-1. **Load and catch up** by [resume.md](references/resume.md): read the map, take in new files under `input/`, print the board, flag overdue gaps, start new research. When no design of that name is here and the working directory's `AGENTS.md` has a `## Repos` section, look in the repos it points at. If it is in one, name that repo, tell the human to run the skill from there, and stop. If the status is `ready`, `committed`, or `abandoned`, say so and stop.
+1. **Load and catch up** by [resume.md](references/resume.md): read `state.md` and `design.md`, take in new files under `input/`, print the board, flag overdue gaps, start new research. When no design of that name is here and the working directory's `AGENTS.md` has a `## Repos` section, look in the repos it points at. If it is in one, name that repo, tell the human to run the skill from there, and stop. If the status is `ready`, `committed`, or `abandoned`, say so and stop.
 2. **Choose the gap and claim it.** Use the one the person named. Otherwise take the first frontier gap. Set `owner` before any work.
 3. **Resolve it by type.** Read a related row or research file when you need it. On a grilling gap, advice comes before the one question.
 4. **Record the resolution.** Write the answer on the row and set `decided`, or `accepted-risk` when the human accepts the risk you named. With no answer, set `waiting-on-input` and write the question sheet. Advice alone never closes a gap.
-5. **Write it into the design.** Put the result in the section its category names. Draw any diagram the answer now triggers, by [diagrams.md](references/diagrams.md). Add the gist to Decisions so far. A new term goes to `glossary.md`, and a gapless choice goes in its section and under Decisions so far as `- <choice>: <gist>`, by the materiality rule.
-6. **Update the map.** Add the gaps this answer opens, then fill `blocks`. Apply the rules at the top. Delete fog you can now phrase. Raise the size if a larger one now holds. Close every other gap in `open` or `waiting-on-input` whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, clear `owner`, `waiting on`, `asked`, and `due`, move its question sheet from Open to Answered when it has one, add that gist to Decisions so far, and write the result into the section its category names. Do not infer a further answer. Update rows it invalidates.
+5. **Write it into the design.** Put the result in the section its category names. Draw any diagram the answer now triggers, by [diagrams.md](references/diagrams.md). Add the gist to Decisions. A new term goes to `glossary.md`, and a gapless choice goes in its section and under Decisions as `- <choice>: <gist>`, by the materiality rule.
+6. **Update the map.** Add the gaps this answer opens, then fill `blocks`. Apply the rules at the top. Delete fog you can now phrase. Raise the size if a larger one now holds. Close every other gap in `open` or `waiting-on-input` whose outcome this answer states in full: set it `decided`, set `answer or source` to `<gist> (from <id>)`, clear `owner`, `waiting on`, `asked`, and `due`, move its question sheet from Open to Answered when it has one, add that gist to Decisions, and write the result into the section its category names. Do not infer a further answer. Update rows it invalidates.
 7. **Stop.** Write state. The session is done when that one gap is claimed and either closed or `waiting-on-input`. On batch, it is done when every accepted gap is closed and every skipped gap is `open` or closed by the cascade.
 
 Other sessions may edit this folder at the same time.

@@ -15,8 +15,8 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 ### Structure
 
 1. The folder holds every entry in [structure.md](structure.md).
-2. The header has every field, in order, with a value.
-3. All 14 sections are present, in order, with the exact headings.
+2. The `design.md` header and `state.md` have every field, in order, with a value.
+3. All 15 sections are present, in order, with the exact headings.
 4. No section is blank. Every `n/a` has a reason. No `n/a` sits in a section the size forbids, see [sizes.md](sizes.md).
 5. `design.md` is within the line budget for its size.
 
@@ -24,7 +24,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 
 6. No row in `gaps.md` is `open`, `research`, or `waiting-on-input`.
 7. Every `accepted-risk` row has an owner and names the risk.
-8. Not yet specified reads `None.`
+8. Open questions reads `None.`
 9. The sweep in [gap-sweep.md](gap-sweep.md), run again against the finished document, finds no new gap.
 
 ### Wording
@@ -51,7 +51,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 23. Every Dependencies row has every field filled and a proof, see [dependency-contract.md](dependency-contract.md).
 24. Every outside call and every dependency has a Failure modes row.
 25. Alternatives includes "do nothing". Assumptions and risks has an owner on every row.
-26. The type requirements in [sizes.md](sizes.md) are met for each type in the header.
+26. The type requirements in [sizes.md](sizes.md) are met for each type in `state.md`.
 
 ### Prose
 
@@ -70,7 +70,7 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human as owner, today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.
 6. A gap they do not accept stops ready.
-7. Add `Open at ready: <n>` to the header. Add a section `## Open at ready` after Sign-off, written for a business reader like the rest of `design.md`, with no gap ids. One entry per accepted gap: the open question or undecided decision in words, why it is not decided, the possible answers, the risk if it stays open, the follow-up action needed with its owner and date, and who accepted it.
+7. Add `Open at ready: <n>` to `state.md`. Fill `## Open questions` with one entry per accepted gap, written for a business reader like the rest of `design.md`, with no gap ids: the open question or undecided decision in words, why it is not decided, the possible answers, the risk if it stays open, the follow-up action needed with its owner and date, and who accepted it.
 
 ## After the gate passes
 
@@ -92,4 +92,4 @@ One ticket is one slice a developer can build and check alone. Every ticket in `
 - story points
 - blockers: the tickets that must land first
 
-Every `R-` id is delivered by at least one ticket. A ticket that touches a gap listed under Open at ready is marked `blocked: <gap question>` and is not started until that gap closes.
+Every `R-` id is delivered by at least one ticket. A ticket that touches a gap accepted at ready is marked `blocked: <gap question>` and is not started until that gap closes.

@@ -58,14 +58,14 @@ Before you stop, in any mode, write state to disk. Nothing may live only in the 
 
 1. The gap row holds its new status and, when closed, its answer.
 2. `log.md` has one new dated line.
-3. `Updated` in the header is today.
+3. `Updated` in `state.md` is today.
 4. The last thing you say is three lines: what changed, what waits on whom, and the next frontier gap by its question.
 
 Do not commit, switch branch, or push. The person commits the design folder.
 
 ## Start of every work session
 
-1. Read the header, the map, `gaps.md`, and the last five `log.md` lines. Do not read `research/` or `input/` yet.
+1. Read `state.md`, `design.md`, `gaps.md`, and the last five `log.md` lines. Do not read `research/` or `input/` yet.
 2. An `open` gap with an `owner` that no log line from the last session explains is a stale claim, such as from a batch that stopped early. Ask the human once to clear it.
 3. Check `input/` for files newer than the last log line. Process each as above.
 4. Print the board from [help.md](help.md).

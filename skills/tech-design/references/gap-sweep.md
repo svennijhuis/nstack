@@ -11,7 +11,7 @@ An unknown is a gap. Never write it as an assumption, a default, or a sentence t
 Take each category in order. Ask its question against the destination and everything said so far. Each category ends in exactly one of three ways:
 
 1. One or more gap rows, when you can phrase the question.
-2. One line under Not yet specified, when you can tell a question is coming but cannot phrase it yet.
+2. One line under Open questions, when you can tell a question is coming but cannot phrase it yet.
 3. One `log.md` line `sweep <category>: n/a: <reason>`, when the category does not apply, or when a gap or a held answer already covers it. At chart, hold these lines until the folder exists (step 5).
 
 Find facts yourself before you add a gap. Read the code and the docs in the repo. A fact you can read is not a gap. Do not assume the code is aligned: if the code does one thing in two ways, that fact stands. Which unknowns are gaps, and where a term is written, is the materiality rule in the skill. A fact that needs a wide read or a source outside the repo is a research gap, see [research.md](research.md).
@@ -23,7 +23,7 @@ The sweep is done when all 18 categories have one of the three endings.
 | # | Category | Ask | Answers land in |
 | --- | --- | --- | --- |
 | 1 | actors | Is every human and every system that touches this named, with its permission level? | Actors |
-| 2 | scope | What would a reasonable reader expect that this will not do? If the chart answers or Out of scope already name it, that part is not a gap. Add a gap only for an expectation they did not name. At chart, when nothing remains, log `sweep scope: n/a: named at chart`. | Goals and non-goals, Out of scope |
+| 2 | scope | What would a reasonable reader expect that this will not do? If the chart answers or a non-goal already names it, that part is not a gap. Add a gap only for an expectation they did not name. At chart, when nothing remains, log `sweep scope: n/a: named at chart`. | Goals and non-goals |
 | 3 | functional | Does every trigger have a stated response, including the unwanted inputs? | Requirements |
 | 4 | data model | For each entity: who owns it, how many, how long kept, how it migrates? | Design, Data model |
 | 5 | data flow | Can each piece of data be traced from source to sink, and what crosses each boundary? | Design, Flows |

@@ -38,7 +38,7 @@ Give each subagent this, and nothing from the conversation:
 ```markdown
 Question: <the gap question, word for word>
 Gap: <id>, in docs/design/<folder>/gaps.md
-Destination: <the Destination lines from design.md>
+Destination: <the Destination lines from state.md>
 Why it matters: <the decision that waits on this fact>
 Look in: <repo paths, or the kind of outside source>
 Write: docs/design/<folder>/research/<gap-id>-<topic>.md
