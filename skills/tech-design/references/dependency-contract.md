@@ -15,7 +15,7 @@ One row per outside system. Columns, in this order:
 | Access | How a caller authenticates: the method, the scopes or roles, and where the secret lives |
 | Credentials | Who issues them, how long that takes, and whether they are already issued for each environment |
 | Environments | Which exist (test, staging, production), their addresses, and how the test one differs |
-| Contract | The spec or document that defines requests, responses, and errors, as a link or a file in `input/` |
+| Contract | The spec or document that defines requests, responses, and errors, named in words in `design.md` with its version and date. The file sits in `input/` and is never linked from `design.md` |
 | Limits | Rate limits, quotas, payload size, timeouts, cost per call |
 | Change notice | How this team learns that the system changes or goes down |
 | Proof | What backs the row, in words and with its date, such as `vendor API spec v3, received 2026-11-10`. The file sits in `input/` or `research/`, never linked from `design.md` |

@@ -47,7 +47,7 @@ Any fail stops ready. Leave the status unchanged. Each fail that is a missing fa
 19. Every diagram has `accTitle`, a lead-in sentence, labelled one-way arrows, and a text twin that agrees with it.
 20. Every arrow that crosses a boundary carries an auth level.
 21. Every sequence diagram for type `api` or `integration` shows a failure path.
-22. Every actor in a diagram is in Actors. Every outside system in a diagram is in Dependencies.
+22. Every actor in a diagram is in Actors. Every outside system in a diagram is in Dependencies. A system inside this codebase's boundary, such as its own database or secret store, is an actor of type system. A system outside it is a dependency. Never both.
 23. Every Dependencies row has every field filled and a proof, see [dependency-contract.md](dependency-contract.md).
 24. Every outside call and every dependency has a Failure modes row.
 25. Alternatives includes "do nothing". Assumptions and risks has an owner on every row.
@@ -65,7 +65,7 @@ When the skill a check needs is not installed, that check fails: `fail: <skill> 
 `/tech-design <name> ready anyway` lets the human go ready while gaps are open. Use it only when the human types it. Never suggest it. Never accept a risk for them.
 
 1. Run the whole gate first and print it.
-2. Checks 1 to 5 and 10 to 28 still stop ready. Only the gap checks 6, 8, and 9 can be accepted.
+2. Checks 1 to 5 and 10 to 28 still stop ready. Only the gap checks 6, 8, and 9 can be accepted. If any other check fails, stop here: accept nothing, write nothing, and leave the status unchanged. Steps 3 to 7 run only when every other check passes.
 3. For each open, research, or waiting gap, and each fog line, show: the question, what a builder would have to guess, what goes wrong if the guess is wrong, the possible answers (the options from the advice or research), and the follow-up action that would settle it, with who does it.
 4. Ask the human to accept each one by name, one at a time. "Accept all" is not an answer.
 5. For each accepted gap, set `accepted-risk`, with the human as owner, today's date, and the risk in the answer cell. A fog line they accept becomes a gap row first.
