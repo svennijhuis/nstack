@@ -13,7 +13,7 @@ The ticket is the tactical goal. The codebase is the strategic one. A ticket is 
 - **The code.** Where the change lands, its direct callers, and its tests. Stop at direct callers. `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
 - **The start commit.** `git rev-parse HEAD`. The review reads the diff from here.
 
-**A bug ticket** goes through `diagnosing-bugs` first: a command that goes red on the bug, then the cause, then a regression test at the right seam. Then shape the fix by 2 and go on from 3. Without `diagnosing-bugs`, keep that order: no fix before a red reproduction. A bug that exists because the code does one thing in two ways is fixed by making it one way, on the path the bug runs through, not by patching the copy that broke.
+**A bug ticket** goes through `diagnosing-bugs` first: a command that goes red on the bug, then the cause, then a regression test at the right seam. Then shape the fix by 2 and go on from 3. Without `diagnosing-bugs`, keep that order: no fix before a red reproduction. A bug that exists because the code does one thing in two places is fixed by moving it to one place: one function both callers use, where its meaning belongs. Copying the working idiom into the broken place still leaves two places. Pin the caller that works first, so the move cannot break it.
 
 ## 2. Shape
 
