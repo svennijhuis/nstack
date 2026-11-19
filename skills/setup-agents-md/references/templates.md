@@ -49,8 +49,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 ## Changes
 
 - Leave the code you touch no worse. Follow the shape it already has. Do not add a second way to do something the code already does.
-- Refactor only in files the task already changes, as its own commit before the task.
-- When the task needs a bigger refactor, do not start it. Say what and why in one line, and suggest `/prep-refactor`.
+- When the change needs a refactor to fit, do it first, with the same behaviour, as its own commit before the change.
 
 ## Decisions
 

@@ -12,7 +12,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](docs/skills/setup-agents-md/README.md). |
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](docs/skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
-| `prep-refactor` | `/prep-refactor <ticket>` | Only when you type it. Checks whether the code a ticket lands in needs a small refactor first, does it on its own branch with tripwires, or writes a follow-up ticket or spec to `docs/follow-ups/`. The always-on part is the Changes section `setup-agents-md` writes: [README](docs/skills/prep-refactor/README.md). |
+| `implement` | "implement this" | Builds a ticket so the codebase gets better, not worse. Reads the code the change lands in, shapes it as if the requirement had been there from the start, and refactors where the change needs it, with the same behaviour and its own commit: [README](docs/skills/implement/README.md). |
 | `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
 
 ## How they work together
@@ -26,8 +26,7 @@ flowchart TD
     D -->|code written many ways| I[align-code<br/>one or more standards per area, report]
     I --> E
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
-    E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
-    F <-->|a refactor looks needed| P[prep-refactor<br/>small refactor first, or a follow-up ticket or spec]
+    E --> F[implement<br/>per ticket: refactor where the change needs it,<br/>follow AGENTS.md, one ADR per decision]
     F <-->|a new comment| R[comment-root-cause<br/>fix the cause, not the symptom]
     F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
     G -->|once a feature has shipped| H[setup-agents-md<br/>shipped decisions become ADRs,<br/>the design folder is offered for deletion]
@@ -48,7 +47,7 @@ A design from start to shipped:
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
   each child repo that points home. `setup-agents-md` owns the rest of a repo's
   `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
-  `align-code` owns `docs/align/`. `prep-refactor` owns `docs/follow-ups/`.
+  `align-code` owns `docs/align/`.
 - **One branch per repo.** The two setup skills put every change to a repo on
   one local branch, after you approve the plan. You review and push it.
   `tech-design` writes only its design folder and commits nothing. You commit
@@ -71,8 +70,7 @@ install them. The list is in
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
-- `prep-refactor` uses `codebase-design`, and points at
-  `improve-codebase-architecture` for candidates without a ticket.
+- `implement` uses `codebase-design` and `comment-root-cause`.
 
 ## Install
 
