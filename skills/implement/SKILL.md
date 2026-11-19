@@ -1,19 +1,16 @@
 ---
 name: implement
-description: Use when you implement a ticket, issue, feature, or fix in code. Builds it so the codebase gets better over time, not worse. Reads the code the change lands in, shapes it as if the requirement had been there from the start, refactors where the change needs it, and leaves the code easier to change next time.
+description: Use when you implement a ticket, issue, spec, feature, or fix in code. Builds it so the codebase gets better over time, not worse. Reads the ticket and its spec, shapes the code the change lands in as if the requirement had been there from the start, refactors where the change needs it, builds with tdd at the agreed seams, and ends with a review and a commit.
 ---
 
 The ticket is the tactical goal. The codebase is the strategic one. A ticket is not done when it works but leaves the code harder to change. Make the change easy, then make the easy change.
 
 ## 1. Read
 
-Read what exists, skip what does not:
-
-- `AGENTS.md` and `docs/agents/code-standards.md`.
-- `GLOSSARY.md` (or `CONTEXT.md`): the terms the ticket uses.
-- The ADRs in `docs/adr/`: titles first, then the ones that cover the code you will change.
-- The code the change lands in, its direct callers, and its tests. Stop at direct callers.
-- `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
+- **The ticket.** A ticket reference: fetch it from the issue tracker, or from `.scratch/<feature>/issues/` when `to-tickets` wrote local files. Say its title before you start. A reference that matches more than one ticket: ask which.
+- **Its spec.** The parent issue, the spec from `to-spec`, or the `docs/design/` folder from `tech-design`. Its Implementation Decisions, Testing Decisions, and seams are decided. They outrank your own shape choices.
+- **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the terms in `GLOSSARY.md` (or `CONTEXT.md`) the ticket uses, and the ADRs in `docs/adr/` that cover the code you will change. Titles first, then the ones that match. Skip what does not exist.
+- **The code.** Where the change lands, its direct callers, and its tests. Stop at direct callers. `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
 
 ## 2. Shape
 
@@ -25,55 +22,61 @@ The change needs a refactor first when, without one, you would:
 - add a second way to do something the code already does
 - copy code to reach what you need
 - make a caller know what a module should hide (call order, internal state)
-- put logic where no test can reach it
+- put logic where no agreed seam can test it
 - work around a name, a type, or a module that no longer fits
 
-Pick the shape that hides the most from its callers, by `codebase-design`. Two good shapes and no clear winner: ask the person in one question with both options.
+Pick the shape that hides the most from its callers, by `codebase-design`. The spec already decided the modules and interfaces: follow it. The code fights the spec, or two shapes are equal and the spec does not choose: ask the person in one question with the options.
 
 Caring is not adding layers. Build for the use the code has today:
 
 - A new module must pass the deletion test: delete it in your head. If the complexity does not come back in its callers, it is a pass-through. Do not add it.
-- One adapter is a hypothetical seam. Add a seam only when two things vary across it, or a test needs it.
+- The seams are the ones the spec agreed. A seam it did not agree is a change to the spec: ask. With no spec, add a seam only when two things vary across it.
 - No option, parameter, or extension point that nothing uses yet.
 
-## 3. Refactor
+## 3. Refactor first
 
 Refactor the code the change lands in, as far as the change needs. Leave unrelated code alone.
 
-- **Behaviour stays.** A refactor changes no behaviour, public API, schema, config name, or UI. A change to any of those is part of the feature: ask the person before you make it.
+- **Behaviour stays.** A refactor changes no behaviour, public API, schema, config name, or UI. A change to any of those is part of the feature: the spec covers it, or you ask.
 - **ADRs win.** When the shape you want goes against an ADR, ask the person.
-- **Pin it first.** No test covers the behaviour you will move? Write one that pins what the code does today.
-- **Small steps.** Each leaves the tests green. Run them after each step.
-- **No leftovers.** Move every caller to the new shape and delete the old one in the same change. No compatibility layer for code only we call. Delete dead code you pass.
-- **Its own commit.** When you commit, the refactor goes first, as `refactor: <what>`, then the feature on top. A reviewer sees the same behaviour first, then the new behaviour.
+- **Pin it first.** No test covers the behaviour you will move? Write one at the agreed seam that pins what the code does today. Run it.
+- **Small steps.** Each leaves the tests green.
+- **No leftovers.** Move every caller to the new shape and delete the old one in the same change. No compatibility layer for code only we call. Delete dead code you pass. The exception: the ticket is one step of an expand-contract plan from `to-tickets`. Then the old shape stays until its contract ticket.
 
 ## 4. Build
 
-Build the feature on the new shape.
+Build the feature on the new shape with `tdd`, at the agreed seams: red, then green, one slice at a time. Without `tdd`, keep the same loop: a failing test through the interface, then the smallest code that passes it.
 
-The interface is the test surface. Test the behaviour you add or change through it, not through the inside. When you have to test past the interface, the shape is wrong: go back to 2. Behaviour you touched that had no test gets one. Delete tests that only pinned an inside that no longer exists.
+Tests go through the interface. When you have to test past it, the shape is wrong: go back to 2.
 
-## 5. Before you finish
+Run the typecheck and the test file you work in often. Run the full suite once at the end.
 
-Read your own diff and ask:
+## 5. Clean up
 
-- Is the code easier to change than before? If not, where did it get worse, and why?
-- Did you add a layer, a seam, or an option nothing uses yet? Remove it.
-- Did a comment cover a shortcut? Fix the cause, by `comment-root-cause`.
-- Did the change make a real decision (a new seam, a module split, a rejected shape)? Write the ADR in the same change, by the repo's `AGENTS.md`.
-- A new or renamed term? Update `GLOSSARY.md`.
+`tdd` leaves refactoring to the review. Do it here, while the code is fresh:
 
-Then say in one or two lines what you refactored and why, so the reviewer knows where to look.
+1. Read your own diff. Is the code easier to change than before? Where did it get worse?
+2. Fix that now, with the tests green, the behaviour the same, in the files the ticket changed.
+3. Did you add a layer, a seam, or an option nothing uses? Remove it.
+4. A comment that covers a shortcut: fix the cause, by `comment-root-cause`.
+
+## 6. Review and commit
+
+1. Run `code-review` on the diff. Fix every finding that is in the files the ticket changed. One that is not: name it in your summary, do not fix it.
+2. Did the change make a real decision (a new seam, a module split, a rejected shape)? Write the ADR in the same change, by the repo's `AGENTS.md`. A new or renamed term: update `GLOSSARY.md`.
+3. Commit to the current branch. The refactor first, as `refactor: <what>`, then the feature. A reviewer sees the same behaviour first, then the new behaviour.
+4. Say in one or two lines what you refactored and why, so the reviewer knows where to look.
 
 ## When the ticket is a refactor
 
 The ticket names the destination. The behaviour stays, so the tests are the contract:
 
 1. Pin the behaviour first, through the interface the callers use. Run it before you change anything.
-2. Shape it by 2: a deeper module, the deletion test, no speculative seams.
-3. Refactor by 3, in small green steps, until every caller uses the new shape and the old one is gone.
+2. Shape it by 2: a deeper module, the deletion test, no seams the spec did not agree.
+3. Refactor by 3, in small green steps, until every caller uses the new shape and the old one is gone, or until this expand-contract step is done.
 4. The pinning tests pass unchanged. A test you had to change pinned the inside, not the behaviour: say which.
+5. Then 6.
 
 ## Companion skills
 
-Call by exact name when installed: `codebase-design`, `comment-root-cause`. If one is missing, go on by these rules.
+Call by exact name with the Skill tool when installed: `tdd`, `code-review`, `codebase-design`, `comment-root-cause`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
