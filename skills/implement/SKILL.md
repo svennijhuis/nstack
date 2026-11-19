@@ -11,6 +11,7 @@ The ticket is the tactical goal. The codebase is the strategic one. A ticket is 
 - **Its spec.** The parent issue, the spec from `to-spec`, or the `docs/design/` folder from `tech-design`. Its Implementation Decisions, Testing Decisions, and seams are decided. They outrank your own shape choices.
 - **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the terms in `GLOSSARY.md` (or `CONTEXT.md`) the ticket uses, and the ADRs in `docs/adr/` that cover the code you will change. Titles first, then the ones that match. Skip what does not exist.
 - **The code.** Where the change lands, its direct callers, and its tests. Stop at direct callers. `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
+- **The start commit.** `git rev-parse HEAD`. The review reads the diff from here.
 
 ## 2. Shape
 
@@ -51,21 +52,31 @@ Tests go through the interface. When you have to test past it, the shape is wron
 
 Run the typecheck and the test file you work in often. Run the full suite once at the end.
 
-## 5. Clean up
+## 5. Review with fresh eyes
 
-`tdd` leaves refactoring to the review. Do it here, while the code is fresh:
+You wrote the code, so you do not judge it. Reviewers with a fresh context do, all at once:
 
-1. Read your own diff. Is the code easier to change than before? Where did it get worse?
-2. Fix that now, with the tests green, the behaviour the same, in the files the ticket changed.
-3. Did you add a layer, a seam, or an option nothing uses? Remove it.
-4. A comment that covers a shortcut: fix the cause, by `comment-root-cause`.
+- `code-review`: its Standards and Spec reviewers.
+- The design reviewer, by [design-review.md](references/design-review.md): is the code easier to change than before? `code-review` does not ask that.
 
-## 6. Review and commit
+Give each one only the diff from the start commit, the ticket, and the paths to the spec, the code standards, the ADRs, and the glossary. Not your plan, your reasoning, or what you think went well: that is the bias they are there to avoid. No subagent tool: say that the review is not independent, and run both by their files yourself.
 
-1. Run `code-review` on the diff. Fix every finding that is in the files the ticket changed. One that is not: name it in your summary, do not fix it.
-2. Did the change make a real decision (a new seam, a module split, a rejected shape)? Write the ADR in the same change, by the repo's `AGENTS.md`. A new or renamed term: update `GLOSSARY.md`.
+## 6. Fix
+
+`tdd` leaves refactoring to the review. This is that refactor:
+
+1. Fix every finding in the files the ticket changed, with the tests green and the behaviour the same.
+2. A finding outside those files: name it in your summary, do not fix it.
+3. A finding that goes against the spec or an ADR: the spec and the ADR win. Name it.
+4. A finding you think is wrong: say why in your summary. Never drop one silently.
+5. One review round. Run a second only when the fixes changed the shape, not for small edits.
+
+## 7. Commit
+
+1. Did the change make a real decision (a new seam, a module split, a rejected shape)? Write the ADR in the same change, by the repo's `AGENTS.md`. A new or renamed term: update `GLOSSARY.md`.
+2. Run the full suite and the typecheck.
 3. Commit to the current branch. The refactor first, as `refactor: <what>`, then the feature. A reviewer sees the same behaviour first, then the new behaviour.
-4. Say in one or two lines what you refactored and why, so the reviewer knows where to look.
+4. Say in a few lines what you refactored and why, which findings you fixed, and which you did not and why.
 
 ## When the ticket is a refactor
 
@@ -75,7 +86,7 @@ The ticket names the destination. The behaviour stays, so the tests are the cont
 2. Shape it by 2: a deeper module, the deletion test, no seams the spec did not agree.
 3. Refactor by 3, in small green steps, until every caller uses the new shape and the old one is gone, or until this expand-contract step is done.
 4. The pinning tests pass unchanged. A test you had to change pinned the inside, not the behaviour: say which.
-5. Then 6.
+5. Then 5 to 7.
 
 ## Companion skills
 

@@ -14,8 +14,9 @@ This skill tells them. It is how the agent implements, not a gate before it.
 2. **Shape**: what would this code look like if the requirement had been there from the start? The spec's decisions and seams outrank the agent's own taste.
 3. **Refactor first** where the change needs it: same behaviour, a pinning test at the agreed seam, small green steps, the old shape deleted.
 4. **Build** with `tdd` at the agreed seams. Typecheck and the test file often, the full suite at the end.
-5. **Clean up** the diff while it is fresh.
-6. **Review and commit**: `code-review`, fix what is in the ticket's files, ADR for a real decision, glossary for a new term. The refactor commit first, then the feature.
+5. **Review with fresh eyes.** The agent that wrote the code does not judge it. `code-review`'s Standards and Spec reviewers, plus a design reviewer that asks: is the code easier to change than before? Each gets only the diff, the ticket, and the paths to the spec and the docs. Not the plan or the reasoning.
+6. **Fix** the findings in the ticket's files, with the same behaviour. This is the refactor `tdd` leaves to the review. Findings outside the ticket, against the spec, or rejected are named, never dropped.
+7. **Commit**: ADR for a real decision, glossary for a new term. The refactor commit first, then the feature.
 
 Caring is not adding layers. A new module must pass the deletion test, a seam must be one the spec agreed, and nothing gets an option nobody uses yet.
 
@@ -23,7 +24,7 @@ It asks the person only for a behaviour or public contract change the spec does 
 
 ## Compared to Matt Pocock's `implement`
 
-His skill is the loop: fetch the ticket, `tdd` at the agreed seams, typecheck and tests, `code-review`, commit. This skill keeps that loop and adds the strategic part. That matters because in his chain refactoring falls between two skills: `tdd` leaves it to the review, and `code-review` only reports smells. Here the agent refactors before the feature to make room, and cleans up after it.
+His skill is the loop: fetch the ticket, `tdd` at the agreed seams, typecheck and tests, `code-review`, commit. This skill keeps that loop and adds the strategic part. That matters because in his chain refactoring falls between two skills: `tdd` leaves it to the review, and `code-review` only reports smells. Here the agent refactors before the feature to make room, and after it applies what the reviewers find. A third reviewer checks the design, because `code-review` checks standards and the spec, not whether the code got easier to change.
 
 Both are named `implement`. Install one of them.
 
