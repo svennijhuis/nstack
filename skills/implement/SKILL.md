@@ -14,10 +14,12 @@ Be the colleague who says "we need to refactor this first", out loud and before 
 
 ## Start
 
-1. Say the goal and the smallest change that meets it, in one line. No acceptance criteria in the work: write them, one checkable line each, and say them. A behaviour choice they need that the work does not make: ask, by Decide, or ask.
-2. Pick one playbook. Read only that one.
-3. Copy its steps into your todo list, and tick them off as you go.
-4. A companion skill is missing: read [fallbacks.md](references/fallbacks.md) once.
+1. On the default branch: make a branch now, before any edit.
+2. Say the goal and the smallest change that meets it, in one line.
+3. The work has no acceptance criteria: write them, one checkable line each, in the language the person wrote in (a Dutch prompt gets Dutch criteria), and say them before any code. A behaviour choice they need that the work does not make: ask, by Decide, or ask.
+4. Pick one playbook. Read only that one.
+5. Copy its steps into your todo list, and tick them off as you go.
+6. A companion skill is missing: read [fallbacks.md](references/fallbacks.md) once.
 
 | The ticket | Playbook |
 | --- | --- |
@@ -25,7 +27,7 @@ Be the colleague who says "we need to refactor this first", out loud and before 
 | Too slow, against a number | [perf](playbooks/perf.md) |
 | One step of an expand-contract plan | [migration-step](playbooks/migration-step.md) |
 | Changes structure only, no new behaviour | [refactor](playbooks/refactor.md) |
-| A text, a value, or one line, and no shape signal in 2 | [small-change](playbooks/small-change.md) |
+| Changes an existing text or value, adds nothing new, and no shape signal in 2 | [small-change](playbooks/small-change.md) |
 | Adds or changes behaviour | [feature](playbooks/feature.md) |
 
 The first row that fits wins. A small change that hits a shape signal is a feature. The ticket writes stored state (create, update, delete, a status change) and `verify-flow` is installed: add [stored-state](references/stored-state.md) to any playbook.
@@ -34,11 +36,11 @@ The playbooks name the shared steps below. Do them as written here. Review alway
 
 ## 1. Read
 
-- **The work.** A reference (a ticket number, a PBI or work item id, a link): fetch it by `docs/agents/issue-tracker.md`, from `.scratch/<feature>/issues/`, or with the tracker's CLI or connector when one is set up. It matches more than one: ask which. Pasted text or a prompt is the work itself. Say its title, or your one-line name for a prompt. Keep the person's language for the criteria; write code and commits in the repo's language.
+- **The work.** A reference (a ticket number, a PBI or work item id, a link): fetch it by `docs/agents/issue-tracker.md`, from `.scratch/<feature>/issues/`, or with the tracker's CLI or connector when one is set up. It matches more than one: ask which. Pasted text or a prompt is the work itself. Say its title, or your one-line name for a prompt. Code and commits stay in the repo's language.
 - **Its spec**, only the one the ticket names or its parent. Its decisions outrank your taste. A spec the ticket does not name does not bind it. Where its decisions sit: [spec.md](references/spec.md).
 - **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the glossary terms the ticket uses (`GLOSSARY.md`, `CONTEXT.md`, or by `GLOSSARY-MAP.md`), the ADRs whose titles match the code you change.
 - **The code.** Where the change lands, its direct callers, their tests. Stop there. `git log --oneline -20 -- <files>`.
-- **Git.** On the default branch: branch first. Note the start commit. Never push.
+- **Git.** Note the start commit. Never push.
 
 ## 2. Shape
 
