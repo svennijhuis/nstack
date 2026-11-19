@@ -14,8 +14,7 @@ How a prep refactor runs, and how it stops.
 2. Refactor in the smallest steps that each leave the tests green. Run the tests after each step.
 3. Move every caller to the new interface and delete the old one in the same change. No compatibility layer for code only we call.
 4. Test at the interface, not the inside. Delete tests that only pinned the old inside.
-5. The refactor touches a resource with a model in `docs/verify-flow/`: run the `verify-flow` triage on the refactor diff alone. It must be `skip`, by its question 4. Anything else is a tripwire.
-6. One commit: `refactor: <what>, to make room for <ticket>`. Then the ticket in its own commit on top.
+5. One commit: `refactor: <what>, to make room for <ticket>`. Then the ticket in its own commit on top.
 
 Never push. Never amend or rebase a commit you did not make in this session.
 
@@ -27,7 +26,6 @@ Stop the refactor the moment one fires:
 - The tests fail twice in a row on the same step.
 - It needs a behaviour choice, a public contract change, or goes against an ADR.
 - The diff is past twice the size the card planned.
-- The `verify-flow` triage of the refactor diff is not `skip`.
 - The person says stop.
 
 Do not fix forward. Go to [Stop](#stop).

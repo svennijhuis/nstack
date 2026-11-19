@@ -30,8 +30,7 @@ Set a default in a repo's `AGENTS.md` under Rules: `care-for-the-code: no-refact
 ## With the other nstack skills
 
 - `tech-design` makes the tickets. This skill runs on each one, and sends what is too big back as a ticket or a spec.
-- `verify-flow` checks the stored state. The card names the resource and its other writers, so `verify-flow` does not trace them again. A refactor must leave its model as it is: its triage on the refactor diff must be `skip`. When its triage is `full`, there is no prep refactor in the same session. Order: [verify-flow.md](../../../skills/care-for-the-code/references/verify-flow.md).
 - `align-code` is for a second way to do something across the codebase. This skill flags it on one ticket.
 - `setup-agents-md` owns the ADRs and the glossary this skill reads and adds to.
 
-Uses `codebase-design`, `grilling`, `domain-modeling`, `align-code`, `tech-design`, `comment-root-cause`, and `verify-flow`. `/setup-nstack-skills` installs the external ones.
+Uses `codebase-design`, `grilling`, `domain-modeling`, `align-code`, `tech-design`, and `comment-root-cause`. `/setup-nstack-skills` installs the external ones.

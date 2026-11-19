@@ -37,21 +37,11 @@ A default may be set in `AGENTS.md` under Rules: `care-for-the-code: no-refactor
    - `too big`: route it by [follow-up.md](references/follow-up.md). Then build the ticket no worse, unless the person picks another option.
 4. **Before you finish:** did the ticket leave the code worse anywhere? Say where, or fix it.
 
-With `verify-flow` installed and a `State:` line that names a resource, the ticket runs in this order. See [verify-flow.md](references/verify-flow.md).
-
-1. `care-for-the-code` check: the card.
-2. `/verify-flow before <resource>`: its triage reuses the writers on the card.
-3. The prep refactor, if any. Not in this session when the triage is `full`.
-4. The ticket.
-5. `/verify-flow after <resource>`.
-6. Step 4 above: no worse.
-
 ### The card
 
 ```text
 care-for-the-code (<mode>): <ticket>
 Landing zone: <modules>
-State: writes <resource>, other writers: <files, jobs, caches, or none> | none
 Findings:
 - <finding>: <files>. Source: <source>.
 Verdict: fits | prep refactor | too big
@@ -68,7 +58,7 @@ Plan: <the refactor in one line, then the ticket>. Or: <route: ticket | spec, an
 
 ## Sessions
 
-- **One refactor per session.** A prep refactor and the ticket share a session only when both are small, and the `verify-flow` triage is not `full`. Otherwise commit the refactor, write the [handoff](references/follow-up.md#handoff), and stop. The next session builds the ticket on a clean context.
+- **One refactor per session.** A prep refactor and the ticket share a session only when both are small. Otherwise commit the refactor, write the [handoff](references/follow-up.md#handoff), and stop. The next session builds the ticket on a clean context.
 - **State lives in git and on disk**, never only in chat: the refactor commit, the stash, the follow-up file.
 
 ## When the ticket is a refactor
@@ -87,4 +77,4 @@ The ticket names the destination: a deeper module, same behaviour. The size rule
 
 ## Companion skills
 
-Call by exact name: `codebase-design`, `grilling`, `domain-modeling`, `align-code`, `tech-design`, `comment-root-cause`, `verify-flow`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+Call by exact name: `codebase-design`, `grilling`, `domain-modeling`, `align-code`, `tech-design`, `comment-root-cause`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
