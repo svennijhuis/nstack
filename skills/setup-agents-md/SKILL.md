@@ -13,7 +13,7 @@ A steering file loads on every request. Every line costs tokens and attention, a
 
 **Decisions live in the repo they change.** ADRs, the glossary, and topic docs go in that repo, never in the home repo. The home repo holds only decisions about itself. See [home-repo.md](references/home-repo.md).
 
-**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Where the code has none, it comes from the person, by [Commands](#commands-by-default). Every rule comes from the person or a doc that is already there. The only fixed text is the Docs and Decisions sections in [templates.md](references/templates.md).
+**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Where the code has none, it comes from the person, by [Commands](#commands-by-default). Every rule comes from the person or a doc that is already there. The only fixed text is the Docs, Changes, and Decisions sections in [templates.md](references/templates.md).
 
 **Never push.** Commit on a local branch, one per repo. The person pushes.
 
