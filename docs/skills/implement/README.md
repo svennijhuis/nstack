@@ -8,6 +8,21 @@ Agents are trained on tactical work: solve the problem in front of you. Left alo
 
 This skill tells them. It is how the agent implements, not a gate before it. Every ticket leaves the code it touches deeper, better tested, free of comments that cover shortcuts (by `comment-root-cause`), and in the words of the glossary and the ADRs. Before it writes code, the agent says its call out loud: refactor first, and why, or fits as it is. At the end it names up to three places outside the ticket where a module should be deeper or tests are missing, scored like `improve-codebase-architecture`, so you can pick one.
 
+## Playbooks
+
+Like pstack's `poteto-mode`, the agent picks one playbook for the kind of ticket, copies its steps into a todo list, and reads only that playbook. The shared steps (read, shape, refactor first, build, review, fix, finish) sit once in `SKILL.md`. Each playbook has its own Reply: what its summary must show.
+
+| Playbook | For | Its own proof |
+| --- | --- | --- |
+| `bug-fix` | something is broken | red reproduction first, the cause and the commit that caused it |
+| `perf` | too slow, against a number | baseline and result with the same command |
+| `migration-step` | one step of an expand-contract plan | old callers still work; contract only when no caller is left |
+| `refactor` | structure only | the pin passes unchanged, old-against-new run, easier to read or revert |
+| `small-change` | a text, a value, one line | a test that pins it, one reviewer |
+| `feature` | new or changed behaviour | the call, what was refactored for it, red then green |
+
+A ticket that writes stored state also runs `verify-flow`, on top of any playbook.
+
 ## How it works
 
 1. **Read** the ticket (from the tracker or from `to-tickets`' local files), its spec (`to-spec` or `tech-design`), `AGENTS.md`, the code standards, the glossary, the ADRs that cover the change, and the code it lands in.

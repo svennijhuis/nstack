@@ -179,6 +179,11 @@ cp -r base matt && (cd matt && printf '@AGENTS.md\n\n## Agent skills\n\n### Issu
   && git add -A && g commit -qm "matt setup and tickets")
 cp -r matt advise
 
+# perf: a quadratic duplicate finder
+cp -r base perf && (cd perf && printf 'def duplicate_names(names: list[str]) -> list[str]:\n    dups: list[str] = []\n    for i, a in enumerate(names):\n        for b in names[i + 1:]:\n            if a == b and a not in dups:\n                dups.append(a)\n    return dups\n' > shop/catalog.py \
+  && printf 'from shop.catalog import duplicate_names\n\n\ndef test_duplicate_names():\n    assert duplicate_names(["a", "b", "a", "c", "b"]) == ["a", "b"]\n' > tests/test_catalog.py \
+  && git add -A && g commit -qm catalog)
+
 # comment: a suppression and a TODO that hide floats in money, on a line the ticket edits
 cp -r base comment && (cd comment && printf 'from shop.pricing import price_cents\n\n\ndef receipt_total(total_cents: int, tier: str) -> str:\n    cents = price_cents(total_cents, tier) * 1.0  # type: ignore  # TODO: why is this a float?\n    return "Total: EUR %%d.%%02d" %% (cents // 100, cents %% 100)\n' > shop/receipt.py \
   && git add -A && g commit -qm "receipt")

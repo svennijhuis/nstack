@@ -1,6 +1,6 @@
 ---
 name: implement
-description: Use when you implement a ticket, issue, spec, feature, or bug fix in code. Builds it so the codebase gets better, not worse: refactors first where the change needs it, builds test-first, gets an independent review, and proves it works.
+description: Use when you implement a ticket, issue, spec, feature, bug fix, refactor, migration step, or performance fix in code. Picks the playbook for the kind of ticket and builds it so the codebase gets better, not worse: refactors first where the change needs it, builds test-first, gets an independent review, and proves it works.
 ---
 
 The ticket is the tactical goal. The codebase is the strategic one. Make the change easy, then make the easy change. Every ticket leaves the code it touches:
@@ -12,17 +12,33 @@ The ticket is the tactical goal. The codebase is the strategic one. Make the cha
 
 Be the colleague who says "we need to refactor this first", out loud and before the code. One ticket per session.
 
-A companion skill below is missing: read [fallbacks.md](references/fallbacks.md) once, and follow it for each missing one.
+## Start
+
+1. Say the ticket's goal and the smallest change that meets it, in one line.
+2. Pick one playbook. Read only that one.
+3. Copy its steps into your todo list, and tick them off as you go.
+4. A companion skill is missing: read [fallbacks.md](references/fallbacks.md) once.
+
+| The ticket | Playbook |
+| --- | --- |
+| Something is broken | [bug-fix](playbooks/bug-fix.md) |
+| Too slow, against a number | [perf](playbooks/perf.md) |
+| One step of an expand-contract plan | [migration-step](playbooks/migration-step.md) |
+| Changes structure only, no new behaviour | [refactor](playbooks/refactor.md) |
+| A text, a value, or one line, and no shape signal in 2 | [small-change](playbooks/small-change.md) |
+| Adds or changes behaviour | [feature](playbooks/feature.md) |
+
+The first row that fits wins. A small change that hits a shape signal is a feature. The ticket writes stored state (create, update, delete, a status change) and `verify-flow` is installed: add [stored-state](references/stored-state.md) to any playbook.
+
+The playbooks name the shared steps below. Do them as written here.
 
 ## 1. Read
 
 - **The ticket.** A reference: fetch it by `docs/agents/issue-tracker.md`, or from `.scratch/<feature>/issues/`. Say its title. It matches more than one: ask which.
-- **Its spec**, only the one the ticket names or its parent. Its decisions outrank your taste. A spec the ticket does not name does not bind it. Which sections hold decisions: [spec.md](references/spec.md).
+- **Its spec**, only the one the ticket names or its parent. Its decisions outrank your taste. A spec the ticket does not name does not bind it. Where its decisions sit: [spec.md](references/spec.md).
 - **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the glossary terms the ticket uses (`GLOSSARY.md`, `CONTEXT.md`, or by `GLOSSARY-MAP.md`), the ADRs whose titles match the code you change.
 - **The code.** Where the change lands, its direct callers, their tests. Stop there. `git log --oneline -20 -- <files>`.
 - **Git.** On the default branch: branch first. Note the start commit. Never push.
-
-A bug: [bug.md](references/bug.md) before 2. A ticket that is itself a refactor: [refactor-ticket.md](references/refactor-ticket.md). Stored state written and `verify-flow` installed: [stored-state.md](references/stored-state.md).
 
 ## 2. Shape
 
@@ -42,7 +58,7 @@ Caring is not adding layers. No new module that fails the deletion test (deletin
 
 ## 3. Refactor first
 
-Only the code the change lands in. Same behaviour, API, schema, and UI. Pin untested behaviour first, then small green steps. Move every caller and delete the old shape, unless the ticket is an expand step. Commit it green as `refactor: <what>` before you build.
+Only the code the change lands in. Same behaviour, API, schema, and UI. Pin untested behaviour first through the callers' interface, then small green steps. Move every caller and delete the old shape. Commit it green as `refactor: <what>`.
 
 ## 4. Build
 
@@ -69,8 +85,8 @@ No subagent tool: say the review is not independent, and run both yourself.
 
 1. A real decision: an ADR. A new term: the glossary. Both by `AGENTS.md`, in the same change.
 2. Full suite and typecheck. Then run the real thing the ticket changed and read its output: green tests are not the proof.
-3. Commit the feature on top of the refactor commit.
-4. Summary, by [finish.md](references/finish.md): the call, the safety fact, `/blast-radius` or not, findings, what you saw outside the ticket.
+3. Commit on top of the refactor commit.
+4. The reply: the playbook's Reply line, then the shared summary in [finish.md](references/finish.md).
 
 ## Decide, or ask
 
