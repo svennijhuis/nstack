@@ -13,6 +13,7 @@ Read what exists, skip what does not:
 - `GLOSSARY.md` (or `CONTEXT.md`): the terms the ticket uses.
 - The ADRs in `docs/adr/`: titles first, then the ones that cover the code you will change.
 - The code the change lands in, its direct callers, and its tests. Stop at direct callers.
+- `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
 
 ## 2. Shape
 
@@ -29,6 +30,12 @@ The change needs a refactor first when, without one, you would:
 
 Pick the shape that hides the most from its callers, by `codebase-design`. Two good shapes and no clear winner: ask the person in one question with both options.
 
+Caring is not adding layers. Build for the use the code has today:
+
+- A new module must pass the deletion test: delete it in your head. If the complexity does not come back in its callers, it is a pass-through. Do not add it.
+- One adapter is a hypothetical seam. Add a seam only when two things vary across it, or a test needs it.
+- No option, parameter, or extension point that nothing uses yet.
+
 ## 3. Refactor
 
 Refactor the code the change lands in, as far as the change needs. Leave unrelated code alone.
@@ -42,18 +49,30 @@ Refactor the code the change lands in, as far as the change needs. Leave unrelat
 
 ## 4. Build
 
-Build the feature on the new shape. Test at the module's interface, not its inside. Delete tests that only pinned an inside that no longer exists.
+Build the feature on the new shape.
+
+The interface is the test surface. Test the behaviour you add or change through it, not through the inside. When you have to test past the interface, the shape is wrong: go back to 2. Behaviour you touched that had no test gets one. Delete tests that only pinned an inside that no longer exists.
 
 ## 5. Before you finish
 
 Read your own diff and ask:
 
 - Is the code easier to change than before? If not, where did it get worse, and why?
+- Did you add a layer, a seam, or an option nothing uses yet? Remove it.
 - Did a comment cover a shortcut? Fix the cause, by `comment-root-cause`.
 - Did the change make a real decision (a new seam, a module split, a rejected shape)? Write the ADR in the same change, by the repo's `AGENTS.md`.
 - A new or renamed term? Update `GLOSSARY.md`.
 
 Then say in one or two lines what you refactored and why, so the reviewer knows where to look.
+
+## When the ticket is a refactor
+
+The ticket names the destination. The behaviour stays, so the tests are the contract:
+
+1. Pin the behaviour first, through the interface the callers use. Run it before you change anything.
+2. Shape it by 2: a deeper module, the deletion test, no speculative seams.
+3. Refactor by 3, in small green steps, until every caller uses the new shape and the old one is gone.
+4. The pinning tests pass unchanged. A test you had to change pinned the inside, not the behaviour: say which.
 
 ## Companion skills
 

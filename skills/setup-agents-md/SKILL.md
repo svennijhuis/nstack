@@ -121,6 +121,10 @@ When the repo already has a standards file elsewhere, such as a language file un
 
 The root file of every repo but a home repo always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths. The section stays when `docs/adr/` does not exist yet: the first ADR creates the folder. That path is not drift.
 
+## The change rules
+
+The root file of every repo but a home repo carries the Changes section from [templates.md](references/templates.md), so every agent that changes code leaves it no worse, also without the `implement` skill. Change nothing in it.
+
 ## With the other nstack skills
 
 Each one is optional. This skill works alone in any repo.

@@ -33,6 +33,7 @@
 | A style rule a linter or formatter could check | low |
 | Obvious advice, vague rules, or ALL-CAPS commands | low |
 | No Decisions section | medium |
+| No Changes section | low |
 | A `Designs in progress` line and no open design | low |
 
 ### Docs

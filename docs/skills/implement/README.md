@@ -13,8 +13,10 @@ This skill tells them. It is how the agent implements, not a gate before it: no 
 1. **Read** `AGENTS.md`, the code standards, the glossary, the ADRs that cover the change, and the code it lands in.
 2. **Shape**: what would this code look like if the requirement had been there from the start?
 3. **Refactor** where the change needs it: same behaviour, a pinning test first, small green steps, old shape deleted, its own commit before the feature.
-4. **Build** the feature on the new shape.
-5. **Check the diff**: is the code easier to change than before? ADR for a real decision, glossary for a new term.
+4. **Build** the feature on the new shape, tested through its interface.
+5. **Check the diff**: is the code easier to change than before? No layer nothing uses. ADR for a real decision, glossary for a new term.
+
+Caring is not adding layers. A new module must pass Matt Pocock's deletion test, and a seam needs two things that vary across it. When the ticket is itself a refactor, the pinning tests are the contract: they pass unchanged.
 
 It asks the person only for a behaviour or public contract change, a conflict with an ADR, or two equal shapes.
 

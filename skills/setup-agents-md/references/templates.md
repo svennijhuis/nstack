@@ -49,7 +49,8 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 ## Changes
 
 - Leave the code you touch no worse. Follow the shape it already has. Do not add a second way to do something the code already does.
-- When the change needs a refactor to fit, do it first, with the same behaviour, as its own commit before the change.
+- When the change needs a refactor to fit, do it first, with the same behaviour. When you commit, the refactor is its own commit before the change.
+- Build for the use the code has today. No layer, seam, or option that nothing uses yet.
 
 ## Decisions
 
