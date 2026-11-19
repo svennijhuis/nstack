@@ -1,17 +1,19 @@
 ---
 name: implement
-description: Use when you implement a ticket, issue, spec, feature, or fix in code. Builds it so the codebase gets better over time, not worse. Reads the ticket and its spec, shapes the code the change lands in as if the requirement had been there from the start, refactors where the change needs it, builds with tdd at the agreed seams, and ends with a review and a commit.
+description: Use when you implement a ticket, issue, spec, feature, or bug fix in code. Builds it so the codebase gets better over time, not worse. Reads the ticket and its spec, shapes the code the change lands in as if the requirement had been there from the start, refactors where the change needs it, builds with tdd at the agreed seams, proves it works, and ends with an independent review and a commit.
 ---
 
 The ticket is the tactical goal. The codebase is the strategic one. A ticket is not done when it works but leaves the code harder to change. Make the change easy, then make the easy change.
 
 ## 1. Read
 
-- **The ticket.** A ticket reference: fetch it from the issue tracker, or from `.scratch/<feature>/issues/` when `to-tickets` wrote local files. Say its title before you start. A reference that matches more than one ticket: ask which.
+- **The ticket.** A ticket reference: fetch it from the issue tracker, by `docs/agents/issue-tracker.md` when it exists, or from `.scratch/<feature>/issues/` when `to-tickets` wrote local files. Say its title before you start. A reference that matches more than one ticket: ask which.
 - **Its spec.** Only the spec the ticket names or links, or its parent issue: from `to-spec`, or a `docs/design/` folder from `tech-design`. Its Implementation Decisions, Testing Decisions, and seams are decided. They outrank your own shape choices. A spec the ticket does not name is not its spec, even when it is about the same code: its decisions do not bind this ticket. No spec: say so, and go on without one.
-- **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the terms in `GLOSSARY.md` (or `CONTEXT.md`) the ticket uses, and the ADRs in `docs/adr/` that cover the code you will change. Titles first, then the ones that match. Skip what does not exist.
+- **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the terms in `GLOSSARY.md` (or `CONTEXT.md`, or the context's glossary that `GLOSSARY-MAP.md` points at) the ticket uses, and the ADRs in `docs/adr/` that cover the code you will change. Titles first, then the ones that match. Skip what does not exist.
 - **The code.** Where the change lands, its direct callers, and its tests. Stop at direct callers. `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
 - **The start commit.** `git rev-parse HEAD`. The review reads the diff from here.
+
+**A bug ticket** goes through `diagnosing-bugs` first: a command that goes red on the bug, then the cause, then a regression test at the right seam. Then shape the fix by 2 and go on from 3. Without `diagnosing-bugs`, keep that order: no fix before a red reproduction.
 
 ## 2. Shape
 
@@ -37,6 +39,8 @@ Caring is not adding layers. Build for the use the code has today:
 - The ticket's spec agreed its seams. A new seam it did not agree is a change to the spec: ask. With no spec, add a seam only when two things vary across it.
 - No option, parameter, or extension point that nothing uses yet.
 
+**Stored state.** When the ticket writes stored state (create, update, delete, a status change) and `verify-flow` is installed, run `verify-flow before <resource>` now, on the shape. Its invariants and planned tests join the ticket's tests.
+
 ## 3. Refactor first
 
 Refactor the code the change lands in, as far as the change needs. Leave unrelated code alone.
@@ -56,6 +60,8 @@ Tests go through the interface. When you have to test past it, the shape is wron
 
 Run the typecheck and the test file you work in often. Run the full suite once at the end.
 
+With `verify-flow before` run in 2: run `verify-flow after <resource>` once the feature is green, before the review.
+
 ## 5. Review with fresh eyes
 
 You wrote the code, so you do not judge it. Reviewers with a fresh context do, all at once:
@@ -69,18 +75,21 @@ Give each one only the diff from the start commit, the ticket, and the paths to 
 
 `tdd` leaves refactoring to the review. This is that refactor:
 
-1. Fix every finding in the files the ticket changed, with the tests green and the behaviour the same. A fix to the feature's own code goes in the feature commit. A fix to code the feature did not add goes in its own `refactor:` commit.
-2. A finding outside those files: name it in your summary, do not fix it.
-3. A finding that goes against the spec or an ADR: the spec and the ADR win. Name it.
-4. A finding you think is wrong: say why in your summary. Never drop one silently.
-5. One review round. Run a second only when the fixes changed the shape, not for small edits.
+1. **A finding that claims a bug** counts only when it is proven: write a test that fails on it, or run the command that shows it. It does not fail: drop it and name it. It fails: the test stays as a regression test, then fix it.
+2. Fix every other finding in the files the ticket changed, with the tests green and the behaviour the same. A fix to the feature's own code goes in the feature commit. A fix to code the feature did not add goes in its own `refactor:` commit.
+3. A finding outside those files: name it in your summary, do not fix it.
+4. A finding that goes against the spec or an ADR: the spec and the ADR win. Name it.
+5. A finding you think is wrong: say why in your summary. Never drop one silently.
+6. One review round. Run a second only when the fixes changed the shape, not for small edits.
 
 ## 7. Commit
 
 1. Did the change make a real decision (a new seam, a module split, a rejected shape)? Write the ADR in the same change, by the repo's `AGENTS.md`. A new or renamed term: update `GLOSSARY.md`.
 2. Run the full suite and the typecheck.
-3. Commit the feature to the current branch, on top of the refactor commit. A reviewer sees the same behaviour first, then the new behaviour.
-4. Say in a few lines what you refactored and why, which findings you fixed, and which you did not and why.
+3. **Prove it works.** Green tests are not the proof. Run the real thing the ticket changed (the command, the endpoint, the page, the function from a script) and read the actual output. A file date, a log line you wrote, or "it compiles" is no proof. When the check fails, suspect the check first, then the code.
+4. **Name the safety fact**: the one fact the change is safe because of (for a refactor: the pinning tests pass unchanged), and how you proved it, or that you could not. The change touches shared code, a public contract, stored data, a wire format, or a feature flag: suggest `/blast-radius` to the person before merge.
+5. Commit the feature to the current branch, on top of the refactor commit. A reviewer sees the same behaviour first, then the new behaviour.
+6. Say in a few lines what you refactored and why, the safety fact, which findings you fixed, and which you did not and why. When you open a pull request, shape its body by `pr`.
 
 ## Decide, or ask
 
@@ -104,4 +113,6 @@ The ticket names the destination. The behaviour stays, so the tests are the cont
 
 ## Companion skills
 
-Call by exact name with the Skill tool when installed: `tdd`, `code-review`, `codebase-design`, `comment-root-cause`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+Call by exact name with the Skill tool when installed: `tdd`, `code-review`, `codebase-design`, `comment-root-cause`, `diagnosing-bugs`, `pr`, `verify-flow`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+
+`blast-radius` runs only when the person types it: suggest it, never call it.

@@ -178,4 +178,4 @@ At the repo root. Only terms whose meaning is special to this project.
 - **<Term>**: <what it means here>. Not <the meaning people might assume>.
 ```
 
-When the repo has a `CONTEXT.md` that holds the terms, keep that name. Do not rename a file other tools or skills read.
+When the repo has a `CONTEXT.md` that holds the terms, keep that name. Do not rename a file other tools or skills read. A repo with `GLOSSARY-MAP.md` has one glossary per context: point the Terms line at the map.

@@ -16,7 +16,9 @@ This skill tells them. It is how the agent implements, not a gate before it.
 4. **Build** with `tdd` at the agreed seams. Typecheck and the test file often, the full suite at the end.
 5. **Review with fresh eyes.** The agent that wrote the code does not judge it. `code-review`'s Standards and Spec reviewers, plus a design reviewer that asks: is the code easier to change than before? Each gets only the diff, the ticket, and the paths to the spec and the docs. Not the plan or the reasoning.
 6. **Fix** the findings in the ticket's files, with the same behaviour. This is the refactor `tdd` leaves to the review. Findings outside the ticket, against the spec, or rejected are named, never dropped.
-7. **Commit**: ADR for a real decision, glossary for a new term. The refactor commit first, then the feature.
+7. **Commit**: ADR for a real decision, glossary for a new term. Prove it works by running the real thing, not only the tests, and name the one fact the change is safe because of. The refactor commit first, then the feature. A pull request body by `pr`.
+
+A bug ticket starts with `diagnosing-bugs`: a red reproduction before any fix. A ticket that writes stored state runs `verify-flow` before and after, when it is installed. A finding that claims a bug counts only with a failing test, as in pstack's `interrogate`. A risky change gets a suggestion to run pstack's `blast-radius` before merge.
 
 Caring is not adding layers. A new module must pass the deletion test, a seam must be one the spec agreed, and nothing gets an option nobody uses yet.
 
@@ -38,4 +40,4 @@ Matt Pocock's flow: `wayfinder`, then `to-spec`, then `to-tickets`, then this sk
 - `align-code` is for a second way to do something across the whole codebase.
 - `comment-root-cause` fixes the cause behind a comment that covers a shortcut.
 
-Uses `tdd`, `code-review`, `codebase-design`, and `comment-root-cause`. `/setup-nstack-skills` installs the external ones.
+Uses `tdd`, `code-review`, `codebase-design`, `comment-root-cause`, `diagnosing-bugs`, `pr`, and `verify-flow`, and suggests `blast-radius`. `/setup-nstack-skills` installs the external ones.

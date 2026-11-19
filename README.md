@@ -70,8 +70,9 @@ install them. The list is in
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
-- `implement` uses `tdd`, `code-review`, `codebase-design`, and
-  `comment-root-cause`.
+- `implement` uses `tdd`, `code-review`, `codebase-design`,
+  `comment-root-cause`, `diagnosing-bugs`, `pr`, and `verify-flow` when it is
+  installed, and suggests `blast-radius`.
 
 ## Install
 
