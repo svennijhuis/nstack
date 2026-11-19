@@ -178,6 +178,8 @@ cp -r base matt && (cd matt && printf '@AGENTS.md\n\n## Agent skills\n\n### Issu
   && printf '# Gold note\n\nStatus: ready-for-agent\n' > .scratch/loyalty/issues/01-gold-note.md \
   && git add -A && g commit -qm "matt setup and tickets")
 cp -r matt advise
+cp -r base prompt
+cp -r base pbi
 
 # perf: a quadratic duplicate finder
 cp -r base perf && (cd perf && printf 'def duplicate_names(names: list[str]) -> list[str]:\n    dups: list[str] = []\n    for i, a in enumerate(names):\n        for b in names[i + 1:]:\n            if a == b and a not in dups:\n                dups.append(a)\n    return dups\n' > shop/catalog.py \

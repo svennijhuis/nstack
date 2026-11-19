@@ -1,9 +1,9 @@
 ---
 name: implement
-description: Use when you implement a ticket, issue, spec, feature, bug fix, refactor, migration step, or performance fix in code. Picks the playbook for the kind of ticket and builds it so the codebase gets better, not worse: refactors first where the change needs it, builds test-first, gets an independent review, and proves it works.
+description: Use when you implement code from a ticket, issue, PBI, user story, work item, spec, or a plain prompt: a feature, bug fix, refactor, migration step, or performance fix. Picks the playbook for the kind of ticket and builds it so the codebase gets better, not worse: refactors first where the change needs it, builds test-first, gets an independent review, and proves it works.
 ---
 
-The ticket is the tactical goal. The codebase is the strategic one. Make the change easy, then make the easy change. Every ticket leaves the code it touches:
+The ticket is the tactical goal. The codebase is the strategic one. A ticket here is any piece of work: a tracker ticket, a team's PBI or user story, or a plain prompt. Make the change easy, then make the easy change. Every ticket leaves the code it touches:
 
 - **deeper**: modules that hide more behind a smaller interface
 - **better tested**: behaviour you touch has a test through its interface
@@ -14,7 +14,7 @@ Be the colleague who says "we need to refactor this first", out loud and before 
 
 ## Start
 
-1. Say the ticket's goal and the smallest change that meets it, in one line.
+1. Say the goal and the smallest change that meets it, in one line. No acceptance criteria in the work: write them, one checkable line each, and say them. A behaviour choice they need that the work does not make: ask, by Decide, or ask.
 2. Pick one playbook. Read only that one.
 3. Copy its steps into your todo list, and tick them off as you go.
 4. A companion skill is missing: read [fallbacks.md](references/fallbacks.md) once.
@@ -30,11 +30,11 @@ Be the colleague who says "we need to refactor this first", out loud and before 
 
 The first row that fits wins. A small change that hits a shape signal is a feature. The ticket writes stored state (create, update, delete, a status change) and `verify-flow` is installed: add [stored-state](references/stored-state.md) to any playbook.
 
-The playbooks name the shared steps below. Do them as written here.
+The playbooks name the shared steps below. Do them as written here. Review always runs by [design-review.md](references/design-review.md), and the reply always follows [finish.md](references/finish.md): read both when you get there, never work them from memory.
 
 ## 1. Read
 
-- **The ticket.** A reference: fetch it by `docs/agents/issue-tracker.md`, or from `.scratch/<feature>/issues/`. Say its title. It matches more than one: ask which.
+- **The work.** A reference (a ticket number, a PBI or work item id, a link): fetch it by `docs/agents/issue-tracker.md`, from `.scratch/<feature>/issues/`, or with the tracker's CLI or connector when one is set up. It matches more than one: ask which. Pasted text or a prompt is the work itself. Say its title, or your one-line name for a prompt. Keep the person's language for the criteria; write code and commits in the repo's language.
 - **Its spec**, only the one the ticket names or its parent. Its decisions outrank your taste. A spec the ticket does not name does not bind it. Where its decisions sit: [spec.md](references/spec.md).
 - **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the glossary terms the ticket uses (`GLOSSARY.md`, `CONTEXT.md`, or by `GLOSSARY-MAP.md`), the ADRs whose titles match the code you change.
 - **The code.** Where the change lands, its direct callers, their tests. Stop there. `git log --oneline -20 -- <files>`.
@@ -66,7 +66,7 @@ Only the code the change lands in. Same behaviour, API, schema, and UI. Pin unte
 
 ## 5. Review with fresh eyes
 
-You do not judge your own code. Start at once, each in a fresh subagent, given only the diff from the start commit, the ticket, and the paths to the spec and the docs, never your reasoning:
+You do not judge your own code. Start at once, each in a fresh subagent, given only the diff from the start commit, the work as given, the acceptance criteria, and the paths to the spec and the docs, never your reasoning:
 
 - `code-review`: Standards and Spec
 - the design reviewer: [design-review.md](references/design-review.md)

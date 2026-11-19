@@ -7,7 +7,7 @@ It runs in a subagent with a fresh context. It did not write the code and does n
 ## Input
 
 - The diff from the start commit.
-- The ticket.
+- The work as given (ticket, PBI, or prompt) and its acceptance criteria.
 - The paths to the spec, `docs/agents/code-standards.md`, `docs/adr/`, and `GLOSSARY.md`, where they exist.
 
 Nothing else. Not the plan, not the reasoning, not a summary of the work.
