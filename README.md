@@ -60,6 +60,35 @@ The details are in the READMEs of
 [setup-home-repo](docs/skills/setup-home-repo/README.md) and
 [setup-agents-md](docs/skills/setup-agents-md/README.md).
 
+## With Matt Pocock's skills
+
+nstack works next to [Matt Pocock's skills](https://github.com/mattpocock/skills).
+A flow that uses both:
+
+```mermaid
+flowchart TD
+    S[once: setup-agents-md + setup-matt-pocock-skills] --> P{Per feature}
+    P -->|developers and business sign a design| TD[tech-design]
+    P -->|only technical decisions| W[wayfinder]
+    TD --> SP[to-spec]
+    W --> SP
+    SP --> TT[to-tickets]
+    TT --> IM[implement, per ticket]
+    IM --> V[verify-flow before and after,<br/>when the ticket writes stored state]
+    IM --> CR[code-review + the design reviewer,<br/>fresh context]
+    IM --> PR[pr: the pull request body]
+```
+
+- Pick `tech-design` or `wayfinder` per feature, not both. Both chart a map
+  and close one question per session.
+- `implement` runs `verify-flow`, `code-review`, and `pr` itself. Do not run
+  them again after it: that reviews the same diff twice.
+- Install nstack's `implement`, not Matt Pocock's. Both have that name, and
+  this one holds his loop.
+- `setup-agents-md` leaves the files `setup-matt-pocock-skills` owns alone:
+  the `## Agent skills` block and `docs/agents/issue-tracker.md`, `domain.md`,
+  and `triage-labels.md`.
+
 Some skills call skills that live in other repos. Run `setup-nstack-skills` to
 install them. The list is in
 [external-skills.md](skills/setup-nstack-skills/external-skills.md):
