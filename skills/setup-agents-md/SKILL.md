@@ -13,7 +13,7 @@ A steering file loads on every request. Every line costs tokens and attention, a
 
 **Decisions live in the repo they change.** ADRs, the glossary, and topic docs go in that repo, never in the home repo. The home repo holds only decisions about itself. See [home-repo.md](references/home-repo.md).
 
-**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Where the code has none, it comes from the person, by [Commands](#commands-by-default). Every rule comes from the person or a doc that is already there. The only fixed text is the Docs and Decisions sections in [templates.md](references/templates.md).
+**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Where the code has none, it comes from the person, by [Commands](#commands-by-default). Every rule comes from the person or a doc that is already there. The only fixed text is the Docs, Changes, and Decisions sections in [templates.md](references/templates.md).
 
 **Never push.** Commit on a local branch, one per repo. The person pushes.
 
@@ -88,6 +88,7 @@ So a `CLAUDE.md` is allowed in one shape: it sits beside an `AGENTS.md`, and its
 - **Do not write one by default.** Offer the one-line file only when the person asks for a `CLAUDE.md`, the check below fails, or one of the hiding files below is there. Recommend yes. Write it on a yes.
 - **Check Claude Code.** When the repo or the user folder shows Claude Code is in use, run `claude --version` during the inventory. It only reads. On a version older than 2.1.277, or no answer, ask once: "Your Claude Code may not read `AGENTS.md`. Write a one-line `CLAUDE.md`?" Recommend yes. On a version from 2.1.277 to 2.1.280, a session on Bedrock or with telemetry off needs it too. On any version, so does one with project instructions set to `CLAUDE.md` only. Say so in the question.
 - **A one-line `CLAUDE.md` exists.** Leave it.
+- **A `CLAUDE.md` with `@AGENTS.md` and a `## Agent skills` block.** `setup-matt-pocock-skills` writes that block into `CLAUDE.md` whenever one exists. The file counts as one-line. Leave both.
 - **`CLAUDE.md` or `.claude/CLAUDE.md` with text of its own.** Sort its lines like any other section and move the kept ones into `AGENTS.md` or a topic file. Then ask: delete the file, which is the recommended answer, or keep a one-line `CLAUDE.md`. Each is a plan row. A kept one is always the root `CLAUDE.md`. A `.claude/CLAUDE.md` is deleted either way.
 - **`.claude/CLAUDE.md` whose only line is `@AGENTS.md`.** It imports nothing and hides `AGENTS.md`. Delete it, and write the root one-line file when the person keeps a `CLAUDE.md`.
 - **`CLAUDE.local.md` in the repo.** It is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude Code for them, and offer the one-line file.
@@ -121,11 +122,17 @@ When the repo already has a standards file elsewhere, such as a language file un
 
 The root file of every repo but a home repo always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths. The section stays when `docs/adr/` does not exist yet: the first ADR creates the folder. That path is not drift.
 
+## The change rules
+
+The root file of every repo but a home repo carries the Changes section from [templates.md](references/templates.md), so every agent that changes code leaves it no worse, also without the `implement` skill. Change nothing in it.
+
 ## With the other nstack skills
 
 Each one is optional. This skill works alone in any repo.
 
 **`setup-home-repo`.** It owns the home repo and the one line in each child repo that points home. This skill owns everything else a child repo's steering file says. `setup-home-repo` calls `/setup-agents-md <repo>` after its setup and after `add <repo>`, for the repos the person picks. What this skill may change in a home repo is in [home-repo.md](references/home-repo.md).
+
+**`setup-matt-pocock-skills`.** Not an nstack skill, but it shares these files. It owns the `## Agent skills` block in the root file or in `CLAUDE.md`, and `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and `docs/agents/triage-labels.md`. Never trim, sort, move, or delete them, and never report them as drift. Other skills read them: `implement` reads `issue-tracker.md` to fetch a ticket. Its glossary layout counts as the glossary: `GLOSSARY.md`, or `GLOSSARY-MAP.md` with a `GLOSSARY.md` per context. When it renamed `CONTEXT.md` to `GLOSSARY.md`, follow the new name.
 
 **`tech-design`.** A design folder `docs/design/<yyyy-mm-dd>-<name>/` is a live doc while its status is `draft`, `discussion`, or `ready`, and while it is `committed` and the feature has not shipped. Leave it alone. `tech-design` has no status for shipped, so ask the person, one question per `committed` design. Never infer it.
 

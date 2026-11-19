@@ -5,6 +5,7 @@
 ## Steps
 
 1. Do Create and Update steps 1 to 4 from the skill, without drafting anything.
+   Files `setup-matt-pocock-skills` owns are never a finding: the `## Agent skills` block, and `docs/agents/issue-tracker.md`, `domain.md`, and `triage-labels.md`. See the skill's With the other nstack skills.
 2. Run the checks below. Each finding is one row.
 3. Print the table, worst first, then the summary line.
 
@@ -33,6 +34,7 @@
 | A style rule a linter or formatter could check | low |
 | Obvious advice, vague rules, or ALL-CAPS commands | low |
 | No Decisions section | medium |
+| No Changes section | low |
 | A `Designs in progress` line and no open design | low |
 
 ### Docs

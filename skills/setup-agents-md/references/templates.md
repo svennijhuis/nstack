@@ -46,6 +46,12 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 - When a change makes a doc wrong, fix or delete it in the same change.
 - Delete a spec or plan once its feature ships. Keep its decisions as ADRs.
 
+## Changes
+
+- Leave the code you touch no worse. Follow the shape it already has. Do not add a second way to do something the code already does.
+- When the change needs a refactor to fit, do it first, with the same behaviour. When you commit, the refactor is its own commit before the change.
+- Build for the use the code has today. No layer, seam, or option that nothing uses yet.
+
 ## Decisions
 
 - When a change makes a real decision, add an ADR in `docs/adr/` in the same change. A real decision is a new dependency, a change to the architecture, the data model, or a public contract, a trade-off, or a rejected alternative. Use the format of the newest ADR there.
@@ -83,7 +89,7 @@ Leave out a command the part does not have. Leave out the Package manager line u
 
 Shape is the thin navigation layer: three to six lines. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.
 
-Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
+Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs, Changes, and Decisions sections as they are, except for the paths.
 
 ## Code standards
 
@@ -172,4 +178,4 @@ At the repo root. Only terms whose meaning is special to this project.
 - **<Term>**: <what it means here>. Not <the meaning people might assume>.
 ```
 
-When the repo has a `CONTEXT.md` that holds the terms, keep that name. Do not rename a file other tools or skills read.
+When the repo has a `CONTEXT.md` that holds the terms, keep that name. Do not rename a file other tools or skills read. A repo with `GLOSSARY-MAP.md` has one glossary per context: point the Terms line at the map.
