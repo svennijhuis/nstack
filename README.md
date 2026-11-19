@@ -76,13 +76,14 @@ flowchart TD
     TT --> IM[implement, per ticket]
     IM --> V[verify-flow before and after,<br/>when the ticket writes stored state]
     IM --> CR[code-review + the design reviewer,<br/>fresh context]
-    IM --> PR[pr: the pull request body]
+    IM --> PR[pr: you run it, for the pull request body]
 ```
 
 - Pick `tech-design` or `wayfinder` per feature, not both. Both chart a map
   and close one question per session.
-- `implement` runs `verify-flow`, `code-review`, and `pr` itself. Do not run
-  them again after it: that reviews the same diff twice.
+- `implement` runs `verify-flow` and `code-review` itself. Do not run them
+  again after it: that reviews the same diff twice. It stops at the commit:
+  you open the pull request, with `pr` or by hand.
 - Install nstack's `implement`, not Matt Pocock's. Both have that name, and
   this one holds his loop.
 - `setup-agents-md` leaves the files `setup-matt-pocock-skills` owns alone:
@@ -100,7 +101,7 @@ install them. The list is in
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
 - `implement` uses `tdd`, `code-review`, `codebase-design`,
-  `comment-root-cause`, `diagnosing-bugs`, `pr`, and `verify-flow` when it is
+  `comment-root-cause`, `diagnosing-bugs`, and `verify-flow` when it is
   installed, and suggests `blast-radius`.
 
 ## Install

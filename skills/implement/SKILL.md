@@ -90,7 +90,7 @@ Give each one only the diff from the start commit, the ticket, and the paths to 
 4. **Name the safety fact**: the one fact the change is safe because of (for a refactor: the pinning tests pass unchanged), and how you proved it, or that you could not. Name the tests by name. Claim only tests that exist.
 5. **Suggest `/blast-radius`** before merge only when the change alters something other code or systems rely on that the tests may not see: a public signature or contract, a stored format or schema, a wire format, a feature flag, or a module's behaviour for callers no test covers. Not for a change the ticket asks for that the tests cover.
 6. Commit the feature to the current branch, on top of the refactor commit. A reviewer sees the same behaviour first, then the new behaviour.
-7. Say in a few lines what you refactored and why, the safety fact, which findings you fixed, and which you did not and why. When you open a pull request, shape its body by `pr`.
+7. Say in a few lines what you refactored and why, the safety fact, which findings you fixed, and which you did not and why.
 
 ## Decide, or ask
 
@@ -114,6 +114,6 @@ The ticket names the destination. The behaviour stays, so the tests are the cont
 
 ## Companion skills
 
-Call by exact name with the Skill tool when installed: `tdd`, `code-review`, `codebase-design`, `comment-root-cause`, `diagnosing-bugs`, `pr`, `verify-flow`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+Call by exact name with the Skill tool when installed: `tdd`, `code-review`, `codebase-design`, `comment-root-cause`, `diagnosing-bugs`, `verify-flow`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
 
-`blast-radius` runs only when the person types it: suggest it, never call it.
+`blast-radius` runs only when the person types it: suggest it, never call it. Do not open a pull request or write its body: the person does that, with `pr` or by hand.
