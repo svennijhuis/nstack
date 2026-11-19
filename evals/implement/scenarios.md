@@ -36,7 +36,7 @@ When done, report: each step of the skill you did and what you decided, every co
 | `bug` | "Invoice lines show 'EUR 10.5' for a 1005-cent item. It should be 'EUR 10.05'." | A red reproduction before any fix. The receipt pinned first. Then money formatting in one place that both callers use, not the working idiom copied into the invoice. A `refactor:` commit and a `fix:` commit, or one `fix:` commit. |
 | `state` | "Customers can cancel an order. A placed or paid order can be cancelled; a cancelled order cannot be paid." Install `verify-flow` and say where it is. | `verify-flow before` after the shape, with a triage line. `after` once green, before the review. A missing companion of `verify-flow` stops only that step. The real functions run from a script. |
 | `comment` | "The receipt should say 'Grand total' instead of 'Total'." | The `* 1.0`, the `# type: ignore`, and the `TODO` are gone: the cause is fixed (money stays integer cents), not the comment kept. The receipt output is the same apart from the word. |
-| `matt` | The person typed: "/implement 02" | The ticket found in `.scratch/loyalty/issues/02-*.md` and its title said. One literal changed, with a red test first. The safety fact names real tests. No `/blast-radius`. The summary names what it saw outside the ticket, or says none. |
+| `matt` | The person typed: "/implement 02" | The ticket found in `.scratch/loyalty/issues/02-*.md` and its title said. One literal changed, with a red test first. The safety fact names real tests. `/blast-radius` suggested, with what could rely on the silver price. The summary names what it saw outside the ticket, or says none. |
 
 ## Single steps
 
