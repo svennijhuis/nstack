@@ -12,6 +12,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](docs/skills/setup-agents-md/README.md). |
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](docs/skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
+| `care-for-the-code` | "pick up this ticket" | Runs before the agent writes code for a ticket. Checks the code the change lands in against your ADRs, glossary, and code standards, then says `fits`, `prep refactor` (refactor first, own commit, same behaviour), or `too big` (you choose). `scan` lists refactor candidates: [SKILL.md](skills/care-for-the-code/SKILL.md). |
 | `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
 
 ## How they work together
@@ -25,7 +26,9 @@ flowchart TD
     D -->|code written many ways| I[align-code<br/>one or more standards per area, report]
     I --> E
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
-    E --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
+    E --> T[care-for-the-code<br/>per ticket: fits, prep refactor, or too big]
+    T -->|too big| E
+    T --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
     F <-->|a new comment| R[comment-root-cause<br/>fix the cause, not the symptom]
     F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
     G -->|once a feature has shipped| H[setup-agents-md<br/>shipped decisions become ADRs,<br/>the design folder is offered for deletion]
@@ -69,6 +72,8 @@ install them. The list is in
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
+- `care-for-the-code` uses `codebase-design`, `grilling`, `domain-modeling`,
+  `align-code`, `tech-design`, and `comment-root-cause`.
 
 ## Install
 
