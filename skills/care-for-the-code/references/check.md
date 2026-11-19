@@ -26,6 +26,8 @@ Read what exists, skip what does not:
 
 List the landing zone: the modules the change touches, their direct callers, and their tests. Stop at direct callers. Run `git log --oneline -20 -- <files>`. Many fixes in one file is a signal, not a finding.
 
+Then fill the card's `State:` line. Does the change write stored state (create, update, delete, a status change), or read a resource that has writes? Name the resource. List every other file, job, queue consumer, or cache that writes it, each with its file path. No stored state: `State: none`. This is a fact for `verify-flow`, not a verdict: do not pick its triage level.
+
 ## 3. Ask
 
 A yes is a finding, with its source. Report only findings the ticket touches or would make worse. Other debt in the zone is one line at most, as a scan candidate.
@@ -46,6 +48,6 @@ A yes is a finding, with its source. Report only findings the ticket touches or 
 
 - `fits`: no finding the ticket makes worse.
 - `prep refactor`: every fix stays inside the files the ticket already changes and their tests, fits one commit, and is smaller than the ticket.
-- `too big`: anything else. Also: a fix needs a choice between shapes, touches a public contract, or fights an ADR.
+- `too big`: anything else. Also: a fix needs a choice between shapes, touches a public contract, or fights an ADR. Also: the fix changes a state, a guard, a written field or status, or who may take a step, in a resource with a model in `docs/verify-flow/`. That is a behaviour change.
 
 In `no-refactor` mode the verdict is `fits` or `too big`, never `prep refactor`.

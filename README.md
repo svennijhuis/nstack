@@ -28,7 +28,10 @@ flowchart TD
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
     E --> T[care-for-the-code<br/>per ticket: fits, prep refactor, or too big]
     T -->|too big: follow-up ticket or spec| E
+    T -->|writes stored state| V[verify-flow before<br/>model the resource]
+    V --> F
     T --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
+    F -->|writes stored state| VA[verify-flow after<br/>replay broken paths into tests]
     F <-->|a new comment| R[comment-root-cause<br/>fix the cause, not the symptom]
     F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
     G -->|once a feature has shipped| H[setup-agents-md<br/>shipped decisions become ADRs,<br/>the design folder is offered for deletion]
@@ -41,6 +44,9 @@ A design from start to shipped:
 2. `/tech-design <name>` closes one gap per session.
 3. `/tech-design <name> ready` runs the gate and writes the tickets.
 4. `/tech-design <name> committed` records the sign-off. Builders start.
+   Per ticket: `care-for-the-code` checks the code it lands in. When the
+   ticket writes stored state, `/verify-flow before`, the build, then
+   `/verify-flow after`.
 5. After the feature ships, `/setup-agents-md` in the repo that holds the
    design asks if it shipped, turns its decisions into ADRs, and offers to
    delete the folder.
@@ -74,7 +80,7 @@ install them. The list is in
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
 - `care-for-the-code` uses `codebase-design`, `grilling`, `domain-modeling`,
-  `align-code`, `tech-design`, and `comment-root-cause`.
+  `align-code`, `tech-design`, `comment-root-cause`, and `verify-flow`.
 
 ## Install
 
