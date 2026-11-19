@@ -6,7 +6,8 @@ Each scenario tests one rule of [implement](../../skills/implement/SKILL.md). Ru
 
 1. `./build.sh <out>` builds one git repo per scenario in `<out>`.
 2. Per scenario, start one subagent with a fresh context and the prompt below. A small model is the hard test: if it follows the skill, a larger one will.
-3. Check the result against Pass, by its git log, its files, and its report. Run the repo's tests yourself: never take the report's word for it.
+3. Check that the agent read the references its branch needs (the bug run reads `bug.md`, a missing companion means `fallbacks.md`), and no others it did not need.
+4. Check the result against Pass, by its git log, its files, and its report. Run the repo's tests yourself: never take the report's word for it.
 
 ## Prompt
 
@@ -20,7 +21,7 @@ There is no human available. If the skill says to ask the person, write the ques
 
 Ticket: <ticket>
 
-When done, report: each step of the skill you did and what you decided, every commit (git log --oneline), test results, the safety fact with the tests named, whether you suggested /blast-radius and why, how you proved it works, and any question you would ask.
+When done, report: each step of the skill you did and what you decided, every commit (git log --oneline), test results, the safety fact with the tests named, whether you suggested /blast-radius and why, how you proved it works, what you saw outside the ticket, any question you would ask, and the list of skill files you read.
 ```
 
 ## Scenarios
