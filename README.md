@@ -70,8 +70,9 @@ flowchart TD
     S[once: setup-agents-md + setup-matt-pocock-skills] --> P{Per feature}
     P -->|developers and business sign a design| TD[tech-design]
     P -->|only technical decisions| W[wayfinder]
-    TD --> SP[to-spec]
-    W --> SP
+    TD -->|its tickets.md| IM
+    TD -.->|only to put them in your tracker| SP
+    W --> SP[to-spec]
     SP --> TT[to-tickets]
     TT --> IM[implement, per ticket]
     IM --> V[verify-flow before and after,<br/>when the ticket writes stored state]
@@ -79,8 +80,26 @@ flowchart TD
     IM --> PR[pr: you run it, for the pull request body]
 ```
 
-- Pick `tech-design` or `wayfinder` per feature, not both. Both chart a map
-  and close one question per session.
+### `tech-design` or `wayfinder`
+
+Pick one per feature, not both. Both chart a map and close one question per
+session.
+
+| Use | When | You get |
+| --- | --- | --- |
+| `tech-design` | Others must read and sign the plan: developers and business, a reviewer, an approver. An outside system or vendor is involved (access, contracts, limits). Requirements and acceptance criteria must be written down. The feature spans several repos. | A design document in `docs/design/`: 14 fixed sections, requirements, diagrams, failure modes, dependencies, sign-off. The ready gate checks it and writes `tickets.md`. |
+| `wayfinder` | The work is too big for one session, but the open points are technical decisions for the team itself. Nobody outside needs a document. You want the decisions as tickets in your tracker. | A map issue in your tracker with one ticket per decision. The decisions are the result, not a document. Then `to-spec` and `to-tickets`. |
+| neither | The change is clear and fits a few tickets. | Straight to `to-spec`, or to `implement` for a single ticket. |
+
+In doubt: `wayfinder`. It is lighter, and a design can still start from its
+decisions when someone asks for a document.
+
+After `tech-design` you can skip `to-spec` and `to-tickets`: the ready gate
+already wrote the tickets. Use them only to put the spec and the tickets in
+your tracker.
+
+### Rules for the combined flow
+
 - `implement` runs `verify-flow` and `code-review` itself. Do not run them
   again after it: that reviews the same diff twice. It stops at the commit:
   you open the pull request, with `pr` or by hand.
