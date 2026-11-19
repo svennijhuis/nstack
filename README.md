@@ -12,7 +12,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](docs/skills/setup-agents-md/README.md). |
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](docs/skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
-| `implement` | "implement this" | Builds a ticket so the codebase gets better, not worse. Reads the code the change lands in, shapes it as if the requirement had been there from the start, and refactors where the change needs it, with the same behaviour and its own commit: [README](docs/skills/implement/README.md). |
+| `implement` | "implement this" | Builds a ticket so the codebase gets better, not worse. Reads the ticket and its spec, shapes the code as if the requirement had been there from the start, refactors where the change needs it, builds with `tdd`, reviews, and commits. Works after `tech-design` or after Matt Pocock's `to-spec` and `to-tickets`: [README](docs/skills/implement/README.md). |
 | `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
 
 ## How they work together
@@ -70,7 +70,8 @@ install them. The list is in
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
-- `implement` uses `codebase-design` and `comment-root-cause`.
+- `implement` uses `tdd`, `code-review`, `codebase-design`, and
+  `comment-root-cause`.
 
 ## Install
 
