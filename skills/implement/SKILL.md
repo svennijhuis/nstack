@@ -34,9 +34,9 @@ If this requirement had been there from the start, what would this code look lik
 - put logic where no test can reach it through an interface
 - work around a name, type, or module that no longer fits
 
-On a signal, shape it with `codebase-design`. Put code where its meaning belongs: the module its name, glossary term, or ADR covers.
+On a signal, shape it with `codebase-design`. Put code where its meaning belongs: the module whose name, glossary term, or ADR covers what the code does. Read an ADR for what it says, not wider. A helper does not go in a module because its callers already import it.
 
-Caring is not adding layers. No new module that fails the deletion test. No seam (a place tests or adapters swap behaviour) unless the spec names it or two things vary across it. No option nothing uses.
+Caring is not adding layers. No new module that fails the deletion test (deleting it would make nothing come back in its callers). A helper two callers share passes it: delete it and the copy returns in both. No seam (a place tests or adapters swap behaviour) unless the spec names it or two things vary across it. No option nothing uses.
 
 **Say the call** in one line, then go on: "Refactor first: <what>, because <signal>." or "Fits as it is: <why>."
 
