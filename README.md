@@ -29,6 +29,7 @@ flowchart TD
     E --> F[implement<br/>per ticket: refactor where the change needs it,<br/>follow AGENTS.md, one ADR per decision]
     F <-->|a new comment| R[comment-root-cause<br/>fix the cause, not the symptom]
     F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
+    F -->|now and then| A2[improve-codebase-architecture<br/>candidates for deeper modules,<br/>each one a ticket for implement]
     G -->|once a feature has shipped| H[setup-agents-md<br/>shipped decisions become ADRs,<br/>the design folder is offered for deletion]
     H --> E
 ```
@@ -105,6 +106,12 @@ your tracker.
   you open the pull request, with `pr` or by hand.
 - Install nstack's `implement`, not Matt Pocock's. Both have that name, and
   this one holds his loop.
+- Claude Code ships its own `code-review` skill. Matt Pocock's has the same
+  name. `implement` and `align-code` mean his two-axis review. When the other
+  one loads, `implement` says so and runs the two reviews as subagents itself.
+- Now and then, run `improve-codebase-architecture`. It finds where the code
+  needs deeper modules. Each candidate you pick becomes a ticket, and
+  `implement` builds it as a refactor ticket.
 - `setup-agents-md` leaves the files `setup-matt-pocock-skills` owns alone:
   the `## Agent skills` block and `docs/agents/issue-tracker.md`, `domain.md`,
   and `triage-labels.md`.

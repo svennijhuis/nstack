@@ -8,7 +8,7 @@ The ticket is the tactical goal. The codebase is the strategic one. A ticket is 
 ## 1. Read
 
 - **The ticket.** A ticket reference: fetch it from the issue tracker, by `docs/agents/issue-tracker.md` when it exists, or from `.scratch/<feature>/issues/` when `to-tickets` wrote local files. Say its title before you start. A reference that matches more than one ticket: ask which.
-- **Its spec.** Only the spec the ticket names or links, or its parent issue: from `to-spec`, or a `docs/design/` folder from `tech-design`. Its Implementation Decisions, Testing Decisions, and seams are decided. They outrank your own shape choices. A spec the ticket does not name is not its spec, even when it is about the same code: its decisions do not bind this ticket. No spec: say so, and go on without one.
+- **Its spec.** Only the spec the ticket names or links, or its parent issue: from `to-spec`, or a `docs/design/` folder from `tech-design`. Its decisions are made: in a `to-spec` spec, Implementation Decisions, Testing Decisions, and the seams; in a `tech-design` design, Decisions so far, Design (Boundaries and contracts, Data model), and Cross-cutting, Testing. They outrank your own shape choices. A spec the ticket does not name is not its spec, even when it is about the same code: its decisions do not bind this ticket. No spec: say so, and go on without one.
 - **The repo.** `AGENTS.md`, `docs/agents/code-standards.md`, the terms in `GLOSSARY.md` (or `CONTEXT.md`, or the context's glossary that `GLOSSARY-MAP.md` points at) the ticket uses, and the ADRs in `docs/adr/` that cover the code you will change. Titles first, then the ones that match. Skip what does not exist.
 - **The code.** Where the change lands, its direct callers, and its tests. Stop at direct callers. `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
 - **The start commit.** `git rev-parse HEAD`. The review reads the diff from here.
@@ -36,7 +36,7 @@ Caring is not adding layers. Build for the use the code has today:
 
 - A new module must pass the deletion test: delete it in your head. If the complexity does not come back in its callers, it is a pass-through. Do not add it.
 - A seam is a place where behaviour can be swapped or tested from outside: an interface that tests or adapters use. A new module, function, or private helper is not a seam. Testing through the public function of a new module is fine.
-- The ticket's spec agreed its seams. A new seam it did not agree is a change to the spec: ask. With no spec, add a seam only when two things vary across it.
+- When the ticket's spec names its seams, a new seam it did not name is a change to the spec: ask. When it names none, or there is no spec, add a seam only when two things vary across it.
 - No option, parameter, or extension point that nothing uses yet.
 
 **Stored state.** When the ticket writes stored state (create, update, delete, a status change) and `verify-flow` is installed, run `verify-flow before <resource>` now, on the shape. Its invariants and planned tests join the ticket's tests.
@@ -54,7 +54,7 @@ Refactor the code the change lands in, as far as the change needs. Leave unrelat
 
 ## 4. Build
 
-Build the feature on the new shape with `tdd`, at the agreed seams: red, then green, one slice at a time. Without `tdd`, keep the same loop: a failing test through the interface, then the smallest code that passes it.
+Build the feature on the new shape with `tdd`, at the agreed seams: red, then green, one slice at a time. When the spec names no seams, `tdd` asks the person to confirm them: propose the public functions the ticket changes, and wait. Without `tdd`, keep the same loop: a failing test through the interface, then the smallest code that passes it.
 
 Tests go through the interface. When you have to test past it, the shape is wrong: go back to 2.
 
@@ -80,7 +80,8 @@ Give each one only the diff from the start commit, the ticket, and the paths to 
 3. A finding outside those files: name it in your summary, do not fix it.
 4. A finding that goes against the spec or an ADR: the spec and the ADR win. Name it.
 5. A finding you think is wrong: say why in your summary. Never drop one silently.
-6. One review round. Run a second only when the fixes changed the shape, not for small edits.
+6. A comment you wrote that covers a shortcut: fix the cause, by `comment-root-cause`.
+7. One review round. Run a second only when the fixes changed the shape, not for small edits.
 
 ## 7. Commit
 
@@ -94,7 +95,7 @@ Give each one only the diff from the start commit, the ticket, and the paths to 
 
 ## Decide, or ask
 
-Ask the person only for: a behaviour or public contract change the ticket and its spec do not cover, a shape that goes against an ADR or the spec, a new seam the spec did not agree, or two shapes that are equal for the long term.
+Ask the person only for: a behaviour or public contract change the ticket and its spec do not cover, a shape that goes against an ADR or the spec, a new seam the spec did not agree, the seams `tdd` asks to confirm, or two shapes that are equal for the long term.
 
 Everything else, decide and name it in your summary, so the person can overrule it:
 
@@ -115,5 +116,7 @@ The ticket names the destination. The behaviour stays, so the tests are the cont
 ## Companion skills
 
 Call by exact name with the Skill tool when installed: `tdd`, `code-review`, `codebase-design`, `comment-root-cause`, `diagnosing-bugs`, `verify-flow`. If one is missing, say so once, name `/setup-nstack-skills`, and go on by these rules.
+
+`code-review` means Matt Pocock's two-axis review (Standards and Spec). Claude Code ships its own skill with that name. When the one that loads is not the two-axis review, say so once, and run the Standards and Spec reviews as fresh subagents yourself: Standards against the code standards and the smells in `code-review`'s baseline, Spec against the ticket and its spec.
 
 `blast-radius` runs only when the person types it: suggest it, never call it. Do not open a pull request or write its body: the person does that, with `pr` or by hand.

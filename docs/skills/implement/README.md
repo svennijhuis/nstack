@@ -30,6 +30,10 @@ His skill is the loop: fetch the ticket, `tdd` at the agreed seams, typecheck an
 
 Both are named `implement`. Install one of them.
 
+## Tests
+
+`evals/implement/` holds the scenarios this skill was tested on, a script that builds their repos, and what passing looks like. Run them after you change the skill.
+
 ## Where it sits
 
 Matt Pocock's flow: `wayfinder`, then `to-spec`, then `to-tickets`, then this skill per ticket. The nstack flow: `tech-design`, then this skill per ticket.
