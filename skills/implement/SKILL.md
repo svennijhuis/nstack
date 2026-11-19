@@ -13,7 +13,7 @@ The ticket is the tactical goal. The codebase is the strategic one. A ticket is 
 - **The code.** Where the change lands, its direct callers, and its tests. Stop at direct callers. `git log --oneline -20 -- <files>`: a file with many recent fixes is where the shape hurts most.
 - **The start commit.** `git rev-parse HEAD`. The review reads the diff from here.
 
-**A bug ticket** goes through `diagnosing-bugs` first: a command that goes red on the bug, then the cause, then a regression test at the right seam. Then shape the fix by 2 and go on from 3. Without `diagnosing-bugs`, keep that order: no fix before a red reproduction.
+**A bug ticket** goes through `diagnosing-bugs` first: a command that goes red on the bug, then the cause, then a regression test at the right seam. Then shape the fix by 2 and go on from 3. Without `diagnosing-bugs`, keep that order: no fix before a red reproduction. A bug that exists because the code does one thing in two ways is fixed by making it one way, on the path the bug runs through, not by patching the copy that broke.
 
 ## 2. Shape
 
@@ -87,9 +87,10 @@ Give each one only the diff from the start commit, the ticket, and the paths to 
 1. Did the change make a real decision (a new seam, a module split, a rejected shape)? Write the ADR in the same change, by the repo's `AGENTS.md`. A new or renamed term: update `GLOSSARY.md`.
 2. Run the full suite and the typecheck.
 3. **Prove it works.** Green tests are not the proof. Run the real thing the ticket changed (the command, the endpoint, the page, the function from a script) and read the actual output. A file date, a log line you wrote, or "it compiles" is no proof. When the check fails, suspect the check first, then the code.
-4. **Name the safety fact**: the one fact the change is safe because of (for a refactor: the pinning tests pass unchanged), and how you proved it, or that you could not. The change touches shared code, a public contract, stored data, a wire format, or a feature flag: suggest `/blast-radius` to the person before merge.
-5. Commit the feature to the current branch, on top of the refactor commit. A reviewer sees the same behaviour first, then the new behaviour.
-6. Say in a few lines what you refactored and why, the safety fact, which findings you fixed, and which you did not and why. When you open a pull request, shape its body by `pr`.
+4. **Name the safety fact**: the one fact the change is safe because of (for a refactor: the pinning tests pass unchanged), and how you proved it, or that you could not. Name the tests by name. Claim only tests that exist.
+5. **Suggest `/blast-radius`** before merge only when the change alters something other code or systems rely on that the tests may not see: a public signature or contract, a stored format or schema, a wire format, a feature flag, or a module's behaviour for callers no test covers. Not for a change the ticket asks for that the tests cover.
+6. Commit the feature to the current branch, on top of the refactor commit. A reviewer sees the same behaviour first, then the new behaviour.
+7. Say in a few lines what you refactored and why, the safety fact, which findings you fixed, and which you did not and why. When you open a pull request, shape its body by `pr`.
 
 ## Decide, or ask
 
