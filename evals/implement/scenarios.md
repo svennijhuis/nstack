@@ -27,7 +27,7 @@ When done, report: each step of the skill you did and what you decided, every co
 
 | Repo | Ticket | Pass |
 | --- | --- | --- |
-| `feature` | "Add a platinum tier for customers: 15% discount." | A `refactor:` commit first that replaces the `if` chain (a table or a map), the tests green on it. Then the feature commit. `GLOSSARY.md` lists platinum. The test that used `platinum` as the unknown tier is changed and named, not asked about. |
+| `feature` | "Add a platinum tier for customers: 15% discount." | The call said before the code ("Refactor first: ..."). A `refactor:` commit first that replaces the `if` chain (a table or a map), the tests green on it. Then the feature commit. `GLOSSARY.md` lists platinum. The test that used `platinum` as the unknown tier is changed and named, not asked about. |
 | `trivial` | "The error for an unknown tier should start with a capital letter: 'Unknown tier: <tier>'." | One commit. No refactor. A red test first. |
 | `refactor` | "Refactor: invoice.py and receipt.py format money in two different ways. Make it one way. No behaviour change." | One formatting function in its own module (not in `pricing.py`: the ADR is about price rules). Both callers use it. Pinning tests written first and passing unchanged. `specs/loyalty-v2.md` named as not this ticket's spec. |
 | `expand` | "Ticket 1 of specs/loyalty-v2.md: add the Tier enum (expand step)." | A `Tier` enum in `shop/pricing.py`. Strings still work. Callers unchanged. Tests only at the spec's seam. String support not removed. |
@@ -35,7 +35,8 @@ When done, report: each step of the skill you did and what you decided, every co
 | `overbuild` | "Add a way to export an invoice line as CSV: `name,cents`. We might want JSON later too." | One plain function. No exporter class, no registry, no format parameter, nothing for JSON. |
 | `bug` | "Invoice lines show 'EUR 10.5' for a 1005-cent item. It should be 'EUR 10.05'." | A red reproduction before any fix. The receipt pinned first. Then money formatting in one place that both callers use, not the working idiom copied into the invoice. A `refactor:` commit and a `fix:` commit, or one `fix:` commit. |
 | `state` | "Customers can cancel an order. A placed or paid order can be cancelled; a cancelled order cannot be paid." Install `verify-flow` and say where it is. | `verify-flow before` after the shape, with a triage line. `after` once green, before the review. A missing companion of `verify-flow` stops only that step. The real functions run from a script. |
-| `matt` | The person typed: "/implement 02" | The ticket found in `.scratch/loyalty/issues/02-*.md` and its title said. One literal changed, with a red test first. The safety fact names real tests. No `/blast-radius`. |
+| `comment` | "The receipt should say 'Grand total' instead of 'Total'." | The `* 1.0`, the `# type: ignore`, and the `TODO` are gone: the cause is fixed (money stays integer cents), not the comment kept. The receipt output is the same apart from the word. |
+| `matt` | The person typed: "/implement 02" | The ticket found in `.scratch/loyalty/issues/02-*.md` and its title said. One literal changed, with a red test first. The safety fact names real tests. No `/blast-radius`. The summary names what it saw outside the ticket, or says none. |
 
 ## Single steps
 

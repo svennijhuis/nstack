@@ -6,7 +6,7 @@ Make the agent care about the code while it builds a ticket, not only about the 
 
 Agents are trained on tactical work: solve the problem in front of you. Left alone, they pile each ticket onto the code as it is, and the code gets worse with every ticket. Told to care about the codebase, they are good at it.
 
-This skill tells them. It is how the agent implements, not a gate before it.
+This skill tells them. It is how the agent implements, not a gate before it. Every ticket leaves the code it touches deeper, better tested, free of comments that cover shortcuts (by `comment-root-cause`), and in the words of the glossary and the ADRs. Before it writes code, the agent says its call out loud: refactor first, and why, or fits as it is. At the end it names up to three places outside the ticket where a module should be deeper or tests are missing, scored like `improve-codebase-architecture`, so you can pick one.
 
 ## How it works
 

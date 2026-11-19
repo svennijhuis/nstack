@@ -178,5 +178,9 @@ cp -r base matt && (cd matt && printf '@AGENTS.md\n\n## Agent skills\n\n### Issu
   && printf '# Gold note\n\nStatus: ready-for-agent\n' > .scratch/loyalty/issues/01-gold-note.md \
   && git add -A && g commit -qm "matt setup and tickets")
 cp -r matt advise
+
+# comment: a suppression and a TODO that hide floats in money, on a line the ticket edits
+cp -r base comment && (cd comment && printf 'from shop.pricing import price_cents\n\n\ndef receipt_total(total_cents: int, tier: str) -> str:\n    cents = price_cents(total_cents, tier) * 1.0  # type: ignore  # TODO: why is this a float?\n    return "Total: EUR %%d.%%02d" %% (cents // 100, cents %% 100)\n' > shop/receipt.py \
+  && git add -A && g commit -qm "receipt")
 rm -rf base
 ls "$out"

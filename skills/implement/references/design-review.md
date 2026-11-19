@@ -30,6 +30,8 @@ A yes is a finding.
 | Does the diff add a seam, a layer, an option, or a parameter that nothing uses, or a seam the spec did not agree? | the spec, or `codebase-design`: seam |
 | Do the tests reach past the interface into the inside? | `codebase-design`: interface |
 | Did the old shape stay behind after a refactor: a wrapper, a compatibility layer, dead code? Not a finding when the ticket is an expand step of an expand-contract plan. | the ticket |
+| Does the diff add or edit a comment, `TODO`, `HACK`, or suppression (`as any`, `@ts-ignore`, `eslint-disable`, `# type: ignore`) that covers a shortcut instead of fixing its cause? | `comment-root-cause` |
+| Does the diff change behaviour that no test covers? | the tests |
 | Does a name differ from `GLOSSARY.md`? | the glossary |
 | Does the diff go against an ADR? | the ADR |
 

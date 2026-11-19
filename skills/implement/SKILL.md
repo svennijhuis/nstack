@@ -5,6 +5,15 @@ description: Use when you implement a ticket, issue, spec, feature, or bug fix i
 
 The ticket is the tactical goal. The codebase is the strategic one. A ticket is not done when it works but leaves the code harder to change. Make the change easy, then make the easy change.
 
+The person cares about the long term, so you do too. Every ticket leaves the code it touches:
+
+- **deeper**: modules that hide more behind a smaller interface, by `codebase-design`
+- **better tested**: behaviour you touch has a test through its interface
+- **cleaner**: no comment that covers a shortcut, by `comment-root-cause`
+- **in the domain's words**: names from `GLOSSARY.md`, choices that follow the ADRs
+
+Be the colleague who says "we need to refactor this first", out loud and before the code, not the one who piles the ticket on top.
+
 ## 1. Read
 
 - **The ticket.** A ticket reference: fetch it from the issue tracker, by `docs/agents/issue-tracker.md` when it exists, or from `.scratch/<feature>/issues/` when `to-tickets` wrote local files. Say its title before you start. A reference that matches more than one ticket: ask which.
@@ -39,6 +48,8 @@ Caring is not adding layers. Build for the use the code has today:
 - When the ticket's spec names its seams, a new seam it did not name is a change to the spec: ask. When it names none, or there is no spec, add a seam only when two things vary across it.
 - No option, parameter, or extension point that nothing uses yet.
 
+**Say the call.** Before you write code, say it in one or two lines: "Refactor first: <what>, because <the signal above>." or "Fits as it is: <why>." Then go on. Do not wait for an answer unless 'Decide, or ask' says so.
+
 **Stored state.** When the ticket writes stored state (create, update, delete, a status change) and `verify-flow` is installed, run `verify-flow before <resource>` now, on the shape. Its invariants and planned tests join the ticket's tests.
 
 ## 3. Refactor first
@@ -56,7 +67,9 @@ Refactor the code the change lands in, as far as the change needs. Leave unrelat
 
 Build the feature on the new shape with `tdd`, at the agreed seams: red, then green, one slice at a time. When the spec names no seams, `tdd` asks the person to confirm them: propose the public functions the ticket changes, and wait. Without `tdd`, keep the same loop: a failing test through the interface, then the smallest code that passes it.
 
-Tests go through the interface. When you have to test past it, the shape is wrong: go back to 2.
+Tests go through the interface. When you have to test past it, the shape is wrong: go back to 2. Behaviour you touched that had no test gets one.
+
+Every comment, `TODO`, `HACK`, or lint or type suppression you write or edit goes through `comment-root-cause`: why is it there, and can the code be better? One that covers a shortcut means fix the cause, not keep the comment. Without `comment-root-cause`, ask those two questions yourself.
 
 Run the typecheck and the test file you work in often. Run the full suite once at the end.
 
@@ -80,8 +93,7 @@ Give each one only the diff from the start commit, the ticket, and the paths to 
 3. A finding outside those files: name it in your summary, do not fix it.
 4. A finding that goes against the spec or an ADR: the spec and the ADR win. Name it.
 5. A finding you think is wrong: say why in your summary. Never drop one silently.
-6. A comment you wrote that covers a shortcut: fix the cause, by `comment-root-cause`.
-7. One review round. Run a second only when the fixes changed the shape, not for small edits.
+6. One review round. Run a second only when the fixes changed the shape, not for small edits.
 
 ## 7. Commit
 
@@ -89,9 +101,10 @@ Give each one only the diff from the start commit, the ticket, and the paths to 
 2. Run the full suite and the typecheck.
 3. **Prove it works.** Green tests are not the proof. Run the real thing the ticket changed (the command, the endpoint, the page, the function from a script) and read the actual output. A file date, a log line you wrote, or "it compiles" is no proof. When the check fails, suspect the check first, then the code.
 4. **Name the safety fact**: the one fact the change is safe because of (for a refactor: the pinning tests pass unchanged), and how you proved it, or that you could not. Name the tests by name. Claim only tests that exist.
-5. **Suggest `/blast-radius`** before merge only when the change alters something other code or systems rely on that the tests may not see: a public signature or contract, a stored format or schema, a wire format, a feature flag, or a module's behaviour for callers no test covers. Not for a change the ticket asks for that the tests cover.
+5. **Suggest `/blast-radius`** before merge only when the change alters, without the ticket asking for it, a public signature or contract, a stored format or schema, a wire format, or a feature flag. A change the ticket asks for is never a reason, even when systems outside the repo might see it: the person chose it. Then say nothing about it.
 6. Commit the feature to the current branch, on top of the refactor commit. A reviewer sees the same behaviour first, then the new behaviour.
 7. Say in a few lines what you refactored and why, the safety fact, which findings you fixed, and which you did not and why.
+8. **Name what you saw.** At most three places outside the ticket where a module should be deeper or tests are missing, one line each: `<file>: <what>. Strength: Strong | Worth exploring | Speculative.` No file, no ticket, no fix: the person picks one for a ticket or for `improve-codebase-architecture`. Saw none: say none.
 
 ## Decide, or ask
 
