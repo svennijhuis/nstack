@@ -12,7 +12,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](docs/skills/setup-agents-md/README.md). |
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](docs/skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
-| `care-for-the-code` | "pick up this ticket" | Runs before the agent writes code for a ticket. Checks the code the change lands in against your ADRs, glossary, and code standards, then says `fits`, `prep refactor` (refactor first, own commit, same behaviour), or `too big` (you choose). `scan` lists refactor candidates: [SKILL.md](skills/care-for-the-code/SKILL.md). |
+| `care-for-the-code` | "pick up this ticket" | Runs before the agent writes code for a ticket. Leaves the code no worse, refactors first only when it is small and you say yes, and sends anything bigger back as a ticket or a spec for `tech-design`. Stops on tripwires and keeps the work in git: [README](docs/skills/care-for-the-code/README.md). |
 | `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
 
 ## How they work together
@@ -27,7 +27,7 @@ flowchart TD
     I --> E
     D --> E[tech-design<br/>per feature. One repo: start it there.<br/>Several repos: start it in the home repo]
     E --> T[care-for-the-code<br/>per ticket: fits, prep refactor, or too big]
-    T -->|too big| E
+    T -->|too big: follow-up ticket or spec| E
     T --> F[Build<br/>agents follow AGENTS.md, one ADR per decision]
     F <-->|a new comment| R[comment-root-cause<br/>fix the cause, not the symptom]
     F -->|now and then| G[setup-agents-md advise<br/>reports drift and shipped designs]
@@ -49,7 +49,8 @@ A design from start to shipped:
 - **Who owns what.** `setup-home-repo` owns the home repo and the one line in
   each child repo that points home. `setup-agents-md` owns the rest of a repo's
   `AGENTS.md`, its ADRs, and its glossary. `tech-design` owns `docs/design/`.
-  `align-code` owns `docs/align/`.
+  `align-code` owns `docs/align/`. `care-for-the-code` writes only the
+  `## Follow-ups` section of a design's `tickets.md`.
 - **One branch per repo.** The two setup skills put every change to a repo on
   one local branch, after you approve the plan. You review and push it.
   `tech-design` writes only its design folder and commits nothing. You commit
