@@ -1,6 +1,6 @@
 # Finish
 
-The summary the person reads, after the playbook's Reply line. A few lines each.
+The summary the person reads, after the playbook's Reply line. A few lines each, in short declarative sentences. Give each claim its evidence, or label it inferred or guess. Never hand the person a check you could run yourself.
 
 1. **The playbook** you picked, and **the call** you said before the code.
 2. **The safety fact**: the one fact the change is safe because of (for a refactor: the pinning tests pass unchanged), how you proved it, or that you could not. Name the tests by name. Claim only tests that exist. Name the real run and its output.

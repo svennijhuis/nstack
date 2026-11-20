@@ -56,6 +56,8 @@ On a signal, shape it with `codebase-design`. Put code where its meaning belongs
 
 Caring is not adding layers. No new module that fails the deletion test (deleting it would make nothing come back in its callers). A helper two callers share passes it: delete it and the copy returns in both. No seam (a place tests or adapters swap behaviour) unless the spec names it or two things vary across it. No option nothing uses.
 
+No is an answer. When the ticket asks for something that makes the code worse, say so with the reason and the smaller change that meets the goal.
+
 **Say the call** in one line, then go on: "Refactor first: <what>, because <signal>." or "Fits as it is: <why>."
 
 ## 3. Refactor first
@@ -70,10 +72,10 @@ Only the code the change lands in. Same behaviour, API, schema, and UI. Pin unte
 
 You do not judge your own code. Start at once, each in a fresh subagent, given only the diff from the start commit, the work as given, the acceptance criteria, and the paths to the spec and the docs, never your reasoning:
 
-- `code-review`: Standards and Spec
-- the design reviewer: [design-review.md](references/design-review.md)
+- `code-review`: Standards and Spec. First kickoff line: `Use the code-review skill, Standards and Spec only.`
+- the design reviewer. First kickoff line: `Read <path>/references/design-review.md before anything else.`, with `<path>` the absolute path of this skill's folder.
 
-No subagent tool: say the review is not independent, and run both yourself.
+A subagent does not load this skill, so the kickoff's first line is the only way its rules reach it. No subagent tool: say the review is not independent, and run both yourself.
 
 ## 6. Fix
 
@@ -81,7 +83,7 @@ No subagent tool: say the review is not independent, and run both yourself.
 - Other findings in the ticket's files: fix, behaviour the same. A fix to the feature's code goes in the feature commit, a fix to older code in its own `refactor:` commit.
 - Outside the ticket's files, or against the spec or an ADR: name it, do not fix it.
 - One you think is wrong: say why. Never drop one silently.
-- One round. A second only when the fixes changed the shape.
+- One round. A second only when the fixes changed the shape, and then in new subagents with the same brief, never the first reviewers.
 
 ## 7. Finish
 
@@ -96,4 +98,4 @@ Ask only for: a behaviour or contract change the ticket and spec do not cover, a
 
 ## Companion skills
 
-`codebase-design`, `tdd`, `comment-root-cause`, `code-review`, `diagnosing-bugs`, `verify-flow`, by exact name, each only on its step. `blast-radius` and `pr` are the person's: suggest `blast-radius`, never call either.
+Each by exact name, only on its step. `blast-radius` and `pr` are the person's: suggest `blast-radius`, never call either.

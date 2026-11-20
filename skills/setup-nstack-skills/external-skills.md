@@ -4,8 +4,8 @@ Skills nstack uses but does not hold. Each row is pinned to one commit. `setup-n
 
 | Name | Used by | Source repo | Folder | Commit | URL |
 | --- | --- | --- | --- | --- | --- |
-| `technical-writing` | `tech-design`, ready gate check 27 | `cursor/plugins` | `pstack/skills/technical-writing` | `ec569379616a4826b98f0f0a205dd3411b573611` | https://github.com/cursor/plugins/blob/ec569379616a4826b98f0f0a205dd3411b573611/pstack/skills/technical-writing/SKILL.md |
-| `unslop` | `tech-design`, ready gate check 28 | `cursor/plugins` | `pstack/skills/unslop` | `ec569379616a4826b98f0f0a205dd3411b573611` | https://github.com/cursor/plugins/blob/ec569379616a4826b98f0f0a205dd3411b573611/pstack/skills/unslop/SKILL.md |
+| `technical-writing` | `tech-design`, ready gate check 27 | `cursor/plugins` | `pstack/skills/technical-writing` | `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7` | https://github.com/cursor/plugins/blob/2f87c854fe3e2fcda44ca86b46ede35aad3c46b7/pstack/skills/technical-writing/SKILL.md |
+| `unslop` | `tech-design`, ready gate check 28 | `cursor/plugins` | `pstack/skills/unslop` | `2f87c854fe3e2fcda44ca86b46ede35aad3c46b7` | https://github.com/cursor/plugins/blob/2f87c854fe3e2fcda44ca86b46ede35aad3c46b7/pstack/skills/unslop/SKILL.md |
 | `grilling` | `tech-design`, chart and grilling gaps, `align-code` | `mattpocock/skills` | `skills/productivity/grilling` | `5863806dd4e15c63174bee4e7515a4256792ecfa` | https://github.com/mattpocock/skills/blob/5863806dd4e15c63174bee4e7515a4256792ecfa/skills/productivity/grilling/SKILL.md |
 | `domain-modeling` | `tech-design`, chart and grilling gaps, `align-code` | `mattpocock/skills` | `skills/engineering/domain-modeling` | `5863806dd4e15c63174bee4e7515a4256792ecfa` | https://github.com/mattpocock/skills/blob/5863806dd4e15c63174bee4e7515a4256792ecfa/skills/engineering/domain-modeling/SKILL.md |
 | `research` | `tech-design`, research gaps, `align-code` | `mattpocock/skills` | `skills/engineering/research` | `5863806dd4e15c63174bee4e7515a4256792ecfa` | https://github.com/mattpocock/skills/blob/5863806dd4e15c63174bee4e7515a4256792ecfa/skills/engineering/research/SKILL.md |
