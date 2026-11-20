@@ -1,23 +1,21 @@
 # Add or update one item
 
-`/setup-home-repo add <thing>`, or `update <thing>`, puts one item into the home repo, or changes one that is there. It runs only inside a home repo. Outside one, say so and name setup.
+`/setup-home-repo add <thing>` or `update <thing>` adds or changes one item. Only inside a home repo; outside one, name setup.
 
-## Steps
-
-1. **Resolve the kind.** Match `<thing>` to a row in [components.md](components.md). A path or a git address is a `repo`. A web address is a `source`. A folder with a `SKILL.md` is a `skill`. If two kinds fit, ask which. If none fits, it is `other`: ask where it should live.
-2. **Look for it.** If an item with that name and kind exists, this is an update. Show what is there.
-3. **Explore what you need.** A repo: its remote, what it is, the path convention already used in `AGENTS.md`. A source: its location and the access method, checked by the same means as setup. An MCP server: its command or address, and the variables it needs.
-4. **Ask only what is missing**, with a recommended answer.
-5. **Show the diff.** Every file that changes, for every harness in use. One item usually touches two to five files.
-6. **Write** on a yes. Commit in the home repo, unless it is local only. Do not push.
-7. **Report** in one or two lines: what was added, where, and anything a harness had no place for.
+1. **Resolve the kind** by [components.md](components.md). A path or git address is a `repo`, a web address a `source`, a folder with `SKILL.md` a `skill`. Two fit: ask. None: `other`, ask where it lives.
+2. **Look for it.** Same name and kind exists: this is an update. Show it.
+3. **Explore what you need**: a repo's remote, what it is, and the path convention; a source's location and access method, checked as in setup; an MCP server's command and variables.
+4. **Ask only what is missing**, recommended answer first.
+5. **Show the diff** of every file, for every harness in use.
+6. **Write** on a yes. Commit in the home repo unless local only.
+7. **Report** in one or two lines, including any harness with no place for it.
 
 ## By kind
 
 | Kind | What add does |
 | --- | --- |
-| `repo` | Adds the pointer line in the same format as the others. Adds the line that points home to the child repo, by apply step 7 in [setup.md](setup.md). In a git home repo, a clone inside the home folder goes into `.gitignore` before the commit. Then asks whether to run `/setup-agents-md <repo>` and calls it on a yes, when that skill is installed. Past about 20 repos, offers the split into `repos/<area>.md` by [layout.md](layout.md). |
-| `source` | Adds the pointer line. If no access method exists, offers to add one first, such as an MCP server, and writes `none yet` if the person declines. |
+| `repo` | Adds the pointer, and the `Home repo:` line in the child by apply step 7 in [setup.md](setup.md). A clone inside a git home folder goes into `.gitignore` first. Offers `/setup-agents-md <repo>` when installed. Past about 20 repos, offers the `repos/<area>.md` split. |
+| `source` | Adds the pointer. No access method: offers one first, else writes `none yet`. |
 | `skill` | Copies the folder whole into the skills folder. If it came from a child repo, offers to remove it there on a new local branch. |
 | `rule` | Writes one file per harness in use, in each harness's format, with the same text. |
 | `agent`, `command` | Writes it for each harness that has a place for it. Reports the ones that do not. |
@@ -32,19 +30,17 @@ The paths per harness are in [harnesses.md](harnesses.md).
 
 ## Update
 
-Same steps. Show the old and the new side by side. For a skill, replace the folder whole. Never patch a skill's body in place. If the name changes, change every place that names it: `AGENTS.md`, the pointer files, other skills' text.
+Show old and new side by side. A skill is replaced whole, never patched. A rename changes every place that names it: `AGENTS.md`, pointer files, other skills.
 
 ## From local only to git
 
-`/setup-home-repo add git` is the one `add` that names no item. It turns a local-only home repo into a git repo, in this order:
+`/setup-home-repo add git` turns a local-only home repo into git:
 
 1. `git init`.
-2. Write the full `.gitignore` by apply step 5 in [setup.md](setup.md): local settings files, `.worktrees/`, secret files, and every child repo clone inside the home folder.
-3. Show the list of files the first commit will hold. No clone folder, local settings file, or secret file may be on it. Check the list for secrets by the advise check.
+2. The full `.gitignore` by apply step 5 in [setup.md](setup.md).
+3. Show the files the first commit holds: no clone, local settings file, or secret, by the advise secret check.
 4. Commit on a yes.
-
-The way back is the person's: they delete the `.git` folder.
 
 ## Remove
 
-`add` does not remove. Removing is a cleanup row, so it gets the same checks.
+`add` never removes. Removing is a cleanup row.

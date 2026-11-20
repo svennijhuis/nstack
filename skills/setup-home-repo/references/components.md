@@ -1,8 +1,6 @@
 # The component registry
 
-Every mode walks this table. Setup uses "What counts" and "Where to look" to find items. Apply and add use "Home" to place them. Advise uses "Check". The exact path for a kind in a given harness is in [harnesses.md](harnesses.md).
-
-To support a new kind, add a row here and a row in the harness table. Change nothing else.
+Setup finds items by "What counts" and "Where to look", apply and add place them by "Home", advise uses "Check". Paths per harness: [harnesses.md](harnesses.md). A new kind is a row here and in the harness table, nothing else.
 
 ## The kinds
 
@@ -26,12 +24,11 @@ To support a new kind, add a row here and a row in the harness table. Change not
 ## Rules for the walk
 
 - Skip dependency and build folders: `node_modules`, `vendor`, `obj`, `dist`, `target`, `.venv`, and a `bin` that git ignores.
-- Skip `.env`, key files, and anything a `.gitignore` marks as a secret store. Note that a file exists. Do not open it.
-- Read the user folder of each harness too. Items there are the ones most likely to be stale.
-- Record for each item: kind, name, path, harness, the repo it sits in, and a hash of its content. The hash finds duplicates and drift.
-- A steering file in a child repo (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`) is `repo-specific` and skips the bucket rules. Apply step 7 in [setup.md](setup.md) adds one line to it. The rest of it belongs to `setup-agents-md`.
-- `docs/adr/`, `docs/agents/`, `docs/design/`, `GLOSSARY.md`, `CONTEXT.md`, and `DECISIONS.md` in a child repo are `repo-specific` and skip the bucket rules. Decisions, terms, topic docs, and designs stay in the repo they are about. They are never a `wiki` item.
-- Two items are the same when name and kind match. They are a `duplicate` when the hashes match and `drift` when they do not. On drift, show both and ask which one wins. Never merge them yourself.
+- Note but never open `.env`, key files, and what a `.gitignore` marks as a secret store.
+- Read each harness's user folder too.
+- Record per item: kind, name, path, harness, repo, and a content hash.
+- In a child repo, the steering file (`AGENTS.md`, `CLAUDE.md`, `copilot-instructions.md`), `docs/adr/`, `docs/agents/`, `docs/design/`, `GLOSSARY.md`, `CONTEXT.md`, and `DECISIONS.md` are `repo-specific`, skip the bucket rules, and are never `wiki`. Apply adds only the `Home repo:` line; the rest belongs to `setup-agents-md`.
+- Same name and kind: a `duplicate` when the hashes match, `drift` when not. On drift, show both and ask which wins. Never merge them.
 
 ## Choosing the bucket
 
@@ -39,12 +36,12 @@ Take the first rule that fits.
 
 1. It comes from a plugin or a marketplace → `installed`.
 2. It is in two or more places → `duplicate`.
-3. It is a `tool` or a `wiki` item and sits in one repo only → `repo-specific`. A repo's own scripts and docs stay with its code.
-4. It sits in one repo, and its body mentions that repo's name, a path, or a service 3 or more times, counting each occurrence → `repo-specific`.
-5. Otherwise → `shared`. When the item sits in one repo only, round two asks if it is `repo-specific`.
+3. A `tool` or `wiki` item in one repo only → `repo-specific`.
+4. In one repo, and its body names that repo, a path in it, or its service 3 or more times → `repo-specific`.
+5. Otherwise → `shared`. In one repo only, round two asks.
 
-Propose the bucket. The person can change any row in the plan step.
+The person can change any bucket in the plan.
 
 ## Personal or team
 
-A team home repo holds what everyone needs. A person's own taste stays in their user folder: editor style, model choice, personal shortcuts. When an item in the user folder looks personal, bucket it `repo-specific` with the user folder as its repo, and say why.
+A team home repo holds what everyone needs. Personal taste (editor style, model choice, shortcuts) stays in the user folder: bucket it `repo-specific` with the user folder as its repo, and say why.

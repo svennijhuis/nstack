@@ -2,7 +2,7 @@
 
 One place for everything your agent needs in every session: skills, pointers to your repos and sources, MCP servers, and hooks. You start every session there and reach the other repos from it. Say "set up a home repo" or type `/setup-home-repo`.
 
-This file is for people. The agent reads [SKILL.md](SKILL.md).
+This file is for people. The agent reads [SKILL.md](../../../skills/setup-home-repo/SKILL.md).
 
 ## What it does
 

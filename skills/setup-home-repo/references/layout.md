@@ -1,6 +1,6 @@
 # The home repo layout
 
-Create only what has content. An empty folder is noise.
+Create only what has content.
 
 ```text
 <home>/
@@ -20,11 +20,9 @@ Create only what has content. An empty folder is noise.
   .gitignore           local settings files, worktrees, secret files, child repo clones   (git only)
 ```
 
-The exact files per harness are in [harnesses.md](harnesses.md).
-
 ## `AGENTS.md`
 
-Keep it short. It is loaded every session. A skill holds a procedure. `AGENTS.md` holds where things are.
+Short: it loads every session. It says where things are; a skill holds a procedure.
 
 ```markdown
 # Home repo
@@ -56,7 +54,7 @@ Start every session here. Reach other repos and sources through the pointers bel
 - <VARIABLE_NAME>: <what it is for>
 ```
 
-Leave out a section that has no lines. The `## Repos` heading is how this skill knows a home repo. Keep it.
+Leave out a section with no lines, but always keep `## Repos`: it marks the home repo.
 
 ## The repo pointer
 
@@ -64,14 +62,14 @@ Leave out a section that has no lines. The `## Repos` heading is how this skill 
 <name> (<what it is>): <local path>. Clone from <remote> if missing.
 ```
 
-- `<what it is>` is a few words the agent can match a task against: "storefront, Next.js", "payments API, .NET".
-- `<local path>` is the same for everyone on the team. Use a path under the home folder, such as `~/repos/acme/storefront`. Ask once what the convention is.
-- A repo with no remote drops the second sentence.
-- Add a hint after it only when it changes what the agent does: "Run `git pull` first.", "Never push to main here."
+- `<what it is>`: a few words to match a task against, such as "payments API, .NET".
+- `<local path>`: the same for the whole team, under the home folder, by the convention asked once.
+- No remote: drop the second sentence.
+- A hint after it only when it changes what the agent does: "Run `git pull` first."
 
 Good: `storefront (web shop, Next.js): ~/repos/acme/storefront. Clone from git@github.com:acme/storefront.git if missing.`
 
-Bad: `storefront: the storefront repo`. No path, no remote, and the description repeats the name.
+Bad: `storefront: the storefront repo`. No path, no remote, the name repeated.
 
 ## The source pointer
 
@@ -79,9 +77,9 @@ Bad: `storefront: the storefront repo`. No path, no remote, and the description 
 <name> (<kind>): <location>. Reach via <how>.
 ```
 
-- `<kind>` is free text: wiki, issue tracker, pipeline, chat, docs, dashboard.
-- `<location>` is the address a person would open: a URL, an organisation and project, a channel.
-- `<how>` is the thing the agent calls. One of: an MCP server by its name in the config, a command line tool, or a plain URL to fetch.
+- `<kind>`: free text, such as wiki, issue tracker, pipeline, chat.
+- `<location>`: what a person would open: a URL, an organisation and project, a channel.
+- `<how>`: an MCP server by its config name, a command line tool, or a URL to fetch.
 
 ```text
 engineering wiki (wiki): dev.azure.com/acme/platform, wiki "Platform". Reach via the `az` tool: `az devops wiki page show`.
@@ -89,17 +87,17 @@ tickets (issue tracker): github.com/acme/storefront/issues. Reach via `gh issue`
 runbooks (docs): Confluence space OPS. Reach via the MCP server `atlassian`.
 ```
 
-Nothing from a source is copied into the home repo. The pointer says where it is and how to reach it. If no access method exists yet, write `Reach via: none yet` and report it. Do not invent one.
+Copy nothing from a source. With no access method yet, write `Reach via: none yet` and report it.
 
 ## The line that points home
 
-One fixed line in each child repo's steering file, under its first sentence, or as the first line when the file has none:
+In each child repo's steering file, under its first sentence, or first when there is none:
 
 ```text
 Home repo: <local path>. Shared skills and pointers to the other repos and sources live there.
 ```
 
-Every mode finds the line by its start, `Home repo:`.
+Every mode finds it by `Home repo:`.
 
 ## Many repos
 
@@ -119,25 +117,23 @@ Past about 20, `## Repos` becomes:
 - Internal: `repos/internal.md`. Tooling and infrastructure.
 ```
 
-Each area file holds pointer lines in the same format. Ask the person for the areas. Do not guess them from repo names alone.
+Each area file holds pointer lines. Ask for the areas; never guess them from repo names.
 
 ## Clones inside the home repo
 
-When the clones sit inside the home folder, they stay where they are. In a git home repo, `.gitignore` lists each clone folder. The pointers use their paths.
+Clones inside the home folder stay put. In a git home repo, `.gitignore` lists each one.
 
 ## Local only
 
-A local-only home repo is a plain folder. It has no git, no `.gitignore`, and no commit. The person shares its files by hand, or not at all. Every mode works the same there, with one difference: there is no undo. A mode still shows the diff and waits for a yes before it overwrites or removes a file, but it keeps no copy of the old one. The person chose that risk with local only. A person who wants an undo uses git.
-
-To share it later, the person types `/setup-home-repo add git`, see [add.md](add.md).
+A plain folder: no git, no `.gitignore`, no commit. Every mode works the same, without undo: it still shows the diff and waits for a yes, but keeps no copy. `/setup-home-repo add git` turns it into git, by [add.md](add.md).
 
 ## Worktrees
 
-One clone per repo. A parallel task gets a worktree inside that clone, under `.worktrees/<task>`. Put `.worktrees/` in that repo's local exclude file, not in its tracked `.gitignore`. Cleanup removes worktrees whose branch is merged.
+A parallel task gets a worktree in the clone under `.worktrees/<task>`, listed in that repo's local exclude file, not its `.gitignore`. Cleanup removes merged ones.
 
 ## What stays out
 
 - Secrets, tokens, and `.env` files.
-- A person's own settings. They stay in the user folder or in a local settings file that git ignores.
+- A person's own settings: user folder, or a local settings file git ignores.
 - Copies of content that lives in a source.
 - Anything bucketed `repo-specific`.

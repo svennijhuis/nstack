@@ -1,19 +1,17 @@
 # Cleanup
 
-`/setup-home-repo cleanup` fixes what advise found. It runs advise first, lets the person pick, applies, and checks again.
+`/setup-home-repo cleanup` fixes what advise found.
 
-## Steps
-
-1. **Run advise** by [advise.md](advise.md). Number the rows.
-2. **Ask which rows to fix.** Recommend all rows of severity high and up. The person answers with numbers, `all`, or `none`.
-3. **Show what each picked row will change**: the files, and for a removal, what is removed and from where.
-4. **Apply in the order below.** Stop at the first failure and report.
-5. **Check again.** Run the checks for the rows you touched.
-6. **Commit and report.** One commit in the home repo, unless it is local only. One commit on a new local branch in each child repo that changed. Do not push.
+1. **Run advise** by [advise.md](advise.md), rows numbered.
+2. **Ask which rows.** Recommend high and up. Answers: numbers, `all`, or `none`.
+3. **Show what each picked row changes**, and for a removal, what and from where.
+4. **Apply in the order below.** Stop and report at the first failure.
+5. **Check again** the rows you touched.
+6. **Commit and report.** One commit in the home repo unless local only, one on a new local branch in each changed child repo.
 
 ## Order
 
-Do the safe fixes first, so a stop halfway leaves nothing broken.
+Safe fixes first.
 
 1. Additions: a missing hook registration, a missing environment entry, a missing one-line `CLAUDE.md`.
 2. Corrections: a pointer path, a script made executable.
@@ -22,7 +20,7 @@ Do the safe fixes first, so a stop halfway leaves nothing broken.
 
 ## Ask again before each of these
 
-A yes to the list is not a yes to these. Confirm each one by name.
+A yes to the list is not a yes to these. Confirm each by name.
 
 | Action | Before you do it |
 | --- | --- |
@@ -32,18 +30,15 @@ A yes to the list is not a yes to these. Confirm each one by name.
 | Change anything in the user folder | Say it changes every session the person runs. |
 | Remove a suspected secret | Say removal does not undo the leak. The token must be rotated. Offer no history rewrite unless asked. |
 
-Never use a force flag to get past a refusal. A refusal is a finding to report.
+Never force past a refusal: report it.
 
 ## Child repos
 
-- Work on a new local branch, `home-repo/cleanup-<date>`.
-- Skip a repo with uncommitted changes to tracked files, other than under `docs/design/`, and report it.
-- Remove only what the picked rows name. Leave everything bucketed `repo-specific`.
-- A row whose Fix names `/setup-agents-md` is not fixed here. Name the command and leave the row.
-
-## Renames
-
-A rename changes every place that names the item in the same commit: `AGENTS.md`, the pointer files, and other skills' text.
+- Work on a new local branch `home-repo/cleanup-<date>`.
+- Skip and report a repo with uncommitted changes to tracked files outside `docs/design/`.
+- Remove only what the picked rows name. Leave `repo-specific` items.
+- A row whose Fix names `/setup-agents-md` stays: name the command.
+- A rename changes every place that names the item, in the same commit.
 
 ## Report
 

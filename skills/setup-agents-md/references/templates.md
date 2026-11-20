@@ -1,10 +1,10 @@
 # Templates
 
-Fill these in. Leave out a section that has no lines, and a line whose file does not exist after this run. Never fill a line with a guess.
+Leave out a section with no lines, and a line whose file will not exist. Never fill a line with a guess.
 
 ## Root `AGENTS.md`
 
-Aim for under 60 lines. Each line must apply to every task in the repo.
+Under about 60 lines, each true for every task.
 
 ```markdown
 # <project name>
@@ -85,15 +85,11 @@ For a repo with several parts, replace Shape and Commands with Parts. Keep Pipel
 - Apply: runs through the `<pipeline>` pipeline, not from a local machine.
 ```
 
-Leave out a command the part does not have. Leave out the Package manager line unless the stack has more than one to choose from and no lockfile or manifest field pins it.
-
-Shape is the thin navigation layer: three to six lines. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.
-
-Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs, Changes, and Decisions sections as they are, except for the paths.
+Leave out a command the part does not have, and the Package manager line unless the stack has several and nothing pins one. Shape is three to six lines, naming a top-level folder at most. Write rules as plain, calm sentences: no ALL CAPS, no "IMPORTANT". Keep Docs, Changes, and Decisions as they are, except the paths.
 
 ## Code standards
 
-`docs/agents/code-standards.md`. Each line is a convention the person confirmed or that came from an existing doc. No rule a linter or the type checker already enforces.
+Each line was confirmed by the person or came from an existing doc. No rule a tool enforces.
 
 ```markdown
 # Code standards
@@ -110,11 +106,11 @@ Read this before you write or change code. The linter and the type checker cover
 - <Convention.>
 ```
 
-Areas that often hold a real convention: errors, modules and boundaries, naming, data access, async work, logging, comments, dependencies. Leave out an area with no confirmed line.
+Likely areas: errors, modules and boundaries, naming, data access, async work, logging, comments, dependencies. Leave out an area with no confirmed line.
 
 ## Topic file
 
-`docs/agents/<topic>.md`, or the docs folder the repo already uses. One topic per file. A topic file may point at a deeper file.
+`docs/agents/<topic>.md`, or the repo's own docs folder. One topic per file.
 
 ```markdown
 # <Topic>
@@ -125,11 +121,11 @@ Read this when <situation>.
 - <Rule.> Follow the pattern in <the module or feature, by name>.
 ```
 
-Describe the pattern and name the part of the code that shows it. Do not paste code or list file paths. Both go stale, and the agent finds the files itself.
+Name the part of the code that shows the pattern. Paste no code and list no file paths.
 
 ## ADR
 
-One file per decision: `docs/adr/<yyyy-mm-dd>-<short-slug>.md`. One file each, so two agents working at once do not conflict on a shared file. When the repo already numbers its ADRs, or keeps one `DECISIONS.md`, follow what is there.
+One file per decision: `docs/adr/<yyyy-mm-dd>-<short-slug>.md`. A repo that numbers its ADRs or keeps one `DECISIONS.md` keeps its way.
 
 ```markdown
 # <Decision as a short statement>
@@ -151,7 +147,7 @@ Change: <the work item, such as a PBI, when known>, <pull request or commit that
 - <Alternative>: <why not>.
 ```
 
-Status words: `Accepted`, `Superseded by <file>`, `Reverted by <file>`. After the ADR is merged only the status line changes. The `Change` line is filled in once, when the pull request has its number. Leave out the work item when nobody knows it. Never guess one: git still links the file to its commit.
+Status words: `Accepted`, `Superseded by <file>`, `Reverted by <file>`. After merge only the status line changes. Fill `Change` once the pull request has its number. Leave out an unknown work item. Never guess one.
 
 A revert ADR:
 
@@ -170,7 +166,7 @@ Reverts: <old ADR file>
 
 ## `GLOSSARY.md`
 
-At the repo root. Only terms whose meaning is special to this project.
+At the repo root. Only terms with a project meaning.
 
 ```markdown
 # Glossary
@@ -178,4 +174,4 @@ At the repo root. Only terms whose meaning is special to this project.
 - **<Term>**: <what it means here>. Not <the meaning people might assume>.
 ```
 
-When the repo has a `CONTEXT.md` that holds the terms, keep that name. Do not rename a file other tools or skills read. A repo with `GLOSSARY-MAP.md` has one glossary per context: point the Terms line at the map.
+A `CONTEXT.md` that holds the terms keeps its name. With `GLOSSARY-MAP.md`, point the Terms line at the map.

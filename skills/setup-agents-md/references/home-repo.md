@@ -1,65 +1,48 @@
 # Home repo or child repo
 
-This skill works without a home repo. Skip this file then. A home repo, from `setup-home-repo`, is the repo the agent starts in. A child repo is any repo it points at under `## Repos`. This skill works in both, but they hold different things.
-
-## Where each thing lives
+Skip this file when there is no home repo. A home repo, from `setup-home-repo`, is where the agent starts. A child repo is one it points at under `## Repos`.
 
 | Thing | Home repo | Child repo |
 | --- | --- | --- |
-| This skill | Yes, in the skills folder, so every repo can use it | No copy |
-| `AGENTS.md` | Yes: how to work across repos, pointers | Yes: what is true only for that repo |
-| ADRs | Only decisions about the home repo itself: which harnesses, which skills, how repos are laid out | Every decision about that repo's code |
-| Glossary | Only terms about the home repo itself | Every term of that repo's domain |
-| Topic files | Only for working across repos | Every topic of that repo |
+| This skill | In the skills folder | No copy |
+| `AGENTS.md` | How to work across repos, and pointers | What is true only for that repo |
+| ADRs, glossary, topic files | Only about the home repo itself | Everything about that repo |
 
-A decision belongs next to the code it changes. A reader of that repo finds it, a revert of that code can be checked against it, and it stays true when the home repo changes.
+A decision that spans repos: the full ADR goes in the repo that owns the change, and each other repo it touches gets a short ADR with the decision in one sentence and a link.
 
-A decision that spans repos: write the full ADR in the repo that owns the change. In each other repo it touches, write a short ADR with the decision in one sentence and a link to the full one.
+## Designs
 
-## Designs from `tech-design`
-
-A design lives in the folder `tech-design` was started in.
-
-| The design touches | Start `tech-design` in | The design lives in |
+| The design touches | Start `tech-design` in | It lives in |
 | --- | --- | --- |
 | One repo | That repo | That repo's `docs/design/` |
-| More than one repo | The home repo. `tech-design` asks there, and the person may pick a repo instead. | The home repo's `docs/design/`, while it is open |
+| Several repos | The home repo, or a repo the person picks | The home `docs/design/`, while open |
 
-A design is a plan, not a decision record. A cross-repo plan has no single repo to live in, so it stays in the home repo while it is open. Its decisions do not stay there. When the feature ships, the skill's `tech-design` steps turn them into ADRs by the cross-repo rule above.
+The home repo may hold open designs. It never holds a shipped design or an ADR about a child repo.
 
-So the home repo may hold open designs. It never holds a shipped design or an ADR about a child repo.
+**A shipped design in the home repo.** A run on the home repo itself, or with `all`, handles each home design that is `abandoned`, or `committed` and shipped by the person's word:
 
-### A shipped design in the home repo
-
-A run on the home repo itself, and a run with `all`, handles each design in the home `docs/design/` that is `abandoned`, or `committed` and shipped by the person's word.
-
-1. Ask which repos the design changed and which one owns the change, with the repos its text names as the recommended answer. For an `abandoned` design, ask which repo would have owned it: the one ADR goes there.
-2. In each of those repos, write the ADRs by the cross-repo rule above, as that repo's own plan, on that repo's branch, after its own yes.
-   When the run is on the home repo itself, that plan holds only those ADRs and the design's project terms, which go into the glossary of the repo that owns the change. It sorts nothing else, adds no section and no code standards file, and runs no command.
-3. Only when every one of those ADRs is committed, offer to delete the design folder, as a row in the home repo's plan. If a repo said no or was skipped, keep the folder and report which repo is missing.
-4. In a local-only home repo there is no git to keep the folder. Say so in the row, so the person knows the delete cannot be undone.
+1. Ask which repos it changed and which owns the change, the repos its text names recommended. For `abandoned`, ask which repo would have owned it.
+2. In each, write the ADRs by the cross-repo rule, as that repo's own plan, branch, and yes. On a run on the home repo itself, that plan holds only those ADRs and the design's terms for the owning repo's glossary. It sorts nothing else and runs no command.
+3. Only when all those ADRs are committed, offer to delete the folder as a home repo plan row. A repo that said no or was skipped keeps the folder: report it.
+4. A local-only home repo has no git: say in the row that the delete cannot be undone.
 
 ## Running in a home repo
 
-**The repo list.** The child repos are the pointer lines under `## Repos`. Past about 20 repos, `setup-home-repo` writes area lines there instead, each naming a `repos/<area>.md` file. Then read every one of those files: their pointer lines are the repo list. An area is never a repo.
+**The repo list** is the pointer lines under `## Repos`. Past about 20 repos those are area lines naming `repos/<area>.md` files: read each, their pointer lines are the list. An area is never a repo.
 
-When the working directory is a home repo:
-
-1. **With a repo name**, `/setup-agents-md <repo name>`: find its pointer in the repo list. If the path is missing, ask before you clone it from the remote in the pointer. Advise does not clone: it reports the missing path and stops. Run Create or Update on that repo.
-2. **With `all`**: do step 1 for every repo in the repo list, one after the other. Each repo gets its own plan, its own yes, and its own branch. A no skips that repo only. Last, show a plan for the home repo that holds only its shipped designs, above.
-3. **With nothing typed**: ask one question. "Which repo? The home repo itself, or one of: <names from the repo list>." With areas, show the names grouped by area. Recommend the child repo the person last named, or the home repo if none.
-4. **On the home repo itself**: trim only the steering text above `## Repos` in `AGENTS.md`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`. They belong to `setup-home-repo`. For problems there, name `/setup-home-repo advise`. The home `AGENTS.md` follows `setup-home-repo`'s layout, so the skill's defaults do not apply to it: add no Commands, Parts, Decisions, Changes, or Docs section and no code standards file, and run no command check. Then do the shipped designs, below.
+1. **`<repo name>`:** find its pointer. Its path is missing: ask before you clone from the pointer's remote. Advise reports it and stops. Then Create or Update that repo.
+2. **`all`:** step 1 for every repo, each with its own plan, yes, and branch. A no skips only that repo. Last, a home repo plan that holds only its shipped designs.
+3. **Nothing typed:** ask "Which repo? The home repo itself, or one of: <names>", grouped by area when there are areas. Recommend the repo last named, or the home repo.
+4. **The home repo itself:** trim only the text above `## Repos`. Never change `## Repos`, `## Sources`, `## Tools`, or `## Environment`: name `/setup-home-repo advise` for those. Add no Commands, Parts, Decisions, Changes, or Docs section and no code standards file, and run no command check.
 
 ## Running in a child repo
 
-Work as in any repo. Do not copy text from the home repo's `AGENTS.md`. The agent reads both.
-
-The line that points at the home repo belongs to `setup-home-repo`. It starts with `Home repo:`. Keep it, under the first sentence. When this skill was called from the home repo and the line is missing, do not write it: name `/setup-home-repo add <repo>`.
+Work as in any repo. Copy nothing from the home `AGENTS.md`. Keep the line that starts `Home repo:` under the first sentence. It belongs to `setup-home-repo`: when it is missing, name `/setup-home-repo add <repo>` and do not write it.
 
 ## Things in the wrong place
 
-Advise reports these. Fixing one is a plan row, never a silent move.
+Advise reports these. Each fix is a plan row.
 
-- An ADR, glossary, or topic file in the home repo that is about one child repo: move it to that repo, on a branch there.
-- A rule in a child repo's `AGENTS.md` that repeats the home repo's text: delete it from the child.
-- A rule in the home repo's `AGENTS.md` that applies to only one child repo: move it to that repo.
+- An ADR, glossary, or topic file in the home repo about one child repo: move it there, on a branch.
+- A child `AGENTS.md` rule that repeats the home repo: delete it from the child.
+- A home `AGENTS.md` rule for one child repo: move it to that repo.

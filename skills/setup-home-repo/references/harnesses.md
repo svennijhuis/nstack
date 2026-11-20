@@ -1,10 +1,10 @@
 # Where each kind lives, per harness
 
-Paths are relative to the home repo root. They were read from each harness's docs in November 2026. A harness changes its paths over time. When a path here does not work, read that harness's current docs, use what they say, and tell the person this file is behind.
+Paths from the home repo root, read from each harness's docs in November 2026. When one does not work, use the harness's current docs and tell the person this file is behind.
 
 ## Detect the harnesses in use
 
-A harness is in use when its folder exists in a chosen repo or in the user folder, or the person says so.
+In use when its folder is in a chosen repo or the user folder, or the person says so. Write files only for harnesses confirmed in round one.
 
 | Harness | Signs on disk |
 | --- | --- |
@@ -13,19 +13,17 @@ A harness is in use when its folder exists in a chosen repo or in the user folde
 | Copilot | `.github/copilot-instructions.md`, `.github/instructions/`, `.github/skills/`, `.github/hooks/`, `~/.copilot/` |
 | Codex | `.codex/`, `.agents/`, `~/.codex/` |
 
-Confirm the list with the person in the first round. Write files only for the confirmed harnesses.
-
 ## Shared by all four
 
 | Kind | Path | Note |
 | --- | --- | --- |
-| `steering`, `repo`, `source` | `AGENTS.md` | All four read it. Claude Code reads it from version 2.1.277, and only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the working folder or a folder above it. Write no `CLAUDE.md` by default. When the person asks for one, or the version check in setup step 3 fails, write one at the home repo root whose only line is `@AGENTS.md`. Never put it in `.claude/`: the import resolves from the file's own folder and finds nothing there. With clones inside the home folder, each child repo then needs the same one-line file at its root. |
+| `steering`, `repo`, `source` | `AGENTS.md` | Claude Code reads it from 2.1.277, unless a `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` here or above hides it. No `CLAUDE.md` by default. On request, or when the setup step 3 version check fails, write a root `CLAUDE.md` whose only line is `@AGENTS.md`, never in `.claude/`. With clones inside the home folder, each child repo then needs the same file. |
 | `tool` | `tools/` | Plain files. One line per tool in `AGENTS.md`. |
 | `wiki` | `wiki/` | Plain markdown. One line in `AGENTS.md` says what is in it. |
 
 ## Skills
 
-One real folder, so there is nothing to keep in sync.
+One real folder.
 
 | Harnesses in use | Real folder | Extra |
 | --- | --- | --- |
@@ -53,17 +51,11 @@ A skill only the person may start needs a flag per harness:
 | `mcp` | `.mcp.json`, key `mcpServers` | `.cursor/mcp.json`, key `mcpServers` | `.vscode/mcp.json`, key `servers`, for the editor. The cloud agent takes its servers from the repository settings on GitHub, not from a file. | `[mcp_servers.<id>]` in `.codex/config.toml` |
 | `registration` | `enabledPlugins` and `extraKnownMarketplaces` in `.claude/settings.json` | In the app. Report it. | In the client. Report it. | In the client. Report it. |
 
-Event names differ per harness. When you move a hook to a second harness, map the event by what it does: before a tool runs, after a file edit, at session start. If the second harness has no matching event, leave that harness out and report it.
-
-Codex loads a project `.codex/config.toml` only when the project is trusted. Say so in the report when you write one.
+Map a hook's event by what it does (before a tool, after an edit, at session start). No matching event: leave that harness out and report it. Codex loads a project `.codex/config.toml` only when trusted: say so when you write one.
 
 ## One item, several harnesses
 
-When an item must exist once per harness, such as an MCP server or a hook:
-
-- Keep one script or one command. Each harness config points at the same file.
-- Write the entry in each harness's own format. Do not copy JSON between harnesses unchanged. The top-level keys differ.
-- Advise checks **parity**: an item present for one harness in use and missing for another.
+An MCP server or hook keeps one script, and each harness config points at it in its own format: the top-level keys differ. Advise checks **parity** across the harnesses in use.
 
 ## Secrets in config
 
@@ -76,4 +68,4 @@ Never write the value. Name the variable.
 | Copilot in the editor | `${input:name}` with an `inputs` entry, or `${env:NAME}` |
 | Codex | `bearer_token_env_var = "NAME"`, or an `env` table that reads from the shell |
 
-List every variable the home repo needs under `## Environment` in `AGENTS.md`: the name and what it is for. Never the value.
+List each variable under `## Environment`: name and purpose.

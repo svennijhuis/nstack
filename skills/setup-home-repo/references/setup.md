@@ -1,79 +1,65 @@
 # Setup
 
-Setup builds a home repo from what the person already has. Steps 1 to 5 only read. Step 6 is the first write, and it waits for approval.
-
-Use subagents for the wide searches in steps 1 to 3 when the harness has them. Each one returns a table, not file contents.
+Steps 1 to 5 only read. Step 6 is the first write, after a yes. Use subagents for the wide searches in steps 1 to 3 when the harness has them; each returns a table, not file contents.
 
 ## 1. Explore the repos
 
-Ask one thing first if you do not know it: which folders hold the person's repos. Recommend the parent of the working directory.
+Unless you know it, ask which folders hold the repos, the parent of the working directory recommended. A working directory that is not a git repo and holds child repos is the home folder: it becomes the home repo, its clones stay where they are, and you skip this question and the location in question 2.
 
-If the working directory is not a git repo and holds child repos, it is the home folder and holds the repos. The home repo is that folder itself. Skip the question above and the location in round one question 2. Its clones stay where they are.
-
-Find every git repo under those folders. Skip dependency and build folders. For each, record:
+Find every git repo there, skipping dependency and build folders. Record per repo:
 
 | Field | From |
 | --- | --- |
 | Name | The folder name |
-| Path | Absolute, then shortened to start at the home folder |
+| Path | Absolute, shown from the home folder |
 | Remote | `git remote get-url origin`. None is allowed. |
-| Host | github.com, dev.azure.com, gitlab.com, or other, read from the remote |
+| Host | github.com, dev.azure.com, gitlab.com, or other |
 | Last commit | `git log -1 --format=%cs` |
-| What it is | The first lines of its readme or steering file, as a few words |
+| What it is | A few words from its readme or steering file |
 
 Done when every repo found is a row.
 
 ## 2. Explore the components
 
-Walk [components.md](components.md) over every repo from step 1 and over the user folder of each harness. Record each item and give it a bucket by the rules in that file.
-
-Done when every item found is a row with a kind and a bucket, and nothing agent-related is left unlisted. What fits no kind is `other`.
+Walk [components.md](components.md) over every repo and each harness's user folder. Done when every agent-related item is a row with a kind and a bucket. What fits no kind is `other`.
 
 ## 3. Explore the sources and the harnesses
 
-Find sources without asking:
+- **Remotes.** github.com means GitHub issues, pull requests, maybe a wiki. dev.azure.com means boards, pipelines, maybe a wiki. The same for GitLab and others.
+- **MCP config.** Name what each configured server reaches.
+- **Tools.** `command -v` for `gh`, `az`, `glab`, `jira`, `linear`, `kubectl`, `aws`, `gcloud`. Never run them against a service.
+- **Steering files.** Wiki addresses, boards, and channels already named there.
 
-- **Remotes.** A github.com remote means GitHub issues, pull requests, and maybe a wiki. A dev.azure.com remote means Azure DevOps boards, pipelines, and maybe a wiki. The same holds for GitLab and others.
-- **MCP config.** Each server already configured is a way to reach something. Name what it reaches.
-- **Tools on the path.** Check which of `gh`, `az`, `glab`, `jira`, `linear`, `kubectl`, `aws`, `gcloud` exist with `command -v`. Do not run them against a service.
-- **Steering files.** Links and names already written there: a wiki address, a board, a channel.
-
-Find the harnesses by the signs in [harnesses.md](harnesses.md).
-
-When Claude Code is one of them, run `claude --version`. It only reads. Note the version, or that there was no answer. Question 5 uses it.
+Find the harnesses by [harnesses.md](harnesses.md). With Claude Code, run `claude --version` and note the answer for question 5.
 
 Done when each source has a name, a kind, a location, and an access method or `none yet`.
 
 ## 4. Ask what is left
 
-Ask in numbered rounds. One round is a short list of questions, each with a recommended answer the person can accept with one word. Skip a question exploring already answered. Most setups need two rounds.
+Numbered rounds, each question with a one-word recommended answer. Skip what exploring answered.
 
 Round one, the shape:
 
-1. Which repos go in? Recommend all with a commit in the last year. List the rest as left out.
-2. Where does the home repo live, and what is it called? Skip the location when step 1 found the home folder. Recommend a new private repo beside the others, named `home`.
-3. Is it for one person or a team? This decides what stays in the user folder.
-4. Is the home repo a git repo, or local only? Skip this when the folder already is a git repo. Recommend git, also for one person: the commit is the undo, and nothing is pushed. A team needs git. When the person picks local only, say once that it has no undo: a changed or removed file is gone.
-5. Which harnesses? Recommend the ones detected. When Claude Code is one and its version is older than 2.1.277 or was not found, ask too: write a one-line `CLAUDE.md`? Recommend yes. Without it that Claude Code reads no `AGENTS.md`. Name the other cases in the question: Bedrock or telemetry off on a version from 2.1.277 to 2.1.280, or project instructions set to `CLAUDE.md` only on any version.
-6. What is the local path convention for repos? Recommend the one most repos already follow.
+1. Which repos go in? Recommend all with a commit in the last year, and list the rest.
+2. Where does the home repo live, and its name? Recommend a new private repo beside the others, named `home`.
+3. One person or a team? This decides what stays in the user folder.
+4. Git or local only? Skip when the folder is already a git repo. Recommend git, also for one person: the commit is the undo. A team needs git. On local only, say once there is no undo.
+5. Which harnesses? Recommend the detected ones. With Claude Code below 2.1.277 or no version, also ask to write a one-line `CLAUDE.md`, recommended yes, and name the other cases: Bedrock or telemetry off on 2.1.277 to 2.1.280, or project instructions set to `CLAUDE.md` only.
+6. The local path convention for repos? Recommend the one most repos follow.
 
 Round two, the gaps:
 
-7. Sources that exploring missed. Ask openly once: wikis, issue trackers, pipelines, chat, dashboards, anything else the agent should reach. For each, the location and how to reach it.
-8. Each drift pair: which copy wins. Each `shared` item that sits in one repo only, see [components.md](components.md): `shared` or `repo-specific`.
-9. Each `other` item: keep, and as what, or leave.
-10. Past about 20 repos: the areas to group them in, and whether the areas follow teams. Recommend team areas when the person names teams.
-11. Which child repos get `setup-agents-md` after setup? Recommend all that go in. Leave this out when that skill is not installed.
+7. Sources exploring missed: wikis, trackers, pipelines, chat, dashboards. For each, the location and how to reach it.
+8. Each drift pair: which copy wins. Each `shared` item in one repo only: `shared` or `repo-specific`.
+9. Each `other` item: keep, as what, or leave.
+10. Past about 20 repos: the areas, and whether they follow teams. Recommend team areas when the person names teams.
+11. Which child repos get `setup-agents-md`? Recommend all that go in. Skip when it is not installed.
 
-If a monorepo would do, or there is only one repo, say so now and ask whether to go on.
-
-Done when no row in the plan would hold a question mark.
+A monorepo would do, or there is one repo: say so now and ask whether to go on. Done when no plan row would hold a question mark.
 
 ## 5. Show the plan
 
-Show two things and wait.
-
-**The plan table.** One row per item.
+**The plan table**, one row per item, with the final path of every repo and item:
 
 ```text
 Item              Kind    From                               To                        Bucket
@@ -84,34 +70,30 @@ migrate-db        skill   payments/.claude/skills            stays              
 engineering wiki  source  dev.azure.com/acme/platform        AGENTS.md Sources         shared
 ```
 
-Settle the layout and show the final path of every repo and item in the table, so nothing moves after the commit. Group long tables by bucket and show the counts first. Show the `repo-specific` and `installed` rows too, so the person sees nothing was missed.
+Group long tables by bucket, counts first. Show `repo-specific` and `installed` rows too.
 
-**The drafted `AGENTS.md`**, by [layout.md](layout.md).
-
-Then list, per child repo, what it will lose, the branch name that change will sit on, and its steering state: none, `CLAUDE.md`, or `AGENTS.md`.
+**The drafted `AGENTS.md`**, by [layout.md](layout.md). Then, per child repo: what it loses, the branch it will sit on, and its steering state (none, `CLAUDE.md`, or `AGENTS.md`).
 
 The person may change any row. Apply nothing until they approve.
 
 ## 6. Apply
 
-In this order, so a stop halfway leaves nothing broken.
+In this order, so a stop halfway breaks nothing.
 
-1. **Create the home repo.** `git init` at the chosen path, or only the folder when it is local only. If the folder already is a git repo, use it.
-2. **Write `AGENTS.md`.** Write a `CLAUDE.md` only by the steering row in [harnesses.md](harnesses.md). If the home folder already has a `CLAUDE.md` or a `.claude/CLAUDE.md` with text of its own, move its lines into `AGENTS.md` as plan rows. Then delete it. When the person keeps a `CLAUDE.md`, the one-line file goes at the root, never in `.claude/`.
-3. **Copy the `shared` and `duplicate` items in**, also when the only copy is in a user folder. A skill folder moves whole. For a duplicate, copy the winning one once.
-4. **Merge the config.** Hooks, settings, MCP servers, and registrations from every source into one file per harness, in that harness's format. Replace each literal secret with a variable and list the variable under `## Environment`. Tell the person which values to set. Do not print the values.
-5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones. Skip this when local only.
-6. **Commit in the home repo.** One commit, the plan summary as its message. Skip this when local only.
-7. **Clean each child repo.** On a new local branch named `home-repo/move-agent-config`, with `-2`, then `-3`, added when that name is taken, remove the copies that moved. Leave `repo-specific` items. Add the line that points home, by [layout.md](layout.md), to the repo's steering file. If the repo has no steering file, that line is its whole `AGENTS.md`. Change nothing else in that file. Commit, and leave the repo on that branch. Do not push. Do not touch a repo with uncommitted changes to tracked files, other than under `docs/design/`; report it instead. An open design there is `tech-design`'s work in progress: leave it uncommitted.
-8. **Leave the user folder for last and ask again.** Removing an item there changes every session the person runs. Name each one and get a yes. On a no, say that an item now in both the home repo and the user folder registers twice.
+1. **Create the home repo.** `git init`, or only the folder when local only. An existing git repo is used as is.
+2. **Write `AGENTS.md`.** A `CLAUDE.md` only by the steering row in [harnesses.md](harnesses.md). A home `CLAUDE.md` or `.claude/CLAUDE.md` with its own text: move its lines into `AGENTS.md` as plan rows, then delete it. A kept `CLAUDE.md` is the one-line file at the root.
+3. **Copy the `shared` and `duplicate` items in**, also from user folders. For a duplicate, the winning copy once.
+4. **Merge the config** per harness, in its format: hooks, settings, MCP servers, registrations. Replace each literal secret with a variable listed under `## Environment`, and tell the person which to set, without the values.
+5. **Write `.gitignore`**: local settings files, `.worktrees/`, secret files, child repo clones. Not when local only.
+6. **Commit** once in the home repo, the plan summary as message. Not when local only.
+7. **Clean each child repo** on a new branch `home-repo/move-agent-config`, adding `-2`, `-3` when taken: remove the moved copies, keep `repo-specific` items, and add the `Home repo:` line by [layout.md](layout.md). With no steering file, that line is the whole `AGENTS.md`. Change nothing else there. Commit, stay on the branch. Skip and report a repo with uncommitted changes to tracked files outside `docs/design/`; an open design there stays uncommitted.
+8. **The user folder last.** Name each removal and get its own yes. On a no, say that an item in both places registers twice.
 
-If a step fails, stop. Report what was done and what was not. Do not roll back what the person can see and fix.
+On a failure, stop and report what was done and what was not. Roll nothing back.
 
 ## 7. Hand over the child repos
 
-What a child repo's steering file says belongs to `setup-agents-md`. For each repo picked in question 11, call `setup-agents-md <repo>`. It shows its own plan for that repo, waits for its own yes, and commits on the branch step 6 made, so each repo has one branch to review.
-
-When that skill is not installed, say so once. The steering files stay as they are.
+For each repo picked in question 11, call `setup-agents-md <repo>`. It shows its own plan, waits for its own yes, and commits on the step 6 branch. When it is not installed, say so once.
 
 ## 8. Report and stop
 
@@ -135,18 +117,13 @@ No place in Copilot for: user-only skills
 Start every session in ~/repos/acme/home. Keep it current with /setup-home-repo update.
 ```
 
-Done when every plan row has an outcome.
-
 ## Update
 
-`/setup-home-repo update` keeps a home repo current. It runs only inside a home repo. Outside one, say so and name setup.
+`/setup-home-repo update` runs only inside a home repo; outside one, name setup.
 
-1. Do steps 1 to 3 again and compare with what is there.
-2. Build the plan table with only what changed: a new repo with no pointer, a pointer whose repo is gone or moved, a new item in a child repo or the user folder, an item that drifted from its copy in the home repo, a new source, a new harness. Rows that are already true are counted, not listed.
-3. Ask only about those rows. A new repo gets question 11 too. Never ask question 4 again.
-4. Show the plan and wait, by step 5.
-5. Apply in the order of step 6, then hand over by step 7 and report by step 8.
+1. Do steps 1 to 3 again and compare.
+2. Plan only what changed: a repo with no pointer, a pointer whose repo moved or is gone, a new item, an item that drifted from its home copy, a new source or harness. Count the rows that are still true.
+3. Ask only about those rows. A new repo gets question 11. Never ask question 4 again.
+4. Show the plan by step 5, apply by step 6, hand over by step 7, report by step 8.
 
-Never rewrite `AGENTS.md` whole. Change the lines that differ, and keep what the person wrote by hand. Never remove an item only because exploring did not find it again. Show it as a row and ask.
-
-When nothing changed, say so in one line and stop.
+Change only the `AGENTS.md` lines that differ, and keep what the person wrote. An item exploring did not find again is a row to ask about, never a silent removal. Nothing changed: say so in one line.

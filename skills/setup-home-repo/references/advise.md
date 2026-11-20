@@ -1,15 +1,10 @@
 # Advise
 
-`/setup-home-repo advise` audits the home repo and says what to fix. It reads. It never writes, never runs a tool against a service, and never opens a secret file. In a local-only home repo, read "tracked file" as any file in the folder.
+`/setup-home-repo advise` audits the home repo. It never writes, runs a tool against a service, or opens a secret file. In a local-only home repo, "tracked file" means any file in the folder.
 
-## Steps
-
-1. **Read the home repo**: `AGENTS.md`, the pointer files, each harness's config, the skills folder.
-2. **Walk the registry** over the home repo, every pointed-at repo that is on disk, as it is checked out, and the user folder. Use the Check column in [components.md](components.md).
-3. **Run the checks below.** Each finding is one row.
-4. **Print the table**, worst first, then the summary line.
-
-## The checks
+1. Read `AGENTS.md`, the pointer files, each harness's config, and the skills folder.
+2. Walk the Check column of [components.md](components.md) over the home repo, every pointed-at repo on disk as checked out, and the user folder.
+3. Run the checks below, one row per finding. Print them worst first, then by kind, then the summary line.
 
 ### Pointers
 
@@ -55,7 +50,7 @@
 | Plugin enabled with no marketplace registered, or the reverse | medium |
 | Personal preference in the shared settings file | low |
 
-For a suspected secret, name the file and the key. Never print the value.
+For a suspected secret, name the file and key, never the value.
 
 ### Steering
 
@@ -63,19 +58,19 @@ For a suspected secret, name the file and the key. Never print the value.
 | --- | --- |
 | `AGENTS.md` over about 200 lines | medium |
 | A procedure in `AGENTS.md` that a skill already holds | medium |
-| Child repo with no `AGENTS.md`, or with a `CLAUDE.md` that has text of its own. The Fix is `/setup-agents-md <repo>` when that skill is installed. Otherwise the Fix says what to change by hand. | medium |
-| Child repo without the line that points home, which starts with `Home repo:` | low |
+| Child repo with no `AGENTS.md`, or a `CLAUDE.md` with its own text. Fix: `/setup-agents-md <repo>` when installed, otherwise the change by hand. | medium |
+| Child repo with no `Home repo:` line | low |
 | A `CLAUDE.md` or `.claude/CLAUDE.md` in the home repo with text of its own | high |
-| A `.claude/CLAUDE.md` in the home repo whose only line is `@AGENTS.md`. It imports nothing and hides `AGENTS.md`. | high |
+| A `.claude/CLAUDE.md` in the home repo whose only line is `@AGENTS.md` | high |
 | Claude Code in use, `claude --version` older than 2.1.277 or no answer, and no root `CLAUDE.md` that imports `AGENTS.md` | high |
-| Claude Code in use, a `CLAUDE.md` in the home repo or a folder above it, and a child repo below it with no `CLAUDE.md` that imports its `AGENTS.md`. Claude Code skips that `AGENTS.md`. | high |
+| Claude Code in use, a `CLAUDE.md` in the home repo or above, and a child repo below it with no `CLAUDE.md` that imports its `AGENTS.md` | high |
 | The `## Repos` heading missing | high |
 
 ### Skills setup wrote
 
 | Finding | Severity |
 | --- | --- |
-| A skill whose file says `Written by setup-home-repo`, such as a router from an earlier version. Cleanup removes it and the line in `AGENTS.md` that names it. | medium |
+| A skill that says `Written by setup-home-repo`, such as an old router. Cleanup removes it and its `AGENTS.md` line. | medium |
 
 ### Worktrees, tools, wiki
 
@@ -91,8 +86,8 @@ For a suspected secret, name the file and the key. Never print the value.
 
 | Finding | Severity |
 | --- | --- |
-| One repo pointer in total. A home repo adds little. | low |
-| Every pointed-at repo shares one remote host and one owner, and nothing mixes public with private. A monorepo may fit. | low |
+| One repo pointer in total | low |
+| Every repo shares one host and owner, none public beside private: a monorepo may fit | low |
 
 ## Output
 
@@ -108,18 +103,6 @@ low       repo    legacy-importer     no commit since 2024-11-02                
 Fix them with /setup-home-repo cleanup.
 ```
 
-- One row per finding. The Fix cell is one concrete action.
-- Sort by severity, then by kind.
-- With no findings, print the clean count and stop.
-- A leaked secret needs more than removal. Say the token must be rotated, since git history keeps it.
+The Fix cell is one concrete action. A leaked secret must be rotated: git history keeps it. With no findings, print the clean count and stop.
 
-## Advice beyond findings
-
-After the table, add at most three lines of advice that no check covers. Only what you saw evidence for:
-
-- A source the agent keeps needing with no access method: suggest one.
-- A task the steering file explains in prose each time: suggest a skill.
-- A script pasted into several skills: suggest a tool.
-- A rule the agent must never break, written as text: suggest a hook.
-
-No evidence, no advice. Leave the lines out.
+After the table, at most three lines of advice no check covers, each with evidence: an access method for a source the agent keeps needing, a skill for a task the steering file explains in prose, a tool for a script pasted into several skills, a hook for a rule written as text.

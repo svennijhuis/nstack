@@ -3,150 +3,128 @@ name: setup-agents-md
 description: Use when the user wants to create, update, trim, or audit a repo's AGENTS.md, or set up its commands, code standards, decisions (ADRs), and glossary.
 ---
 
-A steering file loads on every request. Every line costs tokens and attention, and a line that restates the code becomes a second source of truth that nothing keeps honest. This skill writes the smallest `AGENTS.md` that still makes the agent better, moves the rest to files the agent reads only when a task needs them, and gives decisions and terms a home in the repo they belong to.
+Write the smallest `AGENTS.md` that makes the agent better. Move the rest to files the agent reads only when a task needs them, and give decisions and terms a home in the repo they belong to.
 
 ## Rules that outrank the rest
 
-**Keep only what the code cannot say.** If the agent can learn it by reading the code, the config, or the tests, it does not go in a doc. Make the code clearer instead: a better name, a type, a test, or a short comment that says why. One exception: the commands and the pipelines, by [Commands](#commands-by-default). The agent needs them before it has read anything.
-
-**Read only until the plan is approved.** Explore, then show the plan table and the drafted files. Before a yes, write nothing and run no project command. A missing child repo is cloned only after its own yes, by [home-repo.md](references/home-repo.md). Advise never writes, runs a project command, or clones.
-
-**Decisions live in the repo they change.** ADRs, the glossary, and topic docs go in that repo, never in the home repo. The home repo holds only decisions about itself. See [home-repo.md](references/home-repo.md).
-
-**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Where the code has none, it comes from the person, by [Commands](#commands-by-default). Every rule comes from the person or a doc that is already there. The only fixed text is the Docs, Changes, and Decisions sections in [templates.md](references/templates.md).
-
-**Never push.** Commit on a local branch, one per repo. The person pushes.
-
-**Ask on a conflict.** When two instructions disagree, show both and ask which one stays. Never pick one yourself.
+- **Keep only what the code cannot say.** What the code, config, or tests show goes in no doc: make the code clearer instead. The exception is the commands and pipelines, by [Commands](#commands).
+- **Read only until the plan is approved.** Before a yes, write nothing, run no project command, and clone nothing. Advise never does any of these.
+- **Decisions live in the repo they change.** ADRs, the glossary, and topic docs never go in the home repo, unless they are about the home repo itself. See [home-repo.md](references/home-repo.md).
+- **Never invent a line.** A command comes from a script, the manifest, or the pipeline, or else from the person. A rule comes from the person or an existing doc. The only fixed text is the Docs, Changes, and Decisions sections in [templates.md](references/templates.md).
+- **Never push.** Commit on a local branch, one per repo.
+- **Ask on a conflict.** Two instructions that disagree: show both and ask which stays.
+- **Never open `.env` or another secret file.**
 
 ## The words
 
-The **steering file** is `AGENTS.md`. Every harness in nstack reads it. A **part** is one thing in the repo that builds, runs, or deploys on its own: an app, a package, a solution, a service, the infrastructure. Projects that one build command builds together are one part. A folder with its own `.git` is another repo, never a part: it keeps its own root file. A project or folder that holds only tests always gets its commands in the root file: under the part it tests, or as a block of its own when it tests more than one part. A service that only tests need is no part: name it on the test line that needs it. The **root file** is the steering file at the repo root. A **topic file** is a doc the root file points at and the agent reads only when the task touches its topic. An **ADR** is one decision record in `docs/adr/`. The **glossary** is `GLOSSARY.md`. **Derivable** means the code already says it.
+The **root file** is `AGENTS.md` at the repo root. A **part** builds, runs, or deploys on its own: an app, a package, a solution, a service, the infrastructure. Projects one build command builds together are one part. A folder with its own `.git` is another repo, never a part. A test-only project gets its commands in the root file, under the part it tests or as its own block when it tests several. A service only tests need is no part: name it on that test line. A **topic file** is a doc the root file points at, read only when the task touches its topic. An **ADR** is one decision record in `docs/adr/`. The **glossary** is `GLOSSARY.md`.
 
 ## What goes where
 
-| Content | Where | Why |
-| --- | --- | --- |
-| What the project is, in one sentence | Root file | Anchors every task |
-| The main parts and what each does | Root file | A thin map so the agent knows where to start |
-| The package manager or build tool, when the stack has more than one to choose from and no lockfile or manifest field pins it | Root file | The agent guesses wrong otherwise |
-| How to start, build, and test, plus lint and typecheck | Root file | The agent needs them first |
-| Each part and its commands. Each pipeline and what it does. | Root file | One repo can hold several of each |
-| Rules for every task that no tool enforces | Root file | They apply everywhere |
-| One line per topic file, ADRs, and glossary | Root file | Progressive disclosure |
-| Code standards: how code is written here, beyond what the linter checks | `docs/agents/code-standards.md`, a default topic file | Loaded when the agent writes code, not on every request |
-| Rules for one area: testing, API design, a framework | Topic file under `docs/agents/` | Loaded only when needed |
-| A procedure with steps | A skill. Until the person makes one, a topic file under `docs/agents/`. Never deleted. | Loaded only when triggered |
-| Why something was chosen, and what was rejected | `docs/adr/` | The code shows what, never why |
-| Terms with a meaning special to this project | `GLOSSARY.md` | The code uses the words, it does not define them |
-| How the code works, folder trees, deep file paths | Nowhere. Delete it. | Goes stale, misleads the agent |
-| Finished specs, PRDs, plans | Nowhere. Delete it. Git keeps it. | Describes a past intent, not the code |
-| Style rules a linter or formatter can check | The linter config, or a hook | Tools are faster, cheaper, and always right |
-| Advice the agent already follows: "write clean code" | Nowhere | Spends the budget for nothing |
-
-[README.md](README.md) explains this table to people. You do not need to read it.
+| Content | Where |
+| --- | --- |
+| What the project is, in one sentence | Root file |
+| The main parts and what each does | Root file |
+| The package manager, only when the stack has several and no lockfile or manifest field pins it | Root file |
+| Install, start, build, test, lint, typecheck, per part. Each pipeline and what it does. | Root file |
+| Rules for every task that no tool enforces | Root file |
+| One line per topic file, ADRs, and glossary | Root file |
+| How code is written here, beyond the linter | `docs/agents/code-standards.md` |
+| Rules for one area: testing, API design, a framework | `docs/agents/<topic>.md` |
+| A procedure with steps | A skill. Until there is one, a topic file. Never deleted. |
+| Why something was chosen, and what was rejected | `docs/adr/` |
+| Terms with a project meaning | `GLOSSARY.md` |
+| How the code works, folder trees, deep paths | Delete |
+| Finished specs, PRDs, plans | Delete, after the why is lifted out |
+| Style rules a linter or formatter can check | The tool's config, or a hook |
+| Advice the agent already follows | Delete |
 
 ## Invocation
 
-The person types `/setup-agents-md`. Read the first word after it.
-
-| Typed | Mode | Writes |
+| Typed after `/setup-agents-md` | Mode | Writes |
 | --- | --- | --- |
 | nothing | Detect, then Create or Update | After approval |
-| `<repo name>` | From a home repo: run on that child repo | After approval, on a branch in that repo |
-| `all` | From a home repo: run on every child repo, one plan and one yes each | After each approval, on a branch in each repo |
-| `advise`, `advise <repo name>`, `advise all` | Audit, see [advise.md](references/advise.md) | Never |
-| `help` | The card, see [help.md](references/help.md) | Never |
+| `<repo name>` | From a home repo: that child repo | After approval, on a branch there |
+| `all` | From a home repo: every child repo, one plan and one yes each | After each approval |
+| `advise`, `advise <repo>`, `advise all` | Audit by [advise.md](references/advise.md) | Never |
+| `help` | The card in [help.md](references/help.md) | Never |
 
-### Detect
-
-1. Find where you are. The working directory is a home repo when its `AGENTS.md` has a `## Repos` section written by `setup-home-repo`, or the person says it is. If it is one, follow [home-repo.md](references/home-repo.md). It decides which repo the rest of the steps run on, and which of them do not apply to the home repo itself.
-2. If the target repo has no `AGENTS.md` and no `CLAUDE.md`, run Create. If it has either, run Update.
+**Detect.** The working directory is a home repo when its `AGENTS.md` has a `## Repos` section from `setup-home-repo`, or the person says so. Then follow [home-repo.md](references/home-repo.md) to pick the target repo. A target with no `AGENTS.md` and no `CLAUDE.md` gets Create. Otherwise Update. Create has no steering file to sort, only the docs around it.
 
 ## Create and Update
 
-Same steps. In Create there is no steering file to sort, only the docs around it.
+1. **Inventory.** Read `AGENTS.md`, any `CLAUDE.md`, `README*`, `docs/`, `CONTEXT.md`, `GLOSSARY.md`, `DECISIONS.md`, `docs/adr/`, and any spec, plan, or memory file. Read the manifest, lockfile, scripts, linter config, and CI config for the real commands.
+2. **Sort.** One row per section: file, section, kind (`anchor`, `shape`, `command`, `rule`, `topic`, `procedure`, `decision`, `term`, `derivable`, `finished plan`, `lint rule`, `obvious`), action (keep, move, rewrite, delete, ask).
+3. **Check what you keep.** A command nothing defines and not marked `Not in the code.`, or a path that is gone, is drift: fix or delete it. In Update, find the parts and pipelines again by [Commands](#commands) step 1. A part or pipeline with no line, or a line for one that is gone, is drift.
+4. **Conflicts.** Each pair of lines that disagree is one `ask` row.
+5. **Pull out the why.** Before a spec, plan, or explanation is deleted, lift its decisions and terms into ADR drafts and glossary lines.
+6. **Draft** from [templates.md](references/templates.md): the root file, code standards, topic files, ADRs, glossary.
+7. **Show the plan.** The table, the drafted files, the new root file's line count, the commands step 8 will run, and every open question numbered, the recommended answer first. Wait for a yes.
+8. **Apply.**
+   - Uncommitted changes to tracked files outside `docs/design/`: stop and report. An open design under `docs/design/` is `tech-design`'s: leave it uncommitted.
+   - No git: say in the plan that there is no undo, write after the yes, keep no copy.
+   - Otherwise work on a new branch `agents-md/<yyyy-mm-dd>`, adding `-2`, `-3` when taken. When the current branch starts with `home-repo/` and is not pushed, commit there instead.
+   - Run the commands by [Commands](#commands) step 3. Move, write, delete. Rewrite hand-written text only where a row says so.
+   - Commit only the files the plan names. Report and leave uncommitted anything a build changed.
+9. **Report and stop.** One outcome per row, the root file's line count before and after, the drift found, the branch to push.
 
-1. **Inventory.** Read `AGENTS.md`, any `CLAUDE.md`, `README*`, everything under `docs/`, `CONTEXT.md`, `GLOSSARY.md`, `DECISIONS.md`, `docs/adr/`, and any spec, PRD, plan, or memory file. Read the package manifest, the lockfile, the scripts, the linter config, and the CI config to learn the real commands. Never open `.env` or another secret file.
-2. **Sort every section.** One row per section: file, section, kind, action. Kinds: `anchor`, `shape`, `command`, `rule`, `topic`, `procedure`, `decision`, `term`, `derivable`, `finished plan`, `lint rule`, `obvious`. Actions: keep, move, rewrite, delete, ask.
-3. **Check what you keep.** Look up every command in the scripts, the manifest, or the pipeline. Check every path still exists. A command nothing defines and no line marks `Not in the code.`, or a path that is gone, is drift: fix it or delete it. In Update, find the parts and the pipelines again by [Commands](#commands-by-default) step 1 and compare them with the root file. A part or pipeline with no line, and a line for one that is gone, are drift too.
-4. **Find conflicts.** Two lines that disagree, in one file or across files, become one `ask` row each.
-5. **Pull out the why.** Before a spec, plan, or explanation is deleted, lift any decision or term in it into an ADR draft or a glossary line.
-6. **Draft the files** from [templates.md](references/templates.md): the root file, the code standards file, the other topic files, the ADR drafts, and the glossary.
-7. **Show the plan.** The table, the drafted files, the line count of the new root file, the commands step 8 will run, and every open question, conflicts included, numbered, the recommended answer first. Wait for approval.
-8. **Apply.** If the repo has uncommitted changes to tracked files, other than under `docs/design/`, stop and report it. An open design there is `tech-design`'s work in progress: leave it uncommitted. A folder that is not a git repo has no branch and no undo: say so in the plan, write after the yes, and keep no copy. Otherwise work on a new local branch `agents-md/<yyyy-mm-dd>`, with `-2`, then `-3`, added when that name is taken. When the repo's current branch starts with `home-repo/` and is not pushed, `setup-home-repo` just made it: commit there instead, so the repo has one branch to review. Run the commands by [Commands](#commands-by-default) step 3 and treat a failure as that step says. Move, write, delete. Never rewrite text the person wrote by hand without a row that says so. Commit only the files the plan names. Never stage everything: a build may leave output or change a lockfile. Report such files and leave them uncommitted.
-9. **Report and stop.** One outcome per plan row, the root file's line count before and after, the drift found, and the branch to push.
-
-Done when every plan row has an outcome, the root file is under about 60 lines, not counting the Parts section, and no kept line points at something that is gone. In a home repo's own `AGENTS.md`, count only the lines above `## Repos`.
+Done when every row has an outcome, the root file is under about 60 lines not counting Parts (in a home repo, the lines above `## Repos`), and no kept line points at something gone.
 
 ## CLAUDE.md
 
-`AGENTS.md` is the default and holds all the text. Claude Code reads it itself from version 2.1.277, but only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the working folder or a folder above it. One that does hides `AGENTS.md` from Claude Code, unless a `CLAUDE.md` in the repo imports it.
+`AGENTS.md` holds all the text. Claude Code reads it from version 2.1.277, unless a `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` in the working folder or above hides it. The only allowed `CLAUDE.md` sits at the root beside `AGENTS.md`, and its one line is `@AGENTS.md`. In `.claude/` that import resolves to nothing.
 
-So a `CLAUDE.md` is allowed in one shape: it sits beside an `AGENTS.md`, and its only line is `@AGENTS.md`. Claude Code resolves that import from the folder of the file that holds it. A `.claude/CLAUDE.md` with that line imports nothing, so never leave or write one there.
+- **Write none by default.** Offer the one-line file, recommended yes, when the person asks, a hiding file is there, or the version check fails.
+- **Version check.** When Claude Code is in use, run `claude --version` in the inventory. Ask about the one-line file on a version below 2.1.277 or no answer; on 2.1.277 to 2.1.280 with Bedrock or telemetry off; on any version with project instructions set to `CLAUDE.md` only.
+- **A one-line `CLAUDE.md`,** also with a `## Agent skills` block from `setup-matt-pocock-skills`: leave it.
+- **`CLAUDE.md` or `.claude/CLAUDE.md` with its own text:** sort its lines into `AGENTS.md` or a topic file, then ask: delete it (recommended) or keep a one-line root `CLAUDE.md`. `.claude/CLAUDE.md` is deleted either way, also when its only line is `@AGENTS.md`.
+- **`CLAUDE.local.md`:** do not touch it. Say it hides `AGENTS.md` for that person, and offer the one-line file.
+- **`CLAUDE.md` above the repo:** report it, change nothing outside the repo, offer the one-line file.
 
-- **Do not write one by default.** Offer the one-line file only when the person asks for a `CLAUDE.md`, the check below fails, or one of the hiding files below is there. Recommend yes. Write it on a yes.
-- **Check Claude Code.** When the repo or the user folder shows Claude Code is in use, run `claude --version` during the inventory. It only reads. On a version older than 2.1.277, or no answer, ask once: "Your Claude Code may not read `AGENTS.md`. Write a one-line `CLAUDE.md`?" Recommend yes. On a version from 2.1.277 to 2.1.280, a session on Bedrock or with telemetry off needs it too. On any version, so does one with project instructions set to `CLAUDE.md` only. Say so in the question.
-- **A one-line `CLAUDE.md` exists.** Leave it.
-- **A `CLAUDE.md` with `@AGENTS.md` and a `## Agent skills` block.** `setup-matt-pocock-skills` writes that block into `CLAUDE.md` whenever one exists. The file counts as one-line. Leave both.
-- **`CLAUDE.md` or `.claude/CLAUDE.md` with text of its own.** Sort its lines like any other section and move the kept ones into `AGENTS.md` or a topic file. Then ask: delete the file, which is the recommended answer, or keep a one-line `CLAUDE.md`. Each is a plan row. A kept one is always the root `CLAUDE.md`. A `.claude/CLAUDE.md` is deleted either way.
-- **`.claude/CLAUDE.md` whose only line is `@AGENTS.md`.** It imports nothing and hides `AGENTS.md`. Delete it, and write the root one-line file when the person keeps a `CLAUDE.md`.
-- **`CLAUDE.local.md` in the repo.** It is personal and untracked. Do not touch it. Tell the person it hides `AGENTS.md` from Claude Code for them, and offer the one-line file.
-- **`CLAUDE.md` in a folder above the repo.** Report it and change nothing outside the repo. Offer the one-line file.
+## Commands
 
-## Commands, by default
+Every root file but a home repo's says how to install, start, build, and test, even when the commands are standard. A start, build, or test command nothing defines is asked once per part, the stack's standard command recommended. On a yes, write it ending with `Not in the code.` On a no, leave it out.
 
-The root file of every repo but a home repo always says how to start, build, and test, even when the commands are the standard ones for the stack. A wrong guess costs a failed run. A start, build, or test command that no script, manifest, or pipeline defines is asked of the person, once per part, with the stack's standard command as the recommended answer. On a yes, write it and end the line with `Not in the code.` On a no, leave it out.
+1. **Find every part** from solution and project files, workspaces, build scripts, container files, infrastructure as code, and pipelines.
+2. **Learn its commands** from its scripts, manifest, and pipeline, never from a doc. The pipeline is what really runs.
+3. **Check them after approval.** Install first when defined, then build, test, lint. A defined command that fails here is still written, with the first line of its error in the report. Only an undefined, unconfirmed command is left out. When install cannot run, skip the check and say so. Never run a start, deploy, infrastructure apply, shared-database migration, or publish command: write those as the scripts or pipeline have them.
+4. **One part:** `## Commands` with Start, Build, Test, and Lint or Typecheck. With linting rules, the lint line names the config, how to run it, and how to fix with it. With none, no lint line. Several of one kind get one line each, named for what it runs and what must run first.
+5. **Several parts:** `## Parts`, one block per part: what it is, its entry file, its commands. All in the root file. Write no `AGENTS.md` in a part's folder. One already there is sorted and its kept lines move up, as plan rows.
+6. **Pipelines:** one line each: file, trigger, what it does.
+7. **Infrastructure:** how to check a change without applying it, and that applying goes through the pipeline. Ask when the pipeline does not show it.
 
-1. **Find every part.** Solution and project files, workspaces in a package manifest, build scripts, container files, infrastructure as code, and pipeline definitions. Look for whatever the stack uses.
-2. **Learn each part's commands** from its scripts, its manifest, and the pipeline that builds it. Never from a readme or another doc: the code is the truth. The pipeline is the best source: it is what really runs.
-3. **Check them, after approval.** Run the install command first, when a script, the manifest, or the pipeline defines one, then the build, test, and lint commands. A failure does not prove a command wrong: the dependencies, a database, or a test that was already red can cause it. So a command that a script, the manifest, or the pipeline defines is written even when it fails here, and the report gives the first line of its error. Only a command that nothing defines and the person did not confirm is left out. When install cannot run, skip the check and say so. Never run a start command: it may not exit. Never run a command that deploys, applies infrastructure, migrates a shared database, or publishes. Write those down as the scripts or the pipeline have them.
-4. **One part:** a `## Commands` section with Start, Build, Test, and Lint or Typecheck when they exist. When the repo has linting rules, the lint line also says where the config is, how to run it, and how to fix with it. No linting rules: write no lint line and never mention linting. When a part has more than one of a kind, such as a start per app, or a unit test and an integration test, write one line each, named for what it runs, with what must run first.
-5. **Several parts:** a `## Parts` section, one short block per part: what it is, where its entry file is, and its commands. All of it stays in the one root file, where the `.git` folder is. Write no `AGENTS.md` in a part's folder. One that is already there is sorted like any other doc, and its kept lines move into the root file, as plan rows.
-6. **Pipelines:** one line per pipeline: its file, what triggers it, and what it does. The agent learns what CI will check before it opens a pull request.
-7. **Infrastructure:** say how to check a change without applying it, such as a plan or a what-if, and say that applying goes through the pipeline. Ask the person when the pipeline does not show it.
+## Code standards
 
-## Code standards, by default
+Every plan proposes `docs/agents/code-standards.md` and one root line pointing at it: conventions no tool checks and one file does not show, such as how errors return or which of two patterns to use.
 
-Every plan proposes `docs/agents/code-standards.md`, with one line in the root file that points at it. It holds how code is written in this repo: conventions a reader cannot see from one file and no tool checks, such as how errors are returned, how modules are split, or which of two patterns to use.
+1. Move code-style rules from old steering files, topic docs, and `CONTRIBUTING.md` here.
+2. A rule a linter, formatter, or type checker can enforce becomes a plan row for that tool's config.
+3. Nothing found: ask one round, "Which conventions should every change follow?", with two or three candidates seen in the code, recommended first. Write only what the person confirms.
+4. No conventions: no file, no pointer line, and say so in the report.
+5. Past about 50 lines, or with more than one language: one file per language under `docs/agents/`.
 
-1. **Fill it from what was found.** Code style rules from the old steering files, topic docs, and `CONTRIBUTING.md` move here.
-2. **Send checkable rules to tools.** A rule a linter, formatter, or type checker can enforce becomes a plan row for that tool's config, not a line here.
-3. **Ask when it is empty.** If nothing was found, ask one round: "Which conventions should every change follow?" Offer two or three candidates read from the code, marked as seen in the code, the recommended answer first. Write only what the person confirms.
-4. **Skip it on a no.** If the person gives no conventions, leave out the file and the line that points at it, and say so in the report. An empty file is noise.
-5. **Split past about 50 lines,** or when the repo has more than one language: one file per language under `docs/agents/`, named after the language, each linked from the root file.
+An existing standards file elsewhere keeps its name and place: point at it.
 
-When the repo already has a standards file elsewhere, such as a language file under `docs/` or `CONTRIBUTING.md`, point the root file at it and keep its name. Do not move a file other tools or people link to.
+## Decisions and Changes
 
-## The decision rules
+Every root file but a home repo's carries the Changes and Decisions sections from [templates.md](references/templates.md). Change only the paths in Decisions and nothing in Changes. A `docs/adr/` that does not exist yet is not drift: the first ADR creates it.
 
-The root file of every repo but a home repo always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths. The section stays when `docs/adr/` does not exist yet: the first ADR creates the folder. That path is not drift.
+## With the other skills
 
-## The change rules
+Each is optional. This skill works alone.
 
-The root file of every repo but a home repo carries the Changes section from [templates.md](references/templates.md), so every agent that changes code leaves it no worse, also without the `implement` skill. Change nothing in it.
-
-## With the other nstack skills
-
-Each one is optional. This skill works alone in any repo.
-
-**`setup-home-repo`.** It owns the home repo and the one line in each child repo that points home. This skill owns everything else a child repo's steering file says. `setup-home-repo` calls `/setup-agents-md <repo>` after its setup and after `add <repo>`, for the repos the person picks. What this skill may change in a home repo is in [home-repo.md](references/home-repo.md).
-
-**`setup-matt-pocock-skills`.** Not an nstack skill, but it shares these files. It owns the `## Agent skills` block in the root file or in `CLAUDE.md`, and `docs/agents/issue-tracker.md`, `docs/agents/domain.md`, and `docs/agents/triage-labels.md`. Never trim, sort, move, or delete them, and never report them as drift. Other skills read them: `implement` reads `issue-tracker.md` to fetch a ticket. Its glossary layout counts as the glossary: `GLOSSARY.md`, or `GLOSSARY-MAP.md` with a `GLOSSARY.md` per context. When it renamed `CONTEXT.md` to `GLOSSARY.md`, follow the new name.
-
-**`tech-design`.** A design folder `docs/design/<yyyy-mm-dd>-<name>/` is a live doc while its status is `draft`, `discussion`, or `ready`, and while it is `committed` and the feature has not shipped. Leave it alone. `tech-design` has no status for shipped, so ask the person, one question per `committed` design. Never infer it.
-
-- **Shipped.** The design is a finished plan. Lift each line of its Decisions so far that is a real decision, by the Decisions section in [templates.md](references/templates.md), into an ADR, with the design folder and the pull request in `Change`. A line that only records a fact is not lifted. List those lines in the plan, so the person can add one back. Lift each term in its `glossary.md` that has a project meaning into the repo's glossary. Then offer to delete the folder, as its own plan row. When the folder holds uncommitted files, git does not keep them: say so in the row.
-- **`abandoned`.** One ADR that says what was not built and why, then the same offer.
-- **Terms.** When `domain-modeling` wrote `CONTEXT.md` or `GLOSSARY.md` during the design, keep that file and its name.
-- **Where.** Which repo a design starts in, and where its ADRs go, is in [home-repo.md](references/home-repo.md).
-
-While a design is open, the root file may carry one line: `Designs in progress: docs/design/. Read the one for your task.` Remove it when none is open.
+- **`setup-home-repo`** owns the home repo and the `Home repo:` line in each child repo. It calls `/setup-agents-md <repo>` after setup and `add`. What this skill may change in a home repo: [home-repo.md](references/home-repo.md).
+- **`setup-matt-pocock-skills`** owns the `## Agent skills` block (in `AGENTS.md` or `CLAUDE.md`), `docs/agents/issue-tracker.md`, `domain.md`, and `triage-labels.md`. Never trim, move, delete, or report them. Its glossary layout counts as the glossary: `GLOSSARY.md`, or `GLOSSARY-MAP.md` with one `GLOSSARY.md` per context. Follow its renames.
+- **`tech-design`.** A design in `docs/design/<yyyy-mm-dd>-<name>/` is live while `draft`, `discussion`, `ready`, or `committed` and not shipped. Leave it alone. Ask the person once per `committed` design whether it shipped. Never infer it.
+  - **Shipped:** lift each real decision in its Decisions so far into an ADR, `Change` naming the folder and the pull request. List the lines not lifted. Lift its project terms into the glossary. Then offer to delete the folder as its own row, saying when it holds uncommitted files git does not keep.
+  - **`abandoned`:** one ADR on what was not built and why, then the same offer.
+  - A `CONTEXT.md` or `GLOSSARY.md` that `domain-modeling` wrote keeps its name.
+  - While a design is open the root file may say `Designs in progress: docs/design/. Read the one for your task.` Remove it when none is open.
 
 ## When this is the wrong answer
 
 Say so before you build.
 
-- The steering file is already short, true, and free of conflicts. Say so and stop.
-- The person wants a style guide enforced. Point at the linter or a hook, not at `AGENTS.md`.
-- The repo is a home repo and the person wants its pointers changed. That is `/setup-home-repo`.
+- The steering file is already short, true, and free of conflicts: say so and stop.
+- The person wants style enforced: point at the linter or a hook.
+- They want a home repo's pointers changed: that is `/setup-home-repo`.

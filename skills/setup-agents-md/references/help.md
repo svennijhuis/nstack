@@ -12,4 +12,4 @@ On `/setup-agents-md help`, print this card and stop. Change no file.
 /setup-agents-md help          this card
 ```
 
-Then one line: what goes in the docs and what does not is in this skill's README.md.
+Then one line: what goes in the docs and what does not is in nstack's docs/skills/setup-agents-md/README.md.
