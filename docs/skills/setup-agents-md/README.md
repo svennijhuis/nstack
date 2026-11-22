@@ -119,6 +119,7 @@ From Matt Pocock's [guide to AGENTS.md](https://www.aihero.dev/a-complete-guide-
 | A procedure with steps | A skill | Releasing, migrating a database |
 | Decisions | `docs/adr/` | "A relational database over a document store, because reporting needs joins." |
 | Terms | `GLOSSARY.md` | "Order: a paid cart." |
+| Statecharts: TLA+ models of a flow whose rules must always hold | `docs/statecharts/<subject>/`, one folder per flow | `docs/statecharts/payments/Refund.tla`. You check it with pstack's `/statechart`. |
 
 This is progressive disclosure: the root file holds one line per topic, and the agent opens a topic file only when the task needs it.
 
