@@ -1,129 +1,108 @@
-# Statechart kit
+# Statecharts
 
-Optional. Offered in the plan when the repo has a flow with states and rules that must always hold: an order, a payment, a refund, a dispute, a webhook that can arrive out of order. Never added by default. Read [README](../../../docs/skills/setup-agents-md/README.md) chapter 11 for the why.
+Optional. Offer it only when the repo has a flow whose rules must always hold (an order, a payment, a refund, a webhook that can arrive out of order). Ask once: "Add TLA+ statecharts for this flow?" Recommend no unless the person names such a flow. Never add it unasked.
 
-The kit is three things: a folder of TLA+ models, a runner script, and a `just` recipe (or the repo's own task runner) that calls the runner. The skill writes the kit. The models come from the person, from a `tech-design` design, or from `.tla` files already in the repo. The skill never invents a model or a rule.
+## What it creates
 
-## When it is offered
-
-- The inventory finds a state machine, a status enum with transitions, or a flow the docs or the person call "states", and the repo has no statechart folder yet. Offer it once, as one plan row, kind `statechart`, action `ask`.
-- The person asks for it.
-- A `tech-design` design in `docs/design/` lists rules that must hold. Offer it, and name the design.
-
-Ask first, with three answers, the recommended one first:
-
-1. **Local only** (recommended): the folder, the runner, the recipe. No CI job.
-2. **Local plus CI job**: the above, plus a path-filtered job in the existing CI file. Java and the jar download make it slow, so it runs only when `docs/statechart/**` or `scripts/statechart` changes.
-3. **Folder only**: the folder and its README. No runner, no recipe yet.
-
-A CI change is a row of its own. Never touch a pipeline without the person's yes.
-
-## Where
-
-- An existing folder with `.tla` files: keep its path and its name. Do not move models that other tools link to.
-- No folder yet: `docs/statechart/`.
-- The repo has a `docs/` layout with another name for design or model material: follow it, and say so in the plan.
-
-## The files
-
-| File | Action | Content |
-| --- | --- | --- |
-| `docs/statechart/README.md` | Create | How it works, why, the pinned tool, the rule list. Template below. |
-| `docs/statechart/<Name>.tla` and `<Name>.cfg` | Copy only | Copy from the repo or the person. Never write one. |
-| `scripts/statechart` | Create, executable | The runner below. |
-| `justfile` | Append a recipe, or create it | `check-statechart`. If the repo uses `make`, `npm run`, or another task runner, add the matching target instead, and say which. |
-| `.gitignore` | Add a line | `.cache/`, the jar's cache folder. |
-| An ADR in `docs/adr/` | Create | One ADR: TLC and Java become a checking tool. See the ADR template in [templates.md](templates.md). |
-| CI file | Only on option 2 | A job that runs `just check-statechart`, with `paths:` set to `docs/statechart/**` and `scripts/statechart`. |
-
-## The pin
-
-The runner downloads one jar and checks its sha256. The version and the hash come from the repo's existing pin, if it has one, such as a line in the folder's README. Otherwise ask the person for the version and the sha256 from the release page. Never guess a hash. Until the hash is known, write `<sha256 of tla2tools.jar, 64 hex characters>` and mark the row `ask`. A runner with a placeholder hash does not run.
-
-## The runner
-
-Write `scripts/statechart` as below. Fill the two pin lines from the pin above.
-
-```bash
-#!/usr/bin/env bash
-# Checks every TLA+ model in docs/statechart. Exit 1 when any rule breaks.
-set -euo pipefail
-
-here="$(cd "$(dirname "$0")/.." && pwd)"
-dir="$here/docs/statechart"
-tlc_version="<version, for example 1.7.4>"
-tlc_sha256="<sha256 of tla2tools.jar, 64 hex characters>"
-jar="$here/.cache/tla2tools-$tlc_version.jar"
-url="https://github.com/tlaplus/tlaplus/releases/download/v$tlc_version/tla2tools.jar"
-
-command -v java >/dev/null || { echo "statechart: java is required (JDK 11 or newer)" >&2; exit 2; }
-
-if [ ! -f "$jar" ]; then
-  mkdir -p "$(dirname "$jar")"
-  curl -fsSL -o "$jar.tmp" "$url"
-  mv "$jar.tmp" "$jar"
-fi
-if ! shasum -a 256 -c <<<"$tlc_sha256  $jar" >/dev/null 2>&1; then
-  rm -f "$jar"
-  echo "statechart: tla2tools.jar checksum does not match the pin" >&2
-  exit 2
-fi
-
-status=0
-shopt -s nullglob
-for spec in "$dir"/*.tla; do
-  name="$(basename "$spec" .tla)"
-  echo "== $name"
-  java -XX:+UseParallelGC -cp "$jar" tlc2.TLC -workers auto -config "$dir/$name.cfg" "$spec" || status=1
-done
-exit "$status"
+```text
+docs/statecharts/<subject>/<Name>.tla   the model: states and rules
+docs/statecharts/<subject>/<Name>.cfg   what TLC checks
+scripts/statechart.py                   the one command, Python 3, stdlib only
+.gitignore                              one line: .cache/
 ```
 
-The `justfile` recipe:
+One folder per subject. A subject is a flow in the code, such as `payments` or `orders`. The skill writes the folder and the script. It never writes a model's states or rules. Those come from the person, a design, or a `.tla` file already in the repo.
 
-```just
-# Check every TLA+ model in docs/statechart. Fails on any broken rule.
-check-statechart:
-    scripts/statechart
+## Commands
+
+| Command | Does |
+| --- | --- |
+| `python3 scripts/statechart.py new <subject> <Name>` | Creates `<Name>.tla` and `<Name>.cfg` as a skeleton. You write the rules. On Windows: `py scripts\statechart.py new ...` |
+| `python3 scripts/statechart.py run` | Runs every model. Prints only the red ones. Exit 0 when all hold, 1 when any breaks. |
+| `python3 scripts/statechart.py run <subject>` | Runs one subject. |
+
+Needs Java 11 or newer and Python 3.8 or newer. Works on macOS, Linux, and Windows.
+
+## The script
+
+Write `scripts/statechart.py` exactly as below. Before writing, fill the two pin lines. The version and the sha256 come from the repo (an existing pin) or from the person, read from the TLC release page. Never guess them. Until both are filled, mark the row `ask` and do not write the script.
+
+```python
+#!/usr/bin/env python3
+"""TLA+ statecharts. Commands: new, run. Needs Java 11+ and Python 3.8+."""
+import hashlib, pathlib, subprocess, sys, urllib.request
+
+ROOT = pathlib.Path(__file__).resolve().parent.parent
+DIR = ROOT / "docs" / "statecharts"
+VERSION = "<tlc version>"
+SHA256 = "<sha256 of tla2tools.jar, 64 hex characters>"
+JAR = ROOT / ".cache" / f"tla2tools-{VERSION}.jar"
+URL = f"https://github.com/tlaplus/tlaplus/releases/download/v{VERSION}/tla2tools.jar"
+RED = ("Error", "violated", "Temporal properties were violated", "Deadlock")
+
+def sha(path):
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+def ensure_jar():
+    if JAR.exists() and sha(JAR) == SHA256:
+        return
+    JAR.parent.mkdir(parents=True, exist_ok=True)
+    part = JAR.with_suffix(".part")
+    urllib.request.urlretrieve(URL, part)
+    if sha(part) != SHA256:
+        part.unlink()
+        sys.exit("tla2tools.jar does not match the pin")
+    part.replace(JAR)
+
+def new(subject, name):
+    folder = DIR / subject
+    folder.mkdir(parents=True, exist_ok=True)
+    (folder / f"{name}.tla").write_text(
+        f"---- MODULE {name} ----\nEXTENDS Naturals\nVARIABLE state\n"
+        'Init == state = "start"\nNext == FALSE\nSpec == Init /\\ [][Next]_state\n====\n')
+    (folder / f"{name}.cfg").write_text("SPECIFICATION Spec\n")
+    print(f"created {folder / name}.tla and .cfg")
+
+def run(subject):
+    specs = sorted((DIR / subject if subject else DIR).rglob("*.tla"))
+    if not specs:
+        sys.exit("no models found")
+    ensure_jar()
+    failed = 0
+    for spec in specs:
+        cmd = ["java", "-cp", str(JAR), "tlc2.TLC", "-workers", "auto",
+               "-config", str(spec.with_suffix(".cfg")), str(spec)]
+        out = subprocess.run(cmd, capture_output=True, text=True)
+        text = out.stdout + out.stderr
+        if out.returncode == 0:
+            print(f"ok   {spec.relative_to(ROOT)}")
+            continue
+        failed += 1
+        print(f"RED  {spec.relative_to(ROOT)}")
+        for line in text.splitlines():
+            if any(word in line for word in RED):
+                print(f"     {line}")
+    print(f"{len(specs) - failed} ok, {failed} red")
+    return 1 if failed else 0
+
+if __name__ == "__main__":
+    args = sys.argv[1:]
+    if args[:1] == ["new"] and len(args) == 3:
+        new(args[1], args[2])
+    elif args[:1] == ["run"]:
+        sys.exit(run(args[1] if len(args) > 1 else None))
+    else:
+        sys.exit("usage: statechart.py new <subject> <Name> | run [subject]")
 ```
-
-## The folder README
-
-Write this file from the template. Fill the rule list from the models and the tests. A rule with no test yet is marked `no test yet`. It is not dropped.
-
-```markdown
-# Statechart models
-
-Models of the states this repo must never leave in a bad place. TLC, the model checker from the TLA+ toolset, explores every reachable state of each model and checks each rule. A broken rule fails the run with exit 1.
-
-## Run
-
-    just check-statechart
-
-Needs Java 11 or newer. The first run downloads `tla2tools.jar` into `.cache/` and checks its sha256 against the pin in `scripts/statechart`.
-
-## Why
-
-The code shows what happens. A model shows that the rules hold in every order the events can come in, including the orders no one tested. The model checks the design. It does not read the Rust, Python, or TypeScript code. So each rule also has a test at the HTTP seam, and the table below links the two.
 
 ## Rules
 
-| Rule | Model | Test that proves the code |
-| --- | --- | --- |
-| `<rule in plain words>` | `<Name>.tla` | `<test path>`, or `no test yet` |
+- A model changes in the same change as the code it describes. Run `run` before you finish.
+- Every rule in a model has a test at the HTTP seam. The model checks the design, not the code.
+- A red model is fixed in the design or the code. Never weaken a rule to make it pass.
+- Record one ADR in `docs/adr/` when the kit is added: TLC and Java become a checking tool.
+- No CI job unless the person asks for one. A CI change needs its own yes.
 
-## When you change behaviour
+## Advise
 
-When a change alters an action a model describes, change the model in the same pull request, run `just check-statechart`, and check that every rule still holds. Add a rule to this table for each new guard, and a test for it.
-```
-
-## Rules for the person to keep
-
-- The model is updated in the same pull request as the code it describes. A model that drifts is worse than none, because it still looks true.
-- Each rule has a test at the HTTP seam, and the table links them. The model says the design is right. The test says the code does it.
-- A broken rule is fixed in the design or the code, not by weakening the rule.
-- Adding a model is a decision. The ADR from the kit covers the tool, not each model.
-
-## Drift check
-
-On `advise`, report: a `.tla` file with no rule row, a rule row whose test path is gone, a `scripts/statechart` whose pin is still the placeholder, and a `docs/statechart/` folder with no recipe. All medium.
+Report, medium: a `.tla` with no `.cfg`, a `docs/statecharts/` folder with no `scripts/statechart.py`, or a pin still a placeholder.
