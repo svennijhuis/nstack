@@ -17,6 +17,7 @@ How to handle docs in a repo an agent works in. The first five chapters follow M
 8. [Home repo or repo](#8-home-repo-or-repo)
 9. [With the other nstack skills](#9-with-the-other-nstack-skills)
 10. [Commands](#10-commands)
+11. [Statechart models: checked rules](#11-statechart-models-checked-rules)
 
 ---
 
@@ -197,3 +198,21 @@ Each skill works without the others.
 ```
 
 Nothing is written or run before you approve the plan. Nothing is pushed.
+
+## 11. Statechart models: checked rules
+
+Some flows must never reach a bad state: an order paid twice, a refund after a lost dispute, a webhook that overwrites a newer status with an older one. Tests cover the orders you thought of. A model checker covers all of them.
+
+**What it is.** A TLA+ model describes the states and the actions that move between them. TLC, the model checker from the TLA+ toolset, explores every reachable state and checks each rule you wrote down. A broken rule fails the run with exit 1, like a failing test. The kit puts the models in `docs/statechart/`, a runner in `scripts/statechart`, and a `just check-statechart` recipe that calls it.
+
+**Why it is here and not in the docs.** A statechart in prose goes stale, the same as any doc in chapter 3. A model is run on every check, so it cannot quietly drift. Its rules are the only place the "must always hold" statements live, and each one is linked to a test.
+
+**What it does not do.** The model checks the design, not the code. A model that passes says the design is right. It says nothing about the Rust, TypeScript, or Python that implements it. So every rule in the folder's README has a matching test at the HTTP seam, and the table links them. The model keeps the rule list honest, and the test keeps the code honest.
+
+**How it stays current.** When a change alters an action a model describes, the same pull request changes the model and reruns `just check-statechart`. The line in the folder's README says so: when a decision changes behaviour, change the action, rerun, and every rule must hold. A new guard gets a new rule row and a test.
+
+**Cost.** TLC needs Java 11 or newer. The first run downloads the pinned `tla2tools.jar` into `.cache/` and checks its sha256. The check takes longer than unit tests, so a CI job is optional and, if set up, runs only when the models or the runner change.
+
+**Decisions it creates.** One ADR records that TLC and Java are a checking tool in this repo. Each model is a design decision of its own, and is recorded like one.
+
+**Setup.** `setup-agents-md` offers the kit when a repo has a stateful flow, or a design lists rules that must always hold. It asks which of three options you want: local only (recommended), local plus a CI job, or the folder only. It writes the kit after you approve the plan. It copies models from the repo or from you. It never writes a model or a rule itself, and never guesses the jar's sha256. The details are in [statechart.md](../../../skills/setup-agents-md/references/statechart.md).

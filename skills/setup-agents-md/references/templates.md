@@ -38,6 +38,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 - Code standards: `docs/agents/code-standards.md`. Read before you write or change code.
 - <Topic>: `docs/agents/<topic>.md`. Read when <situation>.
 - Terms: `GLOSSARY.md`. Read when a word in the task has a project meaning.
+- Statechart models: `docs/statechart/`. Read when you change a stateful flow. Run `just check-statechart` after the change. Only when the kit was set up, by [statechart.md](statechart.md).
 - Decisions: `docs/adr/`. Read before you change something an ADR covers.
 
 ## Docs
