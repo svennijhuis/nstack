@@ -69,6 +69,10 @@ install them. The list is in
 - `align-code` uses `grilling`, `domain-modeling`, `research`,
   `codebase-design`, `code-review`, `comment-root-cause`, and
   `writing-for-agents`.
+- You trigger these yourself. `statechart` checks a TLA+ model with TLC and
+  shows each broken rule as its shortest path. `create-formal-verification-skill`
+  writes a project-local verify skill. `maintain-formal-verification-skill`
+  updates that verification after the code changes and reruns it.
 
 ## Install
 

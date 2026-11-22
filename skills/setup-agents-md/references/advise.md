@@ -25,7 +25,7 @@
 | A deploy or apply command with no word on how it runs | medium |
 | Two instructions that contradict | high |
 | A command that no script, manifest, or pipeline defines, and that is not marked `Not in the code.` | high |
-| A path that does not exist. The `docs/adr/` the Decisions section names does not count. | high |
+| A path that does not exist. The `docs/adr/` the Decisions section names, and the `docs/statecharts/` the Statecharts line names, do not count. | high |
 | Root file over about 60 lines, not counting the Parts section. One row. | low, medium past about 100 |
 | A folder tree or a list of file paths | medium |
 | Rules for one area only, in the root file and outside that part's block | medium |
@@ -39,6 +39,7 @@
 
 | Finding | Severity |
 | --- | --- |
+| A `.tla` file outside `docs/statecharts/<subject>/`, or `.tla` files and no Statecharts line | medium |
 | A doc that explains how the code works | medium |
 | A spec, PRD, or plan for a feature that has shipped | medium |
 | A `tech-design` folder whose status is `abandoned`, or `committed` when the person says the feature has shipped | medium |

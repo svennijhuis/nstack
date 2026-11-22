@@ -1,6 +1,6 @@
 # Templates
 
-Fill these in. Leave out a section that has no lines, and a line whose file does not exist after this run. Never fill a line with a guess.
+Fill these in. Leave out a section that has no lines, and a line whose file does not exist after this run. Never fill a line with a guess. One exception: keep the Statecharts line when the person asked for statecharts and `docs/statecharts/` does not exist yet. The first model creates it.
 
 ## Root `AGENTS.md`
 
@@ -39,6 +39,7 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 - <Topic>: `docs/agents/<topic>.md`. Read when <situation>.
 - Terms: `GLOSSARY.md`. Read when a word in the task has a project meaning.
 - Decisions: `docs/adr/`. Read before you change something an ADR covers.
+- Statecharts: `docs/statecharts/<subject>/`, one folder per flow. Add a new model there. When you change a flow that has a model, change the model in the same change and ask the person to rerun `/statechart` on it. Every rule must hold.
 
 ## Docs
 
