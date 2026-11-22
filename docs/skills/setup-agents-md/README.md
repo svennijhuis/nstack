@@ -17,7 +17,6 @@ How to handle docs in a repo an agent works in. The first five chapters follow M
 8. [Home repo or repo](#8-home-repo-or-repo)
 9. [With the other nstack skills](#9-with-the-other-nstack-skills)
 10. [Commands](#10-commands)
-11. [Statechart models: checked rules](#11-statechart-models-checked-rules)
 
 ---
 
@@ -198,23 +197,3 @@ Each skill works without the others.
 ```
 
 Nothing is written or run before you approve the plan. Nothing is pushed.
-
-## 11. Statecharts: rules that must always hold
-
-Some flows must never reach a bad state: an order paid twice, a refund after a lost dispute. Tests cover the orders you thought of. A model checker covers every order the events can arrive in.
-
-**Layout.** One folder per subject: `docs/statecharts/<subject>/<Name>.tla` and `<Name>.cfg`. A subject is a flow in the code, such as `payments`.
-
-**Commands.** One script, `scripts/statechart.py`, Python 3, plus Java 11+:
-
-- `new <subject> <Name>` creates a skeleton model. You write the states and rules.
-- `run` checks every model and prints only the red ones, with the TLC line that says why. Exit 1 when any is red.
-- `run <subject>` checks one subject.
-
-On macOS and Linux: `python3 scripts/statechart.py run`. On Windows: `py scripts\statechart.py run`.
-
-**Why not docs.** A statechart in prose goes stale like any doc. A model runs on every check, so it cannot drift quietly.
-
-**What it does not check.** The model checks the design, not the code. Every rule needs a test at the HTTP seam too.
-
-**Setup.** `setup-agents-md` offers the kit only when a flow's rules must always hold. It writes the folder and the script after you approve. It never writes a model's rules, and never guesses the jar's version or sha256. The details are in [statechart.md](../../../skills/setup-agents-md/references/statechart.md).

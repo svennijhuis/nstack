@@ -1,31 +1,37 @@
-# Statecharts
+---
+name: statechart
+description: Use only when the person types /statechart or asks to create, run, or check TLA+ statecharts for a flow. Creates and runs models in docs/statecharts/. Never start it on your own.
+disable-model-invocation: true
+---
 
-Optional. Offer it only when the repo has a flow whose rules must always hold (an order, a payment, a refund, a webhook that can arrive out of order). Ask once: "Add TLA+ statecharts for this flow?" Recommend no unless the person names such a flow. Never add it unasked.
-
-## What it creates
-
-```text
-docs/statecharts/<subject>/<Name>.tla   the model: states and rules
-docs/statecharts/<subject>/<Name>.cfg   what TLC checks
-scripts/statechart.py                   the one command, Python 3, stdlib only
-.gitignore                              one line: .cache/
-```
-
-One folder per subject. A subject is a flow in the code, such as `payments` or `orders`. The skill writes the folder and the script. It never writes a model's states or rules. Those come from the person, a design, or a `.tla` file already in the repo.
+Statecharts are TLA+ models of a flow whose rules must always hold. The person triggers this skill. Do not offer it, and do not start it on your own.
 
 ## Commands
 
-| Command | Does |
+| Typed | Does |
 | --- | --- |
-| `python3 scripts/statechart.py new <subject> <Name>` | Creates `<Name>.tla` and `<Name>.cfg` as a skeleton. You write the rules. On Windows: `py scripts\statechart.py new ...` |
-| `python3 scripts/statechart.py run` | Runs every model. Prints only the red ones. Exit 0 when all hold, 1 when any breaks. |
-| `python3 scripts/statechart.py run <subject>` | Runs one subject. |
+| `/statechart setup` | Writes `scripts/statechart.py` and the `.gitignore` line. Asks first for the TLC version and sha256 pin. |
+| `/statechart new <subject> <Name>` | Creates a skeleton `docs/statecharts/<subject>/<Name>.tla` and `.cfg`. The person writes the states and rules. |
+| `/statechart run` | Runs every model. Prints only the red ones. |
+| `/statechart run <subject>` | Runs one subject. |
 
-Needs Java 11 or newer and Python 3.8 or newer. Works on macOS, Linux, and Windows.
+Needs Java 11 or newer and Python 3.8 or newer. The commands below work on macOS, Linux, and Windows.
+
+- macOS and Linux: `python3 scripts/statechart.py run`
+- Windows: `py scripts\statechart.py run`
+
+## Rules
+
+- The skill never writes a model's states or rules. The person writes them, or copies a `.tla` from the repo.
+- Never guess the TLC version or the jar's sha256. Ask the person, who reads them from the TLC release page. Until both are filled in `scripts/statechart.py`, `setup` writes nothing and `run` refuses.
+- `setup` adds the `.gitignore` line `.cache/`, and nothing else. No CI job.
+- A red model is fixed in the design or the code. Never weaken a rule to make it pass.
+- A model changes in the same change as the code it describes. Run `run` before you finish.
+- Every rule needs a test at the HTTP seam too. The model checks the design, not the code.
 
 ## The script
 
-Write `scripts/statechart.py` exactly as below. Before writing, fill the two pin lines. The version and the sha256 come from the repo (an existing pin) or from the person, read from the TLC release page. Never guess them. Until both are filled, mark the row `ask` and do not write the script.
+`scripts/statechart.py`. Fill the two pin lines first, then write it exactly as below.
 
 ```python
 #!/usr/bin/env python3
@@ -38,7 +44,7 @@ VERSION = "<tlc version>"
 SHA256 = "<sha256 of tla2tools.jar, 64 hex characters>"
 JAR = ROOT / ".cache" / f"tla2tools-{VERSION}.jar"
 URL = f"https://github.com/tlaplus/tlaplus/releases/download/v{VERSION}/tla2tools.jar"
-RED = ("Error", "violated", "Temporal properties were violated", "Deadlock")
+RED = ("Error", "violated", "Deadlock")
 
 def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
@@ -73,13 +79,12 @@ def run(subject):
         cmd = ["java", "-cp", str(JAR), "tlc2.TLC", "-workers", "auto",
                "-config", str(spec.with_suffix(".cfg")), str(spec)]
         out = subprocess.run(cmd, capture_output=True, text=True)
-        text = out.stdout + out.stderr
         if out.returncode == 0:
             print(f"ok   {spec.relative_to(ROOT)}")
             continue
         failed += 1
         print(f"RED  {spec.relative_to(ROOT)}")
-        for line in text.splitlines():
+        for line in (out.stdout + out.stderr).splitlines():
             if any(word in line for word in RED):
                 print(f"     {line}")
     print(f"{len(specs) - failed} ok, {failed} red")
@@ -95,14 +100,6 @@ if __name__ == "__main__":
         sys.exit("usage: statechart.py new <subject> <Name> | run [subject]")
 ```
 
-## Rules
+## Review notes
 
-- A model changes in the same change as the code it describes. Run `run` before you finish.
-- Every rule in a model has a test at the HTTP seam. The model checks the design, not the code.
-- A red model is fixed in the design or the code. Never weaken a rule to make it pass.
-- Record one ADR in `docs/adr/` when the kit is added: TLC and Java become a checking tool.
-- No CI job unless the person asks for one. A CI change needs its own yes.
-
-## Advise
-
-Report, medium: a `.tla` with no `.cfg`, a `docs/statecharts/` folder with no `scripts/statechart.py`, or a pin still a placeholder.
+- A `run` on a red model prints the TLC lines that match `Error`, `violated`, or `Deadlock`. A TLC message that uses other words shows only the `RED` line. Read the full TLC output in that case.

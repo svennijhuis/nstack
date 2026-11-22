@@ -12,6 +12,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `setup-agents-md` | "set up AGENTS.md" | Creates, trims, and audits a repo's `AGENTS.md`, keeps only what the code cannot say, and puts decisions (ADRs) and the glossary in the repo they belong to. What goes in the docs and what does not: [README](skills/setup-agents-md/README.md). |
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
+| `statechart` | `/statechart` (you type it) | Checks rules that must always hold in a flow, with TLA+ models in `docs/statecharts/<subject>/`. Runs on demand and prints only the red models: [README](docs/skills/statechart/README.md). |
 | `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
 
 ## How they work together
