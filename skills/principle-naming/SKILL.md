@@ -25,7 +25,7 @@ Check only names you add or change. Leave other names alone unless the person as
 | --- | --- |
 | Function, method | A verb phrase for the one thing it does (`calculateTotal`). An "and" or "or" in the name means it does too much: split it. Name what it does, not how. |
 | Boolean, predicate | Reads as a yes/no question (`isActive`, `hasPermission`, `canRetry`). Positive form: `isEnabled`, not `isNotDisabled`. |
-| Class, type | A noun (`Customer`, `PaymentProcessor`). Avoid `Manager`, `Handler`, `Helper`, `Util` unless it names the real role. |
+| Class, type | A noun (`Customer`, `PaymentProcessor`). Avoid vague words like `Manager`, `Helper`, `Util`. Role words from the language or framework (`Handler`, `Controller`, `Repository`) are fine when the class really plays that role. The repo's convention wins. |
 | Collection | Plural or descriptive (`users`, `orderById`). |
 | Constant | The meaning, not the value (`DEFAULT_TIMEOUT_SECONDS`, not `THIRTY`). |
 | File, module | The main thing it holds. |
