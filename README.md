@@ -13,7 +13,7 @@ in Claude Code, Codex, Cursor, and GitHub Copilot.
 | `align-code` | "align the code" | Finds every place the code does one thing in more than one way, lets you pick the way, reports what does not match, and rewrites it one standard at a time on a local branch: [README](docs/skills/align-code/README.md). |
 | `setup-nstack-skills` | "set up nstack" | Installs the external skills nstack calls, at pinned commits, after you approve the plan. |
 | `comment-root-cause` | "check the comments" | Asks why a comment is there and whether the code can be better. A comment that covers a shortcut means: fix the root cause. A business rule, a decision, or API docs stay. The agent starts it when it writes a comment: [SKILL.md](skills/comment-root-cause/SKILL.md). |
-| `principle-naming` | "check the names" | Checks every new name against naming rules: it shows intent, no abbreviations, one word per concept, no misleading names. Works in any language and follows the casing of the repo: [SKILL.md](skills/principle-naming/SKILL.md). |
+| `principle-naming` | "check the names" | Checks every new name against naming rules: it shows intent, no abbreviations, one word per concept, no misleading names. Works in any language and follows that language's best practice, not the habits of the repo: [SKILL.md](skills/principle-naming/SKILL.md). |
 
 ## How they work together
 
