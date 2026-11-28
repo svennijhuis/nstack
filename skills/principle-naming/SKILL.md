@@ -17,7 +17,7 @@ Check only names you add or change. Leave other names alone unless the person as
 5. **One word per concept.** Pick `fetch` or `get` and use it everywhere. Never use one word for two ideas.
 6. **Make real distinctions.** No `ProductData` next to `ProductInfo`, no `user1` and `user2`. Two names that differ must mean different things.
 7. **Do not mislead.** `accountList` that is not a list, or `isValid` that also saves, lies to the reader.
-8. **Use the domain language.** `Invoice`, not `DataRecord`. Use the terms in the repo's glossary when it has one.
+8. **Use the domain language.** `Invoice`, not `DataRecord`. Use the terms in the project's glossary. `AGENTS.md` points to it, wherever it lives (`GLOSSARY.md`, `docs/glossary.md`). Without a pointer, look for a file with that name.
 
 ## By kind of name
 
