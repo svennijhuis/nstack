@@ -1,6 +1,6 @@
 ---
 name: principle-naming
-description: Use when you write, review, or refactor code in any language and add or change a name for a variable, function, class, constant, or file. Applies the Clean Code naming principles so every new name shows its intent.
+description: Use when you write, review, or refactor code in any language and add or change a name for a variable, function, class, constant, or file. Checks every new name against naming rules so it shows its intent.
 ---
 
 Before you add a name, stop and check it against the rules below. Casing (`snake_case`, `camelCase`, `PascalCase`) follows the language and the repo. Never invent a new convention.
