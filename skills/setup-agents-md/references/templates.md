@@ -53,6 +53,17 @@ Aim for under 60 lines. Each line must apply to every task in the repo.
 - Leave an ADR's body as it was merged. To reverse a decision, add a new ADR that supersedes it and change only the old one's status line.
 - When you revert or undo a change, look in `docs/adr/` for an ADR from that change. If there is one, add an ADR that records the revert and why. A git revert deletes the old ADR too: restore it, and set its status to `Reverted by <new ADR>`.
 - Before you finish, ask: did this change contain a decision? If yes, and no ADR was written, write it.
+
+## Terms
+
+- When a change uses a word with a meaning special to this project, and `GLOSSARY.md` lacks it, add one line in the same change: the term, what it means here, and what it is not.
+- Name new things with the glossary's words. A domain word that is new goes in the glossary.
+- When a glossary line no longer matches the code, fix it in the same change.
+
+## Code standards
+
+- When the person states a convention, or a review asks for a change because of a convention that no file states, add one line to `docs/agents/code-standards.md` in the same change. No rule that a linter or the type checker enforces.
+- Before you finish, ask: did this change follow or set a convention that is not written down? If yes, add it.
 ```
 
 For a repo with several parts, replace Shape and Commands with Parts. Keep Pipelines.
@@ -83,7 +94,7 @@ Leave out a command the part does not have. Leave out the Package manager line u
 
 Shape is the thin navigation layer: three to six lines. Name a top-level folder at most. No deeper paths and no folder trees, because those move. The agent finds the rest itself.
 
-Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs and Decisions sections as they are, except for the paths.
+Write the rules in plain, calm sentences. No ALL CAPS, no "IMPORTANT", no "always" or "never" where a plain sentence works. Keep the Docs, Decisions, Terms, and Code standards sections as they are, except for the paths.
 
 ## Code standards
 

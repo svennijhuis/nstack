@@ -13,7 +13,7 @@ A steering file loads on every request. Every line costs tokens and attention, a
 
 **Decisions live in the repo they change.** ADRs, the glossary, and topic docs go in that repo, never in the home repo. The home repo holds only decisions about itself. See [home-repo.md](references/home-repo.md).
 
-**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Where the code has none, it comes from the person, by [Commands](#commands-by-default). Every rule comes from the person or a doc that is already there. The only fixed text is the Docs and Decisions sections in [templates.md](references/templates.md).
+**Never invent a line.** Every command comes from the code: a script, the manifest, or the pipeline. Where the code has none, it comes from the person, by [Commands](#commands-by-default). Every rule comes from the person or a doc that is already there. The only fixed text is the Docs, Decisions, Terms, and Code standards sections in [templates.md](references/templates.md).
 
 **Never push.** Commit on a local branch, one per repo. The person pushes.
 
@@ -120,6 +120,8 @@ When the repo already has a standards file elsewhere, such as a language file un
 ## The decision rules
 
 The root file of every repo but a home repo always carries the Decisions section from [templates.md](references/templates.md), so every agent that works in the repo records its decisions and handles reverts. Change only its paths. The section stays when `docs/adr/` does not exist yet: the first ADR creates the folder. That path is not drift.
+
+The Terms and Code standards sections are carried the same way, so agents add a glossary line when a change brings a new project term, and a standards line when a change follows or sets a convention that is not written down. Change only their paths. A repo whose terms live in `CONTEXT.md` keeps that name. Each section stays when its file does not exist yet: the first term or standard creates it. That path is not drift.
 
 ## With the other nstack skills
 
