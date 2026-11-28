@@ -25,14 +25,14 @@
 | A deploy or apply command with no word on how it runs | medium |
 | Two instructions that contradict | high |
 | A command that no script, manifest, or pipeline defines, and that is not marked `Not in the code.` | high |
-| A path that does not exist. The `docs/adr/` the Decisions section names does not count. | high |
+| A path that does not exist. The `docs/adr/`, `GLOSSARY.md`, and `docs/agents/code-standards.md` that the Decisions, Terms, and Code standards sections name do not count when the file does not exist yet. | high |
 | Root file over about 60 lines, not counting the Parts section. One row. | low, medium past about 100 |
 | A folder tree or a list of file paths | medium |
 | Rules for one area only, in the root file and outside that part's block | medium |
 | A procedure with steps that could be a skill | medium |
 | A style rule a linter or formatter could check | low |
 | Obvious advice, vague rules, or ALL-CAPS commands | low |
-| No Decisions section | medium |
+| No Decisions, Terms, or Code standards section | medium |
 | A `Designs in progress` line and no open design | low |
 
 ### Docs
@@ -62,7 +62,7 @@ To find reverts, read `git log --grep="This reverts commit"` and, for each rever
 
 ### Home repo
 
-Only when the target is in a home repo setup. On the home repo's own `AGENTS.md`, the size check counts only the lines above `## Repos`. Skip three Root file checks there, because `setup-home-repo`'s layout has no such sections: no start, build, or test command; a part or pipeline with no line; no Decisions section.
+Only when the target is in a home repo setup. On the home repo's own `AGENTS.md`, the size check counts only the lines above `## Repos`. Skip three Root file checks there, because `setup-home-repo`'s layout has no such sections: no start, build, or test command; a part or pipeline with no line; no Decisions, Terms, or Code standards section.
 
 | Finding | Severity |
 | --- | --- |

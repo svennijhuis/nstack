@@ -62,7 +62,7 @@ Code shows what was built. It cannot show what was considered instead, or why th
 
 ### Domain language: a glossary
 
-Does the agent know what an "order" means in your codebase? Probably not. Is it a cart, a paid cart, a shipment? A glossary says so. Keep it in `GLOSSARY.md`, one line per term, only terms with a meaning special to this project.
+Does the agent know what an "order" means in your codebase? Probably not. Is it a cart, a paid cart, a shipment? A glossary says so. Keep it in `GLOSSARY.md`, one line per term, only terms with a meaning special to this project. The root file also tells the agent to add a line itself, in the same change, when it meets a project term the glossary lacks.
 
 ```markdown
 - **Order**: a paid cart. Before payment it is a cart, not an order.
@@ -124,7 +124,7 @@ This is progressive disclosure: the root file holds one line per topic, and the 
 
 **`AGENTS.md` by default.** Every harness reads `AGENTS.md`. Claude Code does from version 2.1.277, but only when no `CLAUDE.md`, `.claude/CLAUDE.md`, or `CLAUDE.local.md` sits in the repo or a folder above it. So the skill writes no `CLAUDE.md` unless you need one: you ask for it, you use an older Claude Code, or one of those files is in the way. Then it is one line, `@AGENTS.md`, and all the text stays in `AGENTS.md`. A `CLAUDE.md` with text of its own is moved into `AGENTS.md`, and you choose whether the file goes or stays as that one line.
 
-**Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, one per language. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." If you have no conventions to put in it, it is left out. It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name.
+**Code standards by default.** The AI Hero guide moves language and coding rules out of the root file into their own file, one per language. This skill always proposes one: `docs/agents/code-standards.md`, linked from the root file with "Read before you write or change code." If you have no conventions to put in it, it is left out. It holds only what no tool checks. A rule a linter can enforce goes into the linter config instead. With more than one language, or past about 50 lines, it splits into one file per language. If the repo already has such a file, the skill points at it and keeps its name. The root file also tells the agent to add a line, in the same change, when the person states a convention or a review asks for one that no file holds.
 
 **Commands by default.** The AI Hero guide lists only non-standard commands. This skill always writes Start, Build, and Test, because they are what the agent needs first. It learns them from the scripts and the pipeline. When the repo has linting rules, it also writes a Lint line with the config file, how to run it, and how to fix with it. No linting rules: no lint line. After you approve the plan it runs build, test, and lint to check them. It never runs a start, a deploy, or an apply.
 
